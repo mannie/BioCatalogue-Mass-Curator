@@ -1,9 +1,24 @@
 #
-# application_requires.rb
-# BioCatalogue-Mass-Curator
+#  application_requires.rb
+#  BioCatalogue-Mass-Curator
 #
-# Created by Mannie Tagarira on 19/05/2010.
-# Copyright 2010 University Of Manchester, UK. All rights reserved.
+#  Created by Mannie Tagarira on 19/05/2010.
+#  Copyright (c) 2010 University of Manchester, UK.
+
+=begin
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
+=end
 
 # ========================================
 
@@ -17,30 +32,34 @@ RESOURCES_DIR = File.join(APPLICATION_ROOT, "Resources")
 # ========================================
 
 # Source Files To Include
-UI_SOURCES = %w{ MainWindow.rb MainPanel.rb }
-EH_SOURCES = %w{  }
+UI_SOURCES = %w{ LoginPanel.rb MainWindow.rb MainPanel.rb ServiceSelectPanel.rb 
+                 SpreadsheetUploadPanel.rb }
+                 
+EH_SOURCES = %w{ DownloadSpreadsheetAction.rb GoBackAction.rb 
+                 UploadSpreadsheetAction.rb }
+
 RESOURCES = %w{  }
+
+# Java Classes To Include
+AWT_CLASSES = %w{ BorderLayout event.ActionListener FlowLayout GridBagLayout
+                  GridBagConstraints }
+
+SWING_CLASSES = %w{ BoxLayout JButton JFrame JLabel JOptionPane JPanel }
 
 # ========================================
 
-# INCLUDES
+# ACTUAL INCLUDES
 
 # Core Libraries
 require 'java'
-require 'rubygems'
 
 # RubyGems
+require 'net/http'
+require 'uri'
 
 # Java Classes
-import java.awt.BorderLayout
-import java.awt.FlowLayout
-
-import javax.swing.BoxLayout
-import javax.swing.JButton
-import javax.swing.JFrame
-import javax.swing.JOptionPane
-import javax.swing.JPanel
-import javax.swing.JLabel
+AWT_CLASSES.each { |awt| import "java.awt." << awt }
+SWING_CLASSES.each { |swing| import "javax.swing." << swing }
 
 # Application Sources
 UI_SOURCES.each { |filename| require File.join(USER_INTERFACE_DIR, filename) }

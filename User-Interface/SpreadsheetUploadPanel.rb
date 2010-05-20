@@ -1,8 +1,8 @@
 #
-#  MainWindow.rb
+#  SpreadsheetUploadPanel.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 19/05/2010.
+#  Created by Mannie Tagarira on 20/05/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -20,31 +20,17 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class MainWindow < JFrame
-  
-  def initialize(title="BioCatalogue Mass Curator")
-    super(title)
-    initUI    
-    
-    @@CONTENT_PANE ||= self.getContentPane
-    @@MAIN_PANEL ||= @mainPanel
+class SpreadsheetUploadPanel < JPanel
+
+  def initialize
+    super()
+    initUI
   end # initialize
   
-  def self.CONTENT_PANE
-    @@CONTENT_PANE
-  end # self.CONTENT_PANE
-  
-  def self.MAIN_PANEL
-    @@MAIN_PANEL
-  end # self.MAIN_PANEL
-  
 private
-
+  
   def initUI
-    @mainPanel = MainPanel.new
-
-    self.setLayout(BorderLayout.new)
-    self.getContentPane.add(@mainPanel)
+    self.add(JLabel.new("Spreadsheet Upload Panel"))
   end # initUI
   
 end
