@@ -1,5 +1,5 @@
 #
-#  DownloadSpreadsheetAction.rb
+#  DoLoginAction.rb
 #  BioCatalogue-Mass-Curator
 #
 #  Created by Mannie Tagarira on 20/05/2010.
@@ -20,27 +20,14 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class DownloadSpreadsheetAction
-  
-  def initialize(container)
-    super()
-    @buttonContainer = container
-    
-    if container.instance_of?(MainPanel)
-      @renderPanel = ServiceSelectPanel.new
-    elsif container.instance_of?(ServiceSelectPanel)
-    end
-  end # initialize
-  
-  def actionPerformed(event)
-    if @buttonContainer.instance_of?(MainPanel)
-      @buttonContainer.setVisible(false)
-      @renderPanel.setVisible(true)
+class DoLoginAction
 
-      MainWindow.CONTENT_PANE.add(@renderPanel)
-      MainWindow.CONTENT_PANE.repaint
-    elsif @buttonContainer.instance_of?(ServiceSelectPanel)
-    end
+  def initialize(usernameField, passwordField, rememberMeCheckBox)
+    super()
+  end # initialize
+
+  def actionPerformed(event)
+    puts "Login button clicked"
   end # actionPerformed
 
 end

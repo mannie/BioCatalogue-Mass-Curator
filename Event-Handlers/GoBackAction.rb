@@ -21,7 +21,6 @@
 =end
 
 class GoBackAction
-  include ActionListener
   
   def initialize(container)
     super()

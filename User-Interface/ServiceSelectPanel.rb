@@ -32,6 +32,12 @@ private
   def initUI
     self.setLayout(BorderLayout.new)
     self.add(JLabel.new("Service Select Panel"))
+
+
+
+
+
+
     self.add(backButton = JButton.new("Back"), BorderLayout::SOUTH)
     backButton.addActionListener(GoBackAction.new(self))
   end # initUI

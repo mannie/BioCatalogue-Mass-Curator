@@ -21,8 +21,7 @@
 =end
 
 class UploadSpreadsheetAction
-  include ActionListener
-  
+
   def initialize(container)
     super()
     @buttonContainer = container

@@ -20,6 +20,7 @@
 		36F902BD11A55AC2009E69E2 /* DownloadSpreadsheetAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = DownloadSpreadsheetAction.rb; sourceTree = "<group>"; };
 		36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = UploadSpreadsheetAction.rb; sourceTree = "<group>"; };
 		36F905D111A58885009E69E2 /* GoBackAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = GoBackAction.rb; sourceTree = "<group>"; };
+		36F9063C11A5965F009E69E2 /* DoLoginAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = DoLoginAction.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -66,6 +67,7 @@
 		36F9028911A54B90009E69E2 /* Event-Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				36F9063C11A5965F009E69E2 /* DoLoginAction.rb */,
 				36F902BD11A55AC2009E69E2 /* DownloadSpreadsheetAction.rb */,
 				36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */,
 				36F905D111A58885009E69E2 /* GoBackAction.rb */,

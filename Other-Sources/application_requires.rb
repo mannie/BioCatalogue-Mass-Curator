@@ -32,23 +32,39 @@ RESOURCES_DIR = File.join(APPLICATION_ROOT, "Resources")
 # ========================================
 
 # Source Files To Include
-UI_SOURCES = %w{ LoginPanel.rb MainWindow.rb MainPanel.rb ServiceSelectPanel.rb 
+UI_SOURCES = %w{ LoginPanel.rb
+                 MainWindow.rb 
+                 MainPanel.rb 
+                 ServiceSelectPanel.rb 
                  SpreadsheetUploadPanel.rb }
                  
-EH_SOURCES = %w{ DownloadSpreadsheetAction.rb GoBackAction.rb 
+EH_SOURCES = %w{ DoLoginAction.rb
+                 DownloadSpreadsheetAction.rb 
+                 GoBackAction.rb 
                  UploadSpreadsheetAction.rb }
 
 RESOURCES = %w{  }
 
 # Java Classes To Include
-AWT_CLASSES = %w{ BorderLayout event.ActionListener FlowLayout GridBagLayout
-                  GridBagConstraints }
+AWT_CLASSES = %w{ BorderLayout 
+                  event.ActionListener 
+                  FlowLayout 
+                  GridBagLayout
+                  GridBagConstraints
+                  Insets }
 
-SWING_CLASSES = %w{ BoxLayout JButton JFrame JLabel JOptionPane JPanel }
+SWING_CLASSES = %w{ BorderFactory 
+                    BoxLayout 
+                    JButton 
+                    JCheckBox
+                    JFrame 
+                    JLabel 
+                    JOptionPane 
+                    JPanel
+                    JPasswordField
+                    JTextField }
 
 # ========================================
-
-# ACTUAL INCLUDES
 
 # Core Libraries
 require 'java'
