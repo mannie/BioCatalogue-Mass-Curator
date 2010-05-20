@@ -9,21 +9,23 @@
 /* Begin PBXFileReference section */
 		360FD7D211A410BA00AEC536 /* ReadMe.rdoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.rdoc; sourceTree = "<group>"; };
 		360FD7D311A410BF00AEC536 /* Licence */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licence; sourceTree = "<group>"; };
-		360FD81B11A4122D00AEC536 /* main.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = main.rb; sourceTree = "<group>"; };
 		360FD93E11A426CF00AEC536 /* run_main.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = run_main.rb; sourceTree = "<group>"; };
-		360FD98611A42C2500AEC536 /* MainWindow.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainWindow.rb; sourceTree = "<group>"; };
-		360FD9A711A4304100AEC536 /* application_requires.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_requires.rb; sourceTree = "<group>"; };
-		36AB305A11A4378C0000C15D /* MainPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainPanel.rb; sourceTree = "<group>"; };
+		3620A93511A536B500A67C45 /* Other-Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Other-Sources"; sourceTree = "<group>"; };
+		3620A94011A536D800A67C45 /* User-Interface */ = {isa = PBXFileReference; explicitFileType = folder; path = "User-Interface"; sourceTree = SOURCE_ROOT; };
+		3620A94A11A5371300A67C45 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = SOURCE_ROOT; };
+		3620A95811A5376700A67C45 /* Event-Handlers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Event-Handlers"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		360FD7A711A40F7000AEC536 = {
 			isa = PBXGroup;
 			children = (
-				360FD7FC11A4113700AEC536 /* Classes */,
-				360FD7FD11A4113E00AEC536 /* Other Sources */,
+				360FD93E11A426CF00AEC536 /* run_main.rb */,
+				3620A94011A536D800A67C45 /* User-Interface */,
+				3620A95811A5376700A67C45 /* Event-Handlers */,
+				3620A93511A536B500A67C45 /* Other-Sources */,
+				3620A94A11A5371300A67C45 /* Resources */,
 				360FD7B911A4107600AEC536 /* Documentation */,
-				360FD81511A4116200AEC536 /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -34,32 +36,6 @@
 				360FD7D211A410BA00AEC536 /* ReadMe.rdoc */,
 			);
 			name = Documentation;
-			sourceTree = "<group>";
-		};
-		360FD7FC11A4113700AEC536 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				360FD98611A42C2500AEC536 /* MainWindow.rb */,
-				36AB305A11A4378C0000C15D /* MainPanel.rb */,
-			);
-			name = Classes;
-			sourceTree = "<group>";
-		};
-		360FD7FD11A4113E00AEC536 /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				360FD81B11A4122D00AEC536 /* main.rb */,
-				360FD9A711A4304100AEC536 /* application_requires.rb */,
-				360FD93E11A426CF00AEC536 /* run_main.rb */,
-			);
-			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		360FD81511A4116200AEC536 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

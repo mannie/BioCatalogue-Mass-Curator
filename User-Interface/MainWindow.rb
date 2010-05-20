@@ -18,15 +18,11 @@ private
 
   def initUI
     @mainPanel = MainPanel.new
-    @mainPanel.setLayout(BorderLayout.new)
-
-    buttonPanel = JPanel.new
-    buttonPanel.setLayout(FlowLayout.new)
-    buttonPanel.add(@downloadButton = JButton.new("Download A Spreadsheet"))
-    buttonPanel.add(@uploadButton = JButton.new("Upload A Spreadsheet"))
     
-    @mainPanel.add(buttonPanel)
-
-    self.getContentPane.add(@mainPanel)
+    self.setLayout(BorderLayout.new)
+    
+    contentPane = self.getContentPane
+    contentPane.add(JLabel.new("BioCatalogue"), BorderLayout::NORTH)
+    contentPane.add(@mainPanel)
   end
 end
