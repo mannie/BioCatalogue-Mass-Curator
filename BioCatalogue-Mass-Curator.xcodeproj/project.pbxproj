@@ -1,0 +1,111 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXFileReference section */
+		360FD7D211A410BA00AEC536 /* ReadMe.rdoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.rdoc; sourceTree = "<group>"; };
+		360FD7D311A410BF00AEC536 /* Licence */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licence; sourceTree = "<group>"; };
+		360FD81B11A4122D00AEC536 /* main.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = main.rb; sourceTree = "<group>"; };
+		360FD93E11A426CF00AEC536 /* run_main.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = run_main.rb; sourceTree = "<group>"; };
+		360FD98611A42C2500AEC536 /* MainWindow.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainWindow.rb; sourceTree = "<group>"; };
+		360FD9A711A4304100AEC536 /* application_requires.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_requires.rb; sourceTree = "<group>"; };
+		36AB305A11A4378C0000C15D /* MainPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainPanel.rb; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		360FD7A711A40F7000AEC536 = {
+			isa = PBXGroup;
+			children = (
+				360FD7FC11A4113700AEC536 /* Classes */,
+				360FD7FD11A4113E00AEC536 /* Other Sources */,
+				360FD7B911A4107600AEC536 /* Documentation */,
+				360FD81511A4116200AEC536 /* Resources */,
+			);
+			sourceTree = "<group>";
+		};
+		360FD7B911A4107600AEC536 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				360FD7D311A410BF00AEC536 /* Licence */,
+				360FD7D211A410BA00AEC536 /* ReadMe.rdoc */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+		360FD7FC11A4113700AEC536 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				360FD98611A42C2500AEC536 /* MainWindow.rb */,
+				36AB305A11A4378C0000C15D /* MainPanel.rb */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		360FD7FD11A4113E00AEC536 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				360FD81B11A4122D00AEC536 /* main.rb */,
+				360FD9A711A4304100AEC536 /* application_requires.rb */,
+				360FD93E11A426CF00AEC536 /* run_main.rb */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		360FD81511A4116200AEC536 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		360FD7A911A40F7000AEC536 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 360FD7AC11A40F7000AEC536 /* Build configuration list for PBXProject "BioCatalogue-Mass-Curator" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 360FD7A711A40F7000AEC536;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		360FD7AA11A40F7000AEC536 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		360FD7AB11A40F7000AEC536 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		360FD7AC11A40F7000AEC536 /* Build configuration list for PBXProject "BioCatalogue-Mass-Curator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				360FD7AA11A40F7000AEC536 /* Debug */,
+				360FD7AB11A40F7000AEC536 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 360FD7A911A40F7000AEC536 /* Project object */;
+}

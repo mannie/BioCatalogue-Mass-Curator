@@ -1,14 +1,14 @@
 = BioCatalogue Mass Curator
 
-Authors::   Emmanuel Tagarira
+Authors::   Mannie Tagarira
 Version::   0.0.1
 Contact::   mannie@mygrid.org.uk
-URL::       http://biocatalogue.org/
-Licence::   GPL 3 (See http://www.gnu.org/licenses/gpl.html)
+URL::       http://www.biocatalogue.org
+Licence::   GPL 3 (See Licence or http://www.gnu.org/licenses/gpl.html)
 Copyright:: (c) 2010 University of Manchester, UK
 
 
 
 == Synopsis
 
-This is a Ruby application which uses the BioCatalogue[http://biocatalogue.org] read/write API to annotate a batch of Web Services offline.
+This is a JRuby application which uses the BioCatalogue[http://biocatalogue.org] read/write API to annotate a batch of Web Services offline.
