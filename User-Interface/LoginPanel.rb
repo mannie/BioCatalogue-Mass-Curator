@@ -65,7 +65,7 @@ private
     # username label 
     c.gridy += 1
     usernameLabel = JLabel.new("BioCatalogue Username:")
-    usernameLabel.setLabelFor(usernameField = JTextField.new(20))
+    usernameLabel.setLabelFor(usernameField = JTextField.new(30))
     loginBox.add(usernameLabel, c)
     
     # username field
@@ -76,7 +76,7 @@ private
     c.gridy+= 1
     c.gridx = 0
     passwordLabel = JLabel.new("BioCatalogue Password:")
-    passwordLabel.setLabelFor(passwordField = JPasswordField.new(20))
+    passwordLabel.setLabelFor(passwordField = JPasswordField.new(30))
     loginBox.add(passwordLabel, c)
     
     # password field

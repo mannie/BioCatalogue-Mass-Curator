@@ -22,28 +22,35 @@
 
 # ========================================
 
-# Directory Name Constants
-APPLICATION_ROOT = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+# Application Constants
 
-USER_INTERFACE_DIR = File.join(APPLICATION_ROOT, "User-Interface")
-EVENT_HANDLERS_DIR = File.join(APPLICATION_ROOT, "Event-Handlers")
-RESOURCES_DIR = File.join(APPLICATION_ROOT, "Resources")
+# Directory Names
+APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "..")).freeze
+
+USER_INTERFACE_DIR = File.join(APP_ROOT, "User-Interface").freeze
+EVENT_HANDLERS_DIR = File.join(APP_ROOT, "Event-Handlers").freeze
+MODELS_DIR = File.join(APP_ROOT, "Models").freeze
+RESOURCES_DIR = File.join(APP_ROOT, "Resources").freeze
 
 # ========================================
 
 # Source Files To Include
-UI_SOURCES = %w{ LoginPanel.rb
-                 MainWindow.rb 
-                 MainPanel.rb 
-                 ServiceSelectPanel.rb 
-                 SpreadsheetUploadPanel.rb }
+USER_INTERFACE = %w{ LoginPanel.rb
+                     MainWindow.rb 
+                     MainPanel.rb 
+                     ServiceSelectPanel.rb 
+                     SpreadsheetUploadPanel.rb }.freeze
                  
-EH_SOURCES = %w{ DoLoginAction.rb
-                 DownloadSpreadsheetAction.rb 
-                 GoBackAction.rb 
-                 UploadSpreadsheetAction.rb }
+EVENT_HANDLERS = %w{ DoLoginAction.rb
+                     DownloadSpreadsheetAction.rb 
+                     GoBackAction.rb
+                     PreviewAction.rb 
+                     UploadSpreadsheetAction.rb }.freeze
 
-RESOURCES = %w{  }
+MODELS = %w{ BioCatalogueClient.rb
+             Service.rb }.freeze
+
+RESOURCES = %w{  }.freeze
 
 # Java Classes To Include
 AWT_CLASSES = %w{ BorderLayout 
@@ -51,7 +58,7 @@ AWT_CLASSES = %w{ BorderLayout
                   FlowLayout 
                   GridBagLayout
                   GridBagConstraints
-                  Insets }
+                  Insets }.freeze
 
 SWING_CLASSES = %w{ BorderFactory 
                     BoxLayout 
@@ -62,22 +69,23 @@ SWING_CLASSES = %w{ BorderFactory
                     JOptionPane 
                     JPanel
                     JPasswordField
-                    JTextField }
+                    JTextField }.freeze
 
 # ========================================
 
-# Core Libraries
+# Require Java Core Libraries
 require 'java'
 
-# RubyGems
-require 'net/http'
-require 'uri'
-
-# Java Classes
+# Import Java Classes
 AWT_CLASSES.each { |awt| import "java.awt." << awt }
 SWING_CLASSES.each { |swing| import "javax.swing." << swing }
 
-# Application Sources
-UI_SOURCES.each { |filename| require File.join(USER_INTERFACE_DIR, filename) }
-EH_SOURCES.each { |filename| require File.join(EVENT_HANDLERS_DIR, filename) }
-RESOURCES.each { |filename| require File.join(RESOURCES_DIR, filename) }
+# Require Ruby Gems
+require 'net/http'
+require 'uri'
+
+# Require Application Sources
+USER_INTERFACE.each { |fname| require File.join(USER_INTERFACE_DIR, fname) }
+EVENT_HANDLERS.each { |fname| require File.join(EVENT_HANDLERS_DIR, fname) }
+MODELS.each { |fname| require File.join(MODELS_DIR, fname) }
+RESOURCES.each { |fname| require File.join(RESOURCES_DIR, fname) }

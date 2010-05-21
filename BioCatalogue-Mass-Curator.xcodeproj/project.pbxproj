@@ -21,6 +21,9 @@
 		36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = UploadSpreadsheetAction.rb; sourceTree = "<group>"; };
 		36F905D111A58885009E69E2 /* GoBackAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = GoBackAction.rb; sourceTree = "<group>"; };
 		36F9063C11A5965F009E69E2 /* DoLoginAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = DoLoginAction.rb; sourceTree = "<group>"; };
+		36F907CD11A68918009E69E2 /* BioCatalogueClient.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = BioCatalogueClient.rb; sourceTree = "<group>"; };
+		36F907E011A68FD8009E69E2 /* PreviewAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PreviewAction.rb; sourceTree = "<group>"; };
+		36F907E111A6907F009E69E2 /* Service.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Service.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -28,6 +31,7 @@
 			isa = PBXGroup;
 			children = (
 				360FD93E11A426CF00AEC536 /* run_main.rb */,
+				36F907CC11A688FD009E69E2 /* Models */,
 				36F9025F11A54B27009E69E2 /* User-Interface */,
 				36F9028911A54B90009E69E2 /* Event-Handlers */,
 				36F9028A11A54B90009E69E2 /* Other-Sources */,
@@ -67,6 +71,7 @@
 		36F9028911A54B90009E69E2 /* Event-Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				36F907E011A68FD8009E69E2 /* PreviewAction.rb */,
 				36F9063C11A5965F009E69E2 /* DoLoginAction.rb */,
 				36F902BD11A55AC2009E69E2 /* DownloadSpreadsheetAction.rb */,
 				36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */,
@@ -82,6 +87,15 @@
 				36F9028C11A54B90009E69E2 /* main.rb */,
 			);
 			path = "Other-Sources";
+			sourceTree = SOURCE_ROOT;
+		};
+		36F907CC11A688FD009E69E2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				36F907CD11A68918009E69E2 /* BioCatalogueClient.rb */,
+				36F907E111A6907F009E69E2 /* Service.rb */,
+			);
+			path = Models;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
