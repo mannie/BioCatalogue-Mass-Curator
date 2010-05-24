@@ -25,23 +25,40 @@ class LoginPanel < JPanel
   def initialize
     super()
     initUI
+    return self
   end # initialize
   
 private
   
   def initUI
     self.setLayout(BorderLayout.new)
-    self.add(loginBox)
-    self.add(backButton = JButton.new("Back"), BorderLayout::SOUTH)
     
-    backButton.addActionListener(GoBackAction.new(self))    
+    self.add(loginPanel)
+    self.add(buttonPanel, BorderLayout::SOUTH)    
   end # initUI
 
-  def loginBox
-    loginBox = JPanel.new
-    loginBox.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(10, 10, 10, 10)))
+  def buttonPanel
+    panel = JPanel.new
 
-    loginBox.setLayout(GridBagLayout.new)
+    subPanel = JPanel.new
+    subPanel.setLayout(GridLayout.new)
+    
+    backButton = JButton.new("Back")
+    backButton.addActionListener(GoBackAction.new(self))
+
+    subPanel.add(backButton)
+    
+    panel.add(subPanel)
+    return panel
+  end
+
+  def loginPanel
+    panel = JPanel.new
+    panel.setBorder(
+        BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), 
+        BorderFactory.createEmptyBorder(10, 10, 10, 10)))
+
+    panel.setLayout(GridBagLayout.new)
 
     # set constraints
     c = GridBagConstraints.new
@@ -53,7 +70,7 @@ private
     # "Login to BioCat" label
     loginLabel = JLabel.new("<html><b>Log in to BioCatalogue</b></html>")
     loginLabel.setFont(loginLabel.getFont().deriveFont(13.0))
-    loginBox.add(loginLabel, c);
+    panel.add(loginLabel, c);
 
     # update constraints
     c.weightx = 1
@@ -66,29 +83,29 @@ private
     c.gridy += 1
     usernameLabel = JLabel.new("BioCatalogue Username:")
     usernameLabel.setLabelFor(usernameField = JTextField.new(30))
-    loginBox.add(usernameLabel, c)
+    panel.add(usernameLabel, c)
     
     # username field
     c.gridx = 1
-    loginBox.add(usernameField, c)
+    panel.add(usernameField, c)
 
     # password label
     c.gridy+= 1
     c.gridx = 0
     passwordLabel = JLabel.new("BioCatalogue Password:")
     passwordLabel.setLabelFor(passwordField = JPasswordField.new(30))
-    loginBox.add(passwordLabel, c)
+    panel.add(passwordLabel, c)
     
     # password field
     c.gridx = 1
-    loginBox.add(passwordField, c)
+    panel.add(passwordField, c)
 
     # remember me checkbox and label
     c.gridy += 1
     c.insets.set(25, 0, 2, 0)
     rememberMeCheckBox = JCheckBox.new("Remember me")
     rememberMeCheckBox.setBorder(BorderFactory.createEmptyBorder())
-    loginBox.add(rememberMeCheckBox, c)
+    panel.add(rememberMeCheckBox, c)
 
     # login button
     c.gridy += 1
@@ -100,9 +117,9 @@ private
     loginButton = JButton.new("Login")
     loginButton.addActionListener(
       DoLoginAction.new(usernameField, passwordField, rememberMeCheckBox))
-    loginBox.add(loginButton, c)
+    panel.add(loginButton, c)
 
-    return loginBox
-  end # loginBox
+    return panel
+  end # loginPanel
 
 end

@@ -28,7 +28,12 @@ class MainWindow < JFrame
     
     @@CONTENT_PANE ||= self.getContentPane
     @@MAIN_PANEL ||= @mainPanel
+    
+    addWindowListener(AppWindowListener.new)
+    return self
   end # initialize
+  
+# --------------------
   
   def self.CONTENT_PANE
     @@CONTENT_PANE
@@ -37,7 +42,7 @@ class MainWindow < JFrame
   def self.MAIN_PANEL
     @@MAIN_PANEL
   end # self.MAIN_PANEL
-  
+    
 private
 
   def initUI
@@ -45,6 +50,12 @@ private
 
     self.setLayout(BorderLayout.new)
     self.getContentPane.add(@mainPanel)
+    
+    self.setSize(800, 500)
+    self.setLocation(400, 150)
+    self.setDefaultCloseOperation(JFrame::EXIT_ON_CLOSE)
+
+    self.visible = true
   end # initUI
   
 end

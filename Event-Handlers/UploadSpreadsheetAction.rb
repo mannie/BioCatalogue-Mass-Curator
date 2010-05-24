@@ -25,22 +25,23 @@ class UploadSpreadsheetAction
   def initialize(container)
     super()
     @buttonContainer = container
-    
-    if container.instance_of?(MainPanel)
-      @renderPanel = LoginPanel.new
-    elsif container.instance_of?(SpreadsheetUploadPanel)
-    end
+        
+    return self
   end # initialize
   
   def actionPerformed(event)
     if @buttonContainer.instance_of?(MainPanel)
       @buttonContainer.setVisible(false)
-      @renderPanel.setVisible(true)
+      
+      @@loginPanel ||= LoginPanel.new
+      @@loginPanel.setVisible(true)
 
-      MainWindow.CONTENT_PANE.add(@renderPanel)
+      MainWindow.CONTENT_PANE.add(@@loginPanel)
       MainWindow.CONTENT_PANE.repaint
     elsif @buttonContainer.instance_of?(SpreadsheetUploadPanel)
     end
+    
+    LOG.warn "UploadSpreadsheetAction actionPerformed"
   end # actionPerformed
 
 end

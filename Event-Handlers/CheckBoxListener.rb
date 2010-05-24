@@ -1,8 +1,8 @@
 #
-#  GoBackAction.rb
+#  CheckBoxListener.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 20/05/2010.
+#  Created by Mannie Tagarira on 24/05/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -20,18 +20,20 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class GoBackAction
-  
-  def initialize(container)
+class CheckBoxListener
+
+  def initialize(service)
     super()
-    @buttonContainer = container
+    @service = service
     return self
   end # initialize
-
-  def actionPerformed(event)
-    @buttonContainer.setVisible(false)
-    MainWindow.MAIN_PANEL.setVisible(true)
-    MainWindow.CONTENT_PANE.repaint
-  end # actionPerformed
+  
+  def stateChanged(event)
+    if event.getSource.isSelected
+      BioCatalogueClient.selectServiceForAnnotation(@service)
+    else
+      BioCatalogueClient.deselectServiceForAnnotation(@service)
+    end    
+  end # stateChanged
   
 end

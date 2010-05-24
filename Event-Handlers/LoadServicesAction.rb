@@ -1,5 +1,5 @@
 #
-#  GoBackAction.rb
+#  LoadServicesAction.rb
 #  BioCatalogue-Mass-Curator
 #
 #  Created by Mannie Tagarira on 20/05/2010.
@@ -20,18 +20,35 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class GoBackAction
+class LoadServicesAction
   
-  def initialize(container)
+  @@resultsPanelForPage = {}
+  
+  def initialize(container, pageNumber)
     super()
     @buttonContainer = container
+    @pageNumber = pageNumber
     return self
   end # initialize
-
-  def actionPerformed(event)
-    @buttonContainer.setVisible(false)
-    MainWindow.MAIN_PANEL.setVisible(true)
-    MainWindow.CONTENT_PANE.repaint
-  end # actionPerformed
   
+  def actionPerformed(event)
+  
+    if @buttonContainer.instance_of?(MainPanel) || 
+        @buttonContainer.instance_of?(ServiceSelectPanel)
+      if @@resultsPanelForPage[@pageNumber]
+        @@serviceSelectPanel = @@resultsPanelForPage[@pageNumber]
+      else
+        @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
+        @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
+      end
+
+      @buttonContainer.setVisible(false)
+
+      @@serviceSelectPanel.setVisible(true)
+
+      MainWindow.CONTENT_PANE.add(@@serviceSelectPanel)
+      MainWindow.CONTENT_PANE.repaint
+    end
+  end # actionPerformed
+
 end

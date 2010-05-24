@@ -22,21 +22,35 @@
 
 class Service
   
-  attr_reader :id
+  attr_reader :id, :name, :description, :technology
   
-  def initialize(id)
-    @id = id
+  def initialize(id, name, technology, description="")
+    raise "Service id cannot be nil" if id.nil?
+    raise "Service name cannot be empty" if (name.nil? || name.empty?)
+    raise "Unsupported service type" unless %{ SOAP REST }.include?(
+        technology.upcase)
+    
+    @id, @name = id, name
+    @technology, @description = technology.upcase, (description || "")
+    
+    return self
   end # initialize
   
   def endpoint(format=nil)
     endpoint_with_id(@id, format)
   end # endpoint
 
+  def to_s
+    return "#{@type} Service:: ID: #{@id}, Name: #{@name}"
+  end
+
+# --------------------
+
   def self.endpoint_with_id(id, format=nil)
-    if !format.nil? && !format.empty && format.class.name=="String"
-      URI.join(BioCatalogueClient.HOST.to_s, '/services/', id, '.', format)
+    if !format.nil? && !format.empty? && format.class.name=="String"
+      URI.join(BioCatalogueClient.HOST.to_s, "/services/#{id}.#{format}")
     else
-      URI.join(BioCatalogueClient.HOST.to_s, '/services/', id)
+      URI.join(BioCatalogueClient.HOST.to_s, "/services/#{id}")
     end
   end # self.endpoint_with_id
 

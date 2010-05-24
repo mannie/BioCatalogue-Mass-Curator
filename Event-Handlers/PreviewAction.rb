@@ -25,10 +25,11 @@ class PreviewAction
   def initialize(container)
     super()
     @buttonContainer = container
+    return self
   end # initialize
 
   def actionPerformed(event)
-    puts "Preview button clicked"
+    LOG.warn "Preview Action actionPerformed"
     
     # if buttonContainer==ServiceSelectPanel && event==previewButton
     # 

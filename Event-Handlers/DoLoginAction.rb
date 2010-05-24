@@ -24,10 +24,11 @@ class DoLoginAction
 
   def initialize(usernameField, passwordField, rememberMeCheckBox)
     super()
+    return self
   end # initialize
 
   def actionPerformed(event)
-    puts "Login button clicked"
+    LOG.warn "Login Action actionPerformed"
   end # actionPerformed
 
 end

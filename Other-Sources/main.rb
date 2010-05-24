@@ -20,12 +20,23 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
+# Set Up Logging Facilities
+require 'logger'
+LOG = Logger.new(STDOUT)
+# LOG.level = Logger::WARN # DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
+
+=begin
+%w{ spreadsheet ruby-ole libxml-jruby }.each do |gem|
+  # TODO: show in a dialog box?
+  if `gem list | grep "#{gem}"`.empty?
+    LOG.fatal "The '#{gem}' gem could not be found.  You can install this by running:\n  sudo jruby -S gem install #{gem}"
+    exit
+  end
+end
+=end
+
 require File.join(File.dirname(__FILE__), 'application_requires.rb')
 
-window = MainWindow.new
-
-window.setSize(800, 500)
-window.setLocation(400, 150)
-window.setDefaultCloseOperation(JFrame::EXIT_ON_CLOSE)
-
-window.visible = true
+mainWindow = MainWindow.new
+# selectedServicesWindow = SelectedServicesWindow.new
+LOG.warn "SelectedServicesWindow"

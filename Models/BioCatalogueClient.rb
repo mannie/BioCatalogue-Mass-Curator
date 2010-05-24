@@ -23,20 +23,32 @@
 class BioCatalogueClient
   
   @@HOST = URI.parse("http://www.biocatalogue.org")
+  @@selectedServices = []
   
   def initialize
   end # initialize
   
+# --------------------
+
   def self.HOST
     @@HOST
   end # self.HOST
   
-  def self.services_endpoint(format=nil)
-    if !format.nil? && !format.empty && format.class.name=="String"
-      URI.join(@@HOST.to_s, '/services.', format)
+  def self.services_endpoint(format=nil, perPage=25, page=1)
+    if !format.nil? && !format.empty? && format.class.name=="String"
+      URI.join(@@HOST.to_s, 
+          "/services.#{format}?per_page=#{perPage}&page=#{page}")
     else
-      URI.join(@@HOST.to_s, '/services')
+      URI.join(@@HOST.to_s, "/services/")
     end
   end # self.services_endpoint
-    
+  
+  def self.selectServiceForAnnotation(service)
+    @@selectedServices << service
+  end # self.addService
+  
+  def self.deselectServiceForAnnotation(service)
+    @@selectedServices.reject! { |s| s == service }
+  end # self.removeService
+  
 end

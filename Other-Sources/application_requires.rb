@@ -31,18 +31,23 @@ USER_INTERFACE_DIR = File.join(APP_ROOT, "User-Interface").freeze
 EVENT_HANDLERS_DIR = File.join(APP_ROOT, "Event-Handlers").freeze
 MODELS_DIR = File.join(APP_ROOT, "Models").freeze
 RESOURCES_DIR = File.join(APP_ROOT, "Resources").freeze
+LIBRARIES_DIR = File.join(APP_ROOT, "Libraries").freeze
 
 # ========================================
 
-# Source Files To Include
+# Application Source Files To Include
 USER_INTERFACE = %w{ LoginPanel.rb
                      MainWindow.rb 
                      MainPanel.rb 
-                     ServiceSelectPanel.rb 
+                     ServiceSelectPanel.rb
+                     SelectedServicesWindow.rb 
                      SpreadsheetUploadPanel.rb }.freeze
                  
-EVENT_HANDLERS = %w{ DoLoginAction.rb
-                     DownloadSpreadsheetAction.rb 
+EVENT_HANDLERS = %w{ AppWindowListener.rb
+                     CheckBoxListener.rb
+                     DoLoginAction.rb
+                     LoadServicesAction.rb
+                     GenerateSpreadsheetAction.rb 
                      GoBackAction.rb
                      PreviewAction.rb 
                      UploadSpreadsheetAction.rb }.freeze
@@ -52,24 +57,35 @@ MODELS = %w{ BioCatalogueClient.rb
 
 RESOURCES = %w{  }.freeze
 
+# ========================================
+
 # Java Classes To Include
-AWT_CLASSES = %w{ BorderLayout 
-                  event.ActionListener 
+AWT_CLASSES = %w{ BorderLayout  
                   FlowLayout 
+                  GridLayout
                   GridBagLayout
                   GridBagConstraints
                   Insets }.freeze
+
+AWT_EVENTS = %w{ ActionListener
+                 WindowListener }.freeze
 
 SWING_CLASSES = %w{ BorderFactory 
                     BoxLayout 
                     JButton 
                     JCheckBox
+                    JDialog
                     JFrame 
                     JLabel 
                     JOptionPane 
                     JPanel
                     JPasswordField
+                    JScrollPane
                     JTextField }.freeze
+
+SWING_EVENTS = %w{ ChangeListener }.freeze
+
+MISC_CLASSES = %w{  }.freeze
 
 # ========================================
 
@@ -78,11 +94,18 @@ require 'java'
 
 # Import Java Classes
 AWT_CLASSES.each { |awt| import "java.awt." << awt }
+AWT_EVENTS.each { |event| import "java.awt.event." << event }
+
 SWING_CLASSES.each { |swing| import "javax.swing." << swing }
+SWING_EVENTS.each { |event| import "javax.swing.event." << event }
+
+MISC_CLASSES.each { |misc| import misc }
 
 # Require Ruby Gems
-require 'net/http'
-require 'uri'
+require 'rubygems'
+require 'open-uri'
+require 'spreadsheet'
+require 'xml/libxml'
 
 # Require Application Sources
 USER_INTERFACE.each { |fname| require File.join(USER_INTERFACE_DIR, fname) }

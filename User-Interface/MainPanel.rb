@@ -24,8 +24,8 @@ class MainPanel < JPanel
     
   def initialize
     super()
-    
     initUI
+    return self
   end # initalize
   
 private
@@ -45,11 +45,11 @@ private
     c.gridy = 0
 
     # add buttons to panel
-    buttonPanel.add(downloadButton = JButton.new("Download A Spreadsheet"), c)
+    buttonPanel.add(downloadButton = JButton.new("Browse Services"), c)
     c.gridy += 1
     buttonPanel.add(uploadButton = JButton.new("Upload A Spreadsheet"), c)
     
-    downloadButton.addActionListener(DownloadSpreadsheetAction.new(self))
+    downloadButton.addActionListener(LoadServicesAction.new(self, 1))
     uploadButton.addActionListener(UploadSpreadsheetAction.new(self))
     
     self.add(buttonPanel)

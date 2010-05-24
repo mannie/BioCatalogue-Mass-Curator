@@ -24,20 +24,30 @@ class ServiceSelectPanel < JPanel
   
   attr_reader :serviceURIField
   
-  def initialize
+  def initialize(pageNumber)
     super()
+
+    @page = pageNumber.to_i
     initUI
+    
+    return self
   end # initialize
   
 private
   
   def initUI
-    self.setLayout(BorderLayout.new)
+    self.setLayout(BorderLayout.new)  
     
     self.add(searchPanel, BorderLayout::NORTH)
-    self.add(backButton = JButton.new("Back"), BorderLayout::SOUTH)
+    self.add(mainPanel)
     
-    backButton.addActionListener(GoBackAction.new(self))
+    self.add(nextPageButton = JButton.new(">>"), BorderLayout::EAST)
+    self.add(previousPageButton = JButton.new("<<"), BorderLayout::WEST)
+    nextPageButton.addActionListener(LoadServicesAction.new(self, @page+1))
+    previousPageButton.addActionListener(LoadServicesAction.new(self, @page-1))
+    previousPageButton.setEnabled(false) if @page==1
+    
+    self.add(buttonPanel, BorderLayout::SOUTH)
   end # initUI
   
   def searchPanel
@@ -62,6 +72,84 @@ private
     
     return panel
   end
+  
+  def buttonPanel
+    panel = JPanel.new
+
+    subPanel = JPanel.new
+    subPanel.setLayout(GridLayout.new)
+    
+    backButton = JButton.new("Back")
+    backButton.addActionListener(GoBackAction.new(self))
+
+    exportButton = JButton.new("Export")
+    exportButton.addActionListener(GenerateSpreadsheetAction.new(self))
+
+    subPanel.add(backButton)
+    subPanel.add(exportButton)
+    
+    panel.add(subPanel)
+    return panel
+  end
+  
+  def mainPanel
+    panel = JPanel.new
+    panel.setLayout(GridLayout.new(0, 1))
+    
+    begin
+      xml = open(BioCatalogueClient.services_endpoint('xml', 25, @page)).read
+      xmlDocument = LibXMLJRuby::XML::Parser.string(xml).parse
+    rescue Exception => ex
+      LOG.fatal "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
+      exit
+    end
+    
+    @serviceList = []
+    
+    xmlDocument.root.each { |node|
+      case node.name
+        when 'results'
+          serviceNodes = node.children.select { |n| n.name == "service" }
+          serviceNodes.each { |service| 
+            @serviceList << (listing = generateServiceListing(service))
+            
+            panel.add(checkBox = JCheckBox.new(listing.to_s, false))
+            checkBox.addChangeListener(CheckBoxListener.new(listing))
+          }
+        when 'statistics'
+          LOG.warn "TODO: gather stats"
+      end # case
+    } # xmlDocument.root.each
+        
+    return JScrollPane.new(panel)
+  end # mainPanel
+  
+  def generateServiceListing(serviceNode)
+    begin
+      service_id = serviceNode.attributes.select { |a| "xlink:href"==a.name }[0]
+      service_id = service_id.value.split('/')[-1].to_i
+    
+      name, technology, description = '', '', ''
+    
+      propertyNodes = serviceNode.children.reject { |n| n.name == "#text" }
+      propertyNodes.each do |propertyNode|
+        case propertyNode.name
+          when 'name'
+            name = propertyNode.content
+          when 'dc:description'
+            description = propertyNode.content
+          when 'serviceTechnologyTypes'
+            technology = propertyNode.child.next.content
+        end # case
+      end # serviceNode.each
+
+      listing = Service.new(service_id, name, technology, description)
+    rescue Exception => ex
+      LOG.error "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
+    end # begin rescue
+
+    return listing
+  end # generateServiceListing
   
 end
 

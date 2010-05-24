@@ -25,6 +25,7 @@ class SpreadsheetUploadPanel < JPanel
   def initialize
     super()
     initUI
+    return self
   end # initialize
   
 private

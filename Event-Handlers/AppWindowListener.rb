@@ -1,8 +1,8 @@
 #
-#  DownloadSpreadsheetAction.rb
+#  AppWindowListener.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 20/05/2010.
+#  Created by Mannie Tagarira on 21/05/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -20,27 +20,29 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class DownloadSpreadsheetAction
-  
-  def initialize(container)
-    super()
-    @buttonContainer = container
-    
-    if container.instance_of?(MainPanel)
-      @renderPanel = ServiceSelectPanel.new
-    elsif container.instance_of?(ServiceSelectPanel)
-    end
-  end # initialize
-  
-  def actionPerformed(event)
-    if @buttonContainer.instance_of?(MainPanel)
-      @buttonContainer.setVisible(false)
-      @renderPanel.setVisible(true)
+class AppWindowListener
 
-      MainWindow.CONTENT_PANE.add(@renderPanel)
-      MainWindow.CONTENT_PANE.repaint
-    elsif @buttonContainer.instance_of?(ServiceSelectPanel)
-    end
-  end # actionPerformed
-
+  def windowActivated(event)
+  end # windowActivated
+  
+  def windowClosed(event)
+    LOG.close
+  end # windowClosed
+  
+  def windowClosing(event)
+    LOG.warn "AppWindowListener windowClosing"
+  end # windowClosing
+  
+  def windowDeactivated(event)
+  end # windowDeactivated
+  
+  def windowDeiconified(event)
+  end # windowDeiconified
+  
+  def windowIconified(event)
+  end # windowIconified
+  
+  def windowOpened(event)
+  end # windowOpened
+  
 end
