@@ -38,7 +38,7 @@ private
     
     # set GridBagConstraints
     c = GridBagConstraints.new
-    c.anchor = GridBagConstraints::NORTH
+    c.anchor = GridBagConstraints::CENTER
     c.fill = GridBagConstraints::BOTH
     c.gridwidth = 1
     c.gridx = 0

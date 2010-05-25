@@ -14,6 +14,9 @@
 		3627357211A6CB9000269B2C /* AppWindowListener.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppWindowListener.rb; sourceTree = "<group>"; };
 		3627392911AAAF9D00269B2C /* CheckBoxListener.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = CheckBoxListener.rb; sourceTree = "<group>"; };
 		3627399D11AAC13E00269B2C /* SelectedServicesWindow.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SelectedServicesWindow.rb; sourceTree = "<group>"; };
+		36273C0111ABD7BA00269B2C /* PreviewDialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PreviewDialog.rb; sourceTree = "<group>"; };
+		36273D0D11ABEE9400269B2C /* ServiceListingPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ServiceListingPanel.rb; sourceTree = "<group>"; };
+		36273F5411AC1EF900269B2C /* Utilities.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Utilities.rb; sourceTree = "<group>"; };
 		36F9026011A54B27009E69E2 /* LoginPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = LoginPanel.rb; sourceTree = "<group>"; };
 		36F9026111A54B27009E69E2 /* MainPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainPanel.rb; sourceTree = "<group>"; };
 		36F9026211A54B27009E69E2 /* MainWindow.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainWindow.rb; sourceTree = "<group>"; };
@@ -57,6 +60,7 @@
 		362735E111A6DD3D00269B2C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				36273F5411AC1EF900269B2C /* Utilities.rb */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -69,7 +73,9 @@
 				36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */,
 				36F9026411A54B27009E69E2 /* SpreadsheetUploadPanel.rb */,
 				36F9026211A54B27009E69E2 /* MainWindow.rb */,
+				36273C0111ABD7BA00269B2C /* PreviewDialog.rb */,
 				3627399D11AAC13E00269B2C /* SelectedServicesWindow.rb */,
+				36273D0D11ABEE9400269B2C /* ServiceListingPanel.rb */,
 			);
 			path = "User-Interface";
 			sourceTree = SOURCE_ROOT;

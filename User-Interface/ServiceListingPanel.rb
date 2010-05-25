@@ -1,8 +1,8 @@
 #
-#  MainWindow.rb
+#  ServiceListingPanel.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 19/05/2010.
+#  Created by Mannie Tagarira on 25/05/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -20,44 +20,40 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class MainWindow < JFrame
-  
-  def initialize(title="BioCatalogue Mass Curator")
-    super(title)
-    initUI    
-    
-    @@CONTENT_PANE ||= self.getContentPane
-    @@MAIN_PANEL ||= @mainPanel
-    
-    addWindowListener(AppWindowListener.new)
+class ServiceListingPanel < JPanel
 
+  def initialize(service)
+    super()
+    
+    @service = service
+    
+    initUI
     return self
   end # initialize
-  
-# --------------------
-  
-  def self.CONTENT_PANE
-    @@CONTENT_PANE
-  end # self.CONTENT_PANE
-  
-  def self.MAIN_PANEL
-    @@MAIN_PANEL
-  end # self.MAIN_PANEL
-    
+
 private
-
+  
   def initUI
-    @mainPanel = MainPanel.new
-
-    self.setLayout(BorderLayout.new)
-    self.getContentPane.add(@mainPanel)
+    self.setLayout(GridBagLayout.new)
     
-    self.setSize(800, 500)
-    self.setDefaultCloseOperation(JFrame::EXIT_ON_CLOSE)
-
-    Utilities.centerComponentToDisplay(self)
+    c = GridBagConstraints.new
+    c.anchor = GridBagConstraints::NORTHWEST
+    c.fill = GridBagConstraints::HORIZONTAL
+    c.insets = Insets.new(2, 5, 3, 5)
+    c.weightx = 2
+    c.gridx, c.gridy = 0, 0
+ 
+    checkBox = JCheckBox.new(@service.name, false)
+    checkBox.addChangeListener(CheckBoxListener.new(@service))
+    self.add(checkBox, c)
+        
+    c.weightx = GridBagConstraints::REMAINDER
+    c.gridwidth = 1
+    c.gridx = 1
+    previewButton = JButton.new("Preview")
+    previewButton.addActionListener(PreviewAction.new(self, @service))
     
-    self.setVisible(true)
+    self.add(previewButton, c)
   end # initUI
   
 end

@@ -31,24 +31,21 @@ class LoadServicesAction
     return self
   end # initialize
   
-  def actionPerformed(event)
-  
-    if @buttonContainer.instance_of?(MainPanel) || 
-        @buttonContainer.instance_of?(ServiceSelectPanel)
-      if @@resultsPanelForPage[@pageNumber]
-        @@serviceSelectPanel = @@resultsPanelForPage[@pageNumber]
-      else
-        @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
-        @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
-      end
-
-      @buttonContainer.setVisible(false)
-
-      @@serviceSelectPanel.setVisible(true)
-
-      MainWindow.CONTENT_PANE.add(@@serviceSelectPanel)
-      MainWindow.CONTENT_PANE.repaint
+  def actionPerformed(event)  
+    if (panel = @@resultsPanelForPage[@pageNumber])
+      @@serviceSelectPanel = panel
+      Utilities.syncCollectionWithCache(panel.localServiceCache)
+    else
+      @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
+      @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
     end
+
+    @buttonContainer.setVisible(false)
+
+    @@serviceSelectPanel.setVisible(true)
+
+    MainWindow.CONTENT_PANE.add(@@serviceSelectPanel)
+    MainWindow.CONTENT_PANE.repaint
   end # actionPerformed
 
 end

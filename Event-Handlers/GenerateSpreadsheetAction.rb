@@ -30,6 +30,7 @@ class GenerateSpreadsheetAction
 
   def actionPerformed(event)
     LOG.warn "Generate Spreadsheet Action actionPerformed"
+    LOG.info BioCatalogueClient.selectedServices.inspect
     
     # if buttonContainer==ServiceSelectPanel
     # 

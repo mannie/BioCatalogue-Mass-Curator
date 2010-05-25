@@ -24,14 +24,49 @@ class Service
   
   attr_reader :id, :name, :description, :technology
   
-  def initialize(id, name, technology, description="")
-    raise "Service id cannot be nil" if id.nil?
-    raise "Service name cannot be empty" if (name.nil? || name.empty?)
-    raise "Unsupported service type" unless %{ SOAP REST }.include?(
-        technology.upcase)
+  def initialize(serviceURIString)
+    begin
+      LOG.warn "TODO: error handling for uris that are not => /services/{id}"
+      
+      @id = serviceURIString.split('/')[-1].to_i
+ 
+      if (cachedService = BioCatalogueClient.cachedServices[@id]) # cached
+        @name = cachedService.name
+        @description = cachedService.description
+        #@technology = cachedService.technology
+        cachedService = self
+      else # not cached
+        serviceURIString << ".xml"
+
+        serviceURI = URI.parse(serviceURIString)
+        
+        xmlContent = open(serviceURI).read
+        xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
+      
+        propertyNodes = xmlDocument.root.children.reject { |n| n.name == "#text" }
+        propertyNodes.each do |propertyNode|
+          case propertyNode.name
+            when 'name'
+              @name = propertyNode.content
+            when 'dc:description'
+              @description = propertyNode.content
+            when 'serviceTechnologyTypes'
+              @technology = propertyNode.child.next.content
+          end # case
+        end # propertyNodes.each
+      end # if else cached
+      
+      BioCatalogueClient.addServiceToCache(self)
+      
+    rescue Exception => ex
+      LOG.error "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
+      BioCatalogueClient.removeServiceFromCache(self)
+    end
     
-    @id, @name = id, name
-    @technology, @description = technology.upcase, (description || "")
+    if @name.nil?
+      BioCatalogueClient.removeServiceFromCache(self)
+      @id = -1
+    end
     
     return self
   end # initialize
@@ -41,8 +76,8 @@ class Service
   end # endpoint
 
   def to_s
-    return "#{@type} Service:: ID: #{@id}, Name: #{@name}"
-  end
+    return "#{@technology} Service:: ID: #{@id}, Name: #{@name}"
+  end # to_s
 
 # --------------------
 

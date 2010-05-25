@@ -1,8 +1,8 @@
 #
-#  MainWindow.rb
+#  PreviewDialog.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 19/05/2010.
+#  Created by Mannie Tagarira on 25/05/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -20,44 +20,33 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class MainWindow < JFrame
+class PreviewDialog < JDialog
   
-  def initialize(title="BioCatalogue Mass Curator")
-    super(title)
-    initUI    
+  def initialize(service, parent, title)
     
-    @@CONTENT_PANE ||= self.getContentPane
-    @@MAIN_PANEL ||= @mainPanel
+    super(parent, title, true)
     
-    addWindowListener(AppWindowListener.new)
-
+    @service = service if service.class == Service
+    @parent = parent
+    
+    initUI
+    
     return self
-  end # initialize
+  end
   
-# --------------------
-  
-  def self.CONTENT_PANE
-    @@CONTENT_PANE
-  end # self.CONTENT_PANE
-  
-  def self.MAIN_PANEL
-    @@MAIN_PANEL
-  end # self.MAIN_PANEL
-    
 private
-
+  
   def initUI
-    @mainPanel = MainPanel.new
-
-    self.setLayout(BorderLayout.new)
-    self.getContentPane.add(@mainPanel)
+    self.getContentPane.add(JLabel.new(@service.to_s))
+        
+    self.setSize(300, 500)
+    self.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
     
-    self.setSize(800, 500)
-    self.setDefaultCloseOperation(JFrame::EXIT_ON_CLOSE)
-
-    Utilities.centerComponentToDisplay(self)
+    Utilities.centerComponentTo(self, @parent)
+    
+    LOG.warn "Implement fetchMoreInformation for service"
     
     self.setVisible(true)
-  end # initUI
+  end
   
 end

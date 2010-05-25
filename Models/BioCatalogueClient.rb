@@ -23,7 +23,8 @@
 class BioCatalogueClient
   
   @@HOST = URI.parse("http://www.biocatalogue.org")
-  @@selectedServices = []
+  @@selectedServices = {}
+  @@cachedServices = {}
   
   def initialize
   end # initialize
@@ -33,6 +34,14 @@ class BioCatalogueClient
   def self.HOST
     @@HOST
   end # self.HOST
+  
+  def self.cachedServices
+    @@cachedServices
+  end # self.cachedServices
+  
+  def self.selectedServices
+    @@selectedServices
+  end # self.selectedServices
   
   def self.services_endpoint(format=nil, perPage=25, page=1)
     if !format.nil? && !format.empty? && format.class.name=="String"
@@ -44,11 +53,25 @@ class BioCatalogueClient
   end # self.services_endpoint
   
   def self.selectServiceForAnnotation(service)
-    @@selectedServices << service
+    @@selectedServices.merge!(service.id => service) if service && 
+        service.class==Service && !@@selectedServices.include?(service.id)
   end # self.addService
   
   def self.deselectServiceForAnnotation(service)
-    @@selectedServices.reject! { |s| s == service }
+    @@selectedServices.reject! { |key, value| 
+      key == service.id 
+    } if service && service.class==Service
   end # self.removeService
+  
+  def self.addServiceToCache(service)
+    @@cachedServices.merge!(service.id => service) if service &&
+        service.class==Service
+  end # self.cacheService
+
+  def self.removeServiceFromCache(service)
+    @@cachedServices.reject! { |key, value| 
+      key == service.id 
+    } if service && service.class==Service
+  end # self.cacheService
   
 end

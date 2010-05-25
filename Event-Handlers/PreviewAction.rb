@@ -22,17 +22,25 @@
 
 class PreviewAction
 
-  def initialize(container)
+  def initialize(container, service=nil)
     super()
+    
     @buttonContainer = container
+    @service = service if service.class == Service
+    
     return self
   end # initialize
 
   def actionPerformed(event)
-    LOG.warn "Preview Action actionPerformed"
     
-    # if buttonContainer==ServiceSelectPanel && event==previewButton
-    # 
+    if @service
+      PreviewDialog.new(@service, MAIN_WINDOW, @service.name)
+    else
+      uriString = @buttonContainer.serviceURIField.getText
+      service = Service.new(uriString)
+      PreviewDialog.new(service, MAIN_WINDOW, service.name)
+    end
+     
   end # actionPerformed
 
 end

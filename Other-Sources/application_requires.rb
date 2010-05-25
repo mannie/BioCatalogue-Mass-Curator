@@ -38,7 +38,9 @@ LIBRARIES_DIR = File.join(APP_ROOT, "Libraries").freeze
 # Application Source Files To Include
 USER_INTERFACE = %w{ LoginPanel.rb
                      MainWindow.rb 
-                     MainPanel.rb 
+                     MainPanel.rb
+                     PreviewDialog.rb
+                     ServiceListingPanel.rb
                      ServiceSelectPanel.rb
                      SelectedServicesWindow.rb 
                      SpreadsheetUploadPanel.rb }.freeze
@@ -55,6 +57,8 @@ EVENT_HANDLERS = %w{ AppWindowListener.rb
 MODELS = %w{ BioCatalogueClient.rb
              Service.rb }.freeze
 
+LIBRARIES = %w{ Utilities.rb }.freeze
+
 RESOURCES = %w{  }.freeze
 
 # ========================================
@@ -65,7 +69,8 @@ AWT_CLASSES = %w{ BorderLayout
                   GridLayout
                   GridBagLayout
                   GridBagConstraints
-                  Insets }.freeze
+                  Insets
+                  Toolkit }.freeze
 
 AWT_EVENTS = %w{ ActionListener
                  WindowListener }.freeze
@@ -81,6 +86,7 @@ SWING_CLASSES = %w{ BorderFactory
                     JPanel
                     JPasswordField
                     JScrollPane
+                    JTextArea
                     JTextField }.freeze
 
 SWING_EVENTS = %w{ ChangeListener }.freeze
@@ -111,4 +117,5 @@ require 'xml/libxml'
 USER_INTERFACE.each { |fname| require File.join(USER_INTERFACE_DIR, fname) }
 EVENT_HANDLERS.each { |fname| require File.join(EVENT_HANDLERS_DIR, fname) }
 MODELS.each { |fname| require File.join(MODELS_DIR, fname) }
+LIBRARIES.each { |fname| require File.join(LIBRARIES_DIR, fname) }
 RESOURCES.each { |fname| require File.join(RESOURCES_DIR, fname) }

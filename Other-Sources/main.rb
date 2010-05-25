@@ -20,10 +20,11 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
+BENCHMARK = true
+
 # Set Up Logging Facilities
 require 'logger'
 LOG = Logger.new(STDOUT)
-# LOG.level = Logger::WARN # DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
 
 =begin
 %w{ spreadsheet ruby-ole libxml-jruby }.each do |gem|
@@ -35,8 +36,30 @@ LOG = Logger.new(STDOUT)
 end
 =end
 
-require File.join(File.dirname(__FILE__), 'application_requires.rb')
+if BENCHMARK
 
-mainWindow = MainWindow.new
+  require 'benchmark'
+  
+  # ASP = Applicat Startup Phase
+  Benchmark.bm do |b| 
+    b.report("ASP 1") {
+      require File.join(File.dirname(__FILE__), 'application_requires.rb')
+    }
+
+    b.report("ASP 2") {
+      MAIN_WINDOW = MainWindow.new
+    }
+  end
+  
+else
+
+  require File.join(File.dirname(__FILE__), 'application_requires.rb')
+  MAIN_WINDOW = MainWindow.new
+
+end
+
 # selectedServicesWindow = SelectedServicesWindow.new
+
+
 LOG.warn "SelectedServicesWindow"
+
