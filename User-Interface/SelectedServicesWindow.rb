@@ -22,51 +22,52 @@
 
 class SelectedServicesWindow < JFrame
   
+  @@previouslyUsedPanel = nil
+  
   def initialize(title="Services to export")
     super(title)
-    
-    @@selectedServices ||= []
-    @@CONTENT_PANE = self.getContentPane
-    
     initUI
-
     return self
   end # initialize
+
+  def refreshSelectedServices
+    listPanel = JPanel.new
+    listPanel.setLayout(GridBagLayout.new)
     
-# --------------------
+    c = GridBagConstraints.new
+    c.anchor = GridBagConstraints::NORTHWEST
+    c.insets = Insets.new(2, 5, 3, 5)
+    c.fill = GridBagConstraints::BOTH
+    c.weightx, c.weighty = 1, 1
+    c.gridy = 0
+
+    BioCatalogueClient.selectedServices.each { |service|
+      listPanel.add(JLabel.new(service[-1].to_s), c)
+      c.gridy += 1
+    }
     
-  def self.addService(service)
-    @@selectedServices << service
-    SelectedServicesWindow.showSelectedServices
-  end # self.addService
-  
-  def self.removeService(service)
-    @@selectedServices.reject! { |s| s == service }
-    SelectedServicesWindow.showSelectedServices
-  end # self.removeService
+    scrollPane = JScrollPane.new(listPanel)
+    c.gridy = 0
+    c.insets.set(1, 1, 1, 1)
+    self.getContentPane.add(scrollPane, c)
+    
+    self.pack
+  end # showSelectedServices
   
 private
 
   def initUI
-    SelectedServicesWindow.showSelectedServices
+    self.getContentPane.setLayout(GridBagLayout.new)
+
+    refreshSelectedServices
         
-    self.setSize(250, 350)
+    self.setMaximumSize(Dimension.new(300, 600))
+    self.setMinimumSize(Dimension.new(300, 100))
+
     self.setLocation(70, 75)
-    self.setDefaultCloseOperation(JFrame::DO_NOTHING_ON_CLOSE)
+    self.setDefaultCloseOperation(JFrame::HIDE_ON_CLOSE)
 
-    self.visible = true
+    self.setVisible(true)
   end # initUI
-
-  def self.showSelectedServices
-    @@CONTENT_PANE.setLayout(GridLayout.new(0, 1))
-
-    @@selectedServices.uniq!
-    
-    @@selectedServices.each { |listing|
-      @@CONTENT_PANE.add(JLabel.new(listing.to_s))
-    } # @@SELECTED_SERVICES.each
-    
-    @@CONTENT_PANE.repaint
-  end # showSelectedServices
   
 end

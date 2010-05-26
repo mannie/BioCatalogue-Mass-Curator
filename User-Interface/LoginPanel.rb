@@ -54,9 +54,7 @@ private
 
   def loginPanel
     panel = JPanel.new
-    panel.setBorder(
-        BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), 
-        BorderFactory.createEmptyBorder(10, 10, 10, 10)))
+    panel.setBorder(BorderFactory.createEtchedBorder())
 
     panel.setLayout(GridBagLayout.new)
 

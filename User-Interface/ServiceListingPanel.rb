@@ -35,25 +35,32 @@ private
   
   def initUI
     self.setLayout(GridBagLayout.new)
+    self.setBorder(BorderFactory.createEtchedBorder())
     
+    # set default constraints
     c = GridBagConstraints.new
     c.anchor = GridBagConstraints::NORTHWEST
     c.fill = GridBagConstraints::HORIZONTAL
     c.insets = Insets.new(2, 5, 3, 5)
     c.weightx = 2
     c.gridx, c.gridy = 0, 0
- 
+    
+    # add checkbox
     checkBox = JCheckBox.new(@service.name, false)
     checkBox.addChangeListener(CheckBoxListener.new(@service))
     self.add(checkBox, c)
-        
+    
+    # add preview button
     c.weightx = GridBagConstraints::REMAINDER
-    c.gridwidth = 1
     c.gridx = 1
     previewButton = JButton.new("Preview")
     previewButton.addActionListener(PreviewAction.new(self, @service))
-    
     self.add(previewButton, c)
+    
+    # add link to biocatalogue
+    c.gridx, c.gridy = 0, 1
+    c.insets.set(2, 50, 3, 5)
+    self.add(JLabel.new(@service.technology + ": " + @service.weblink.to_s), c)    
   end # initUI
   
 end

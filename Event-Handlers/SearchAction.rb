@@ -1,8 +1,8 @@
 #
-#  MainWindow.rb
+#  SearchAction.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 19/05/2010.
+#  Created by Mannie Tagarira on 26/05/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -20,43 +20,21 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class MainWindow < JFrame
-  
-  attr_reader :mainPanel
-  
-  def initialize(title="BioCatalogue Mass Curator")
-    super(title)
-    initUI    
-        
-    addWindowListener(AppWindowListener.new)
+class SearchAction
     
-    @@SEARCH_PANEL = SearchPanel.new
-    
+  def initialize
+    super()
     return self
   end # initialize
-  
+
 # --------------------
 
-  def self.SEARCH_PANEL
-    @@SEARCH_PANEL
-  end # self.SEARCH_PANEL
-      
-private
-
-  def initUI
-    @mainPanel = MainPanel.new
-
-    self.setLayout(BorderLayout.new)
-    self.getContentPane.add(@mainPanel)
+  def actionPerformed(event)
+    query = MainWindow.SEARCH_PANEL.searchField.getText
     
-    self.setDefaultCloseOperation(JFrame::EXIT_ON_CLOSE)
+    unless query.empty?
+      LOG.warn "Searched for #{query}"
+    end
+  end # actionPerformed
 
-    self.setMinimumSize(Dimension.new(800, 500))
-    self.pack
-    
-    Application::Utilities.centerComponentToDisplay(self)
-    
-    self.setVisible(true)
-  end # initUI
-  
 end

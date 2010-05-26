@@ -28,10 +28,12 @@ class GoBackAction
     return self
   end # initialize
 
+# --------------------
+
   def actionPerformed(event)
     @buttonContainer.setVisible(false)
-    MainWindow.MAIN_PANEL.setVisible(true)
-    MainWindow.CONTENT_PANE.repaint
+    MAIN_WINDOW.mainPanel.setVisible(true)
+    MAIN_WINDOW.getContentPane.repaint
   end # actionPerformed
   
 end

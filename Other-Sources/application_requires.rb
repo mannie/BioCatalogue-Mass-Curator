@@ -40,6 +40,7 @@ USER_INTERFACE = %w{ LoginPanel.rb
                      MainWindow.rb 
                      MainPanel.rb
                      PreviewDialog.rb
+                     SearchPanel.rb
                      ServiceListingPanel.rb
                      ServiceSelectPanel.rb
                      SelectedServicesWindow.rb 
@@ -51,20 +52,24 @@ EVENT_HANDLERS = %w{ AppWindowListener.rb
                      LoadServicesAction.rb
                      GenerateSpreadsheetAction.rb 
                      GoBackAction.rb
-                     PreviewAction.rb 
+                     PreviewAction.rb
+                     SearchAction.rb
                      UploadSpreadsheetAction.rb }.freeze
 
 MODELS = %w{ BioCatalogueClient.rb
              Service.rb }.freeze
 
-LIBRARIES = %w{ Utilities.rb }.freeze
+LIBRARIES = %w{ Spreadsheet.rb
+                Utilities.rb }.freeze
 
 RESOURCES = %w{  }.freeze
 
 # ========================================
 
 # Java Classes To Include
-AWT_CLASSES = %w{ BorderLayout  
+AWT_CLASSES = %w{ BorderLayout
+                  Color
+                  Dimension
                   FlowLayout 
                   GridLayout
                   GridBagLayout
@@ -75,7 +80,8 @@ AWT_CLASSES = %w{ BorderLayout
 AWT_EVENTS = %w{ ActionListener
                  WindowListener }.freeze
 
-SWING_CLASSES = %w{ BorderFactory 
+SWING_CLASSES = %w{ plaf.basic.BasicArrowButton
+                    BorderFactory 
                     BoxLayout 
                     JButton 
                     JCheckBox
@@ -87,7 +93,8 @@ SWING_CLASSES = %w{ BorderFactory
                     JPasswordField
                     JScrollPane
                     JTextArea
-                    JTextField }.freeze
+                    JTextField
+                    SwingConstants }.freeze
 
 SWING_EVENTS = %w{ ChangeListener }.freeze
 

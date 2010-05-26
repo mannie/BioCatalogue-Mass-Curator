@@ -28,6 +28,8 @@ class UploadSpreadsheetAction
         
     return self
   end # initialize
+
+# --------------------
   
   def actionPerformed(event)
     if @buttonContainer.instance_of?(MainPanel)
@@ -36,8 +38,8 @@ class UploadSpreadsheetAction
       @@loginPanel ||= LoginPanel.new
       @@loginPanel.setVisible(true)
 
-      MainWindow.CONTENT_PANE.add(@@loginPanel)
-      MainWindow.CONTENT_PANE.repaint
+      MAIN_WINDOW.getContentPane.add(@@loginPanel)
+      MAIN_WINDOW.getContentPane.repaint
     elsif @buttonContainer.instance_of?(SpreadsheetUploadPanel)
     end
     

@@ -26,8 +26,6 @@ class Service
   
   def initialize(serviceURIString)
     begin
-      LOG.warn "TODO: error handling for uris that are not => /services/{id}"
-      
       @id = serviceURIString.split('/')[-1].to_i
  
       if (cachedService = BioCatalogueClient.cachedServices[@id]) # cached
@@ -36,7 +34,7 @@ class Service
         #@technology = cachedService.technology
         cachedService = self
       else # not cached
-        serviceURIString << ".xml"
+        serviceURIString << "/variants.xml"
 
         serviceURI = URI.parse(serviceURIString)
         
@@ -71,9 +69,9 @@ class Service
     return self
   end # initialize
   
-  def endpoint(format=nil)
-    endpoint_with_id(@id, format)
-  end # endpoint
+  def weblink(format=nil)
+    Service.weblinkWithID(@id, format)
+  end # weblink
 
   def to_s
     return "#{@technology} Service:: ID: #{@id}, Name: #{@name}"
@@ -81,12 +79,12 @@ class Service
 
 # --------------------
 
-  def self.endpoint_with_id(id, format=nil)
+  def self.weblinkWithID(id, format=nil)
     if !format.nil? && !format.empty? && format.class.name=="String"
       URI.join(BioCatalogueClient.HOST.to_s, "/services/#{id}.#{format}")
     else
       URI.join(BioCatalogueClient.HOST.to_s, "/services/#{id}")
     end
-  end # self.endpoint_with_id
+  end # self.weblinkWithID
 
 end

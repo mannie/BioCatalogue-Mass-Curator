@@ -22,15 +22,19 @@
 
 class BioCatalogueClient
   
-  @@HOST = URI.parse("http://www.biocatalogue.org")
-  @@selectedServices = {}
-  @@cachedServices = {}
-  
-  def initialize
+  def initialize(base="http://www.biocatalogue.org")
+    @@HOST ||= URI.parse(base)
+    @@selectedServices ||= {}
+    @@cachedServices ||= {}
+    @@SEARCH ||= SearchAction.new
   end # initialize
   
 # --------------------
-
+  
+  def self.SEARCH
+    @@SEARCH
+  end
+    
   def self.HOST
     @@HOST
   end # self.HOST
@@ -43,14 +47,14 @@ class BioCatalogueClient
     @@selectedServices
   end # self.selectedServices
   
-  def self.services_endpoint(format=nil, perPage=25, page=1)
+  def self.servicesEndpoint(format=nil, perPage=25, page=1)
     if !format.nil? && !format.empty? && format.class.name=="String"
       URI.join(@@HOST.to_s, 
           "/services.#{format}?per_page=#{perPage}&page=#{page}")
     else
       URI.join(@@HOST.to_s, "/services/")
     end
-  end # self.services_endpoint
+  end # self.servicesEndpoint
   
   def self.selectServiceForAnnotation(service)
     @@selectedServices.merge!(service.id => service) if service && 

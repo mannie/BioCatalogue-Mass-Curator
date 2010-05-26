@@ -22,9 +22,9 @@
 
 class ServiceSelectPanel < JPanel
   
-  attr_reader :serviceURIField, :localServiceCache
+  attr_reader :localServiceCache
   
-  SERVICES_PER_PAGE = 3
+  SERVICES_PER_PAGE = 30
   
   def initialize(pageNumber)
     super()
@@ -40,50 +40,35 @@ private
   def initUI
     self.setLayout(BorderLayout.new)  
     
-    self.add(searchPanel, BorderLayout::NORTH)
+    self.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
     self.add(mainPanel)
     
-    self.add(nextPageButton = JButton.new(">"), BorderLayout::EAST)
-    nextPageButton.addActionListener(LoadServicesAction.new(self, @page+1))
-    nextPageButton.setEnabled(false) if @page==@lastPage
-    
-    self.add(previousPageButton = JButton.new("<"), BorderLayout::WEST)
+    # button to previous page
+#    previousPageButton = BasicArrowButton.new(SwingConstants::WEST)
+    previousPageButton = JButton.new("<<")
     previousPageButton.addActionListener(LoadServicesAction.new(self, @page-1))
     previousPageButton.setEnabled(false) if @page==1
+    self.add(previousPageButton, BorderLayout::WEST)
     
-    self.add(buttonPanel, BorderLayout::SOUTH)
+    # button to next page
+#    nextPageButton = BasicArrowButton.new(SwingConstants::EAST)
+    nextPageButton = JButton.new(">>")
+    nextPageButton.addActionListener(LoadServicesAction.new(self, @page+1))
+    nextPageButton.setEnabled(false) if @page==@lastPage
+    self.add(nextPageButton, BorderLayout::EAST)
+
+    self.add(bottomPanel, BorderLayout::SOUTH)
   end # initUI
   
-  def searchPanel
-    panel = JPanel.new
-    panel.setLayout(GridBagLayout.new)    
-    c = GridBagConstraints.new
-    c.fill = GridBagConstraints::HORIZONTAL
-    c.anchor = GridBagConstraints::EAST
+private
 
-    # text field
-    c.gridx = 0
-    c.weightx = 50
-    @serviceURIField = JTextField.new(BioCatalogueClient.services_endpoint.to_s)
-    panel.add(@serviceURIField, c)
-        
-    # preview button
-    c.gridx = 1
-    c.weightx = 1
-    previewButton = JButton.new("Preview")
-    previewButton.addActionListener(PreviewAction.new(self))
-    panel.add(previewButton, c)
-    
-    return panel
-  end
-  
-  def buttonPanel
+  def bottomPanel
     panel = JPanel.new
 
     subPanel = JPanel.new
     subPanel.setLayout(GridLayout.new)
     
-    backButton = JButton.new("Back")
+    backButton = JButton.new("Go Back")
     backButton.addActionListener(GoBackAction.new(self))
 
     exportButton = JButton.new("Export")
@@ -93,6 +78,8 @@ private
     subPanel.add(exportButton)
     
     panel.add(subPanel)
+    panel.add(JLabel.new("Page #{@page} of #{@lastPage}"))
+    
     return panel
   end
   
@@ -108,7 +95,7 @@ private
     c.gridy = 0
 
     begin
-      xmlContent = open(BioCatalogueClient.services_endpoint(
+      xmlContent = open(BioCatalogueClient.servicesEndpoint(
           'xml', SERVICES_PER_PAGE, @page)).read
       xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
     rescue Exception => ex

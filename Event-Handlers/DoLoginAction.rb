@@ -27,6 +27,8 @@ class DoLoginAction
     return self
   end # initialize
 
+# --------------------
+
   def actionPerformed(event)
     LOG.warn "Login Action actionPerformed"
   end # actionPerformed

@@ -31,16 +31,10 @@ class PreviewAction
     return self
   end # initialize
 
+# --------------------
+
   def actionPerformed(event)
-    
-    if @service
-      PreviewDialog.new(@service, MAIN_WINDOW, @service.name)
-    else
-      uriString = @buttonContainer.serviceURIField.getText
-      service = Service.new(uriString)
-      PreviewDialog.new(service, MAIN_WINDOW, service.name)
-    end
-     
+    PreviewDialog.new(@service, MAIN_WINDOW, @service.name) if @service
   end # actionPerformed
 
 end

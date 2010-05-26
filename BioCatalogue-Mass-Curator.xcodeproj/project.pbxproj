@@ -17,6 +17,9 @@
 		36273C0111ABD7BA00269B2C /* PreviewDialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PreviewDialog.rb; sourceTree = "<group>"; };
 		36273D0D11ABEE9400269B2C /* ServiceListingPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ServiceListingPanel.rb; sourceTree = "<group>"; };
 		36273F5411AC1EF900269B2C /* Utilities.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Utilities.rb; sourceTree = "<group>"; };
+		363DDC8F11AD266B00CF54D7 /* Spreadsheet.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Spreadsheet.rb; sourceTree = "<group>"; };
+		363DDD2F11AD53C400CF54D7 /* SearchAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SearchAction.rb; sourceTree = "<group>"; };
+		363DDDF411AD675B00CF54D7 /* SearchPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SearchPanel.rb; sourceTree = "<group>"; };
 		36F9026011A54B27009E69E2 /* LoginPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = LoginPanel.rb; sourceTree = "<group>"; };
 		36F9026111A54B27009E69E2 /* MainPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainPanel.rb; sourceTree = "<group>"; };
 		36F9026211A54B27009E69E2 /* MainWindow.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainWindow.rb; sourceTree = "<group>"; };
@@ -61,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				36273F5411AC1EF900269B2C /* Utilities.rb */,
+				363DDC8F11AD266B00CF54D7 /* Spreadsheet.rb */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -70,12 +74,13 @@
 			children = (
 				36F9026011A54B27009E69E2 /* LoginPanel.rb */,
 				36F9026111A54B27009E69E2 /* MainPanel.rb */,
-				36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */,
-				36F9026411A54B27009E69E2 /* SpreadsheetUploadPanel.rb */,
 				36F9026211A54B27009E69E2 /* MainWindow.rb */,
 				36273C0111ABD7BA00269B2C /* PreviewDialog.rb */,
+				363DDDF411AD675B00CF54D7 /* SearchPanel.rb */,
 				3627399D11AAC13E00269B2C /* SelectedServicesWindow.rb */,
 				36273D0D11ABEE9400269B2C /* ServiceListingPanel.rb */,
+				36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */,
+				36F9026411A54B27009E69E2 /* SpreadsheetUploadPanel.rb */,
 			);
 			path = "User-Interface";
 			sourceTree = SOURCE_ROOT;
@@ -92,12 +97,13 @@
 			children = (
 				3627357211A6CB9000269B2C /* AppWindowListener.rb */,
 				3627392911AAAF9D00269B2C /* CheckBoxListener.rb */,
-				3627349C11A6BAE400269B2C /* GenerateSpreadsheetAction.rb */,
-				36F907E011A68FD8009E69E2 /* PreviewAction.rb */,
 				36F9063C11A5965F009E69E2 /* DoLoginAction.rb */,
-				36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */,
-				36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */,
+				3627349C11A6BAE400269B2C /* GenerateSpreadsheetAction.rb */,
 				36F905D111A58885009E69E2 /* GoBackAction.rb */,
+				36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */,
+				36F907E011A68FD8009E69E2 /* PreviewAction.rb */,
+				363DDD2F11AD53C400CF54D7 /* SearchAction.rb */,
+				36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */,
 			);
 			path = "Event-Handlers";
 			sourceTree = SOURCE_ROOT;

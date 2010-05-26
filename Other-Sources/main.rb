@@ -20,7 +20,8 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-BENCHMARK = true
+doBenchmark = true
+biocatHost = "http://sandbox.biocatalogue.org"
 
 # Set Up Logging Facilities
 require 'logger'
@@ -36,30 +37,31 @@ LOG = Logger.new(STDOUT)
 end
 =end
 
-if BENCHMARK
+if doBenchmark
 
   require 'benchmark'
   
-  # ASP = Applicat Startup Phase
   Benchmark.bm do |b| 
-    b.report("ASP 1") {
+    
+    b.report("Libs") {
       require File.join(File.dirname(__FILE__), 'application_requires.rb')
     }
 
-    b.report("ASP 2") {
-      MAIN_WINDOW = MainWindow.new
-    }
+    b.report("Clie") { biocatClient = BioCatalogueClient.new(biocatHost) }
+    
+    b.report("Sele") { SELECTED_SERVICES_WINDOW = SelectedServicesWindow.new }
+
+    b.report("Main") { MAIN_WINDOW = MainWindow.new }
+    
+    
   end
   
 else
 
   require File.join(File.dirname(__FILE__), 'application_requires.rb')
+
+  biocatClient = BioCatalogueClient.new(biocatHost)
+  SELECTED_SERVICES_WINDOW = SelectedServicesWindow.new
   MAIN_WINDOW = MainWindow.new
-
+  
 end
-
-# selectedServicesWindow = SelectedServicesWindow.new
-
-
-LOG.warn "SelectedServicesWindow"
-

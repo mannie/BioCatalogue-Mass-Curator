@@ -20,34 +20,37 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-module Utilities
+module Application
+  module Utilities
 
-  def self.centerComponentTo(dependant, parent)
-    x = parent.getLocationOnScreen.getX + 
-        (parent.getWidth / 2) - 
-        (dependant.getWidth / 2)
-	
-    y = parent.getLocationOnScreen.getY	+ 
-        (parent.getHeight / 2) - 
-        (dependant.getHeight / 2)
+    def self.centerComponentTo(dependant, parent)
+      x = parent.getLocationOnScreen.getX + 
+          (parent.getWidth / 2) - 
+          (dependant.getWidth / 2)
+    
+      y = parent.getLocationOnScreen.getY	+ 
+          (parent.getHeight / 2) - 
+          (dependant.getHeight / 2)
 
-    dependant.setLocation(x, y)
-  end # self.centerComponentTo
+      dependant.setLocation(x, y)
+    end # self.centerComponentTo
 
-  def self.centerComponentToDisplay(component)
-    screenSize = Toolkit.getDefaultToolkit.getScreenSize
+    def self.centerComponentToDisplay(component)
+      screenSize = Toolkit.getDefaultToolkit.getScreenSize
 
-    x = (screenSize.getWidth / 2) - (component.getWidth / 2)
-    y = (screenSize.getHeight / 2) - (component.getHeight / 2)
+      x = (screenSize.getWidth / 2) - (component.getWidth / 2)
+      y = (screenSize.getHeight / 2) - (component.getHeight / 2)
 
-    component.setLocation(x, y)
-  end # self.centerComponentToScreen
+      component.setLocation(x, y)
+    end # self.centerComponentToScreen
 
-  def self.syncCollectionWithCache(collection)
-    collection.each { |service|
-      if (cached = BioCatalogueClient.cachedServices[service.id])
-          service = cached
-        end
-      }
-  end # self.syncCollectionWithCache(collection)
+    def self.syncCollectionWithCache(collection)
+      collection.each { |service|
+        if (cached = BioCatalogueClient.cachedServices[service.id])
+            service = cached
+          end
+        }
+    end # self.syncCollectionWithCache(collection)
+
+  end
 end

@@ -33,7 +33,11 @@ class CheckBoxListener
       BioCatalogueClient.selectServiceForAnnotation(@service)
     else
       BioCatalogueClient.deselectServiceForAnnotation(@service)
-    end    
+    end
+    
+    SELECTED_SERVICES_WINDOW.refreshSelectedServices
+    visible = SELECTED_SERVICES_WINDOW.isVisible
+    SELECTED_SERVICES_WINDOW.setVisible(true) unless visible
   end # stateChanged
   
 end

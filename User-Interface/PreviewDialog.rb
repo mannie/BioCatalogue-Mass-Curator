@@ -42,7 +42,7 @@ private
     self.setSize(300, 500)
     self.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
     
-    Utilities.centerComponentTo(self, @parent)
+    Application::Utilities.centerComponentTo(self, @parent)
     
     LOG.warn "Implement fetchMoreInformation for service"
     

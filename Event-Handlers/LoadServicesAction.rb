@@ -30,22 +30,24 @@ class LoadServicesAction
     @pageNumber = pageNumber
     return self
   end # initialize
+
+# --------------------
   
   def actionPerformed(event)  
     if (panel = @@resultsPanelForPage[@pageNumber])
       @@serviceSelectPanel = panel
-      Utilities.syncCollectionWithCache(panel.localServiceCache)
+      panel.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
+      Application::Utilities.syncCollectionWithCache(panel.localServiceCache)
     else
       @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
       @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
     end
 
     @buttonContainer.setVisible(false)
-
     @@serviceSelectPanel.setVisible(true)
-
-    MainWindow.CONTENT_PANE.add(@@serviceSelectPanel)
-    MainWindow.CONTENT_PANE.repaint
+    
+    MAIN_WINDOW.getContentPane.add(@@serviceSelectPanel)
+    MAIN_WINDOW.getContentPane.repaint
   end # actionPerformed
 
 end
