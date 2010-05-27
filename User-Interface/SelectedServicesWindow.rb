@@ -47,9 +47,10 @@ class SelectedServicesWindow < JFrame
     }
     
     scrollPane = JScrollPane.new(listPanel)
-    c.gridy = 0
-    c.insets.set(1, 1, 1, 1)
-    self.getContentPane.add(scrollPane, c)
+    self.getContentPane.add(scrollPane)
+        
+    @@previouslyUsedPanel.setVisible(false) if @@previouslyUsedPanel
+    @@previouslyUsedPanel = scrollPane
     
     self.pack
   end # showSelectedServices
@@ -57,7 +58,7 @@ class SelectedServicesWindow < JFrame
 private
 
   def initUI
-    self.getContentPane.setLayout(GridBagLayout.new)
+    self.getContentPane.setLayout(BorderLayout.new)
 
     refreshSelectedServices
         
