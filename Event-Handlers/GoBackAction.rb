@@ -31,7 +31,7 @@ class GoBackAction
 # --------------------
 
   def actionPerformed(event)
-    @buttonContainer.setVisible(false)
+    LoadServicesAction.setServicesPanelVisible(false)
     MAIN_WINDOW.mainPanel.setVisible(true)
     MAIN_WINDOW.getContentPane.repaint
   end # actionPerformed

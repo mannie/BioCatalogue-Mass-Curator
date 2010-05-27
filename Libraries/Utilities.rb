@@ -20,8 +20,23 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-module Application
-  module Utilities
+module Utilities
+
+  module Application
+    
+    def self.syncCollectionWithCache(collection)
+      collection.each { |service|
+        if (cached = BioCatalogueClient.cachedServices[service.id])
+            service = cached
+          end
+        }
+    end # self.syncCollectionWithCache(collection)
+
+  end # module Application
+  
+# ========================================
+
+  module Components
 
     def self.centerComponentTo(dependant, parent)
       x = parent.getLocationOnScreen.getX + 
@@ -44,13 +59,28 @@ module Application
       component.setLocation(x, y)
     end # self.centerComponentToScreen
 
-    def self.syncCollectionWithCache(collection)
-      collection.each { |service|
-        if (cached = BioCatalogueClient.cachedServices[service.id])
-            service = cached
-          end
-        }
-    end # self.syncCollectionWithCache(collection)
+  end # module Components
+  
+# ========================================
+  
+  module XML
+  
+    def self.getAttributeFromNode(attribute, node)
+      node.attributes.select { |a| "xlink:href"==a.name }[0]
+    end # self.getAttributeFromNode
+    
+    def self.getValidChildren(node)
+      node.children.reject { |n| n.name == "#text" }
+    end # self.getValidChildren
+    
+    def self.getContentOfFirstChild(node)
+      node.child.next.content
+    end # self.getContentOfFirstChild
+    
+    def self.selectNodesWithNameFrom(name, parent)
+      parent.children.select { |n| n.name == name }
+    end # self.selectNodesWithName
+    
+  end # module XML
 
-  end
 end

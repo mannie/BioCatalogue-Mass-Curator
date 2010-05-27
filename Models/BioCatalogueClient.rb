@@ -44,13 +44,14 @@ class BioCatalogueClient
   end # self.cachedServices
   
   def self.selectedServices
+#    @@selectedServices.reject! { |id, service| id == -1 }
     @@selectedServices
   end # self.selectedServices
   
-  def self.servicesEndpoint(format=nil, perPage=25, page=1)
+  def self.servicesEndpoint(format=nil, perPage=25, page=1, filter='')
     if !format.nil? && !format.empty? && format.class.name=="String"
       URI.join(@@HOST.to_s, 
-          "/services.#{format}?per_page=#{perPage}&page=#{page}")
+          "/services.#{format}?per_page=#{perPage}&page=#{page}&t=[#{filter}]")
     else
       URI.join(@@HOST.to_s, "/services/")
     end
@@ -73,6 +74,8 @@ class BioCatalogueClient
   end # self.cacheService
 
   def self.removeServiceFromCache(service)
+    self.deselectServiceForAnnotation(service)
+    
     @@cachedServices.reject! { |key, value| 
       key == service.id 
     } if service && service.class==Service

@@ -22,7 +22,10 @@
 
 class Service
   
+  attr_reader :components
   attr_reader :id, :name, :description, :technology
+  
+  @componentsFetched = false
   
   def initialize(serviceURIString)
     begin
@@ -41,7 +44,7 @@ class Service
         xmlContent = open(serviceURI).read
         xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
       
-        propertyNodes = xmlDocument.root.children.reject { |n| n.name == "#text" }
+        propertyNodes = Utilities::XML.getValidChildren(xmlDocument.root)
         propertyNodes.each do |propertyNode|
           case propertyNode.name
             when 'name'
@@ -49,7 +52,17 @@ class Service
             when 'dc:description'
               @description = propertyNode.content
             when 'serviceTechnologyTypes'
-              @technology = propertyNode.child.next.content
+              @technology = Utilities::XML.getContentOfFirstChild(propertyNode)
+            when 'variants'
+              variants = Utilities::XML.selectNodesWithNameFrom(
+                  "#{@technology.downcase}Service", propertyNode)
+              variants.each { |node|
+                @variantURI = Utilities::XML.getAttributeFromNode(
+                  "xlink:href", node).value
+                break if @variantURI
+              }
+              
+              @variantURI = URI.parse(@variantURI + '.xml')
           end # case
         end # propertyNodes.each
       end # if else cached
@@ -59,7 +72,7 @@ class Service
     rescue Exception => ex
       LOG.error "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
       BioCatalogueClient.removeServiceFromCache(self)
-    end
+    end # begin rescue
     
     if @name.nil?
       BioCatalogueClient.removeServiceFromCache(self)
@@ -73,8 +86,42 @@ class Service
     Service.weblinkWithID(@id, format)
   end # weblink
 
+  def fetchComponents
+    return true if @componentsFetched
+
+    @components = {}
+  
+    begin
+      xmlContent = open(@variantURI).read
+      xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
+      
+      nodeName = (@technology=="SOAP" ? "operations" : nil)
+      raise "Only support for SOAP is currently available" if nodeName.nil?
+      
+      operationsNode = Utilities::XML.selectNodesWithNameFrom(nodeName, 
+          xmlDocument.root)[0]
+      
+      Utilities::XML.getValidChildren(operationsNode).each { |op|
+        uriString = Utilities::XML.getAttributeFromNode("xlink:href", op).value
+        
+        component = ServiceComponent.new(uriString)
+        next if component.id == -1
+        
+        @components.merge!(component.id => component)
+      }
+      
+      BioCatalogueClient.addServiceToCache(self)
+      @componentsFetched = true
+      
+      return true
+    rescue Exception => ex
+      LOG.error "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
+      return false
+    end # begin rescue
+  end # fetchComponents
+
   def to_s
-    return "#{@technology} Service:: ID: #{@id}, Name: #{@name}"
+    "#{@technology}::#{@id}::#{@name}"
   end # to_s
 
 # --------------------

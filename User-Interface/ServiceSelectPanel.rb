@@ -24,14 +24,15 @@ class ServiceSelectPanel < JPanel
   
   attr_reader :localServiceCache
   
-  SERVICES_PER_PAGE = 30
+  SERVICES_PER_PAGE = 5
   
   def initialize(pageNumber)
     super()
 
     @page = pageNumber.to_i
     initUI
-    
+    MainWindow.ACTIONS_PANEL.pageCount = @lastPage
+
     return self
   end # initialize
   
@@ -42,7 +43,8 @@ private
     
     self.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
     self.add(mainPanel)
-    
+    self.add(MainWindow.ACTIONS_PANEL, BorderLayout::SOUTH)
+        
     # button to previous page
 #    previousPageButton = BasicArrowButton.new(SwingConstants::WEST)
     previousPageButton = JButton.new("<<")
@@ -56,32 +58,9 @@ private
     nextPageButton.addActionListener(LoadServicesAction.new(self, @page+1))
     nextPageButton.setEnabled(false) if @page==@lastPage
     self.add(nextPageButton, BorderLayout::EAST)
-
-    self.add(bottomPanel, BorderLayout::SOUTH)
   end # initUI
   
 private
-
-  def bottomPanel
-    panel = JPanel.new
-
-    subPanel = JPanel.new
-    subPanel.setLayout(GridLayout.new)
-    
-    backButton = JButton.new("Go Back")
-    backButton.addActionListener(GoBackAction.new(self))
-
-    exportButton = JButton.new("Export")
-    exportButton.addActionListener(GenerateSpreadsheetAction.new(self))
-
-    subPanel.add(backButton)
-    subPanel.add(exportButton)
-    
-    panel.add(subPanel)
-    panel.add(JLabel.new("Page #{@page} of #{@lastPage}"))
-    
-    return panel
-  end
   
   def mainPanel
     panel = JPanel.new
@@ -96,7 +75,7 @@ private
 
     begin
       xmlContent = open(BioCatalogueClient.servicesEndpoint(
-          'xml', SERVICES_PER_PAGE, @page)).read
+          'xml', SERVICES_PER_PAGE, @page, 'SOAP')).read
       xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
     rescue Exception => ex
       LOG.fatal "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
@@ -108,22 +87,21 @@ private
     xmlDocument.root.each { |node|
       case node.name
         when 'results'
-          serviceNodes = node.children.select { |n| n.name == "service" }
+          serviceNodes = Utilities::XML.selectNodesWithNameFrom("service", node)
           serviceNodes.each { |node|
-            uriAttr = node.attributes.select { |a| "xlink:href"==a.name }[0]
-            
-            next if (service = Service.new(uriAttr.value)).nil?
+            attr = Utilities::XML.getAttributeFromNode("xlink:href", node)
+            next if (service = Service.new(attr.value)).nil? # URI attribute
             
             @localServiceCache << (service)
             panel.add(ServiceListingPanel.new(service), c)
             c.gridy += 1
           }
         when 'statistics'
-          validNodes = node.children.reject { |n| n.name == "#text" }
-          validNodes.each { |statsNode|
-            case statsNode.name
+          statsNodes = Utilities::XML.getValidChildren(node)
+          statsNodes.each { |node|
+            case node.name
               when 'pages'
-                @lastPage = statsNode.content.to_i
+                @lastPage = node.content.to_i
             end # case
           }
       end # case

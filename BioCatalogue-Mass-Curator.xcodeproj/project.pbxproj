@@ -9,7 +9,6 @@
 /* Begin PBXFileReference section */
 		360FD7D211A410BA00AEC536 /* ReadMe.rdoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.rdoc; sourceTree = "<group>"; };
 		360FD7D311A410BF00AEC536 /* Licence */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licence; sourceTree = "<group>"; };
-		360FD93E11A426CF00AEC536 /* run_main.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = run_main.rb; sourceTree = "<group>"; };
 		3627349C11A6BAE400269B2C /* GenerateSpreadsheetAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = GenerateSpreadsheetAction.rb; sourceTree = "<group>"; };
 		3627357211A6CB9000269B2C /* AppWindowListener.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppWindowListener.rb; sourceTree = "<group>"; };
 		3627392911AAAF9D00269B2C /* CheckBoxListener.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = CheckBoxListener.rb; sourceTree = "<group>"; };
@@ -17,9 +16,12 @@
 		36273C0111ABD7BA00269B2C /* PreviewDialog.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PreviewDialog.rb; sourceTree = "<group>"; };
 		36273D0D11ABEE9400269B2C /* ServiceListingPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ServiceListingPanel.rb; sourceTree = "<group>"; };
 		36273F5411AC1EF900269B2C /* Utilities.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Utilities.rb; sourceTree = "<group>"; };
-		363DDC8F11AD266B00CF54D7 /* Spreadsheet.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Spreadsheet.rb; sourceTree = "<group>"; };
+		363DDC8F11AD266B00CF54D7 /* Curation.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Curation.rb; sourceTree = "<group>"; };
 		363DDD2F11AD53C400CF54D7 /* SearchAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SearchAction.rb; sourceTree = "<group>"; };
 		363DDDF411AD675B00CF54D7 /* SearchPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SearchPanel.rb; sourceTree = "<group>"; };
+		363DDFED11AE7B3800CF54D7 /* ServiceComponent.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ServiceComponent.rb; sourceTree = "<group>"; };
+		363DE10E11AE983600CF54D7 /* ActionsPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ActionsPanel.rb; sourceTree = "<group>"; };
+		363DE23F11AEB0E000CF54D7 /* run.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		36F9026011A54B27009E69E2 /* LoginPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = LoginPanel.rb; sourceTree = "<group>"; };
 		36F9026111A54B27009E69E2 /* MainPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainPanel.rb; sourceTree = "<group>"; };
 		36F9026211A54B27009E69E2 /* MainWindow.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainWindow.rb; sourceTree = "<group>"; };
@@ -40,14 +42,14 @@
 		360FD7A711A40F7000AEC536 = {
 			isa = PBXGroup;
 			children = (
-				360FD93E11A426CF00AEC536 /* run_main.rb */,
+				363DE23F11AEB0E000CF54D7 /* run.sh */,
 				36F907CC11A688FD009E69E2 /* Models */,
-				36F9025F11A54B27009E69E2 /* User-Interface */,
 				36F9028911A54B90009E69E2 /* Event-Handlers */,
+				362735E111A6DD3D00269B2C /* Libraries */,
+				36F9025F11A54B27009E69E2 /* User-Interface */,
 				36F9028A11A54B90009E69E2 /* Other-Sources */,
 				36F9026511A54B41009E69E2 /* Resources */,
 				360FD7B911A4107600AEC536 /* Documentation */,
-				362735E111A6DD3D00269B2C /* Libraries */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,8 +65,8 @@
 		362735E111A6DD3D00269B2C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				363DDC8F11AD266B00CF54D7 /* Curation.rb */,
 				36273F5411AC1EF900269B2C /* Utilities.rb */,
-				363DDC8F11AD266B00CF54D7 /* Spreadsheet.rb */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -72,6 +74,7 @@
 		36F9025F11A54B27009E69E2 /* User-Interface */ = {
 			isa = PBXGroup;
 			children = (
+				363DE10E11AE983600CF54D7 /* ActionsPanel.rb */,
 				36F9026011A54B27009E69E2 /* LoginPanel.rb */,
 				36F9026111A54B27009E69E2 /* MainPanel.rb */,
 				36F9026211A54B27009E69E2 /* MainWindow.rb */,
@@ -122,6 +125,7 @@
 			children = (
 				36F907CD11A68918009E69E2 /* BioCatalogueClient.rb */,
 				36F907E111A6907F009E69E2 /* Service.rb */,
+				363DDFED11AE7B3800CF54D7 /* ServiceComponent.rb */,
 			);
 			path = Models;
 			sourceTree = SOURCE_ROOT;

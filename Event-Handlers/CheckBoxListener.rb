@@ -38,6 +38,10 @@ class CheckBoxListener
     SELECTED_SERVICES_WINDOW.refreshSelectedServices
     visible = SELECTED_SERVICES_WINDOW.isVisible
     SELECTED_SERVICES_WINDOW.setVisible(true) unless visible
+    
+    MainWindow.ACTIONS_PANEL.exportButton.setEnabled(
+        !BioCatalogueClient.selectedServices.empty?)
+    MainWindow.ACTIONS_PANEL.refresh
   end # stateChanged
   
 end

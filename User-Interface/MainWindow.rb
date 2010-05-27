@@ -31,6 +31,7 @@ class MainWindow < JFrame
     addWindowListener(AppWindowListener.new)
     
     @@SEARCH_PANEL = SearchPanel.new
+    @@ACTIONS_PANEL = ActionsPanel.new
     
     return self
   end # initialize
@@ -40,7 +41,11 @@ class MainWindow < JFrame
   def self.SEARCH_PANEL
     @@SEARCH_PANEL
   end # self.SEARCH_PANEL
-      
+  
+  def self.ACTIONS_PANEL
+    @@ACTIONS_PANEL
+  end # self.ACTIONS_PANEL
+  
 private
 
   def initUI
@@ -54,7 +59,7 @@ private
     self.setMinimumSize(Dimension.new(800, 500))
     self.pack
     
-    Application::Utilities.centerComponentToDisplay(self)
+    Utilities::Components.centerComponentToDisplay(self)
     
     self.setVisible(true)
   end # initUI

@@ -30,19 +30,31 @@ class LoadServicesAction
     @pageNumber = pageNumber
     return self
   end # initialize
-
+  
+  def self.setServicesPanelVisible(visible)
+    @@serviceSelectPanel.setVisible(visible) if @@serviceSelectPanel
+  end
+  
 # --------------------
   
   def actionPerformed(event)  
     if (panel = @@resultsPanelForPage[@pageNumber])
       @@serviceSelectPanel = panel
+            
       panel.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
-      Application::Utilities.syncCollectionWithCache(panel.localServiceCache)
+      panel.add(MainWindow.ACTIONS_PANEL, BorderLayout::SOUTH)
+      
+      Utilities::Application.syncCollectionWithCache(panel.localServiceCache)
     else
       @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
       @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
     end
 
+    MainWindow.ACTIONS_PANEL.currentPage = @pageNumber
+    MainWindow.ACTIONS_PANEL.exportButton.setEnabled(
+        !BioCatalogueClient.selectedServices.empty?)
+    MainWindow.ACTIONS_PANEL.refresh
+    
     @buttonContainer.setVisible(false)
     @@serviceSelectPanel.setVisible(true)
     

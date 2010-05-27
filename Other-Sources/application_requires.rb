@@ -36,7 +36,8 @@ LIBRARIES_DIR = File.join(APP_ROOT, "Libraries").freeze
 # ========================================
 
 # Application Source Files To Include
-USER_INTERFACE = %w{ LoginPanel.rb
+USER_INTERFACE = %w{ ActionsPanel.rb
+                     LoginPanel.rb
                      MainWindow.rb 
                      MainPanel.rb
                      PreviewDialog.rb
@@ -57,9 +58,10 @@ EVENT_HANDLERS = %w{ AppWindowListener.rb
                      UploadSpreadsheetAction.rb }.freeze
 
 MODELS = %w{ BioCatalogueClient.rb
-             Service.rb }.freeze
+             Service.rb
+             ServiceComponent.rb }.freeze
 
-LIBRARIES = %w{ Spreadsheet.rb
+LIBRARIES = %w{ Curation.rb
                 Utilities.rb }.freeze
 
 RESOURCES = %w{  }.freeze
@@ -86,6 +88,7 @@ SWING_CLASSES = %w{ plaf.basic.BasicArrowButton
                     JButton 
                     JCheckBox
                     JDialog
+                    JFileChooser
                     JFrame 
                     JLabel 
                     JOptionPane 

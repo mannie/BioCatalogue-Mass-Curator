@@ -29,12 +29,22 @@ class GenerateSpreadsheetAction
   end # initialize
 
   def actionPerformed(event)
-    LOG.warn "Generate Spreadsheet Action actionPerformed"
-    LOG.info BioCatalogueClient.selectedServices.inspect
-    Application::Curation.generateSpreadsheet(nil)
+    @@fileSelector ||= JFileChooser.new
+    @@fileSelector.setFileSelectionMode(JFileChooser::DIRECTORIES_ONLY)
     
-    # if buttonContainer==ServiceSelectPanel
-    # 
+    if @@fileSelector.showOpenDialog(MAIN_WINDOW) == 
+        JFileChooser::APPROVE_OPTION
+      dir = @@fileSelector.getSelectedFile()
+      return if dir.nil? || !dir.isDirectory
+
+      LOG.warn "TODO: disable buttons"
+      
+      file = Curation.generateSpreadsheet(
+          BioCatalogueClient.selectedServices, dir.path)
+      LOG.warn "TODO: popup for confirmation"
+      
+      LOG.warn "TODO: enable buttons"
+    end # if
   end # actionPerformed
 
 end

@@ -41,15 +41,15 @@ class SelectedServicesWindow < JFrame
     c.weightx, c.weighty = 1, 1
     c.gridy = 0
 
-    BioCatalogueClient.selectedServices.each { |service|
-      listPanel.add(JLabel.new(service[-1].to_s), c)
+    BioCatalogueClient.selectedServices.each { |id, service|
+      listPanel.add(JLabel.new(service.to_s), c)
       c.gridy += 1
     }
     
     scrollPane = JScrollPane.new(listPanel)
     self.getContentPane.add(scrollPane)
         
-    @@previouslyUsedPanel.setVisible(false) if @@previouslyUsedPanel
+    self.remove(@@previouslyUsedPanel) if @@previouslyUsedPanel
     @@previouslyUsedPanel = scrollPane
     
     self.pack
