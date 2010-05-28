@@ -29,11 +29,11 @@ module Curation
     # FORMATTING
     Spreadsheet.client_encoding = 'UTF-8'
     @@formats ||= defineSpreadsheetFormatting
-    @@heightMultiplier = 1.3
+    @@heightMultiplier = 1.4
     @@offset ||= 1
     
     # initialise
-    filename = "Curation Spreadsheet - #{Time.now.strftime('%Y-%m-%d')}.xls"
+    filename = "Curation Spreadsheet (#{Time.now.strftime('%Y-%m-%d')}).xls"
     file = File.new(File.join(saveDir, filename), "w+")
     @workbook = Spreadsheet::Workbook.new(file.path)  
     
@@ -51,7 +51,7 @@ module Curation
                 when 0: 7 # ID
                 when 1: 20 # Type
                 when 2: 40 # Name
-                when 3: 50 # Descriptions
+                when 3: 70 # Descriptions
                 when 4: 20 # Tags
                 when 5: 30 # Examples
               end
@@ -64,12 +64,10 @@ module Curation
       next unless service.technology == "SOAP"
       
       success = service.fetchComponents
-      LOG.info "#{id} - #{success}"
       next unless success
       
       @nextRow += 1
       writeToSpreadsheet(service)
-      puts service.inspect
     end          
     
     # finalise
@@ -89,11 +87,11 @@ private
         :pattern => patt, :weight => :bold, :align => :center)
     s = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :magenta,
         :pattern => patt, :weight => :bold)                                 
-    op = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :green, 
+    op = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :yellow, 
         :pattern => patt)                                     
     i = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :cyan, 
         :pattern => patt)
-    o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :brown, 
+    o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :lime, 
         :pattern => patt)
     
     return { :header => h, 
@@ -107,38 +105,41 @@ private
     # write service row and format
     @worksheet[@nextRow, 0] = service.id
     @worksheet[@nextRow, 1] = "#{service.technology} Service"
-    @worksheet[@nextRow, 2] = service.name       
+    @worksheet[@nextRow, 2] = service.name
+    @worksheet[@nextRow, 3] = service.description
     3.times { |x| @worksheet.row(@nextRow).set_format(x, @@formats[:service]) }
     @worksheet.row(@nextRow).height *= @@heightMultiplier
     
     # iterate over top level components
     @nextRow += 1
     writeServiceComponents(service)
-    
-    @nextRow += 1
   end # self.writeToSpreadsheet
   
   def self.writeServiceComponents(service)
     service.components.each do |id, component|
       # write operation   
-      writeComponentRow(@@formats[:operation], "SOAP Operation", component.name)
+      writeComponentRow(@@formats[:operation], "SOAP Operation", 
+          component.name, component.description)
               
       # write inputs
-      component.inputs.each do |id, name|
-        writeComponentRow(@@formats[:input], "SOAP Input", name)
+      component.inputs.each do |id, input|
+        writeComponentRow(@@formats[:input], "SOAP Input", 
+            input.name, input.description)
       end # component.inputs.each
       
       # write outputs
-      component.outputs.each do |id, name|
-        writeComponentRow(@@formats[:output], "SOAP Output", name)
+      component.outputs.each do |id, output|
+        writeComponentRow(@@formats[:output], "SOAP Output", 
+            output.name, output.description)
       end # component.outputs.each
     end # service.components.each
   end # self.writeServiceComponents
   
-  def self.writeComponentRow(format, type, name)
+  def self.writeComponentRow(format, type, name, description)
     @worksheet[@nextRow, 1] = type
     @worksheet[@nextRow, 2] = name
-    
+    @worksheet[@nextRow, 3] = description
+        
     2.times { |x| @worksheet.row(@nextRow).set_format(x + @@offset, format) }
     @worksheet.row(@nextRow).height *= @@heightMultiplier
     

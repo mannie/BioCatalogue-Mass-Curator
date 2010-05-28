@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXFileReference section */
@@ -22,6 +22,7 @@
 		363DDFED11AE7B3800CF54D7 /* ServiceComponent.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ServiceComponent.rb; sourceTree = "<group>"; };
 		363DE10E11AE983600CF54D7 /* ActionsPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ActionsPanel.rb; sourceTree = "<group>"; };
 		363DE23F11AEB0E000CF54D7 /* run.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
+		363DE3C911AFC7E800CF54D7 /* ServiceComponentPort.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ServiceComponentPort.rb; sourceTree = "<group>"; };
 		36F9026011A54B27009E69E2 /* LoginPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = LoginPanel.rb; sourceTree = "<group>"; };
 		36F9026111A54B27009E69E2 /* MainPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainPanel.rb; sourceTree = "<group>"; };
 		36F9026211A54B27009E69E2 /* MainWindow.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = MainWindow.rb; sourceTree = "<group>"; };
@@ -126,6 +127,7 @@
 				36F907CD11A68918009E69E2 /* BioCatalogueClient.rb */,
 				36F907E111A6907F009E69E2 /* Service.rb */,
 				363DDFED11AE7B3800CF54D7 /* ServiceComponent.rb */,
+				363DE3C911AFC7E800CF54D7 /* ServiceComponentPort.rb */,
 			);
 			path = Models;
 			sourceTree = SOURCE_ROOT;
@@ -136,7 +138,7 @@
 		360FD7A911A40F7000AEC536 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 360FD7AC11A40F7000AEC536 /* Build configuration list for PBXProject "BioCatalogue-Mass-Curator" */;
-			compatibilityVersion = "Xcode 3.0";
+			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 0;
 			mainGroup = 360FD7A711A40F7000AEC536;
 			projectDirPath = "";

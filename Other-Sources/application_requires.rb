@@ -59,7 +59,8 @@ EVENT_HANDLERS = %w{ AppWindowListener.rb
 
 MODELS = %w{ BioCatalogueClient.rb
              Service.rb
-             ServiceComponent.rb }.freeze
+             ServiceComponent.rb
+             ServiceComponentPort.rb }.freeze
 
 LIBRARIES = %w{ Curation.rb
                 Utilities.rb }.freeze

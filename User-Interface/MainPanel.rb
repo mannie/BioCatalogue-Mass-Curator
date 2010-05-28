@@ -21,7 +21,9 @@
 =end
 
 class MainPanel < JPanel
-    
+  
+  attr_reader :browseButtonAction
+  
   def initialize
     super()
     initUI
@@ -45,11 +47,14 @@ private
     c.gridy = 0
 
     # add buttons to panel
-    buttonPanel.add(downloadButton = JButton.new("Browse Services"), c)
+    # browse button
+    @browseButtonAction = LoadServicesAction.new(self, 1)
+    buttonPanel.add(browseButton = JButton.new("Browse Services"), c)
+    browseButton.addActionListener(@browseButtonAction)
+    
+    # upload button
     c.gridy += 1
     buttonPanel.add(uploadButton = JButton.new("Upload A Spreadsheet"), c)
-    
-    downloadButton.addActionListener(LoadServicesAction.new(self, 1))
     uploadButton.addActionListener(UploadSpreadsheetAction.new(self))
     
     self.add(buttonPanel)

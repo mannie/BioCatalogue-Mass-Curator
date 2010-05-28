@@ -22,9 +22,9 @@
 
 class ServiceSelectPanel < JPanel
   
-  attr_reader :localServiceCache
+  attr_reader :localServiceCache, :mainPanel, :previousPageButton, :nextPageButton
   
-  SERVICES_PER_PAGE = 5
+  SERVICES_PER_PAGE = 10
   
   def initialize(pageNumber)
     super()
@@ -42,27 +42,27 @@ private
     self.setLayout(BorderLayout.new)  
     
     self.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
-    self.add(mainPanel)
+    self.add(@mainPanel ||= mainScrollPane)
     self.add(MainWindow.ACTIONS_PANEL, BorderLayout::SOUTH)
         
     # button to previous page
 #    previousPageButton = BasicArrowButton.new(SwingConstants::WEST)
-    previousPageButton = JButton.new("<<")
-    previousPageButton.addActionListener(LoadServicesAction.new(self, @page-1))
-    previousPageButton.setEnabled(false) if @page==1
-    self.add(previousPageButton, BorderLayout::WEST)
+    @previousPageButton = JButton.new("<<")
+    @previousPageButton.addActionListener(LoadServicesAction.new(self, @page-1))
+    @previousPageButton.setEnabled(false) if @page==1
+    self.add(@previousPageButton, BorderLayout::WEST)
     
     # button to next page
 #    nextPageButton = BasicArrowButton.new(SwingConstants::EAST)
-    nextPageButton = JButton.new(">>")
-    nextPageButton.addActionListener(LoadServicesAction.new(self, @page+1))
-    nextPageButton.setEnabled(false) if @page==@lastPage
-    self.add(nextPageButton, BorderLayout::EAST)
+    @nextPageButton = JButton.new(">>")
+    @nextPageButton.addActionListener(LoadServicesAction.new(self, @page+1))
+    @nextPageButton.setEnabled(false) if @page==@lastPage
+    self.add(@nextPageButton, BorderLayout::EAST)
   end # initUI
   
 private
   
-  def mainPanel
+  def mainScrollPane
     panel = JPanel.new
     panel.setLayout(GridBagLayout.new)
     
@@ -108,7 +108,7 @@ private
     } # xmlDocument.root.each
         
     return JScrollPane.new(panel)
-  end # mainPanel
+  end # mainScrollPane
   
 end
 

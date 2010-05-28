@@ -22,7 +22,8 @@
 
 class ServiceComponent
 
-  attr_reader :id, :name, :inputs, :outputs
+  attr_reader :id, :name, :description
+  attr_reader :inputs, :outputs
   
   def initialize(uriString)
     @inputs = {}
@@ -42,30 +43,20 @@ class ServiceComponent
         case propertyNode.name
           when 'name'
             @name = propertyNode.content
+          when 'dc:description'
+            @description = propertyNode.content
           when 'inputs'
-            ins = Utilities::XML.selectNodesWithNameFrom("soapInput",
+            inputs = Utilities::XML.selectNodesWithNameFrom("soapInput",
                 propertyNode)
-            ins.each { |input|
-              id = Utilities::XML.getAttributeFromNode('xlink:href', input)
-              id = id.value.split('/')[-1].to_i
-              
-              name = Utilities::XML.selectNodesWithNameFrom("name", input)[0]
-              name = name.content
-              
-              @inputs.merge!(id => name)
-            } # in.each
+            inputs.each { |inputNode|              
+              @inputs.merge!(id => getServiceComponentPortFromNode(inputNode))
+            } # inputs.each
           when 'outputs'
-            outs = Utilities::XML.selectNodesWithNameFrom("soapOutput", 
+            outputs = Utilities::XML.selectNodesWithNameFrom("soapInput",
                 propertyNode)
-            outs.each { |output|
-              id = Utilities::XML.getAttributeFromNode('xlink:href', output)
-              id = id.value.split('/')[-1].to_i
-              
-              name = Utilities::XML.selectNodesWithNameFrom("name", output)[0]
-              name = name.content
-              
-              @outputs.merge!(id => name)
-            } # outs.each
+            outputs.each { |outputNode|              
+              @outputs.merge!(id => getServiceComponentPortFromNode(outputNode))
+            } # outputs.each
         end # case
       end # propertyNodes.each
       
@@ -88,5 +79,25 @@ class ServiceComponent
   def addOutput(id, name)
     @outputs.merge!(id => name)
   end # addOutput
+  
+private
+  
+  def getServiceComponentPortFromNode(node)
+    id = Utilities::XML.getAttributeFromNode('xlink:href', node)
+    id = id.value.split('/')[-1].to_i
+              
+    name, desc = nil, nil
+              
+    Utilities::XML.getValidChildren(node).each { |propertyNode|
+      case propertyNode.name
+        when 'name'
+          name = propertyNode.content
+        when 'dc:description'
+          desc = propertyNode.content
+      end # case
+    } # Utilities::XML.getValidChildren(outputNode).each
+    
+    return ServiceComponentPort.new(id, name, desc)
+  end # getComponentPortFromNode
   
 end

@@ -59,6 +59,11 @@ module Utilities
       component.setLocation(x, y)
     end # self.centerComponentToScreen
 
+    def self.flashComponent(component)
+      component.setVisible(false)
+      component.setVisible(true)
+    end # self.flashComponent
+
   end # module Components
   
 # ========================================

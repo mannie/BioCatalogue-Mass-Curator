@@ -31,20 +31,21 @@ class GenerateSpreadsheetAction
   def actionPerformed(event)
     @@fileSelector ||= JFileChooser.new
     @@fileSelector.setFileSelectionMode(JFileChooser::DIRECTORIES_ONLY)
-    
+
+    LoadServicesAction.setBusyExporting(true)
+
     if @@fileSelector.showOpenDialog(MAIN_WINDOW) == 
         JFileChooser::APPROVE_OPTION
       dir = @@fileSelector.getSelectedFile()
       return if dir.nil? || !dir.isDirectory
-
-      LOG.warn "TODO: disable buttons"
       
       file = Curation.generateSpreadsheet(
           BioCatalogueClient.selectedServices, dir.path)
-      LOG.warn "TODO: popup for confirmation"
       
-      LOG.warn "TODO: enable buttons"
-    end # if
+      LOG.warn "TODO: popup for confirmation"
+    end # if    
+  
+    LoadServicesAction.setBusyExporting(false)    
   end # actionPerformed
-
+  
 end

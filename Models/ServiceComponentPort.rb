@@ -1,8 +1,8 @@
 #
-#  GoBackAction.rb
+#  ServiceComponentPort.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 20/05/2010.
+#  Created by Mannie Tagarira on 28/05/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -20,21 +20,13 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class GoBackAction
+class ServiceComponentPort
   
-  def initialize(container)
-    super()
-    @buttonContainer = container
+  attr_reader :id, :name, :description
+  
+  def initialize(id, name, description)
+    @id, @name, @description = id, name, description
     return self
   end # initialize
-
-# --------------------
-
-  def actionPerformed(event)
-    LoadServicesAction.setServicesPanelVisible(false)
-    MAIN_WINDOW.mainPanel.browseButtonAction.setLoadPageNumber(LoadServicesAction.currentPage)
-    MAIN_WINDOW.mainPanel.setVisible(true)
-    MAIN_WINDOW.getContentPane.repaint
-  end # actionPerformed
   
 end

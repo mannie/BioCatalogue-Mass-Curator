@@ -23,6 +23,7 @@
 class LoadServicesAction
   
   @@resultsPanelForPage = {}
+  @@serviceSelectPanel = nil
   
   def initialize(container, pageNumber)
     super()
@@ -30,14 +31,39 @@ class LoadServicesAction
     @pageNumber = pageNumber
     return self
   end # initialize
+
+  def setLoadPageNumber(page)
+    @pageNumber = page
+  end # setLoadPageNumber
+
+# --------------------
+  
+  def self.currentPage
+    @@currentPage
+  end # self.currentPage
   
   def self.setServicesPanelVisible(visible)
     @@serviceSelectPanel.setVisible(visible) if @@serviceSelectPanel
-  end
+  end # self.setServicesPanelVisible
+
+   
+  def self.setBusyExporting(exporting)
+    MainWindow.SEARCH_PANEL.setVisible(!exporting)
+    MainWindow.ACTIONS_PANEL.setVisible(!exporting)
+    @@serviceSelectPanel.previousPageButton.setVisible(!exporting)
+    @@serviceSelectPanel.nextPageButton.setVisible(!exporting)
+    @@serviceSelectPanel.mainPanel.setVisible(!exporting)
+    
+    Utilities::Components.flashComponent(@@serviceSelectPanel)
+  end # self.setBusyExporting
   
 # --------------------
   
-  def actionPerformed(event)  
+  def actionPerformed(event)
+    # set page number to be used by the GoBackAction
+    @@currentPage = @pageNumber
+        
+    # load new service select panel
     if (panel = @@resultsPanelForPage[@pageNumber])
       @@serviceSelectPanel = panel
             
@@ -50,11 +76,13 @@ class LoadServicesAction
       @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
     end
 
+    # update status.actions panel
     MainWindow.ACTIONS_PANEL.currentPage = @pageNumber
     MainWindow.ACTIONS_PANEL.exportButton.setEnabled(
         !BioCatalogueClient.selectedServices.empty?)
     MainWindow.ACTIONS_PANEL.refresh
     
+    # update full view to show new services
     @buttonContainer.setVisible(false)
     @@serviceSelectPanel.setVisible(true)
     

@@ -38,30 +38,29 @@ class ActionsPanel < JPanel
   end # initialize
   
   def initUI
-    buttonPanel = JPanel.new
-    buttonPanel.setLayout(GridLayout.new)
+    self.setLayout(BorderLayout.new)
     
-    backButton = JButton.new("Go Back")
-    backButton.addActionListener(GoBackAction.new(self))
-    buttonPanel.add(backButton)
+    @backButton = JButton.new("Go Back")
+    @backButton.addActionListener(GoBackAction.new(self))
 
     @exportButton = JButton.new("Export")
     @exportButton.addActionListener(GenerateSpreadsheetAction.new(self))
-    buttonPanel.add(@exportButton)
-    
-    self.add(buttonPanel)
-    
+            
     refresh
   end
 
   def refresh
-    self.setVisible(false)
-    
+    # current page label
     self.remove(@@lastLabelUsed) if @@lastLabelUsed
-    @@lastLabelUsed = JLabel.new("Page #{@currentPage} of #{@pageCount}")
+    @@lastLabelUsed = JLabel.new("Page #{@currentPage} of #{@pageCount}", 
+        SwingConstants::CENTER)
+  
+    # add components to panel
+    self.add(@backButton, BorderLayout::WEST)
     self.add(@@lastLabelUsed)
+    self.add(@exportButton, BorderLayout::EAST)
 
-    self.setVisible(true)
+    Utilities::Components.flashComponent(self)
   end
   
 end
