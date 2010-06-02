@@ -30,9 +30,14 @@ class GoBackAction
 
 # --------------------
 
-  def actionPerformed(event)
+  def actionPerformed(event) 
+    @buttonContainer.setVisible(false)
     LoadServicesAction.setServicesPanelVisible(false)
-    MAIN_WINDOW.mainPanel.browseButtonAction.setLoadPageNumber(LoadServicesAction.currentPage)
+    
+    MAIN_WINDOW.mainPanel.browseButtonAction.setLoadPageNumber(
+        LoadServicesAction.currentPage) if @buttonContainer.instance_of?(
+        ActionsPanel)
+        
     MAIN_WINDOW.mainPanel.setVisible(true)
     MAIN_WINDOW.getContentPane.repaint
   end # actionPerformed

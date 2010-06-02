@@ -121,6 +121,7 @@ MISC_CLASSES.each { |misc| import misc }
 # Require Ruby Gems
 require 'rubygems'
 require 'open-uri'
+require 'net/http'
 require 'spreadsheet'
 require 'xml/libxml'
 

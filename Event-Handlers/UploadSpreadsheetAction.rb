@@ -33,13 +33,19 @@ class UploadSpreadsheetAction
   
   def actionPerformed(event)
     if @buttonContainer.instance_of?(MainPanel)
-      @buttonContainer.setVisible(false)
-      
-      @@loginPanel ||= LoginPanel.new
-      @@loginPanel.setVisible(true)
+    
+      if BioCatalogueClient.loggedIn
+      else
+        @buttonContainer.setVisible(false)
+        
+        @@loginPanel ||= LoginPanel.new
+        @@loginPanel.setVisible(true)
+        @buttonContainer.setVisible(false)
 
-      MAIN_WINDOW.getContentPane.add(@@loginPanel)
-      MAIN_WINDOW.getContentPane.repaint
+        MAIN_WINDOW.getContentPane.add(@@loginPanel)
+        MAIN_WINDOW.getContentPane.repaint
+      end # if BioCatalogueClient.loggedIn
+      
     elsif @buttonContainer.instance_of?(SpreadsheetUploadPanel)
     end
     

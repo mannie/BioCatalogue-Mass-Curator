@@ -24,6 +24,10 @@ class DoLoginAction
 
   def initialize(usernameField, passwordField, rememberMeCheckBox)
     super()
+    
+    @usernameField, @passwordField = usernameField, passwordField
+    @rememberMeCheckBox = rememberMeCheckBox
+    
     return self
   end # initialize
 
@@ -31,6 +35,16 @@ class DoLoginAction
 
   def actionPerformed(event)
     LOG.warn "Login Action actionPerformed"
+    puts @usernameField.getText, @passwordField.getText
+    
+    Net::HTTP.start(BioCatalogueClient.HOST.to_s) { |http|
+      req = Net::HTTP::Get.new('/login')
+      req.basic_auth @usernameField.getText, @passwordField.getText
+      response = http.request(req)
+      print response.body
+    }
+
+    
   end # actionPerformed
 
 end

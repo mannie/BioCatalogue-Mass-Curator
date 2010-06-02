@@ -32,13 +32,9 @@ class ServiceComponent
     begin
       @id = uriString.split('/')[-1].to_i
       
-      uriString << ".xml"
-      serviceURI = URI.parse(uriString)
-        
-      xmlContent = open(serviceURI).read
-      xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
-      
+      xmlDocument = Utilities::XML.getXMLDocumentFromURI(uriString)
       propertyNodes = Utilities::XML.getValidChildren(xmlDocument.root)
+      
       propertyNodes.each do |propertyNode|
         case propertyNode.name
           when 'name'
@@ -52,7 +48,7 @@ class ServiceComponent
               @inputs.merge!(id => getServiceComponentPortFromNode(inputNode))
             } # inputs.each
           when 'outputs'
-            outputs = Utilities::XML.selectNodesWithNameFrom("soapInput",
+            outputs = Utilities::XML.selectNodesWithNameFrom("soapOutput",
                 propertyNode)
             outputs.each { |outputNode|              
               @outputs.merge!(id => getServiceComponentPortFromNode(outputNode))

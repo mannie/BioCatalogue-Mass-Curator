@@ -74,9 +74,9 @@ private
     c.gridy = 0
 
     begin
-      xmlContent = open(BioCatalogueClient.servicesEndpoint(
-          'xml', SERVICES_PER_PAGE, @page, 'SOAP')).read
-      xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
+      xmlDocument = Utilities::XML.getXMLDocumentFromURI(
+          BioCatalogueClient.servicesEndpoint('xml', SERVICES_PER_PAGE, @page, 
+          'SOAP'))
     rescue Exception => ex
       LOG.fatal "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
       exit

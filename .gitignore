@@ -1,13 +1,2 @@
 .DS_Store
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/categories.pbxbtree
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/cdecls.pbxbtree
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/decls.pbxbtree
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/files.pbxbtree
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/imports.pbxbtree
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/pbxindex.header
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/protocols.pbxbtree
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/refs.pbxbtree
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/strings.pbxstrings/control
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/strings.pbxstrings/strings
-build/BioCatalogue-Mass-Curator.build/BioCatalogue-Mass-Curator.pbxindex/subclasses.pbxbtree
-build/BioCatalogue-Mass-Curator.build/Debug/Shell Script.build/Script-363DE26511AEB3BB00CF54D7.sh
+build/*

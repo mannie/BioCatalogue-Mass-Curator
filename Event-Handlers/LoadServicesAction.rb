@@ -59,7 +59,7 @@ class LoadServicesAction
   
 # --------------------
   
-  def actionPerformed(event)
+  def actionPerformed(event)    
     # set page number to be used by the GoBackAction
     @@currentPage = @pageNumber
         

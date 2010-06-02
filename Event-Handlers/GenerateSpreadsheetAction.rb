@@ -39,10 +39,28 @@ class GenerateSpreadsheetAction
       dir = @@fileSelector.getSelectedFile()
       return if dir.nil? || !dir.isDirectory
       
-      file = Curation.generateSpreadsheet(
-          BioCatalogueClient.selectedServices, dir.path)
+      Thread.new("Generating spreadsheet") { |t|
+        event.getSource.setEnabled(false)
+        originalButtonCaption = event.getSource.getText
+        event.getSource.setText("Exporting...")
+        
+        file = Curation.generateSpreadsheet(BioCatalogueClient.selectedServices,
+            dir.path)
+
+        if file
+          JOptionPane.showMessageDialog(MAIN_WINDOW,
+              "The selected services have been successfully exported to:\n" + 
+              file.path,"Export Complete", JOptionPane::INFORMATION_MESSAGE)
+        else
+          JOptionPane.showMessageDialog(MAIN_WINDOW, "Error", 
+              "An error occured while trying to export the selected services.",
+              JOptionPane::ERROR_MESSAGE)
+        end
+        
+        event.getSource.setEnabled(true)
+        event.getSource.setText(originalButtonCaption)
+      }
       
-      LOG.warn "TODO: popup for confirmation"
     end # if    
   
     LoadServicesAction.setBusyExporting(false)    

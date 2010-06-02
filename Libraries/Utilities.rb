@@ -70,6 +70,19 @@ module Utilities
   
   module XML
   
+    def self.getXMLDocumentFromURI(uri)
+      uri = URI.parse(uri) if uri.class==String
+      
+      return nil unless uri.class.name.include?("URI")
+      
+      userAgent = "BioCatalogue Mass Curator Alpha; JRuby/#{JRUBY_VERSION}"
+      
+      xmlContent = open(uri, "Accept" => "application/xml", 
+          "User-Agent" => userAgent).read
+      
+      return LibXMLJRuby::XML::Parser.string(xmlContent).parse
+    end
+    
     def self.getAttributeFromNode(attribute, node)
       node.attributes.select { |a| "xlink:href"==a.name }[0]
     end # self.getAttributeFromNode

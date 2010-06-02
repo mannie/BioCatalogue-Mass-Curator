@@ -54,47 +54,47 @@ private
 
   def loginPanel
     panel = JPanel.new
-    panel.setBorder(BorderFactory.createEtchedBorder())
 
     panel.setLayout(GridBagLayout.new)
 
     # set constraints
     c = GridBagConstraints.new
-    c.gridwidth = GridBagConstraints::REMAINDER
     c.insets = (insets = Insets.new(0, 0, 15, 0))
-    c.gridx = 0
-    c.gridy = 0
+    c.gridx, c.gridy = 1, 0
+    c.ipadx = 10
 
     # "Login to BioCat" label
+    c.anchor = GridBagConstraints::WEST
     loginLabel = JLabel.new("<html><b>Log in to BioCatalogue</b></html>")
     loginLabel.setFont(loginLabel.getFont().deriveFont(13.0))
     panel.add(loginLabel, c);
 
     # update constraints
-    c.weightx = 1
-    c.gridwidth = 1
-    c.anchor = GridBagConstraints::LINE_START
     c.insets.set(0, 0, 3, 0)
-    c.ipadx = 10
 
     # username label 
     c.gridy += 1
+    c.gridx = 0
+    c.anchor = GridBagConstraints::EAST
     usernameLabel = JLabel.new("BioCatalogue Username:")
     usernameLabel.setLabelFor(usernameField = JTextField.new(30))
     panel.add(usernameLabel, c)
     
-    # username field
+    # username field   
+    c.anchor = GridBagConstraints::WEST
     c.gridx = 1
     panel.add(usernameField, c)
 
     # password label
-    c.gridy+= 1
+    c.anchor = GridBagConstraints::EAST
+    c.gridy += 1
     c.gridx = 0
     passwordLabel = JLabel.new("BioCatalogue Password:")
     passwordLabel.setLabelFor(passwordField = JPasswordField.new(30))
     panel.add(passwordLabel, c)
     
     # password field
+    c.anchor = GridBagConstraints::WEST
     c.gridx = 1
     panel.add(passwordField, c)
 
@@ -107,14 +107,12 @@ private
 
     # login button
     c.gridy += 1
-    c.gridx = 0
-    c.anchor = GridBagConstraints::CENTER
-    c.gridwidth = GridBagConstraints::REMAINDER
-    c.fill = GridBagConstraints::HORIZONTAL
+    c.gridx = 1
+    c.anchor = GridBagConstraints::WEST
     c.insets.set(10, 0, 0, 0)
     loginButton = JButton.new("Login")
     loginButton.addActionListener(
-      DoLoginAction.new(usernameField, passwordField, rememberMeCheckBox))
+        DoLoginAction.new(usernameField, passwordField, rememberMeCheckBox))
     panel.add(loginButton, c)
 
     return panel

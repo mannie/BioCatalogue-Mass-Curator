@@ -54,9 +54,9 @@ private
     self.setLayout(BorderLayout.new)
     self.getContentPane.add(@mainPanel)
     
-    self.setDefaultCloseOperation(JFrame::EXIT_ON_CLOSE)
+    self.setDefaultCloseOperation(JFrame::DO_NOTHING_ON_CLOSE)
 
-    self.setMinimumSize(Dimension.new(800, 500))
+    self.setMinimumSize(Dimension.new(800, 550))
     self.pack
     
     Utilities::Components.centerComponentToDisplay(self)

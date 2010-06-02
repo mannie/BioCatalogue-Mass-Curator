@@ -24,12 +24,18 @@ class BioCatalogueClient
   
   def initialize(base="http://www.biocatalogue.org")
     @@HOST ||= URI.parse(base)
+    
     @@selectedServices ||= {}
     @@cachedServices ||= {}
     @@SEARCH ||= SearchAction.new
+    @@user = nil
   end # initialize
   
 # --------------------
+  
+  def self.loggedIn
+    !@@user.nil?
+  end
   
   def self.SEARCH
     @@SEARCH
@@ -53,7 +59,7 @@ class BioCatalogueClient
       URI.join(@@HOST.to_s, 
           "/services.#{format}?per_page=#{perPage}&page=#{page}&t=[#{filter}]")
     else
-      URI.join(@@HOST.to_s, "/services/")
+      URI.join(@@HOST.to_s, "/services")
     end
   end # self.servicesEndpoint
   

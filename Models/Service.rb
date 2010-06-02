@@ -37,12 +37,8 @@ class Service
         #@technology = cachedService.technology
         cachedService = self
       else # not cached
-        serviceURIString << "/variants.xml"
-
-        serviceURI = URI.parse(serviceURIString)
-        
-        xmlContent = open(serviceURI).read
-        xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
+        serviceURIString << "/variants.xml"        
+        xmlDocument = Utilities::XML.getXMLDocumentFromURI(serviceURIString)
       
         propertyNodes = Utilities::XML.getValidChildren(xmlDocument.root)
         propertyNodes.each do |propertyNode|
@@ -62,7 +58,7 @@ class Service
                 break if @variantURI
               }
               
-              @variantURI = URI.parse(@variantURI + '.xml')
+              @variantURI = URI.parse(@variantURI + ".xml")
           end # case
         end # propertyNodes.each
       end # if else cached
@@ -92,8 +88,7 @@ class Service
     @components = {}
   
     begin
-      xmlContent = open(@variantURI).read
-      xmlDocument = LibXMLJRuby::XML::Parser.string(xmlContent).parse
+      xmlDocument = Utilities::XML.getXMLDocumentFromURI(@variantURI)
       
       nodeName = (@technology=="SOAP" ? "operations" : nil)
       raise "Only support for SOAP is currently available" if nodeName.nil?
