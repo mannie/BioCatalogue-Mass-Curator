@@ -45,19 +45,19 @@ class ServiceComponent
             inputs = Utilities::XML.selectNodesWithNameFrom("soapInput",
                 propertyNode)
             inputs.each { |inputNode|              
-              @inputs.merge!(id => getServiceComponentPortFromNode(inputNode))
+              addServiceComponentPortFromNodeTo(inputNode, @inputs)
             } # inputs.each
           when 'outputs'
             outputs = Utilities::XML.selectNodesWithNameFrom("soapOutput",
                 propertyNode)
-            outputs.each { |outputNode|              
-              @outputs.merge!(id => getServiceComponentPortFromNode(outputNode))
+            outputs.each { |outputNode|
+              addServiceComponentPortFromNodeTo(outputNode, @outputs)
             } # outputs.each
         end # case
       end # propertyNodes.each
       
     rescue Exception => ex
-      LOG.error "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
+      log('e', ex)
     end # begin rescue
     
     if @name.nil?
@@ -78,12 +78,12 @@ class ServiceComponent
   
 private
   
-  def getServiceComponentPortFromNode(node)
+  def addServiceComponentPortFromNodeTo(node, destination)
     id = Utilities::XML.getAttributeFromNode('xlink:href', node)
     id = id.value.split('/')[-1].to_i
               
     name, desc = nil, nil
-              
+    
     Utilities::XML.getValidChildren(node).each { |propertyNode|
       case propertyNode.name
         when 'name'
@@ -93,7 +93,7 @@ private
       end # case
     } # Utilities::XML.getValidChildren(outputNode).each
     
-    return ServiceComponentPort.new(id, name, desc)
+    destination.merge!(id => ServiceComponentPort.new(id, name, desc))
   end # getComponentPortFromNode
   
 end

@@ -1,5 +1,5 @@
 #
-#  ActionsPanel.rb
+#  BrowsingStatusPanel.rb
 #  BioCatalogue-Mass-Curator
 #
 #  Created by Mannie Tagarira on 27/05/2010.
@@ -20,7 +20,7 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class ActionsPanel < JPanel
+class BrowsingStatusPanel < JPanel
 
   attr_reader :exportButton
 

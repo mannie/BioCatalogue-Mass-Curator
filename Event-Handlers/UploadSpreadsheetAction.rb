@@ -21,7 +21,9 @@
 =end
 
 class UploadSpreadsheetAction
-
+  
+  @selectedFilePath = nil
+  
   def initialize(container)
     super()
     @buttonContainer = container
@@ -33,23 +35,66 @@ class UploadSpreadsheetAction
   
   def actionPerformed(event)
     if @buttonContainer.instance_of?(MainPanel)
-    
-      if BioCatalogueClient.loggedIn
-      else
-        @buttonContainer.setVisible(false)
-        
-        @@loginPanel ||= LoginPanel.new
-        @@loginPanel.setVisible(true)
-        @buttonContainer.setVisible(false)
-
-        MAIN_WINDOW.getContentPane.add(@@loginPanel)
-        MAIN_WINDOW.getContentPane.repaint
-      end # if BioCatalogueClient.loggedIn
+      @buttonContainer.setVisible(false)
       
-    elsif @buttonContainer.instance_of?(SpreadsheetUploadPanel)
-    end
+      # @@loginPanel ||= LoginPanel.new
+      # @@loginPanel.setVisible(true)
+      
+      @@uploadPanel ||= UploadSpreadsheetPanel.new
+      @@uploadPanel.setVisible(true)
+      @buttonContainer.setVisible(false)
+
+      MAIN_WINDOW.getContentPane.add(@@uploadPanel)
+      MAIN_WINDOW.getContentPane.repaint
     
-    LOG.warn "UploadSpreadsheetAction actionPerformed"
+    elsif @buttonContainer.instance_of?(UploadSpreadsheetPanel)
+      
+      if event.getSource==@buttonContainer.selectSpreadsheetButton
+        @@fileSelector ||= JFileChooser.new
+        @@filter ||= FileNameExtensionFilter.new("Excel Spreadsheets", "xls")
+        @@fileSelector.setAcceptAllFileFilterUsed(false)
+        @@fileSelector.setFileFilter(@@filter)
+    
+        if @@fileSelector.showOpenDialog(MAIN_WINDOW) == 
+            JFileChooser::APPROVE_OPTION
+          @selectedFilePath = @@fileSelector.getSelectedFile.getAbsolutePath
+          @buttonContainer.selectedSpreadsheetLabel.setText(@selectedFilePath)
+          @buttonContainer.selectedSpreadsheetLabel.setEnabled(true)
+        end # if file selected
+      elsif event.getSource==@buttonContainer.uploadSpreadsheetButton
+        
+        return if @selectedFilePath.nil?
+        
+        jsonOutput = SpreadsheetParsing.generateJSONFromSpreadsheet(
+            @selectedFilePath)
+        
+        if jsonOutput
+          user = @buttonContainer.usernameField.getText
+          pass = @buttonContainer.passwordField.getText
+          
+          Thread.new("Posting annotation data") {
+            @buttonContainer.uploadSpreadsheetButton.setEnabled(false)
+            @buttonContainer.uploadSpreadsheetButton.setText("Uploading...")
+            
+            if Utilities::Application.postAnnotationData(jsonOutput, user, pass)
+              Utilities::Notification.informationDialog(
+                  "Annotations has been successfully sent.", "Success")
+            else
+              Utilities::Notification.errorDialog(
+                  "An error occured while trying to send you annotations.")
+            end
+            
+            @buttonContainer.uploadSpreadsheetButton.setEnabled(true)
+            @buttonContainer.uploadSpreadsheetButton.setText("Upload") 
+          }
+        else
+          Utilities::Notification.errorDialog(
+              "An error occured while trying to parse the given spreadsheet.")
+        end # if jsonOutput 
+          
+      end # elsif event.getSource==@buttonContainer.uploadSpreadsheetButton
+
+    end # elsif @buttonContainer.instance_of?(UploadSpreadsheetPanel)
   end # actionPerformed
 
 end

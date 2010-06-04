@@ -50,7 +50,7 @@ class BioCatalogueClient
   end # self.cachedServices
   
   def self.selectedServices
-#    @@selectedServices.reject! { |id, service| id == -1 }
+    @@selectedServices.reject! { |id, service| id == -1 }
     @@selectedServices
   end # self.selectedServices
   
@@ -62,29 +62,5 @@ class BioCatalogueClient
       URI.join(@@HOST.to_s, "/services")
     end
   end # self.servicesEndpoint
-  
-  def self.selectServiceForAnnotation(service)
-    @@selectedServices.merge!(service.id => service) if service && 
-        service.class==Service && !@@selectedServices.include?(service.id)
-  end # self.addService
-  
-  def self.deselectServiceForAnnotation(service)
-    @@selectedServices.reject! { |key, value| 
-      key == service.id 
-    } if service && service.class==Service
-  end # self.removeService
-  
-  def self.addServiceToCache(service)
-    @@cachedServices.merge!(service.id => service) if service &&
-        service.class==Service
-  end # self.cacheService
-
-  def self.removeServiceFromCache(service)
-    self.deselectServiceForAnnotation(service)
     
-    @@cachedServices.reject! { |key, value| 
-      key == service.id 
-    } if service && service.class==Service
-  end # self.cacheService
-  
 end

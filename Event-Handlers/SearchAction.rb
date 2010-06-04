@@ -33,7 +33,7 @@ class SearchAction
     query = MainWindow.SEARCH_PANEL.searchField.getText
     
     unless query.empty?
-      LOG.warn "Searched for #{query}"
+      log('w', nil, "Searched for #{query}")
     end
   end # actionPerformed
 

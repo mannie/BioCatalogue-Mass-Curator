@@ -27,21 +27,25 @@ class CheckBoxListener
     @service = service
     return self
   end # initialize
-  
-  def stateChanged(event)
+
+# --------------------
+
+  def stateChanged(event)    
     if event.getSource.isSelected
-      BioCatalogueClient.selectServiceForAnnotation(@service)
+      Utilities::Application.selectServiceForAnnotation(@service)
     else
-      BioCatalogueClient.deselectServiceForAnnotation(@service)
+      Utilities::Application.deselectServiceForAnnotation(@service)
     end
     
     SELECTED_SERVICES_WINDOW.refreshSelectedServices
     visible = SELECTED_SERVICES_WINDOW.isVisible
     SELECTED_SERVICES_WINDOW.setVisible(true) unless visible
     
-    MainWindow.ACTIONS_PANEL.exportButton.setEnabled(
+    return if GenerateSpreadsheetAction.isBusyExporting
+
+    MainWindow.BROWSING_STATUS_PANEL.exportButton.setEnabled(
         !BioCatalogueClient.selectedServices.empty?)
-    MainWindow.ACTIONS_PANEL.refresh
+    MainWindow.BROWSING_STATUS_PANEL.refresh
   end # stateChanged
   
 end

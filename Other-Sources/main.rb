@@ -23,16 +23,11 @@
 doBenchmark = true
 biocatHost = "http://sandbox.biocatalogue.org"
 
-# Set Up Logging Facilities
-require 'logger'
-LOG = Logger.new(STDOUT)
-
 =begin
 %w{ spreadsheet ruby-ole libxml-jruby }.each do |gem|
   # TODO: show in a dialog box?
   if `gem list | grep "#{gem}"`.empty?
-    LOG.fatal "The '#{gem}' gem could not be found.  You can install this by running:\n  sudo jruby -S gem install #{gem}"
-    exit
+    log('f', "The '#{gem}' gem could not be found.  You can install this by running:\n  sudo jruby -S gem install #{gem}")
   end
 end
 =end
@@ -42,8 +37,12 @@ if doBenchmark
   require 'benchmark'
   
   Benchmark.bm do |b| 
+
+    b.report("Cons") {
+      require File.join(File.dirname(__FILE__), 'application_constants.rb')
+    }
     
-    b.report("Libs") {
+    b.report("Libr") {
       require File.join(File.dirname(__FILE__), 'application_requires.rb')
     }
 
@@ -57,7 +56,8 @@ if doBenchmark
   end
   
 else
-
+  
+  require File.join(File.dirname(__FILE__), 'application_constants.rb')
   require File.join(File.dirname(__FILE__), 'application_requires.rb')
 
   biocatClient = BioCatalogueClient.new(biocatHost)

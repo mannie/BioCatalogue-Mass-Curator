@@ -36,7 +36,7 @@ class GoBackAction
     
     MAIN_WINDOW.mainPanel.browseButtonAction.setLoadPageNumber(
         LoadServicesAction.currentPage) if @buttonContainer.instance_of?(
-        ActionsPanel)
+        BrowsingStatusPanel)
         
     MAIN_WINDOW.mainPanel.setVisible(true)
     MAIN_WINDOW.getContentPane.repaint

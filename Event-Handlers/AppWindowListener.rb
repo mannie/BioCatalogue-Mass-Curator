@@ -30,13 +30,12 @@ class AppWindowListener
   
   def windowClosing(event)
     yesNo = JOptionPane.showConfirmDialog(event.getSource,
-        "Are you sure you want to close this application?\n" + 
-        "All unsaved changes will be lost...",
+        "Are you sure you want to close this application?",
         "Quit?", JOptionPane::YES_NO_OPTION)
         
     if yesNo == JOptionPane::YES_OPTION
       event.getSource.dispose
-      LOG.close
+      LOGGER.close
       java.lang.System::exit(0)
     end
   end # windowClosing

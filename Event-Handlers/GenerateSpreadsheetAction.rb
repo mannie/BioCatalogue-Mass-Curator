@@ -21,12 +21,26 @@
 =end
 
 class GenerateSpreadsheetAction
-
+  
+  @@isBusyExporting = false
+  
   def initialize(container)
     super()
     @buttonContainer = container
     return self
   end # initialize
+
+# --------------------
+  
+  def self.setBusyExporting(busy)
+    @@isBusyExporting = busy
+  end # self.setBusyExporting
+
+  def self.isBusyExporting
+    @@isBusyExporting
+  end # isBusyExporting
+  
+# --------------------
 
   def actionPerformed(event)
     @@fileSelector ||= JFileChooser.new
@@ -40,30 +54,33 @@ class GenerateSpreadsheetAction
       return if dir.nil? || !dir.isDirectory
       
       Thread.new("Generating spreadsheet") { |t|
+        GenerateSpreadsheetAction.setBusyExporting(true)
+
         event.getSource.setEnabled(false)
         originalButtonCaption = event.getSource.getText
         event.getSource.setText("Exporting...")
         
-        file = Curation.generateSpreadsheet(BioCatalogueClient.selectedServices,
-            dir.path)
+        file = SpreadsheetGeneration.generateSpreadsheet(
+            BioCatalogueClient.selectedServices, dir.path)
 
         if file
-          JOptionPane.showMessageDialog(MAIN_WINDOW,
+          Utilities::Notification.informationDialog(
               "The selected services have been successfully exported to:\n" + 
-              file.path,"Export Complete", JOptionPane::INFORMATION_MESSAGE)
+              file.path, "Export Complete")
         else
-          JOptionPane.showMessageDialog(MAIN_WINDOW, "Error", 
-              "An error occured while trying to export the selected services.",
-              JOptionPane::ERROR_MESSAGE)
+          Utilities::Notification.errorDialog(
+              "An error occured while trying to export the selected services.")
         end
         
         event.getSource.setEnabled(true)
         event.getSource.setText(originalButtonCaption)
-      }
+        
+        GenerateSpreadsheetAction.setBusyExporting(false)
+      } # thread
+    end # if file selected
+    
+    LoadServicesAction.setBusyExporting(false)
       
-    end # if    
-  
-    LoadServicesAction.setBusyExporting(false)    
   end # actionPerformed
   
 end

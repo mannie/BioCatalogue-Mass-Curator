@@ -22,90 +22,6 @@
 
 # ========================================
 
-# Application Constants
-
-# Directory Names
-APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "..")).freeze
-
-USER_INTERFACE_DIR = File.join(APP_ROOT, "User-Interface").freeze
-EVENT_HANDLERS_DIR = File.join(APP_ROOT, "Event-Handlers").freeze
-MODELS_DIR = File.join(APP_ROOT, "Models").freeze
-RESOURCES_DIR = File.join(APP_ROOT, "Resources").freeze
-LIBRARIES_DIR = File.join(APP_ROOT, "Libraries").freeze
-
-# ========================================
-
-# Application Source Files To Include
-USER_INTERFACE = %w{ ActionsPanel.rb
-                     LoginPanel.rb
-                     MainWindow.rb 
-                     MainPanel.rb
-                     PreviewDialog.rb
-                     SearchPanel.rb
-                     ServiceListingPanel.rb
-                     ServiceSelectPanel.rb
-                     SelectedServicesWindow.rb 
-                     SpreadsheetUploadPanel.rb }.freeze
-                 
-EVENT_HANDLERS = %w{ AppWindowListener.rb
-                     CheckBoxListener.rb
-                     DoLoginAction.rb
-                     LoadServicesAction.rb
-                     GenerateSpreadsheetAction.rb 
-                     GoBackAction.rb
-                     PreviewAction.rb
-                     SearchAction.rb
-                     UploadSpreadsheetAction.rb }.freeze
-
-MODELS = %w{ BioCatalogueClient.rb
-             Service.rb
-             ServiceComponent.rb
-             ServiceComponentPort.rb }.freeze
-
-LIBRARIES = %w{ Curation.rb
-                Utilities.rb }.freeze
-
-RESOURCES = %w{  }.freeze
-
-# ========================================
-
-# Java Classes To Include
-AWT_CLASSES = %w{ BorderLayout
-                  Color
-                  Dimension
-                  FlowLayout 
-                  GridLayout
-                  GridBagLayout
-                  GridBagConstraints
-                  Insets
-                  Toolkit }.freeze
-
-AWT_EVENTS = %w{ ActionListener
-                 WindowListener }.freeze
-
-SWING_CLASSES = %w{ plaf.basic.BasicArrowButton
-                    BorderFactory 
-                    BoxLayout 
-                    JButton 
-                    JCheckBox
-                    JDialog
-                    JFileChooser
-                    JFrame 
-                    JLabel 
-                    JOptionPane 
-                    JPanel
-                    JPasswordField
-                    JScrollPane
-                    JTextArea
-                    JTextField
-                    SwingConstants }.freeze
-
-SWING_EVENTS = %w{ ChangeListener }.freeze
-
-MISC_CLASSES = %w{  }.freeze
-
-# ========================================
-
 # Require Java Core Libraries
 require 'java'
 
@@ -120,14 +36,18 @@ MISC_CLASSES.each { |misc| import misc }
 
 # Require Ruby Gems
 require 'rubygems'
+
 require 'open-uri'
 require 'net/http'
+
 require 'spreadsheet'
+
 require 'xml/libxml'
+require 'json/ext'
 
 # Require Application Sources
-USER_INTERFACE.each { |fname| require File.join(USER_INTERFACE_DIR, fname) }
 EVENT_HANDLERS.each { |fname| require File.join(EVENT_HANDLERS_DIR, fname) }
-MODELS.each { |fname| require File.join(MODELS_DIR, fname) }
 LIBRARIES.each { |fname| require File.join(LIBRARIES_DIR, fname) }
+MODELS.each { |fname| require File.join(MODELS_DIR, fname) }
 RESOURCES.each { |fname| require File.join(RESOURCES_DIR, fname) }
+USER_INTERFACE.each { |fname| require File.join(USER_INTERFACE_DIR, fname) }

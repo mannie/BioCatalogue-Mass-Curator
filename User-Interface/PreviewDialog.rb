@@ -44,7 +44,7 @@ private
     
     Utilities::Components.centerComponentTo(self, @parent)
     
-    LOG.warn "Implement fetchMoreInformation for service"
+    log('w', nil, "Implement fetchMoreInformation for service")
     
     self.setVisible(true)
   end

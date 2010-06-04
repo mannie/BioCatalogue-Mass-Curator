@@ -49,7 +49,7 @@ class LoadServicesAction
    
   def self.setBusyExporting(exporting)
     MainWindow.SEARCH_PANEL.setVisible(!exporting)
-    MainWindow.ACTIONS_PANEL.setVisible(!exporting)
+    MainWindow.BROWSING_STATUS_PANEL.setVisible(!exporting)
     @@serviceSelectPanel.previousPageButton.setVisible(!exporting)
     @@serviceSelectPanel.nextPageButton.setVisible(!exporting)
     @@serviceSelectPanel.mainPanel.setVisible(!exporting)
@@ -68,19 +68,20 @@ class LoadServicesAction
       @@serviceSelectPanel = panel
             
       panel.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
-      panel.add(MainWindow.ACTIONS_PANEL, BorderLayout::SOUTH)
+      panel.add(MainWindow.BROWSING_STATUS_PANEL, BorderLayout::SOUTH)
       
       Utilities::Application.syncCollectionWithCache(panel.localServiceCache)
     else
       @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
       @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
     end
-
+    
     # update status.actions panel
-    MainWindow.ACTIONS_PANEL.currentPage = @pageNumber
-    MainWindow.ACTIONS_PANEL.exportButton.setEnabled(
-        !BioCatalogueClient.selectedServices.empty?)
-    MainWindow.ACTIONS_PANEL.refresh
+    MainWindow.BROWSING_STATUS_PANEL.currentPage = @pageNumber
+    MainWindow.BROWSING_STATUS_PANEL.exportButton.setEnabled(
+        !BioCatalogueClient.selectedServices.empty?) unless
+        GenerateSpreadsheetAction.isBusyExporting
+    MainWindow.BROWSING_STATUS_PANEL.refresh
     
     # update full view to show new services
     @buttonContainer.setVisible(false)

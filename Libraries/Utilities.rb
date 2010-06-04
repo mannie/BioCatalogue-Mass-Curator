@@ -24,6 +24,53 @@ module Utilities
 
   module Application
     
+    def self.postAnnotationData(jsonContent, user, pass)
+      begin            
+        request = Net::HTTP::Post.new("/annotations/bulk_create")
+        request.basic_auth(user, pass)
+        request.body = jsonContent
+        request.content_type = 'application/json'
+        request.add_field("Accept", 'application/json')
+        
+        Net::HTTP.new(BioCatalogueClient.HOST.host).start { |http|
+          response = http.request(request)
+          log('w', nil, "do after POST checks on response")
+          p response.inspect, response.content_type, response.body
+        }
+        
+        return true
+      rescue Exception => ex
+        log('e', ex)
+        return nil
+      end # begin rescue
+
+    end # self.postAnnotationData
+    
+    def self.selectServiceForAnnotation(service)
+      BioCatalogueClient.selectedServices.merge!(service.id => service) if 
+          service && service.class==Service && 
+          !BioCatalogueClient.selectedServices.include?(service.id)
+    end # self.addService
+    
+    def self.deselectServiceForAnnotation(service)
+      BioCatalogueClient.selectedServices.reject! { |key, value| 
+        key == service.id 
+      } if service && service.class==Service
+    end # self.removeService
+    
+    def self.addServiceToCache(service)
+      BioCatalogueClient.cachedServices.merge!(service.id => service) if 
+          service && service.class==Service
+    end # self.cacheService
+
+    def self.removeServiceFromCache(service)
+      self.deselectServiceForAnnotation(service)
+      
+      BioCatalogueClient.cachedServices.reject! { |key, value| 
+        key == service.id 
+      } if service && service.class==Service
+    end # self.cacheService
+
     def self.syncCollectionWithCache(collection)
       collection.each { |service|
         if (cached = BioCatalogueClient.cachedServices[service.id])
@@ -32,6 +79,26 @@ module Utilities
         }
     end # self.syncCollectionWithCache(collection)
 
+    def self.weblinkWithIDForResource(id, resource="service", format=nil)
+      return nil if !format.nil? && format.class!=String
+      return nil if resource.nil? || resource.class!=String
+      
+      path = "/#{resource}/#{id}"
+      path += ".#{format}" if format
+      
+      return URI.join(BioCatalogueClient.HOST.to_s, path)
+    end # self.weblinkWithID
+    
+    def self.resourceNameFor(thing)
+      case thing.downcase
+        when "soap service", "rest service": "services"
+        when "soap input": "soap_inputs"
+        when "soap output": "soap_outputs"
+        when "soap operation": "soap_operations"
+        else nil
+      end # case
+    end # resourceNameFor
+    
   end # module Application
   
 # ========================================
@@ -67,21 +134,41 @@ module Utilities
   end # module Components
   
 # ========================================
+
+  module Notification
+    
+    def self.errorDialog(msg, title="Error")
+      JOptionPane.showMessageDialog(MAIN_WINDOW, msg, title, 
+          JOptionPane::ERROR_MESSAGE)
+    end # self.errorDialog
+    
+    def self.informationDialog(msg, title="Information")
+      JOptionPane.showMessageDialog(MAIN_WINDOW, msg, title, 
+          JOptionPane::INFORMATION_MESSAGE)
+    end # self.informationDialog
+    
+  end # module Notification
+  
+# ========================================
   
   module XML
   
     def self.getXMLDocumentFromURI(uri)
-      uri = URI.parse(uri) if uri.class==String
-      
-      return nil unless uri.class.name.include?("URI")
-      
-      userAgent = "BioCatalogue Mass Curator Alpha; JRuby/#{JRUBY_VERSION}"
-      
-      xmlContent = open(uri, "Accept" => "application/xml", 
-          "User-Agent" => userAgent).read
-      
-      return LibXMLJRuby::XML::Parser.string(xmlContent).parse
-    end
+      begin
+        uri = URI.parse(uri) if uri.class==String
+        
+        raise "Invalid argument" unless uri.class.name.include?("URI")
+        
+        userAgent = "BioCatalogue Mass Curator Alpha; JRuby/#{JRUBY_VERSION}"
+        xmlContent = open(uri, "Accept" => "application/xml", 
+            "User-Agent" => userAgent).read
+        
+        return LibXMLJRuby::XML::Parser.string(xmlContent).parse
+      rescue Exception => ex
+        log('e', ex)
+        return nil
+      end # begin rescue
+    end # self.getXMLDocumentFromURI
     
     def self.getAttributeFromNode(attribute, node)
       node.attributes.select { |a| "xlink:href"==a.name }[0]

@@ -14,6 +14,6 @@ Copyright:: (c) 2010 University of Manchester, UK
 This is a JRuby application which uses the BioCatalogue[http://biocatalogue.org] read/write API to annotate a batch of Web Services offline.
 
 == Installing Dependencies
-This app is dependant on the following gems: libxml-jruby, and spreadsheet.
-  sudo jruby -S gem install libxml-jruby spreadsheet
+This app is dependant on the following gems: json-jruby, libxml-jruby, and spreadsheet.
+  sudo jruby -S gem install libxml-jruby spreadsheet json-jruby
   

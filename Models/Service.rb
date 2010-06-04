@@ -63,25 +63,21 @@ class Service
         end # propertyNodes.each
       end # if else cached
       
-      BioCatalogueClient.addServiceToCache(self)
+      Utilities::Application.addServiceToCache(self)
       
     rescue Exception => ex
-      LOG.error "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
-      BioCatalogueClient.removeServiceFromCache(self)
+      log('e', ex)
+      Utilities::Application.removeServiceFromCache(self)
     end # begin rescue
     
     if @name.nil?
-      BioCatalogueClient.removeServiceFromCache(self)
+      Utilities::Application.removeServiceFromCache(self)
       @id = -1
     end
     
     return self
   end # initialize
   
-  def weblink(format=nil)
-    Service.weblinkWithID(@id, format)
-  end # weblink
-
   def fetchComponents
     return true if @componentsFetched
 
@@ -105,12 +101,12 @@ class Service
         @components.merge!(component.id => component)
       }
       
-      BioCatalogueClient.addServiceToCache(self)
+      Utilities::Application.addServiceToCache(self)
       @componentsFetched = true
       
       return true
     rescue Exception => ex
-      LOG.error "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
+      log('e', ex)
       return false
     end # begin rescue
   end # fetchComponents
@@ -118,15 +114,5 @@ class Service
   def to_s
     "#{@technology}::#{@id}::#{@name}"
   end # to_s
-
-# --------------------
-
-  def self.weblinkWithID(id, format=nil)
-    if !format.nil? && !format.empty? && format.class.name=="String"
-      URI.join(BioCatalogueClient.HOST.to_s, "/services/#{id}.#{format}")
-    else
-      URI.join(BioCatalogueClient.HOST.to_s, "/services/#{id}")
-    end
-  end # self.weblinkWithID
 
 end

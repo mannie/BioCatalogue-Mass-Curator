@@ -22,16 +22,17 @@
 
 class ServiceSelectPanel < JPanel
   
-  attr_reader :localServiceCache, :mainPanel, :previousPageButton, :nextPageButton
+  attr_reader :localServiceCache, :mainPanel
+  attr_reader :previousPageButton, :nextPageButton
   
-  SERVICES_PER_PAGE = 10
+  SERVICES_PER_PAGE ||= 10
   
   def initialize(pageNumber)
     super()
 
     @page = pageNumber.to_i
     initUI
-    MainWindow.ACTIONS_PANEL.pageCount = @lastPage
+    MainWindow.BROWSING_STATUS_PANEL.pageCount = @lastPage
 
     return self
   end # initialize
@@ -43,7 +44,7 @@ private
     
     self.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
     self.add(@mainPanel ||= mainScrollPane)
-    self.add(MainWindow.ACTIONS_PANEL, BorderLayout::SOUTH)
+    self.add(MainWindow.BROWSING_STATUS_PANEL, BorderLayout::SOUTH)
         
     # button to previous page
 #    previousPageButton = BasicArrowButton.new(SwingConstants::WEST)
@@ -78,8 +79,7 @@ private
           BioCatalogueClient.servicesEndpoint('xml', SERVICES_PER_PAGE, @page, 
           'SOAP'))
     rescue Exception => ex
-      LOG.fatal "#{ex.class.name} - #{ex.message}\n" << ex.backtrace.join("\n")
-      exit
+      log('f', ex)
     end
     
     @localServiceCache = []
