@@ -22,12 +22,12 @@
 
 class ServiceListingPanel < JPanel
 
-  def initialize(service)
+  def initialize(service, showDetail=true)
     super()
     
-    @service = service
-    
+    @service, @showDetail = service, showDetail
     initUI
+    
     return self
   end # initialize
 
@@ -41,28 +41,30 @@ private
     c = GridBagConstraints.new
     c.anchor = GridBagConstraints::NORTHWEST
     c.fill = GridBagConstraints::HORIZONTAL
-    c.insets = Insets.new(2, 5, 3, 5)
-    c.weightx = 2
+    c.insets = Insets.new(2, 3, 2, 3)
+    c.weightx, c.weighty = 2, 1
     c.gridx, c.gridy = 0, 0
     
     # add checkbox
-    checkBox = JCheckBox.new(@service.name, false)
-    checkBox.addChangeListener(CheckBoxListener.new(@service))
+    checkBox = JCheckBox.new(@service.name, @service.isSelectedForAnnotation)
+    checkBox.addChangeListener(@service.selectedStatusChangeListener)
     self.add(checkBox, c)
     
-    # add preview button
-    c.weightx = GridBagConstraints::REMAINDER
-    c.gridx = 1
-    previewButton = JButton.new("Preview")
-    previewButton.addActionListener(PreviewAction.new(self, @service))
-    self.add(previewButton, c)
-    
-    # add link to biocatalogue
-    c.gridx, c.gridy = 0, 1
-    c.insets.set(2, 50, 3, 5)
-    uriLabel = JLabel.new(@service.technology + ": " + 
-        Utilities::Application.weblinkWithIDForResource(@service.id).to_s)
-    self.add(uriLabel, c)    
+    if @showDetail
+      # add preview button
+      c.weightx = GridBagConstraints::REMAINDER
+      c.gridx = 1
+      previewButton = JButton.new("Preview")
+      previewButton.addActionListener(PreviewAction.new(self, @service))
+      self.add(previewButton, c)
+      
+      # add link to biocatalogue
+      c.gridx, c.gridy = 0, 1
+      c.insets.set(2, 50, 3, 5)
+      uriLabel = JLabel.new(@service.technology + ": " + 
+          Utilities::Application.weblinkWithIDForResource(@service.id).to_s)
+      self.add(uriLabel, c)
+    end # if @showDetail 
   end # initUI
   
 end

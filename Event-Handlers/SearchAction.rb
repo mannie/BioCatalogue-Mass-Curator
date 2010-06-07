@@ -32,8 +32,18 @@ class SearchAction
   def actionPerformed(event)
     query = MainWindow.SEARCH_PANEL.searchField.getText
     
-    unless query.empty?
-      log('w', nil, "Searched for #{query}")
+    unless query.empty?      
+      Thread.new("Searching for: '#{}'") {
+        MainWindow.SEARCH_PANEL.searchButton.setText("Searching...")
+        MainWindow.SEARCH_PANEL.searchButton.setEnabled(false)
+        MainWindow.SEARCH_PANEL.searchField.setEnabled(false)
+        
+        SearchResultsWindow.new(query)
+        
+        MainWindow.SEARCH_PANEL.searchButton.setText("Search")
+        MainWindow.SEARCH_PANEL.searchButton.setEnabled(true)
+        MainWindow.SEARCH_PANEL.searchField.setEnabled(true)
+      }
     end
   end # actionPerformed
 

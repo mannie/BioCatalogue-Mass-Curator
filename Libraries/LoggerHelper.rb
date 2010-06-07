@@ -26,7 +26,6 @@ LOGGER ||= Logger.new(STDOUT)
 
 def log(level, exception, msg=nil)
   begin
-  puts level, exception.inspect 
     raise "Invalid parameters passed to logger" if level.nil? || level.empty? ||
         (exception.nil? && msg.nil?)
     

@@ -22,7 +22,7 @@
 
 class SearchPanel < JPanel
   
-  attr_reader :searchField
+  attr_reader :searchField, :searchButton
   
   def initialize
     super()
@@ -41,13 +41,13 @@ class SearchPanel < JPanel
     # text field
     c.gridx = 0
     c.weightx = 50
-    self.add(@searchField = JTextField.new, c)
+    self.add(@searchField = JTextField.new("emboss"), c)
           
     # preview button
     c.gridx = 1
     c.weightx = 1
-    searchButton = JButton.new("Search")
-    searchButton.addActionListener(BioCatalogueClient.SEARCH)
-    self.add(searchButton, c)
+    @searchButton = JButton.new("Search")
+    @searchButton.addActionListener(BioCatalogueClient.SEARCH)
+    self.add(@searchButton, c)
   end # initUI
 end

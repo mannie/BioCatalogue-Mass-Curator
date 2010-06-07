@@ -21,6 +21,8 @@
 		3634F7DD11B924B8003A01B6 /* reload_app.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = reload_app.rb; sourceTree = "<group>"; };
 		3634F7E711B92C21003A01B6 /* LoggerHelper.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = LoggerHelper.rb; sourceTree = "<group>"; };
 		3634F85F11B93296003A01B6 /* application_constants.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = application_constants.rb; sourceTree = "<group>"; };
+		3634F9C711BCFB0D003A01B6 /* BrowserLauncher2-1_3.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; path = "BrowserLauncher2-1_3.jar"; sourceTree = "<group>"; };
+		3634F9F711BCFE9B003A01B6 /* SearchResultsWindow.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SearchResultsWindow.rb; sourceTree = "<group>"; };
 		363DDC8F11AD266B00CF54D7 /* SpreadsheetGeneration.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SpreadsheetGeneration.rb; sourceTree = "<group>"; };
 		363DDD2F11AD53C400CF54D7 /* SearchAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SearchAction.rb; sourceTree = "<group>"; };
 		363DDDF411AD675B00CF54D7 /* SearchPanel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = SearchPanel.rb; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 		362735E111A6DD3D00269B2C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3634F9C711BCFB0D003A01B6 /* BrowserLauncher2-1_3.jar */,
 				3634F7E711B92C21003A01B6 /* LoggerHelper.rb */,
 				3634F70811B8FEA7003A01B6 /* SpreadsheetConstants.rb */,
 				363DDC8F11AD266B00CF54D7 /* SpreadsheetGeneration.rb */,
@@ -89,6 +92,7 @@
 				36F9026211A54B27009E69E2 /* MainWindow.rb */,
 				36273C0111ABD7BA00269B2C /* PreviewDialog.rb */,
 				363DDDF411AD675B00CF54D7 /* SearchPanel.rb */,
+				3634F9F711BCFE9B003A01B6 /* SearchResultsWindow.rb */,
 				3627399D11AAC13E00269B2C /* SelectedServicesWindow.rb */,
 				36273D0D11ABEE9400269B2C /* ServiceListingPanel.rb */,
 				36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */,

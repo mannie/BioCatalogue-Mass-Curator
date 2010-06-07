@@ -32,26 +32,26 @@ class SelectedServicesWindow < JFrame
 
   def refreshSelectedServices
     listPanel = JPanel.new
-    listPanel.setLayout(GridBagLayout.new)
+    listPanel.setLayout(GridLayout.new(0, 1))
     
     c = GridBagConstraints.new
     c.anchor = GridBagConstraints::NORTHWEST
-    c.insets = Insets.new(2, 5, 3, 5)
-    c.fill = GridBagConstraints::BOTH
-    c.weightx, c.weighty = 1, 1
+    c.insets = Insets.new(1, 2, 1, 2)
+    c.fill = GridBagConstraints::HORIZONTAL
+    c.weightx
     c.gridy = 0
 
     BioCatalogueClient.selectedServices.each { |id, service|
-      listPanel.add(JLabel.new(service.to_s), c)
+      listPanel.add(ServiceListingPanel.new(service, false))
       c.gridy += 1
     }
     
     scrollPane = JScrollPane.new(listPanel)
     self.getContentPane.add(scrollPane)
-        
+    
     self.remove(@@previouslyUsedPanel) if @@previouslyUsedPanel
     @@previouslyUsedPanel = scrollPane
-    
+
     self.pack
   end # showSelectedServices
   
@@ -66,7 +66,7 @@ private
     self.setMinimumSize(Dimension.new(300, 100))
 
     self.setLocation(70, 75)
-    self.setDefaultCloseOperation(JFrame::HIDE_ON_CLOSE)
+    self.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
 
     self.setVisible(true)
   end # initUI

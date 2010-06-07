@@ -30,20 +30,19 @@ class MainWindow < JFrame
         
     addWindowListener(AppWindowListener.new)
     
-    @@SEARCH_PANEL = SearchPanel.new
-    @@BROWSING_STATUS_PANEL = BrowsingStatusPanel.new
-    
     return self
   end # initialize
   
 # --------------------
 
   def self.SEARCH_PANEL
-    @@SEARCH_PANEL
+    @@SEARCH_PANEL ||= SearchPanel.new
+    return @@SEARCH_PANEL
   end # self.SEARCH_PANEL
   
   def self.BROWSING_STATUS_PANEL
-    @@BROWSING_STATUS_PANEL
+    @@BROWSING_STATUS_PANEL ||= BrowsingStatusPanel.new
+    return @@BROWSING_STATUS_PANEL
   end # self.BROWSING_STATUS_PANEL
   
 private

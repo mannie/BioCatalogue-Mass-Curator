@@ -22,8 +22,9 @@
 
 class Service
   
-  attr_reader :components
+  attr_reader :components, :selectedStatusChangeListener
   attr_reader :id, :name, :description, :technology
+  attr_reader :variantURI
   
   @componentsFetched = false
   
@@ -31,37 +32,32 @@ class Service
     begin
       @id = serviceURIString.split('/')[-1].to_i
  
-      if (cachedService = BioCatalogueClient.cachedServices[@id]) # cached
-        @name = cachedService.name
-        @description = cachedService.description
-        #@technology = cachedService.technology
-        cachedService = self
-      else # not cached
-        serviceURIString << "/variants.xml"        
-        xmlDocument = Utilities::XML.getXMLDocumentFromURI(serviceURIString)
+      serviceURIString << "/variants.xml"        
+      xmlDocument = Utilities::XML.getXMLDocumentFromURI(serviceURIString)
+    
+      propertyNodes = Utilities::XML.getValidChildren(xmlDocument.root)
+      propertyNodes.each do |propertyNode|
+        case propertyNode.name
+          when 'name'
+            @name = propertyNode.content
+          when 'dc:description'
+            @description = propertyNode.content
+          when 'serviceTechnologyTypes'
+            @technology = Utilities::XML.getContentOfFirstChild(propertyNode)
+          when 'variants'
+            variants = Utilities::XML.selectNodesWithNameFrom(
+                "#{@technology.downcase}Service", propertyNode)
+            variants.each { |node|
+              @variantURI = Utilities::XML.getAttributeFromNode(
+                "xlink:href", node).value
+              break if @variantURI
+            }
+            
+            @variantURI = URI.parse(@variantURI)
+        end # case
+      end # propertyNodes.each
       
-        propertyNodes = Utilities::XML.getValidChildren(xmlDocument.root)
-        propertyNodes.each do |propertyNode|
-          case propertyNode.name
-            when 'name'
-              @name = propertyNode.content
-            when 'dc:description'
-              @description = propertyNode.content
-            when 'serviceTechnologyTypes'
-              @technology = Utilities::XML.getContentOfFirstChild(propertyNode)
-            when 'variants'
-              variants = Utilities::XML.selectNodesWithNameFrom(
-                  "#{@technology.downcase}Service", propertyNode)
-              variants.each { |node|
-                @variantURI = Utilities::XML.getAttributeFromNode(
-                  "xlink:href", node).value
-                break if @variantURI
-              }
-              
-              @variantURI = URI.parse(@variantURI + ".xml")
-          end # case
-        end # propertyNodes.each
-      end # if else cached
+      @selectedStatusChangeListener = CheckBoxListener.new(self)
       
       Utilities::Application.addServiceToCache(self)
       
@@ -84,7 +80,8 @@ class Service
     @components = {}
   
     begin
-      xmlDocument = Utilities::XML.getXMLDocumentFromURI(@variantURI)
+      xmlDocument = Utilities::XML.getXMLDocumentFromURI(@variantURI.to_s + 
+          '.xml')
       
       nodeName = (@technology=="SOAP" ? "operations" : nil)
       raise "Only support for SOAP is currently available" if nodeName.nil?
@@ -110,6 +107,10 @@ class Service
       return false
     end # begin rescue
   end # fetchComponents
+
+  def isSelectedForAnnotation
+    !BioCatalogueClient.selectedServices[@id].nil?
+  end # isSelectedForAnnotation
 
   def to_s
     "#{@technology}::#{@id}::#{@name}"

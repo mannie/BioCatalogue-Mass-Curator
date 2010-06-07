@@ -79,7 +79,16 @@ module Utilities
         }
     end # self.syncCollectionWithCache(collection)
 
-    def self.weblinkWithIDForResource(id, resource="service", format=nil)
+    def self.serviceWithURI(uriString)
+      id = uriString.split('/')[-1].to_i
+      
+      service = BioCatalogueClient.cachedServices[id]
+      service ||= Service.new(uriString.to_s)
+      
+      return service
+    end # self.serviceWithURI
+    
+    def self.weblinkWithIDForResource(id, resource="services", format=nil)
       return nil if !format.nil? && format.class!=String
       return nil if resource.nil? || resource.class!=String
       
@@ -91,7 +100,7 @@ module Utilities
     
     def self.resourceNameFor(thing)
       case thing.downcase
-        when "soap service", "rest service": "services"
+        when "soap service": "soap_services"
         when "soap input": "soap_inputs"
         when "soap output": "soap_outputs"
         when "soap operation": "soap_operations"

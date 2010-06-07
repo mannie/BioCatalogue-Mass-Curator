@@ -54,8 +54,21 @@ class BioCatalogueClient
     @@selectedServices
   end # self.selectedServices
   
+  def self.searchEndpoint(query, format=nil, perPage=25, page=1,
+      scope='services')
+    query = URI.escape(query)
+    
+    if !format.nil? && !format.empty? && format.class==String
+      URI.join(@@HOST.to_s,
+          "/search.#{format}" + 
+          "?q=#{query}&scope=#{scope}&page=#{page}&per_page=#{perPage}")
+    else
+      URI.join(@@HOST.to_s, "/search?q=#{query}")
+    end
+  end # self.searchEndpoint
+
   def self.servicesEndpoint(format=nil, perPage=25, page=1, filter='')
-    if !format.nil? && !format.empty? && format.class.name=="String"
+    if !format.nil? && !format.empty? && format.class==String
       URI.join(@@HOST.to_s, 
           "/services.#{format}?per_page=#{perPage}&page=#{page}&t=[#{filter}]")
     else

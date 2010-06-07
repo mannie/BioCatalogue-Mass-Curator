@@ -34,7 +34,11 @@ class PreviewAction
 # --------------------
 
   def actionPerformed(event)
-    PreviewDialog.new(@service, MAIN_WINDOW, @service.name) if @service
+    @@browserLauncher ||= BrowserLauncher.new
+    @@browserLauncher.setNewWindowPolicy(false)
+    
+    @@browserLauncher.openURLinBrowser(
+        Utilities::Application.weblinkWithIDForResource(@service.id).to_s)
   end # actionPerformed
 
 end

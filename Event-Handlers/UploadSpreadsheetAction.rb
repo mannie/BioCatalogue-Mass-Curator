@@ -69,6 +69,14 @@ class UploadSpreadsheetAction
             @selectedFilePath)
         
         if jsonOutput
+          if jsonOutput.empty?
+            Utilities::Notification.informationDialog(
+                  "No new annotations could be found in the spreadsheet.\n" +
+                  "Nothing has been sent to BioCatalogue.", 
+                  "No New Annotations Found")
+            return
+          end
+          
           user = @buttonContainer.usernameField.getText
           pass = @buttonContainer.passwordField.getText
           
@@ -78,10 +86,10 @@ class UploadSpreadsheetAction
             
             if Utilities::Application.postAnnotationData(jsonOutput, user, pass)
               Utilities::Notification.informationDialog(
-                  "Annotations has been successfully sent.", "Success")
+                  "Your annotations have been successfully sent.", "Success")
             else
               Utilities::Notification.errorDialog(
-                  "An error occured while trying to send you annotations.")
+                  "An error occured while trying to send your annotations.")
             end
             
             @buttonContainer.uploadSpreadsheetButton.setEnabled(true)
@@ -89,7 +97,9 @@ class UploadSpreadsheetAction
           }
         else
           Utilities::Notification.errorDialog(
-              "An error occured while trying to parse the given spreadsheet.")
+              "An error occured while trying to upload your spreadsheet.\n" +
+              "Please check that the spreadsheet contains new annotations\n" +
+              "before trying again.")
         end # if jsonOutput 
           
       end # elsif event.getSource==@buttonContainer.uploadSpreadsheetButton

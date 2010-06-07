@@ -202,6 +202,46 @@
 			<key>Content</key>
 			<dict>
 				<key>PBXProjectModuleGUID</key>
+				<string>3634FBA711BD4989003A01B6</string>
+				<key>PBXProjectModuleLabel</key>
+				<string>SpreadsheetParsing.rb</string>
+				<key>PBXSplitModuleInNavigatorKey</key>
+				<dict>
+					<key>Split0</key>
+					<dict>
+						<key>PBXProjectModuleGUID</key>
+						<string>3634FBA811BD4989003A01B6</string>
+						<key>PBXProjectModuleLabel</key>
+						<string>SpreadsheetParsing.rb</string>
+						<key>_historyCapacity</key>
+						<integer>0</integer>
+						<key>bookmark</key>
+						<string>3634FBCF11BD511E003A01B6</string>
+						<key>history</key>
+						<array>
+							<string>3634FBA611BD4819003A01B6</string>
+						</array>
+					</dict>
+					<key>SplitCount</key>
+					<string>1</string>
+				</dict>
+				<key>StatusBarVisibility</key>
+				<true/>
+			</dict>
+			<key>Geometry</key>
+			<dict>
+				<key>Frame</key>
+				<string>{{0, 20}, {551, 650}}</string>
+				<key>PBXModuleWindowStatusBarHidden2</key>
+				<false/>
+				<key>RubberWindowFrame</key>
+				<string>304 337 551 691 0 0 1680 1028 </string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Content</key>
+			<dict>
+				<key>PBXProjectModuleGUID</key>
 				<string>3634F7F111B92D17003A01B6</string>
 				<key>PBXProjectModuleLabel</key>
 				<string>UploadSpreadsheetAction.rb</string>
@@ -216,7 +256,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>3634F94F11B95B97003A01B6</string>
+						<string>3634FBD011BD511E003A01B6</string>
 						<key>history</key>
 						<array>
 							<string>3634F8C011B938A1003A01B6</string>
@@ -235,87 +275,7 @@
 				<key>PBXModuleWindowStatusBarHidden2</key>
 				<false/>
 				<key>RubberWindowFrame</key>
-				<string>705 217 551 684 0 0 1680 1028 </string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>3634F87F11B934C7003A01B6</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>Utilities.rb</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>3634F88011B934C7003A01B6</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>Utilities.rb</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>3634F95011B95B97003A01B6</string>
-						<key>history</key>
-						<array>
-							<string>3634F87E11B934C1003A01B6</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {548, 650}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>77 276 548 691 0 0 1680 1028 </string>
-			</dict>
-		</dict>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>3634F92611B9560A003A01B6</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>SpreadsheetParsing.rb</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>3634F92711B9560A003A01B6</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>SpreadsheetParsing.rb</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>3634F95111B95B97003A01B6</string>
-						<key>history</key>
-						<array>
-							<string>3634F92411B955C4003A01B6</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {551, 650}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>477 337 551 691 0 0 1680 1028 </string>
+				<string>626 344 551 684 0 0 1680 1028 </string>
 			</dict>
 		</dict>
 	</array>
@@ -386,7 +346,7 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>40</integer>
+											<integer>42</integer>
 											<integer>0</integer>
 										</array>
 									</array>
@@ -447,19 +407,20 @@
 										<string>36F9025F11A54B27009E69E2</string>
 										<string>362735E111A6DD3D00269B2C</string>
 										<string>36F9028911A54B90009E69E2</string>
+										<string>36F9028A11A54B90009E69E2</string>
 										<string>360FD7B911A4107600AEC536</string>
 										<string>1C37FAAC04509CD000000102</string>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>21</integer>
-											<integer>17</integer>
+											<integer>24</integer>
+											<integer>18</integer>
 											<integer>0</integer>
 										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-									<string>{{0, 19}, {275, 602}}</string>
+									<string>{{0, 86}, {275, 602}}</string>
 								</dict>
 								<key>PBXTopSmartGroupGIDs</key>
 								<array/>
@@ -598,10 +559,9 @@
 		<string>1C530D54069F1CE1000CFCEE</string>
 		<string>36273F1711AC147A00269B2C</string>
 		<string>1C530D57069F1CE1000CFCEE</string>
-		<string>/Users/mannie/Documents/BioCatalogue-Mass-Curator/BioCatalogue-Mass-Curator.xcodeproj</string>
-		<string>3634F92611B9560A003A01B6</string>
-		<string>3634F87F11B934C7003A01B6</string>
 		<string>3634F7F111B92D17003A01B6</string>
+		<string>/Users/mannie/Documents/BioCatalogue-Mass-Curator/BioCatalogue-Mass-Curator.xcodeproj</string>
+		<string>3634FBA711BD4989003A01B6</string>
 	</array>
 	<key>WindowString</key>
 	<string>-1 340 292 688 0 0 1680 1028 </string>
@@ -975,14 +935,12 @@
 							<key>Dock</key>
 							<array>
 								<dict>
-									<key>BecomeActive</key>
-									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>UploadSpreadsheetAction.rb</string>
+										<string>SpreadsheetParsing.rb</string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -1003,6 +961,8 @@
 							<string>364pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -1143,7 +1103,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1138, 601}}</string>
 								<key>RubberWindowFrame</key>
-								<string>424 386 1138 642 0 0 1680 1028 </string>
+								<string>267 372 1138 642 0 0 1680 1028 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCSnapshotModule</string>
@@ -1172,7 +1132,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.snapshots</string>
 			<key>WindowString</key>
-			<string>424 386 1138 642 0 0 1680 1028 </string>
+			<string>267 372 1138 642 0 0 1680 1028 </string>
 			<key>WindowToolGUID</key>
 			<string>36273F1711AC147A00269B2C</string>
 			<key>WindowToolIsVisible</key>

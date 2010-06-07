@@ -23,6 +23,7 @@
 # ========================================
 
 # Application Directory Names
+
 APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "..")).freeze
 
 EVENT_HANDLERS_DIR = File.join(APP_ROOT, "Event-Handlers").freeze
@@ -34,6 +35,7 @@ USER_INTERFACE_DIR = File.join(APP_ROOT, "User-Interface").freeze
 # ========================================
 
 # Application Source Files To Include
+
 EVENT_HANDLERS = %w{ AppWindowListener.rb
                      CheckBoxListener.rb
                      GenerateSpreadsheetAction.rb 
@@ -62,6 +64,7 @@ USER_INTERFACE = %w{ BrowsingStatusPanel.rb
                      MainPanel.rb
                      PreviewDialog.rb
                      SearchPanel.rb
+                     SearchResultsWindow.rb
                      ServiceListingPanel.rb
                      ServiceSelectPanel.rb
                      SelectedServicesWindow.rb 
@@ -70,6 +73,7 @@ USER_INTERFACE = %w{ BrowsingStatusPanel.rb
 # ========================================
 
 # Java Classes To Include
+
 AWT_CLASSES = %w{ BorderLayout
                   Color
                   Dimension
@@ -103,5 +107,6 @@ SWING_CLASSES = %w{ filechooser.FileNameExtensionFilter
 
 SWING_EVENTS = %w{ ChangeListener }.freeze
 
-MISC_CLASSES = %w{  }.freeze
+JARS = %w{ BrowserLauncher2-1_3.jar }.freeze
 
+OTHER_CLASSES = %w{ edu.stanford.ejalbert.BrowserLauncher }.freeze

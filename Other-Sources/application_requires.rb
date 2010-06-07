@@ -25,14 +25,15 @@
 # Require Java Core Libraries
 require 'java'
 
-# Import Java Classes
+# Import Java Libraries
 AWT_CLASSES.each { |awt| import "java.awt." << awt }
 AWT_EVENTS.each { |event| import "java.awt.event." << event }
 
 SWING_CLASSES.each { |swing| import "javax.swing." << swing }
 SWING_EVENTS.each { |event| import "javax.swing.event." << event }
 
-MISC_CLASSES.each { |misc| import misc }
+JARS.each { |jar| require File.join(LIBRARIES_DIR, jar) }
+OTHER_CLASSES.each { |library| import library }
 
 # Require Ruby Gems
 require 'rubygems'

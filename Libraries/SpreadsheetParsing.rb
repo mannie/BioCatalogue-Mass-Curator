@@ -44,18 +44,38 @@ module SpreadsheetParsing
           description, tags, examples = nil, nil, nil
           
           # fill in vars with the spreadsheet values
-          log('w', nil, "Check that the service components have changed")
           @header.size.times do |cell|
             case @header[cell]
               when "ID"
                 id = row[cell]
-              when "Type": 
+              when "Type"
                 resource = Utilities::Application.resourceNameFor(row[cell])
-                link = Utilities::Application.weblinkWithIDForResource(id, 
-                    resource)
-                entry.merge!('resource' => link.to_s)
+                uri = Utilities::Application.weblinkWithIDForResource(id)
+
+                if resource=='soap_services'
+                  @service = Utilities::Application.serviceWithURI(uri.to_s)
+                  @service.fetchComponents
+                elsif resource=='soap_operations'
+                  @component = @service.components[id]
+                end # if resource=="services"
+                
+                entry.merge!('resource' => @service.variantURI.to_s)
               when "Description"
-                annotations.merge!('description' => row[cell]) if row[cell]
+                break unless row[cell]
+                
+                originalDescrip = case resource
+                                    when 'soap_services'
+                                      @service.description
+                                    when 'soap_operations'
+                                      @component.description
+                                    when 'soap_inputs'
+                                      @component.inputs[id].description
+                                    when 'soap_outputs'
+                                      @component.outputs[id].description
+                                  end # case resource
+                
+                altered = originalDescrip.chomp.strip != row[cell].chomp.strip
+                annotations.merge!('description' => row[cell]) if altered
               when "Tags"
                 annotations.merge!('tag' => row[cell].split(',')) if row[cell]
               when "Examples"
@@ -65,14 +85,16 @@ module SpreadsheetParsing
           end # @header.each
           
           # consolidate the entry
-          entry.merge!('annotations' => annotations)
-          bulk_annotations << entry
+          unless annotations.empty?
+            entry.merge!('annotations' => annotations)
+            bulk_annotations << entry
+          end
           
         end # if else row == first        
       end # each row in the workboow
       
       content = {'bulk_annotations' => bulk_annotations}
-      return content.to_json
+      return (bulk_annotations.empty? ? '' : content.to_json)
 
     rescue Exception => ex
       log('e', ex)
