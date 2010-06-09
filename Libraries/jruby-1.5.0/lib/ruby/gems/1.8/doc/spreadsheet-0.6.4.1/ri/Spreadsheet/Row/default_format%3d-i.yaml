@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Set the default Format used when writing a Cell if no explicit Format is stored for the cell.
+full_name: Spreadsheet::Row#default_format=
+is_singleton: false
+name: default_format=
+params: (format)
+visibility: public

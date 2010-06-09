@@ -1,0 +1,32 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: java_obj
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: from_java
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+constants: []
+
+full_name: LibXMLJRuby::XML::Attr
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: name
+  - !ruby/object:RI::MethodSummary 
+    name: parent
+  - !ruby/object:RI::MethodSummary 
+    name: parent?
+  - !ruby/object:RI::MethodSummary 
+    name: remove!
+  - !ruby/object:RI::MethodSummary 
+    name: value
+  - !ruby/object:RI::MethodSummary 
+    name: value=
+name: Attr
+superclass: Node

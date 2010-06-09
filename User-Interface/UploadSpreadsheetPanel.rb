@@ -56,6 +56,7 @@ private
     @uploadSpreadsheetButton = JButton.new("Upload")
     @uploadSpreadsheetButton.addActionListener(@uploadSpreadsheetAction)
     panel.add(@uploadSpreadsheetButton, BorderLayout::EAST)
+    @uploadSpreadsheetButton.setEnabled(false)
     
     return panel
   end # buttonPanel

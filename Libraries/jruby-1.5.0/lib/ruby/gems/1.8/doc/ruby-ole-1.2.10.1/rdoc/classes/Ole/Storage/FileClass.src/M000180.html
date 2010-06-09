@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>open (Ole::Storage::FileClass)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ole/storage/file_system.rb, line 153</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">mode</span>=<span class="ruby-value str">'r'</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-constant">IO</span><span class="ruby-operator">::</span><span class="ruby-constant">Mode</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">mode</span>).<span class="ruby-identifier">create?</span>
+          <span class="ruby-keyword kw">begin</span>
+            <span class="ruby-identifier">dirent</span> = <span class="ruby-identifier">dirent_from_path</span> <span class="ruby-identifier">path</span>
+          <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+            <span class="ruby-comment cmt"># maybe instead of repeating this everywhere, i should have</span>
+            <span class="ruby-comment cmt"># a get_parent_dirent function.</span>
+            <span class="ruby-identifier">parent_path</span>, <span class="ruby-identifier">basename</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">split</span> <span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">path</span>)
+            <span class="ruby-identifier">parent</span> = <span class="ruby-ivar">@ole</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">:dirent_from_path</span>, <span class="ruby-identifier">parent_path</span>, <span class="ruby-identifier">path</span>
+            <span class="ruby-identifier">parent</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dirent</span> = <span class="ruby-constant">Dirent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@ole</span>, <span class="ruby-identifier">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:file</span>, <span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">basename</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">dirent</span> = <span class="ruby-identifier">dirent_from_path</span> <span class="ruby-identifier">path</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">dirent</span>.<span class="ruby-identifier">open</span> <span class="ruby-identifier">mode</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

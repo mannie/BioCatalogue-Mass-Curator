@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Spreadsheet::Excel::Internals</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Spreadsheet::Excel::Internals</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/spreadsheet/excel/internals/biff5_rb.html">
+                lib/spreadsheet/excel/internals/biff5.rb
+                </a>
+        <br />
+                <a href="../../../files/lib/spreadsheet/excel/internals/biff8_rb.html">
+                lib/spreadsheet/excel/internals/biff8.rb
+                </a>
+        <br />
+                <a href="../../../files/lib/spreadsheet/excel/internals_rb.html">
+                lib/spreadsheet/excel/internals.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Binary Formats and other configurations internal to <a
+href="../Excel.html">Excel</a>. This Module is likely to shrink as Support
+for older Versions of <a href="../Excel.html">Excel</a> grows and more
+Binary formats are moved away from here for disambiguation. If you need to
+work with constants defined in this module and are confused by names like
+SEDOC_ROLOC, try reading them backwards. (The reason for this weird naming
+convention is that according to my ri, Ruby 1.9 renames Hash#index to
+Hash#key without backward compatibility. Since I did not want to pepper my
+code with RUBY_VERSION-checks, I settled on this strategy to make the
+transition to Ruby 1.9 as simple as possible.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000228">binfmt</a>&nbsp;&nbsp;
+      <a href="#M000229">opcode</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Internals/Biff5.html" class="link">Spreadsheet::Excel::Internals::Biff5</a><br />
+Module <a href="Internals/Biff8.html" class="link">Spreadsheet::Excel::Internals::Biff8</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EIGHT_BYTE_DOUBLE</td>
+          <td>=</td>
+          <td class="context-item-value">[0.1].pack('E').size == 8 ? 'E' : 'e'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CODEPAGES</td>
+          <td>=</td>
+          <td class="context-item-value">{     367 =&gt; &quot;ASCII&quot;,     437 =&gt; &quot;IBM437&quot;, #(US)     720 =&gt; &quot;IBM720&quot;, #(OEM Arabic)     737 =&gt; &quot;IBM737&quot;, #(Greek)     775 =&gt; &quot;IBM775&quot;, #(Baltic)     850 =&gt; &quot;IBM850&quot;, #(Latin I)     852 =&gt; &quot;IBM852&quot;, #(Latin II (Central European))     855 =&gt; &quot;IBM855&quot;, #(Cyrillic)     857 =&gt; &quot;IBM857&quot;, #(Turkish)     858 =&gt; &quot;IBM858&quot;, #(Multilingual Latin I with Euro)     860 =&gt; &quot;IBM860&quot;, #(Portuguese)     861 =&gt; &quot;IBM861&quot;, #(Icelandic)     862 =&gt; &quot;IBM862&quot;, #(Hebrew)     863 =&gt; &quot;IBM863&quot;, #(Canadian (French))     864 =&gt; &quot;IBM864&quot;, #(Arabic)     865 =&gt; &quot;IBM865&quot;, #(Nordic)     866 =&gt; &quot;IBM866&quot;, #(Cyrillic (Russian))     869 =&gt; &quot;IBM869&quot;, #(Greek (Modern))     874 =&gt; &quot;WINDOWS-874&quot;, #(Thai)     932 =&gt; &quot;WINDOWS-932&quot;, #(Japanese Shift-JIS)     936 =&gt; &quot;WINDOWS-936&quot;, #(Chinese Simplified GBK)     949 =&gt; &quot;WINDOWS-949&quot;, #(Korean (Wansung))     950 =&gt; &quot;WINDOWS-950&quot;, #(Chinese Traditional BIG5)     1200 =&gt; &quot;UTF-16LE&quot;, #(BIFF8)     1250 =&gt; &quot;WINDOWS-1250&quot;, #(Latin II) (Central European)     1251 =&gt; &quot;WINDOWS-1251&quot;, #(Cyrillic)     1252 =&gt; &quot;WINDOWS-1252&quot;, #(Latin I) (BIFF4-BIFF7)     1253 =&gt; &quot;WINDOWS-1253&quot;, #(Greek)     1254 =&gt; &quot;WINDOWS-1254&quot;, #(Turkish)     1255 =&gt; &quot;WINDOWS-1255&quot;, #(Hebrew)     1256 =&gt; &quot;WINDOWS-1256&quot;, #(Arabic)     1257 =&gt; &quot;WINDOWS-1257&quot;, #(Baltic)     1258 =&gt; &quot;WINDOWS-1258&quot;, #(Vietnamese)     1361 =&gt; &quot;WINDOWS-1361&quot;, #(Korean (Johab))     10000 =&gt; &quot;MACINTOSH&quot;,     32768 =&gt; &quot;MACINTOSH&quot;,     32769 =&gt; &quot;WINDOWS-1252&quot;, #(Latin I) (BIFF2-BIFF3)   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEGAPEDOC</td>
+          <td>=</td>
+          <td class="context-item-value">CODEPAGES.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COLOR_CODES</td>
+          <td>=</td>
+          <td class="context-item-value">{     0x0000 =&gt; :builtin_black,     0x0001 =&gt; :builtin_white,     0x0002 =&gt; :builtin_red,     0x0003 =&gt; :builtin_green,     0x0004 =&gt; :builtin_blue,     0x0005 =&gt; :builtin_yellow,     0x0006 =&gt; :builtin_magenta,     0x0007 =&gt; :builtin_cyan,     0x0008 =&gt; :black,     0x0009 =&gt; :white,     0x000a =&gt; :red,     0x000b =&gt; :lime,     0x000c =&gt; :blue,     0x000d =&gt; :yellow,     0x000e =&gt; :magenta,     0x000f =&gt; :cyan,     0x0010 =&gt; :brown,     0x0011 =&gt; :green,     0x0012 =&gt; :navy,     0x0016 =&gt; :silver,     0x0017 =&gt; :gray,     0x001d =&gt; :orange,     0x0024 =&gt; :purple,     0x0040 =&gt; :border,     0x0041 =&gt; :pattern_bg,     0x0043 =&gt; :dialog_bg,     0x004d =&gt; :chart_text,     0x004e =&gt; :chart_bg,     0x004f =&gt; :chart_border,     0x0050 =&gt; :tooltip_bg,     0x0051 =&gt; :tooltip_text,     0x7fff =&gt; :text,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEDOC_ROLOC</td>
+          <td>=</td>
+          <td class="context-item-value">COLOR_CODES.invert.update( :aqua    =&gt; 0x000f,                                            :fuchsia =&gt; 0x000e,                                            :grey    =&gt; 0x0017 )</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BINARY_FORMATS</td>
+          <td>=</td>
+          <td class="context-item-value">{     :blank      =&gt; 'v3',     :boolerr    =&gt; 'v3C2',     :colinfo    =&gt; 'v5x2',     :font       =&gt; 'v5C3x',     :labelsst   =&gt; 'v3V',     :number     =&gt; &quot;v3#{EIGHT_BYTE_DOUBLE}&quot;,     :pagesetup  =&gt; &quot;v8#{EIGHT_BYTE_DOUBLE}2v&quot;,     :rk         =&gt; 'v3V',     :row        =&gt; 'v4x4V',     :window2    =&gt; 'v4x2v2x4',     :xf         =&gt; 'v3C4V2v',   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BUILTIN_FORMATS</td>
+          <td>=</td>
+          <td class="context-item-value">{ # TODO: locale support      0 =&gt; 'GENERAL',      1 =&gt; '0',      2 =&gt; '0.00',      3 =&gt; '#,##0',      4 =&gt; '#,##0.00',      5 =&gt; '&quot;$&quot;#,##0_);(&quot;$&quot;#,##0)',      6 =&gt; '&quot;$&quot;#,##0_);[Red](&quot;$&quot;#,##0)',      7 =&gt; '&quot;$&quot;#,##0.00_);(&quot;$&quot;#,##0.00)',      8 =&gt; '&quot;$&quot;#,##0.00_);[Red](&quot;$&quot;#,##0.00)',      9 =&gt; '0%',     10 =&gt; '0.00%',     11 =&gt; '0.00E+00',     12 =&gt; '# ?/?',     13 =&gt; '# ??/??',     14 =&gt; 'M/D/YY',     15 =&gt; 'D-MMM-YY',     16 =&gt; 'D-MMM',     17 =&gt; 'MMM-YY',     18 =&gt; 'h:mm AM/PM',     19 =&gt; 'h:mm:ss AM/PM',     20 =&gt; 'h:mm',     21 =&gt; 'h:mm:ss',     22 =&gt; 'M/D/YY h:mm',     37 =&gt; '_(#,##0_);(#,##0)',     38 =&gt; '_(#,##0_);[Red](#,##0)',     39 =&gt; '_(#,##0.00_);(#,##0.00)',     40 =&gt; '_(#,##0.00_);[Red](#,##0.00)',     41 =&gt; '_(&quot;$&quot;* #,##0_);_(&quot;$&quot;* (#,##0);_(&quot;$&quot;* &quot;-&quot;_);_(@_)',     42 =&gt; '_(* #,##0_);_(* (#,##0);_(* &quot;-&quot;_);_(@_)',     43 =&gt; '_(&quot;$&quot;* #,##0.00_);_(&quot;$&quot;* (#,##0.00);_(&quot;$&quot;* &quot;-&quot;??_);_(@_)',     44 =&gt; '_(* #,##0.00_);_(* (#,##0.00);_(* &quot;-&quot;??_);_(@_)',     45 =&gt; 'mm:ss',     46 =&gt; '[h]:mm:ss',     47 =&gt; 'mm:ss.0',     48 =&gt; '##0.0E+0',     49 =&gt; '@',   }</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+From BIFF5 on, the built-in number formats will be omitted. The built-in
+formats are dependent on the current regional settings of the operating
+system. The following table shows which number formats are used by default
+in a US-English environment. All indexes from 0 to 163 are reserved for
+built-in formats.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BUILTIN_STYLES</td>
+          <td>=</td>
+          <td class="context-item-value">{     0x00 =&gt; 'Normal',     0x01 =&gt; 'RowLevel_lv',     0x02 =&gt; 'ColLevel_lv',     0x03 =&gt; 'Comma',     0x04 =&gt; 'Currency',     0x05 =&gt; 'Percent',     0x06 =&gt; 'Comma',     0x07 =&gt; 'Currency',     0x08 =&gt; 'Hyperlink',     0x09 =&gt; 'Followed Hyperlink',   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ESCAPEMENT_TYPES</td>
+          <td>=</td>
+          <td class="context-item-value">{     0x0001 =&gt; :superscript,     0x0002 =&gt; :subscript,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEPYT_TNEMEPACSE</td>
+          <td>=</td>
+          <td class="context-item-value">ESCAPEMENT_TYPES.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FONT_ENCODINGS</td>
+          <td>=</td>
+          <td class="context-item-value">{     0x00 =&gt; :iso_latin1,     0x01 =&gt; :default,     0x02 =&gt; :symbol,     0x4d =&gt; :apple_roman,     0x80 =&gt; :shift_jis,     0x81 =&gt; :korean_hangul,     0x82 =&gt; :korean_johab,     0x86 =&gt; :chinese_simplified,     0x88 =&gt; :chinese_traditional,     0xa1 =&gt; :greek,     0xa2 =&gt; :turkish,     0xa3 =&gt; :vietnamese,     0xb1 =&gt; :hebrew,     0xb2 =&gt; :arabic,     0xba =&gt; :baltic,     0xcc =&gt; :cyrillic,     0xde =&gt; :thai,     0xee =&gt; :iso_latin2,     0xff =&gt; :oem_latin1,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SGNIDOCNE_TNOF</td>
+          <td>=</td>
+          <td class="context-item-value">FONT_ENCODINGS.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FONT_FAMILIES</td>
+          <td>=</td>
+          <td class="context-item-value">{     0x01 =&gt; :roman,     0x02 =&gt; :swiss,     0x03 =&gt; :modern,     0x04 =&gt; :script,     0x05 =&gt; :decorative,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEILIMAF_TNOF</td>
+          <td>=</td>
+          <td class="context-item-value">FONT_FAMILIES.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FONT_WEIGHTS</td>
+          <td>=</td>
+          <td class="context-item-value">{     :bold   =&gt; 700,     :normal =&gt; 400,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">LEAP_ERROR</td>
+          <td>=</td>
+          <td class="context-item-value">Date.new 1900, 2, 28</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">OPCODES</td>
+          <td>=</td>
+          <td class="context-item-value">{     :blank        =&gt; 0x0201, #    BLANK ➜ 6.7     :boolerr      =&gt; 0x0205, #    BOOLERR ➜ 6.10     :boundsheet   =&gt; 0x0085, # ●● BOUNDSHEET ➜ 6.12     :codepage     =&gt; 0x0042, # ○  CODEPAGE ➜ 6.17     :colinfo      =&gt; 0x007d, # ○○ COLINFO ➜ 6.18     :continue     =&gt; 0x003c, # ○  CONTINUE ➜ 6.22     :datemode     =&gt; 0x0022, # ○  DATEMODE ➜ 6.25     :dbcell       =&gt; 0x0a0b, # ○  DBCELL     :dimensions   =&gt; 0x0200, # ●  DIMENSIONS ➜ 6.31     :eof          =&gt; 0x000a, # ●  EOF ➜ 6.36     :font         =&gt; 0x0031, # ●● FONT ➜ 6.43     :format       =&gt; 0x041e, # ○○ FORMAT (Number Format) ➜ 6.45     :formula      =&gt; 0x0006, #    FORMULA ➜ 6.46     :hlink        =&gt; 0x01b8, #    HLINK ➜ 6.52 (BIFF8 only)     :label        =&gt; 0x0204, #    LABEL ➜ 6.59 (BIFF2-BIFF7)     :labelsst     =&gt; 0x00fd, #    LABELSST ➜ 6.61 (BIFF8 only)     :mulblank     =&gt; 0x00be, #    MULBLANK ➜ 6.64 (BIFF5-BIFF8)     :mulrk        =&gt; 0x00bd, #    MULRK ➜ 6.65 (BIFF5-BIFF8)     :number       =&gt; 0x0203, #    NUMBER ➜ 6.68     :rk           =&gt; 0x027e, #    RK ➜ 6.82 (BIFF3-BIFF8)     :row          =&gt; 0x0208, # ●  ROW ➜ 6.83     :rstring      =&gt; 0x00d6, #    RSTRING ➜ 6.84 (BIFF5/BIFF7)     :sst          =&gt; 0x00fc, # ●  SST ➜ 6.96     :string       =&gt; 0x0207, #    STRING ➜ 6.98     :style        =&gt; 0x0293, # ●● STYLE ➜ 6.99     :xf           =&gt; 0x00e0, # ●● XF ➜ 6.115     :sharedfmla   =&gt; 0x04bc, #    SHAREDFMLA ➜ 5.94     ########################## Unhandled Opcodes ################################     :extsst       =&gt; 0x00ff, # ●  EXTSST ➜ 6.40     :index        =&gt; 0x020b, # ○  INDEX ➜ 5.7 (Row Blocks), ➜ 6.55     :uncalced     =&gt; 0x005e, # ○  UNCALCED ➜ 6.104     ########################## ○  Calculation Settings Block ➜ 5.3     :calccount    =&gt; 0x000c, # ○  CALCCOUNT ➜ 6.14     :calcmode     =&gt; 0x000d, # ○  CALCMODE ➜ 6.15     :precision    =&gt; 0x000e, # ○  PRECISION ➜ 6.74 (moved to Workbook Globals                              #                      Substream in BIFF5-BIFF8)     :refmode      =&gt; 0x000f, # ○  REFMODE ➜ 6.80     :delta        =&gt; 0x0010, # ○  DELTA ➜ 6.30     :iteration    =&gt; 0x0011, # ○  ITERATION ➜ 6.57     :saverecalc   =&gt; 0x005f, # ○  SAVERECALC ➜ 6.85 (BIFF3-BIFF8 only)     ########################## ○  Workbook Protection Block ➜ 5.18     :protect      =&gt; 0x0012, # ○  PROTECT                              #    Worksheet contents: 1 = protected (➜ 6.77)     :windowprot   =&gt; 0x0019, # ○  WINDOWPROTECT Window settings: 1 = protected                              #                  (BIFF4W only, ➜ 6.110)     :objectprot   =&gt; 0x0063, # ○  OBJECTPROTECT                              #    Embedded objects: 1 = protected (➜ 6.69)     :scenprotect  =&gt; 0x00dd, # ○  SCENPROTECT                              #    Scenarios: 1 = protected (BIFF5-BIFF8, ➜ 6.86)     :password     =&gt; 0x0013, # ○  PASSWORD Hash value of the password;                              #             0   = no password (➜ 6.72)     ########################## ○  File Protection Block ➜ 5.19     :writeprot    =&gt; 0x0086, # ○  WRITEPROT File is write protected                              #    (BIFF3-BIFF8, ➜ 6.112), password in FILESHARING     :filepass     =&gt; 0x002f, # ○  FILEPASS File is read/write-protected,                              #             encryption information (➜ 6.41)     :writeaccess  =&gt; 0x005c, # ○  WRITEACCESS User name (BIFF3-BIFF8, ➜ 6.111)     :filesharing  =&gt; 0x005b, # ○  FILESHARING File sharing options                              #    (BIFF3-BIFF8, ➜ 6.42)     ########################## ○  Link Table ➜ 5.10.3                              # ●● SUPBOOK Block(s)                              #    Settings for a referenced document     :supbook      =&gt; 0x01ae, #    ●  SUPBOOK ➜ 6.100     :externname   =&gt; 0x0223, #    ○○ EXTERNNAME ➜ 6.38     :xct          =&gt; 0x0059, #    ○○ ●  XCT ➜ 6.114     :crn          =&gt; 0x005a, #       ●● CRN ➜ 6.24     :externsheet  =&gt; 0x0017, # ●  EXTERNSHEET ➜ 6.39     :name         =&gt; 0x0218, # ○○ NAME ➜ 6.66     ##########################     :window1      =&gt; 0x003d, # ●  WINDOW1 ➜ 6.108 (has information on                              #              which Spreadsheet is 'active')     :backup       =&gt; 0x0040, # ○  BACKUP ➜ 6.5     :country      =&gt; 0x008c, # ○  COUNTRY (Make writeable?) ➜ 6.23     :hideobj      =&gt; 0x008d, # ○  HIDEOBJ ➜ 6.52     :palette      =&gt; 0x0092, # ○  PALETTE ➜ 6.70     :fngroupcnt   =&gt; 0x009c, # ○  FNGROUPCOUNT     :bookbool     =&gt; 0x00da, # ○  BOOKBOOL ➜ 6.9     :tabid        =&gt; 0x013d, # ○  TABID     :useselfs     =&gt; 0x0160, # ○  USESELFS (Natural Language Formulas) ➜ 6.105     :dsf          =&gt; 0x0161, # ○  DSF (Double Stream File) ➜ 6.32     :refreshall   =&gt; 0x01b7, # ○  REFRESHALL     ########################## ●  Worksheet View Settings Block ➜ 5.5     :window2      =&gt; 0x023e, # ●  WINDOW2 ➜ 5.110     :scl          =&gt; 0x00a0, # ○  SCL ➜ 5.92 (BIFF4-BIFF8 only)     :pane         =&gt; 0x0041, # ○  PANE ➜ 5.75     :selection    =&gt; 0x001d, # ○○ SELECTION ➜ 5.93     ########################## ○  Page Settings Block ➜ 5.4     :hpagebreaks  =&gt; 0x001b, # ○  HORIZONTALPAGEBREAKS ➜ 6.54     :vpagebreaks  =&gt; 0x001a, # ○  VERTICALPAGEBREAKS ➜ 6.107     :header       =&gt; 0x0014, # ○  HEADER ➜ 6.51     :footer       =&gt; 0x0015, # ○  FOOTER ➜ 6.44     :hcenter      =&gt; 0x0083, # ○  HCENTER ➜ 6.50 (BIFF3-BIFF8 only)     :vcenter      =&gt; 0x0084, # ○  VCENTER ➜ 6.106 (BIFF3-BIFF8 only)     :leftmargin   =&gt; 0x0026, # ○  LEFTMARGIN ➜ 6.62     :rightmargin  =&gt; 0x0027, # ○  RIGHTMARGIN ➜ 6.81     :topmargin    =&gt; 0x0028, # ○  TOPMARGIN ➜ 6.103     :bottommargin =&gt; 0x0029, # ○  BOTTOMMARGIN ➜ 6.11                              # ○  PLS (opcode unknown)     :pagesetup    =&gt; 0x00a1, # ○  PAGESETUP ➜ 6.89 (BIFF4-BIFF8 only)     :bitmap       =&gt; 0x00e9, # ○  BITMAP ➜ 6.6 (Background-Bitmap, BIFF8 only)     ##########################     :printheaders =&gt; 0x002a, # ○  PRINTHEADERS ➜ 6.76     :printgridlns =&gt; 0x002b, # ○  PRINTGRIDLINES ➜ 6.75     :gridset      =&gt; 0x0082, # ○  GRIDSET ➜ 6.48     :guts         =&gt; 0x0080, # ○  GUTS ➜ 6.49     :defrowheight =&gt; 0x0225, # ○  DEFAULTROWHEIGHT ➜ 6.28     :wsbool       =&gt; 0x0081, # ○  WSBOOL ➜ 6.113     :defcolwidth  =&gt; 0x0055, # ○  DEFCOLWIDTH ➜ 6.29     :sort         =&gt; 0x0090, # ○  SORT ➜ 6.95   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEDOCPO</td>
+          <td>=</td>
+          <td class="context-item-value">OPCODES.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TWIPS</td>
+          <td>=</td>
+          <td class="context-item-value">20</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">UNDERLINE_TYPES</td>
+          <td>=</td>
+          <td class="context-item-value">{     0x0001 =&gt; :single,     0x0002 =&gt; :double,     0x0021 =&gt; :single_accounting,     0x0022 =&gt; :double_accounting,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEPYT_ENILREDNU</td>
+          <td>=</td>
+          <td class="context-item-value">UNDERLINE_TYPES.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">XF_H_ALIGN</td>
+          <td>=</td>
+          <td class="context-item-value">{     :default       =&gt; 0,     :left          =&gt; 1,     :center        =&gt; 2,     :right         =&gt; 3,     :fill          =&gt; 4,     :justify       =&gt; 5,     :merge         =&gt; 6,     :distributed   =&gt; 7,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NGILA_H_FX</td>
+          <td>=</td>
+          <td class="context-item-value">XF_H_ALIGN.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">XF_TEXT_DIRECTION</td>
+          <td>=</td>
+          <td class="context-item-value">{     :context       =&gt; 0,     :left_to_right =&gt; 1,     :right_to_left =&gt; 2,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NOITCERID_TXET_FX</td>
+          <td>=</td>
+          <td class="context-item-value">XF_TEXT_DIRECTION.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">XF_V_ALIGN</td>
+          <td>=</td>
+          <td class="context-item-value">{     :top         =&gt; 0,     :middle      =&gt; 1,     :bottom      =&gt; 2,     :justify     =&gt; 3,     :distributed =&gt; 4,   }</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NGILA_V_FX</td>
+          <td>=</td>
+          <td class="context-item-value">XF_V_ALIGN.invert</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">OPCODE_SIZE</td>
+          <td>=</td>
+          <td class="context-item-value">4</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ROW_HEIGHT</td>
+          <td>=</td>
+          <td class="context-item-value">12.1</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SST_CHUNKSIZE</td>
+          <td>=</td>
+          <td class="context-item-value">20</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000228" class="method-detail">
+        <a name="M000228"></a>
+
+        <div class="method-heading">
+          <a href="Internals.src/M000228.html" target="Code" class="method-signature"
+            onclick="popupCode('Internals.src/M000228.html');return false;">
+          <span class="method-name">binfmt</span><span class="method-args">(key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000229" class="method-detail">
+        <a name="M000229"></a>
+
+        <div class="method-heading">
+          <a href="Internals.src/M000229.html" target="Code" class="method-signature"
+            onclick="popupCode('Internals.src/M000229.html');return false;">
+          <span class="method-name">opcode</span><span class="method-args">(key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

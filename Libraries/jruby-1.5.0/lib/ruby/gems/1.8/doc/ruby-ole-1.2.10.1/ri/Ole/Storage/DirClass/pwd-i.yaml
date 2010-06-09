@@ -1,0 +1,13 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: 
+  - !ruby/object:RI::AliasName 
+    name: getwd
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: pwd is always stored without the trailing slash. we handle the root case here
+full_name: Ole::Storage::DirClass#pwd
+is_singleton: false
+name: pwd
+params: ()
+visibility: public

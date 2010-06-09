@@ -49,17 +49,22 @@ module SpreadsheetParsing
               when "ID"
                 id = row[cell]
               when "Type"
-                resource = Utilities::Application.resourceNameFor(row[cell])
-                uri = Utilities::Application.weblinkWithIDForResource(id)
+                resource = Application.resourceNameFor(row[cell])
 
                 if resource=='soap_services'
-                  @service = Utilities::Application.serviceWithURI(uri.to_s)
+                  uri = Application.weblinkWithIDForResource(id)
+                  @service = Application.serviceWithURI(uri.to_s)
                   @service.fetchComponents
-                elsif resource=='soap_operations'
-                  @component = @service.components[id]
-                end # if resource=="services"
-                
-                entry.merge!('resource' => @service.variantURI.to_s)
+
+                  entry.merge!('resource' => @service.variantURI.to_s)
+                else
+                  @component = @service.components[id] if resource==
+                      'soap_operations'
+
+                  uri = Application.weblinkWithIDForResource(id, resource)
+                  
+                  entry.merge!('resource' => uri.to_s)
+                end # if else resource=='soap_services'
               when "Description"
                 break unless row[cell]
                 

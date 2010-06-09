@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>blocks_to_ranges (Ole::Storage::AllocationTable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ole/storage/base.rb, line 486</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">blocks_to_ranges</span> <span class="ruby-identifier">chain</span>, <span class="ruby-identifier">size</span>=<span class="ruby-keyword kw">nil</span>
+        <span class="ruby-comment cmt"># truncate the chain if required</span>
+        <span class="ruby-identifier">chain</span> = <span class="ruby-identifier">chain</span>[<span class="ruby-value">0</span>, (<span class="ruby-identifier">size</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">block_size</span>).<span class="ruby-identifier">ceil</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">size</span>
+        <span class="ruby-comment cmt"># convert chain to ranges of the block size</span>
+        <span class="ruby-identifier">ranges</span> = <span class="ruby-identifier">chain</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">block_size</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">i</span>, <span class="ruby-identifier">block_size</span>] }
+        <span class="ruby-comment cmt"># truncate final range if required</span>
+        <span class="ruby-identifier">ranges</span>.<span class="ruby-identifier">last</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">-=</span> (<span class="ruby-identifier">ranges</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">block_size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">size</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ranges</span>.<span class="ruby-identifier">last</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">size</span>
+        <span class="ruby-identifier">ranges</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

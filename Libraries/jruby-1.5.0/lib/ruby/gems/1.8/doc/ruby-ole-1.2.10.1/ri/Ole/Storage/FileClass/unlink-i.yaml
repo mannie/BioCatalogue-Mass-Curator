@@ -1,0 +1,11 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: 
+  - !ruby/object:RI::AliasName 
+    name: delete
+block_params: 
+comment: 
+full_name: Ole::Storage::FileClass#unlink
+is_singleton: false
+name: unlink
+params: (*paths)
+visibility: public

@@ -1,0 +1,11 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: 
+  - !ruby/object:RI::AliasName 
+    name: properties
+block_params: 
+comment: 
+full_name: LibXMLJRuby::XML::Node#attributes
+is_singleton: false
+name: attributes
+params: ()
+visibility: public

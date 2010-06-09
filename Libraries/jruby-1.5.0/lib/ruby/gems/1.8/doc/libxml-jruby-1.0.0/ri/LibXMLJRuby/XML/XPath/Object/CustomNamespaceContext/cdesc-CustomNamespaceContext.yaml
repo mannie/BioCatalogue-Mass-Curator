@@ -1,0 +1,24 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: resolver
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+constants: []
+
+full_name: LibXMLJRuby::XML::XPath::Object::CustomNamespaceContext
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: getNamespaceURI
+  - !ruby/object:RI::MethodSummary 
+    name: getPrefix
+  - !ruby/object:RI::MethodSummary 
+    name: getPrefixes
+name: CustomNamespaceContext
+superclass: Object

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>flush (Ole::Storage)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ole/storage/base.rb, line 177</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush</span>
+      <span class="ruby-comment cmt"># update root dirent, and flatten dirent tree</span>
+      <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">name</span> = <span class="ruby-value str">'Root Entry'</span>
+      <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">first_block</span> = <span class="ruby-ivar">@sb_file</span>.<span class="ruby-identifier">first_block</span>
+      <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">size</span> = <span class="ruby-ivar">@sb_file</span>.<span class="ruby-identifier">size</span>
+      <span class="ruby-ivar">@dirents</span> = <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">flatten</span>
+
+      <span class="ruby-comment cmt"># serialize the dirents using the bbat</span>
+      <span class="ruby-constant">RangesIOResizeable</span>.<span class="ruby-identifier">open</span> <span class="ruby-ivar">@bbat</span>, <span class="ruby-value str">'w'</span>, <span class="ruby-identifier">:first_block</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">dirent_start</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span> <span class="ruby-ivar">@dirents</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">dirent</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dirent</span>.<span class="ruby-identifier">to_s</span> }.<span class="ruby-identifier">join</span>
+        <span class="ruby-identifier">padding</span> = (<span class="ruby-identifier">io</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">/</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span>.<span class="ruby-identifier">to_f</span>).<span class="ruby-identifier">ceil</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">size</span>
+        <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span> <span class="ruby-value">0</span>.<span class="ruby-identifier">chr</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">padding</span>
+        <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">dirent_start</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">first_block</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># serialize the sbat</span>
+      <span class="ruby-comment cmt"># perhaps the blocks used by the sbat should be marked with BAT?</span>
+      <span class="ruby-constant">RangesIOResizeable</span>.<span class="ruby-identifier">open</span> <span class="ruby-ivar">@bbat</span>, <span class="ruby-value str">'w'</span>, <span class="ruby-identifier">:first_block</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">sbat_start</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span> <span class="ruby-ivar">@sbat</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">sbat_start</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">first_block</span>
+        <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">num_sbat</span> = <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">chain</span>(<span class="ruby-ivar">@header</span>.<span class="ruby-identifier">sbat_start</span>).<span class="ruby-identifier">length</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># create RangesIOResizeable hooked up to the bbat. use that to claim bbat blocks using</span>
+      <span class="ruby-comment cmt"># truncate. then when its time to write, convert that chain and some chunk of blocks at</span>
+      <span class="ruby-comment cmt"># the end, into META_BAT blocks. write out the chain, and those meta bat blocks, and its</span>
+      <span class="ruby-comment cmt"># done.</span>
+      <span class="ruby-comment cmt"># this is perhaps not good, as we reclaim all bat blocks here, which</span>
+      <span class="ruby-comment cmt"># may include the sbat we just wrote. FIXME</span>
+      <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">b</span> <span class="ruby-operator">==</span> <span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">BAT</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">b</span> <span class="ruby-operator">==</span> <span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">META_BAT</span> <span class="ruby-value">? </span><span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">AVAIL</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">b</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># currently we use a loop. this could be better, but basically,</span>
+      <span class="ruby-comment cmt"># the act of writing out the bat, itself requires blocks which get</span>
+      <span class="ruby-comment cmt"># recorded in the bat.</span>
+      <span class="ruby-comment cmt">#</span>
+      <span class="ruby-comment cmt"># i'm sure that there'd be some simpler closed form solution to this. solve</span>
+      <span class="ruby-comment cmt"># recursive func:</span>
+      <span class="ruby-comment cmt">#</span>
+      <span class="ruby-comment cmt">#   num_mbat_blocks = ceil(max((mbat_len - 109) * 4 / block_size, 0))</span>
+      <span class="ruby-comment cmt">#   bbat_len = initial_bbat_len + num_mbat_blocks</span>
+      <span class="ruby-comment cmt">#   mbat_len = ceil(bbat_len * 4 / block_size)</span>
+      <span class="ruby-comment cmt">#</span>
+      <span class="ruby-comment cmt"># the actual bbat allocation table is itself stored throughout the file, and that chain</span>
+      <span class="ruby-comment cmt"># is stored in the initial blocks, and the mbat blocks.</span>
+      <span class="ruby-identifier">num_mbat_blocks</span> = <span class="ruby-value">0</span>
+      <span class="ruby-identifier">io</span> = <span class="ruby-constant">RangesIOResizeable</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@bbat</span>, <span class="ruby-value str">'w'</span>, <span class="ruby-identifier">:first_block</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">EOC</span>
+      <span class="ruby-comment cmt"># truncate now, so that we can simplify size calcs - the mbat blocks will be appended in a</span>
+      <span class="ruby-comment cmt"># contiguous chunk at the end.</span>
+      <span class="ruby-comment cmt"># hmmm, i think this truncate should be matched with a truncate of the underlying io. if you</span>
+      <span class="ruby-comment cmt"># delete a lot of stuff, and free up trailing blocks, the file size never shrinks. this can</span>
+      <span class="ruby-comment cmt"># be fixed easily, add an io truncate</span>
+      <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">truncate!</span>
+      <span class="ruby-identifier">before</span> = <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">size</span>
+      <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">truncate</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span> <span class="ruby-operator">*</span> (<span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+      <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+        <span class="ruby-comment cmt"># get total bbat size. equivalent to @bbat.to_s.length, but for the factoring in of</span>
+        <span class="ruby-comment cmt"># the mbat blocks. we can't just add the mbat blocks directly to the bbat, as as this iteration</span>
+        <span class="ruby-comment cmt"># progresses, more blocks may be needed for the bat itself (if there are no more gaps), and the</span>
+        <span class="ruby-comment cmt"># mbat must remain contiguous.</span>
+        <span class="ruby-identifier">bbat_data_len</span> = ((<span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">num_mbat_blocks</span>) <span class="ruby-operator">*</span> <span class="ruby-value">4</span> <span class="ruby-operator">/</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span>.<span class="ruby-identifier">to_f</span>).<span class="ruby-identifier">ceil</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span>
+        <span class="ruby-comment cmt"># now storing the excess mbat blocks also increases the size of the bbat:</span>
+        <span class="ruby-identifier">new_num_mbat_blocks</span> = ([<span class="ruby-identifier">bbat_data_len</span> <span class="ruby-operator">/</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span> <span class="ruby-operator">-</span> <span class="ruby-value">109</span>, <span class="ruby-value">0</span>].<span class="ruby-identifier">max</span> <span class="ruby-operator">*</span> <span class="ruby-value">4</span> <span class="ruby-operator">/</span> (<span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">-</span> <span class="ruby-value">4</span>)).<span class="ruby-identifier">ceil</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_num_mbat_blocks</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">num_mbat_blocks</span>
+          <span class="ruby-comment cmt"># need more space for the mbat.</span>
+          <span class="ruby-identifier">num_mbat_blocks</span> = <span class="ruby-identifier">new_num_mbat_blocks</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">bbat_data_len</span>
+          <span class="ruby-comment cmt"># need more space for the bat</span>
+          <span class="ruby-comment cmt"># this may grow the bbat, depending on existing available blocks</span>
+          <span class="ruby-identifier">io</span>.<span class="ruby-identifier">truncate</span> <span class="ruby-identifier">bbat_data_len</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-keyword kw">break</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># now extract the info we want:</span>
+      <span class="ruby-identifier">ranges</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">ranges</span>
+      <span class="ruby-identifier">bbat_chain</span> = <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">chain</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">first_block</span>
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">close</span>
+      <span class="ruby-identifier">bbat_chain</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@bbat</span>[<span class="ruby-identifier">b</span>] = <span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">BAT</span> }
+      <span class="ruby-comment cmt"># tack on the mbat stuff</span>
+      <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">num_bat</span> = <span class="ruby-identifier">bbat_chain</span>.<span class="ruby-identifier">length</span>
+      <span class="ruby-identifier">mbat_blocks</span> = (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">num_mbat_blocks</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span>
+        <span class="ruby-identifier">block</span> = <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">free_block</span>
+        <span class="ruby-ivar">@bbat</span>[<span class="ruby-identifier">block</span>] = <span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">META_BAT</span>
+        <span class="ruby-identifier">block</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">mbat_start</span> = <span class="ruby-identifier">mbat_blocks</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">||</span> <span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">EOC</span>
+
+      <span class="ruby-comment cmt"># now finally write the bbat, using a not resizable io.</span>
+      <span class="ruby-comment cmt"># the mode here will be 'r', which allows write atm. </span>
+      <span class="ruby-constant">RangesIO</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@io</span>, <span class="ruby-identifier">:ranges</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ranges</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">to_s</span> }
+
+      <span class="ruby-comment cmt"># this is the mbat. pad it out.</span>
+      <span class="ruby-identifier">bbat_chain</span> <span class="ruby-operator">+=</span> [<span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">AVAIL</span>] <span class="ruby-operator">*</span> [<span class="ruby-value">109</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">bbat_chain</span>.<span class="ruby-identifier">length</span>, <span class="ruby-value">0</span>].<span class="ruby-identifier">max</span>
+      <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">num_mbat</span> = <span class="ruby-identifier">num_mbat_blocks</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">num_mbat_blocks</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+        <span class="ruby-comment cmt"># write out the mbat blocks now. first of all, where are they going to be?</span>
+        <span class="ruby-identifier">mbat_data</span> = <span class="ruby-identifier">bbat_chain</span>[<span class="ruby-value">109</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+        <span class="ruby-comment cmt"># expand the mbat_data to include the linked list forward pointers.</span>
+        <span class="ruby-identifier">mbat_data</span> = <span class="ruby-identifier">mbat_data</span>.<span class="ruby-identifier">to_enum</span>(<span class="ruby-identifier">:each_slice</span>, <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">4</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">to_a</span>.
+          <span class="ruby-identifier">zip</span>(<span class="ruby-identifier">mbat_blocks</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>] <span class="ruby-operator">+</span> [<span class="ruby-keyword kw">nil</span>]).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span> <span class="ruby-value">? </span><span class="ruby-identifier">a</span> <span class="ruby-operator">+</span> [<span class="ruby-identifier">b</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">a</span> }
+        <span class="ruby-comment cmt"># pad out the last one.</span>
+        <span class="ruby-identifier">mbat_data</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">push</span>(<span class="ruby-operator">*</span>([<span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">AVAIL</span>] <span class="ruby-operator">*</span> (<span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">block_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">4</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">mbat_data</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">length</span>)))
+        <span class="ruby-constant">RangesIO</span>.<span class="ruby-identifier">open</span> <span class="ruby-ivar">@io</span>, <span class="ruby-identifier">:ranges</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">ranges</span>(<span class="ruby-identifier">mbat_blocks</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">mbat_data</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'V*'</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># now seek back and write the header out</span>
+      <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">seek</span> <span class="ruby-value">0</span>
+      <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">write</span> <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">bbat_chain</span>[<span class="ruby-value">0</span>, <span class="ruby-value">109</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'V*'</span>)
+      <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">flush</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

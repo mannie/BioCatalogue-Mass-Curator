@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: LibXMLJRuby::XML::Parser#input_source
+is_singleton: false
+name: input_source
+params: ()
+visibility: public

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_cellblocks (Spreadsheet::Excel::Writer::Worksheet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/worksheet.rb, line 180</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_cellblocks</span> <span class="ruby-identifier">row</span>
+    <span class="ruby-comment cmt"># BLANK ➜ 6.7</span>
+    <span class="ruby-comment cmt"># BOOLERR ➜ 6.10</span>
+    <span class="ruby-comment cmt"># INTEGER ➜ 6.56 (BIFF2 only)</span>
+    <span class="ruby-comment cmt"># LABEL ➜ 6.59 (BIFF2-BIFF7)</span>
+    <span class="ruby-comment cmt"># LABELSST ➜ 6.61 (BIFF8 only)</span>
+    <span class="ruby-comment cmt"># MULBLANK ➜ 6.64 (BIFF5-BIFF8)</span>
+    <span class="ruby-comment cmt"># MULRK ➜ 6.65 (BIFF5-BIFF8)</span>
+    <span class="ruby-comment cmt"># NUMBER ➜ 6.68</span>
+    <span class="ruby-comment cmt"># RK ➜ 6.82 (BIFF3-BIFF8)</span>
+    <span class="ruby-comment cmt"># RSTRING ➜ 6.84 (BIFF5/BIFF7)</span>
+    <span class="ruby-identifier">multiples</span>, <span class="ruby-identifier">first_idx</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">row</span> = <span class="ruby-identifier">row</span>.<span class="ruby-identifier">formatted</span>
+    <span class="ruby-identifier">row</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cell</span>, <span class="ruby-identifier">idx</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">cell</span> = <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cell</span> <span class="ruby-operator">==</span> <span class="ruby-value str">''</span>
+      <span class="ruby-comment cmt">## it appears that there are limitations to RK precision, both for</span>
+      <span class="ruby-comment cmt">#  Integers and Floats, that lie well below 2^30 significant bits, or</span>
+      <span class="ruby-comment cmt">#  Ruby's Bignum threshold. In that case we'll just write a Number</span>
+      <span class="ruby-comment cmt">#  record</span>
+      <span class="ruby-identifier">need_number</span> = <span class="ruby-identifier">need_number?</span> <span class="ruby-identifier">cell</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">multiples</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">multiples</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-identifier">cell</span>.<span class="ruby-identifier">class</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">need_number</span>)
+        <span class="ruby-identifier">write_multiples</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">first_idx</span>, <span class="ruby-identifier">multiples</span>
+        <span class="ruby-identifier">multiples</span>, <span class="ruby-identifier">first_idx</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">nxt</span> = <span class="ruby-identifier">idx</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">cell</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">NilClass</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">multiples</span>
+          <span class="ruby-identifier">multiples</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">cell</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">nxt</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">row</span>[<span class="ruby-identifier">nxt</span>].<span class="ruby-identifier">nil?</span>
+          <span class="ruby-identifier">multiples</span> = [<span class="ruby-identifier">cell</span>]
+          <span class="ruby-identifier">first_idx</span> = <span class="ruby-identifier">idx</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">write_blank</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">idx</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">TrueClass</span>, <span class="ruby-constant">FalseClass</span>, <span class="ruby-constant">Error</span>
+        <span class="ruby-identifier">write_boolerr</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">idx</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+        <span class="ruby-identifier">write_labelsst</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">idx</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+        <span class="ruby-comment cmt">## RK encodes Floats with 30 significant bits, which is a bit more than</span>
+        <span class="ruby-comment cmt">#  10^9. Not sure what is a good rule of thumb here, but it seems that</span>
+        <span class="ruby-comment cmt">#  Decimal Numbers with more than 4 significant digits are not represented</span>
+        <span class="ruby-comment cmt">#  with sufficient precision by RK</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">need_number</span>
+          <span class="ruby-identifier">write_number</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">idx</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">multiples</span>
+          <span class="ruby-identifier">multiples</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">cell</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">nxt</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">row</span>[<span class="ruby-identifier">nxt</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Numeric</span>)
+          <span class="ruby-identifier">multiples</span> = [<span class="ruby-identifier">cell</span>]
+          <span class="ruby-identifier">first_idx</span> = <span class="ruby-identifier">idx</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">write_rk</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">idx</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Formula</span>
+        <span class="ruby-identifier">write_formula</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">idx</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Date</span>, <span class="ruby-constant">Time</span>
+        <span class="ruby-identifier">write_number</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">idx</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">write_multiples</span> <span class="ruby-identifier">row</span>, <span class="ruby-identifier">first_idx</span>, <span class="ruby-identifier">multiples</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">multiples</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

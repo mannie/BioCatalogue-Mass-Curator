@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Returns a copy of self with nil-values appended for empty cells that have an associated Format. This is primarily a helper-function for the writer classes.
+full_name: Spreadsheet::Row#formatted
+is_singleton: false
+name: formatted
+params: ()
+visibility: public

@@ -26,14 +26,14 @@
 require 'java'
 
 # Import Java Libraries
-AWT_CLASSES.each { |awt| import "java.awt." << awt }
-AWT_EVENTS.each { |event| import "java.awt.event." << event }
+AWT_CLASSES.each { |awt| java_import "java.awt." << awt }
+AWT_EVENTS.each { |event| java_import "java.awt.event." << event }
 
-SWING_CLASSES.each { |swing| import "javax.swing." << swing }
-SWING_EVENTS.each { |event| import "javax.swing.event." << event }
+SWING_CLASSES.each { |swing| java_import "javax.swing." << swing }
+SWING_EVENTS.each { |event| java_import "javax.swing.event." << event }
 
-JARS.each { |jar| require File.join(LIBRARIES_DIR, jar) }
-OTHER_CLASSES.each { |library| import library }
+JAR_ARCHIVES.each { |jar| require File.join(LIBRARIES_DIR, jar) }
+OTHER_CLASSES.each { |library| java_import library }
 
 # Require Ruby Gems
 require 'rubygems'

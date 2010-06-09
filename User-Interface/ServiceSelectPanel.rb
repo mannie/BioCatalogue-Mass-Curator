@@ -32,7 +32,7 @@ class ServiceSelectPanel < JPanel
 
     @page = pageNumber.to_i
     initUI
-    MainWindow.BROWSING_STATUS_PANEL.pageCount = @lastPage
+    Component.browsingStatusPanel.pageCount = @lastPage
 
     return self
   end # initialize
@@ -42,9 +42,9 @@ private
   def initUI
     self.setLayout(BorderLayout.new)  
     
-    self.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
+    self.add(Component.searchPanel, BorderLayout::NORTH)
     self.add(@mainPanel ||= mainScrollPane)
-    self.add(MainWindow.BROWSING_STATUS_PANEL, BorderLayout::SOUTH)
+    self.add(Component.browsingStatusPanel, BorderLayout::SOUTH)
         
     # button to previous page
     @previousPageButton = BasicArrowButton.new(SwingConstants::WEST)
@@ -75,9 +75,9 @@ private
     c.gridy = 0
 
     begin
-      xmlDocument = Utilities::XML.getXMLDocumentFromURI(
+      xmlDocument = XMLUtils.getXMLDocumentFromURI(
           BioCatalogueClient.servicesEndpoint('xml', SERVICES_PER_PAGE, @page, 
-          'SOAP'))
+              'SOAP'))
     rescue Exception => ex
       log('f', ex)
     end
@@ -87,10 +87,10 @@ private
     xmlDocument.root.each { |node|
       case node.name
         when 'results'
-          serviceNodes = Utilities::XML.selectNodesWithNameFrom("service", node)
+          serviceNodes = XMLUtils.selectNodesWithNameFrom("service", node)
           serviceNodes.each { |node|
-            attr = Utilities::XML.getAttributeFromNode("xlink:href", node)
-            service = Utilities::Application.serviceWithURI(attr.value)
+            attr = XMLUtils.getAttributeFromNode("xlink:href", node)
+            service = Application.serviceWithURI(attr.value)
                      
             next if service.nil? # URI attribute
             
@@ -99,7 +99,7 @@ private
             c.gridy += 1
           }
         when 'statistics'
-          statsNodes = Utilities::XML.getValidChildren(node)
+          statsNodes = XMLUtils.getValidChildren(node)
           statsNodes.each { |node|
             case node.name
               when 'pages'

@@ -21,7 +21,8 @@
 =end
 
 class SearchAction
-    
+  java_implements ActionListener
+  
   def initialize
     super()
     return self
@@ -30,19 +31,19 @@ class SearchAction
 # --------------------
 
   def actionPerformed(event)
-    query = MainWindow.SEARCH_PANEL.searchField.getText
+    query = Component.searchPanel.searchField.getText
     
     unless query.empty?      
       Thread.new("Searching for: '#{}'") {
-        MainWindow.SEARCH_PANEL.searchButton.setText("Searching...")
-        MainWindow.SEARCH_PANEL.searchButton.setEnabled(false)
-        MainWindow.SEARCH_PANEL.searchField.setEnabled(false)
+        Component.searchPanel.searchButton.setText("Searching...")
+        Component.searchPanel.searchButton.setEnabled(false)
+        Component.searchPanel.searchField.setEnabled(false)
         
         SearchResultsWindow.new(query)
         
-        MainWindow.SEARCH_PANEL.searchButton.setText("Search")
-        MainWindow.SEARCH_PANEL.searchButton.setEnabled(true)
-        MainWindow.SEARCH_PANEL.searchField.setEnabled(true)
+        Component.searchPanel.searchButton.setText("Search")
+        Component.searchPanel.searchButton.setEnabled(true)
+        Component.searchPanel.searchField.setEnabled(true)
       }
     end
   end # actionPerformed

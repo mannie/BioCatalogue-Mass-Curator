@@ -1,0 +1,107 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: worksheet
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: "Writer class for Excel Worksheets. Most write_* method correspond to an Excel-Record/Opcode. You should not need to call any of its methods directly. If you think you do, look at #write_worksheet"
+constants: []
+
+full_name: Spreadsheet::Excel::Writer::Worksheet
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Excel::Writer::Biff8
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Excel::Internals
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Excel::Internals::Biff8
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: boundsheet_size
+  - !ruby/object:RI::MethodSummary 
+    name: data
+  - !ruby/object:RI::MethodSummary 
+    name: encode_date
+  - !ruby/object:RI::MethodSummary 
+    name: encode_rk
+  - !ruby/object:RI::MethodSummary 
+    name: name
+  - !ruby/object:RI::MethodSummary 
+    name: need_number?
+  - !ruby/object:RI::MethodSummary 
+    name: row_blocks
+  - !ruby/object:RI::MethodSummary 
+    name: size
+  - !ruby/object:RI::MethodSummary 
+    name: strings
+  - !ruby/object:RI::MethodSummary 
+    name: write_blank
+  - !ruby/object:RI::MethodSummary 
+    name: write_bof
+  - !ruby/object:RI::MethodSummary 
+    name: write_boolerr
+  - !ruby/object:RI::MethodSummary 
+    name: write_calccount
+  - !ruby/object:RI::MethodSummary 
+    name: write_cell
+  - !ruby/object:RI::MethodSummary 
+    name: write_cellblocks
+  - !ruby/object:RI::MethodSummary 
+    name: write_changes
+  - !ruby/object:RI::MethodSummary 
+    name: write_colinfo
+  - !ruby/object:RI::MethodSummary 
+    name: write_colinfos
+  - !ruby/object:RI::MethodSummary 
+    name: write_defaultrowheight
+  - !ruby/object:RI::MethodSummary 
+    name: write_defcolwidth
+  - !ruby/object:RI::MethodSummary 
+    name: write_dimensions
+  - !ruby/object:RI::MethodSummary 
+    name: write_eof
+  - !ruby/object:RI::MethodSummary 
+    name: write_formula
+  - !ruby/object:RI::MethodSummary 
+    name: write_from_scratch
+  - !ruby/object:RI::MethodSummary 
+    name: write_hlink
+  - !ruby/object:RI::MethodSummary 
+    name: write_hyperlink_table
+  - !ruby/object:RI::MethodSummary 
+    name: write_iteration
+  - !ruby/object:RI::MethodSummary 
+    name: write_labelsst
+  - !ruby/object:RI::MethodSummary 
+    name: write_mulblank
+  - !ruby/object:RI::MethodSummary 
+    name: write_mulrk
+  - !ruby/object:RI::MethodSummary 
+    name: write_multiples
+  - !ruby/object:RI::MethodSummary 
+    name: write_number
+  - !ruby/object:RI::MethodSummary 
+    name: write_op
+  - !ruby/object:RI::MethodSummary 
+    name: write_refmode
+  - !ruby/object:RI::MethodSummary 
+    name: write_rk
+  - !ruby/object:RI::MethodSummary 
+    name: write_row
+  - !ruby/object:RI::MethodSummary 
+    name: write_rowblock
+  - !ruby/object:RI::MethodSummary 
+    name: write_rows
+  - !ruby/object:RI::MethodSummary 
+    name: write_saverecalc
+  - !ruby/object:RI::MethodSummary 
+    name: write_window2
+  - !ruby/object:RI::MethodSummary 
+    name: write_wsbool
+name: Worksheet
+superclass: Object

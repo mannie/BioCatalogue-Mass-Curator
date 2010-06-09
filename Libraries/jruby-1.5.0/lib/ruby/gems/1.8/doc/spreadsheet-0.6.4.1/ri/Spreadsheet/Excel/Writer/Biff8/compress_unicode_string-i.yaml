@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Check whether the string <em>data</em> can be compressed (i.e. every second byte is a Null-byte) and perform compression. Returns the data and compression_status (0/1)
+full_name: Spreadsheet::Excel::Writer::Biff8#compress_unicode_string
+is_singleton: false
+name: compress_unicode_string
+params: (data)
+visibility: public

@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Format#color_code
+is_singleton: false
+name: color_code
+params: (color)
+visibility: public

@@ -1,0 +1,33 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: java_obj
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: from_java
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+constants: []
+
+full_name: LibXMLJRuby::XML::Attributes
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Enumerable
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: "[]"
+  - !ruby/object:RI::MethodSummary 
+    name: "[]="
+  - !ruby/object:RI::MethodSummary 
+    name: each
+  - !ruby/object:RI::MethodSummary 
+    name: get_attribute
+  - !ruby/object:RI::MethodSummary 
+    name: get_attribute_ns
+  - !ruby/object:RI::MethodSummary 
+    name: length
+name: Attributes
+superclass: Object

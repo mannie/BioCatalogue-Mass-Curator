@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: "Renumbers all Rows starting at <em>idx</em> and calls #row_updated for each of them."
+full_name: Spreadsheet::Worksheet#updated_from
+is_singleton: false
+name: updated_from
+params: (index)
+visibility: public

@@ -1,0 +1,36 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: java_obj
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: file
+  - !ruby/object:RI::MethodSummary 
+    name: from_java
+  - !ruby/object:RI::MethodSummary 
+    name: new
+  - !ruby/object:RI::MethodSummary 
+    name: string
+comment: 
+constants: []
+
+full_name: LibXMLJRuby::XML::Document
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: child?
+  - !ruby/object:RI::MethodSummary 
+    name: find
+  - !ruby/object:RI::MethodSummary 
+    name: find_first
+  - !ruby/object:RI::MethodSummary 
+    name: parent?
+  - !ruby/object:RI::MethodSummary 
+    name: root
+  - !ruby/object:RI::MethodSummary 
+    name: validate
+name: Document
+superclass: Object

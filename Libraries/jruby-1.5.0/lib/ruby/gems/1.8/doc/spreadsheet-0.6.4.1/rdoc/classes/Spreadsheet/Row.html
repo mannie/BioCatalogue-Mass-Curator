@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Spreadsheet::Row</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Spreadsheet::Row</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/spreadsheet/row_rb.html">
+                lib/spreadsheet/row.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="../Array.html">
+                Array
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+The <a href="Row.html">Row</a> class. Encapsulates Cell data and
+formatting. Since <a href="Row.html">Row</a> is a subclass of <a
+href="../Array.html">Array</a>, you may use all the standard <a
+href="../Array.html">Array</a> methods to manipulate a <a
+href="Row.html">Row</a>. By convention, Row#at will give you raw values,
+while <a href="Row.html">Row</a>#[] may be overridden to return enriched
+data if necessary (see also the Date- and DateTime-handling in <a
+href="Excel/Row.html">Excel::Row</a>#[]
+</p>
+<p>
+Useful Attributes are:
+</p>
+<table>
+<tr><td valign="top">idx:</td><td>The 0-based index of this <a href="Row.html">Row</a> in its <a
+href="Worksheet.html">Worksheet</a>.
+
+</td></tr>
+<tr><td valign="top">formats:</td><td>A parallel array containing Formatting information for all cells stored in
+a <a href="Row.html">Row</a>.
+
+</td></tr>
+<tr><td valign="top">default_format:</td><td>The default <a href="Format.html">Format</a> used when writing a Cell if no
+explicit <a href="Format.html">Format</a> is stored in formats for the
+cell.
+
+</td></tr>
+<tr><td valign="top">height:</td><td>The height of this <a href="Row.html">Row</a> in points (defaults to 12).
+
+</td></tr>
+</table>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000438">default_format=</a>&nbsp;&nbsp;
+      <a href="#M000443">first_unused</a>&nbsp;&nbsp;
+      <a href="#M000439">first_used</a>&nbsp;&nbsp;
+      <a href="#M000440">format</a>&nbsp;&nbsp;
+      <a href="#M000435">format_updater</a>&nbsp;&nbsp;
+      <a href="#M000441">formatted</a>&nbsp;&nbsp;
+      <a href="#M000442">formatted_size</a>&nbsp;&nbsp;
+      <a href="#M000444">inspect</a>&nbsp;&nbsp;
+      <a href="#M000437">new</a>&nbsp;&nbsp;
+      <a href="#M000445">set_format</a>&nbsp;&nbsp;
+      <a href="#M000436">updater</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Datatypes.html">Datatypes</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">default_format</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">formats</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">height</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">idx</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">worksheet</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000435" class="method-detail">
+        <a name="M000435"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000435.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000435.html');return false;">
+          <span class="method-name">format_updater</span><span class="method-args">(*keys)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000437" class="method-detail">
+        <a name="M000437"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000437.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000437.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(worksheet, idx, cells=[])</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000436" class="method-detail">
+        <a name="M000436"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000436.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000436.html');return false;">
+          <span class="method-name">updater</span><span class="method-args">(*keys)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000438" class="method-detail">
+        <a name="M000438"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000438.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000438.html');return false;">
+          <span class="method-name">default_format=</span><span class="method-args">(format)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the default <a href="Format.html">Format</a> used when writing a Cell
+if no explicit <a href="Format.html">Format</a> is stored for the cell.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000443" class="method-detail">
+        <a name="M000443"></a>
+
+        <div class="method-heading">
+          <span class="method-name">first_unused</span><span class="method-args">()</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="Row.html#M000442">formatted_size</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000439" class="method-detail">
+        <a name="M000439"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000439.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000439.html');return false;">
+          <span class="method-name">first_used</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Row.html#M000439">first_used</a> the 0-based index of the first
+non-blank Cell.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000440" class="method-detail">
+        <a name="M000440"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000440.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000440.html');return false;">
+          <span class="method-name">format</span><span class="method-args">(idx)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The <a href="Format.html">Format</a> for the Cell at <em>idx</em>
+(0-based), or the first valid <a href="Format.html">Format</a> in
+Row#default_format, Column#default_format and <a
+href="Worksheet.html#M000399">Worksheet#default_format</a>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000441" class="method-detail">
+        <a name="M000441"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000441.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000441.html');return false;">
+          <span class="method-name">formatted</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a copy of self with nil-values appended for empty cells that have
+an associated <a href="Format.html">Format</a>. This is primarily a
+helper-function for the writer classes.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000442" class="method-detail">
+        <a name="M000442"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000442.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000442.html');return false;">
+          <span class="method-name">formatted_size</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Same as Row#size, but takes into account <a
+href="Row.html#M000441">formatted</a> empty cells
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000444" class="method-detail">
+        <a name="M000444"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000444.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000444.html');return false;">
+          <span class="method-name">inspect</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000445" class="method-detail">
+        <a name="M000445"></a>
+
+        <div class="method-heading">
+          <a href="Row.src/M000445.html" target="Code" class="method-signature"
+            onclick="popupCode('Row.src/M000445.html');return false;">
+          <span class="method-name">set_format</span><span class="method-args">(idx, fmt)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the <a href="Format.html">Format</a> for the Cell at <em>idx</em>
+(0-based).
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

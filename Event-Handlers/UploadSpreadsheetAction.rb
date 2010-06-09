@@ -21,7 +21,8 @@
 =end
 
 class UploadSpreadsheetAction
-  
+  java_implements ActionListener
+
   @selectedFilePath = nil
   
   def initialize(container)
@@ -60,48 +61,46 @@ class UploadSpreadsheetAction
           @selectedFilePath = @@fileSelector.getSelectedFile.getAbsolutePath
           @buttonContainer.selectedSpreadsheetLabel.setText(@selectedFilePath)
           @buttonContainer.selectedSpreadsheetLabel.setEnabled(true)
+          
+          @buttonContainer.uploadSpreadsheetButton.setEnabled(true)
         end # if file selected
-      elsif event.getSource==@buttonContainer.uploadSpreadsheetButton
-        
+      elsif event.getSource==@buttonContainer.uploadSpreadsheetButton        
         return if @selectedFilePath.nil?
-        
-        jsonOutput = SpreadsheetParsing.generateJSONFromSpreadsheet(
-            @selectedFilePath)
-        
-        if jsonOutput
-          if jsonOutput.empty?
-            Utilities::Notification.informationDialog(
+                
+        Thread.new("Posting annotation data") {
+          @buttonContainer.uploadSpreadsheetButton.setEnabled(false)
+          @buttonContainer.uploadSpreadsheetButton.setText("Uploading...")
+
+          jsonOutput = SpreadsheetParsing.generateJSONFromSpreadsheet(
+              @selectedFilePath)
+          
+          if jsonOutput
+            if jsonOutput.empty?
+              Notification.informationDialog(
                   "No new annotations could be found in the spreadsheet.\n" +
                   "Nothing has been sent to BioCatalogue.", 
                   "No New Annotations Found")
-            return
-          end
-          
-          user = @buttonContainer.usernameField.getText
-          pass = @buttonContainer.passwordField.getText
-          
-          Thread.new("Posting annotation data") {
-            @buttonContainer.uploadSpreadsheetButton.setEnabled(false)
-            @buttonContainer.uploadSpreadsheetButton.setText("Uploading...")
-            
-            if Utilities::Application.postAnnotationData(jsonOutput, user, pass)
-              Utilities::Notification.informationDialog(
-                  "Your annotations have been successfully sent.", "Success")
-            else
-              Utilities::Notification.errorDialog(
-                  "An error occured while trying to send your annotations.")
+              return
             end
             
-            @buttonContainer.uploadSpreadsheetButton.setEnabled(true)
-            @buttonContainer.uploadSpreadsheetButton.setText("Upload") 
-          }
-        else
-          Utilities::Notification.errorDialog(
-              "An error occured while trying to upload your spreadsheet.\n" +
-              "Please check that the spreadsheet contains new annotations\n" +
-              "before trying again.")
-        end # if jsonOutput 
+            user = @buttonContainer.usernameField.getText
+            pass = @buttonContainer.passwordField.getText
+            
+            if Application.postAnnotationData(jsonOutput, user, pass)
+              Notification.informationDialog(
+                  "Your annotations have been successfully sent.", "Success")
+            else
+              Notification.errorDialog(
+                  "An error occured while trying to send your annotations.")
+            end            
+          else
+            Notification.errorDialog(
+                "An error occured while uploading your spreadsheet.")
+          end # if jsonOutput 
           
+          @buttonContainer.uploadSpreadsheetButton.setText("Upload") 
+          @buttonContainer.uploadSpreadsheetButton.setEnabled(true)
+        } # Thread.new
       end # elsif event.getSource==@buttonContainer.uploadSpreadsheetButton
 
     end # elsif @buttonContainer.instance_of?(UploadSpreadsheetPanel)

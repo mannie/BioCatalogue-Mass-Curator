@@ -1,0 +1,13 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: 
+  - !ruby/object:RI::AliasName 
+    name: delete
+  - !ruby/object:RI::AliasName 
+    name: unlink
+block_params: 
+comment: 
+full_name: Ole::Storage::DirClass#rmdir
+is_singleton: false
+name: rmdir
+params: (path)
+visibility: public

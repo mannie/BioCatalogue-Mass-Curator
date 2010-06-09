@@ -21,7 +21,8 @@
 =end
 
 class GoBackAction
-  
+  java_implements ActionListener
+
   def initialize(container)
     super()
     @buttonContainer = container
@@ -38,7 +39,7 @@ class GoBackAction
         LoadServicesAction.currentPage) if @buttonContainer.instance_of?(
         BrowsingStatusPanel)
  
-    MAIN_WINDOW.mainPanel.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
+    MAIN_WINDOW.mainPanel.add(Component.searchPanel, BorderLayout::NORTH)
  
     MAIN_WINDOW.mainPanel.setVisible(true)
     MAIN_WINDOW.getContentPane.repaint

@@ -1,0 +1,81 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: block_size
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: io
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: ole
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: <tt>AllocationTable</tt>'s hold the chains corresponding to files. Given an initial index, <tt>AllocationTable#chain</tt> follows the chain, returning the blocks that make up that file.
+  - !ruby/struct:SM::Flow::P 
+    body: There are 2 allocation tables, the bbat, and sbat, for big and small blocks respectively. The block chain should be loaded using either <tt>Storage#read_big_blocks</tt> or <tt>Storage#read_small_blocks</tt> as appropriate.
+  - !ruby/struct:SM::Flow::P 
+    body: Whether or not big or small blocks are used for a file depends on whether its size is over the <tt>Header#threshold</tt> level.
+  - !ruby/struct:SM::Flow::P 
+    body: An <tt>Ole::Storage</tt> document is serialized as a series of directory objects, which are stored in blocks throughout the file. The blocks are either big or small, and are accessed using the <tt>AllocationTable</tt>.
+  - !ruby/struct:SM::Flow::P 
+    body: The bbat allocation table's data is stored in the spare room in the header block, and in extra blocks throughout the file as referenced by the meta bat. That chain is linear, as there is no higher level table.
+  - !ruby/struct:SM::Flow::P 
+    body: "AllocationTable.new is used to create an empty table. It can parse a string with the #load method. Serialization is accomplished with the #to_s method."
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: a free block (I don't currently leave any blocks free), although I do pad out the allocation table with AVAIL to the block size.
+    name: AVAIL
+    value: "0xffffffff"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: EOC
+    value: "0xfffffffe"
+  - !ruby/object:RI::Constant 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: these blocks are used for storing the allocation table chains
+    name: BAT
+    value: "0xfffffffd"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: META_BAT
+    value: "0xfffffffc"
+full_name: Ole::Storage::AllocationTable
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: "[]="
+  - !ruby/object:RI::MethodSummary 
+    name: blocks_to_ranges
+  - !ruby/object:RI::MethodSummary 
+    name: chain
+  - !ruby/object:RI::MethodSummary 
+    name: free_block
+  - !ruby/object:RI::MethodSummary 
+    name: load
+  - !ruby/object:RI::MethodSummary 
+    name: open
+  - !ruby/object:RI::MethodSummary 
+    name: ranges
+  - !ruby/object:RI::MethodSummary 
+    name: read
+  - !ruby/object:RI::MethodSummary 
+    name: resize_chain
+  - !ruby/object:RI::MethodSummary 
+    name: to_s
+  - !ruby/object:RI::MethodSummary 
+    name: truncate
+  - !ruby/object:RI::MethodSummary 
+    name: truncate!
+name: AllocationTable
+superclass: Array

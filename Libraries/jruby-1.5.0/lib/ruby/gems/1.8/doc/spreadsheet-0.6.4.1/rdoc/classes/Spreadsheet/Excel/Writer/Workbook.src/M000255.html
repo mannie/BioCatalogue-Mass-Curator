@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 21</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+    <span class="ruby-keyword kw">super</span>
+    <span class="ruby-ivar">@biff_version</span> = <span class="ruby-value">0x0600</span>
+    <span class="ruby-ivar">@bof</span> = <span class="ruby-value">0x0809</span>
+    <span class="ruby-ivar">@build_id</span> = <span class="ruby-value">3515</span>
+    <span class="ruby-ivar">@build_year</span> = <span class="ruby-value">1996</span>
+    <span class="ruby-ivar">@bof_types</span> = {
+      <span class="ruby-identifier">:globals</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0x0005</span>,
+      <span class="ruby-identifier">:visual_basic</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0x0006</span>,
+      <span class="ruby-identifier">:worksheet</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0x0010</span>,
+      <span class="ruby-identifier">:chart</span>        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0x0020</span>,
+      <span class="ruby-identifier">:macro_sheet</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0x0040</span>,
+      <span class="ruby-identifier">:workspace</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0x0100</span>,
+    }
+    <span class="ruby-ivar">@worksheets</span> = {}
+    <span class="ruby-ivar">@sst</span> = {}
+    <span class="ruby-ivar">@recordsize_limit</span> = <span class="ruby-value">8224</span>
+    <span class="ruby-ivar">@fonts</span> = {}
+    <span class="ruby-ivar">@formats</span> = {}
+    <span class="ruby-ivar">@number_formats</span> = {}
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_boundsheets (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 135</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_boundsheets</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">offset</span>
+    <span class="ruby-identifier">worksheets</span> = <span class="ruby-identifier">worksheets</span>(<span class="ruby-identifier">workbook</span>)
+    <span class="ruby-identifier">worksheets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">worksheet</span><span class="ruby-operator">|</span>
+      <span class="ruby-comment cmt"># account for boundsheet-entry</span>
+      <span class="ruby-identifier">offset</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">worksheet</span>.<span class="ruby-identifier">boundsheet_size</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">worksheets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">worksheet</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">data</span> = [
+        <span class="ruby-identifier">offset</span>,   <span class="ruby-comment cmt"># Absolute stream position of the BOF record of the sheet</span>
+                  <span class="ruby-comment cmt"># represented by this record. This field is never encrypted</span>
+                  <span class="ruby-comment cmt"># in protected files.</span>
+        <span class="ruby-value">0x00</span>,     <span class="ruby-comment cmt"># Visibility: 0x00 = Visible</span>
+                  <span class="ruby-comment cmt">#             0x01 = Hidden</span>
+                  <span class="ruby-comment cmt">#             0x02 = Strong hidden (see below)</span>
+        <span class="ruby-value">0x00</span>,     <span class="ruby-comment cmt"># Sheet type: 0x00 = Worksheet</span>
+                  <span class="ruby-comment cmt">#             0x02 = Chart</span>
+                  <span class="ruby-comment cmt">#             0x06 = Visual Basic module</span>
+      ]
+      <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">writer</span>, <span class="ruby-value">0x0085</span>, <span class="ruby-identifier">data</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;VC2&quot;</span>), <span class="ruby-identifier">worksheet</span>.<span class="ruby-identifier">name</span>
+      <span class="ruby-identifier">offset</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">worksheet</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

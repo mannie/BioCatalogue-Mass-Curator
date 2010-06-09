@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: flattens the tree starting from here into <tt>dirents</tt>. note it modifies its argument.
+full_name: Ole::Storage::Dirent#flatten
+is_singleton: false
+name: flatten
+params: (dirents=[])
+visibility: public

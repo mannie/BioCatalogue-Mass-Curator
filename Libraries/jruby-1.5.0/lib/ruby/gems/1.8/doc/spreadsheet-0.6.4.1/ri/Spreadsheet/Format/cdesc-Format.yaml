@@ -1,0 +1,69 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: font
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: name
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: number_format
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: pattern
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: Text rotation
+    name: rotation
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: used_merge
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Formatting data
+constants: []
+
+full_name: Spreadsheet::Format
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Datatypes
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Encodings
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: align=
+  - !ruby/object:RI::MethodSummary 
+    name: border
+  - !ruby/object:RI::MethodSummary 
+    name: border=
+  - !ruby/object:RI::MethodSummary 
+    name: border_color
+  - !ruby/object:RI::MethodSummary 
+    name: border_color=
+  - !ruby/object:RI::MethodSummary 
+    name: center_across!
+  - !ruby/object:RI::MethodSummary 
+    name: date?
+  - !ruby/object:RI::MethodSummary 
+    name: date_or_time?
+  - !ruby/object:RI::MethodSummary 
+    name: datetime?
+  - !ruby/object:RI::MethodSummary 
+    name: merge!
+  - !ruby/object:RI::MethodSummary 
+    name: rotation=
+  - !ruby/object:RI::MethodSummary 
+    name: time?
+name: Format
+superclass: Object

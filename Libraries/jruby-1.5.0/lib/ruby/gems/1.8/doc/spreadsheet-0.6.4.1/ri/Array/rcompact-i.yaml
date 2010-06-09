@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Array#rcompact
+is_singleton: false
+name: rcompact
+params: ()
+visibility: public

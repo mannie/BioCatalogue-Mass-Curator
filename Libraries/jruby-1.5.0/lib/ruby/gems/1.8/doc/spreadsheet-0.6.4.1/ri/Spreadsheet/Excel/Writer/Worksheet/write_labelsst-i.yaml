@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Write a cell with a String value. The String must have been stored in the Shared String Table.
+full_name: Spreadsheet::Excel::Writer::Worksheet#write_labelsst
+is_singleton: false
+name: write_labelsst
+params: (row, idx)
+visibility: public

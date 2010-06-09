@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: The Format at <em>idx</em>, or - if <em>idx</em> is a String - the Format with name == <em>idx</em>
+full_name: Spreadsheet::Workbook#format
+is_singleton: false
+name: format
+params: (idx)
+visibility: public

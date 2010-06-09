@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: LibXMLJRuby::XML::Node#equal?
+is_singleton: false
+name: equal?
+params: (other)
+visibility: public

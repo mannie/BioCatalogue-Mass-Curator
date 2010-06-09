@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Encodings#utf8
+is_singleton: false
+name: utf8
+params: (string, client=Spreadsheet.client_encoding)
+visibility: public

@@ -1,0 +1,14 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: most of the work this function does is moving the dirent between 2 parents. the actual name changing is quite simple. File.rename can move a file into another folder, which is why i've done it too, though i think its not always possible...
+  - !ruby/struct:SM::Flow::P 
+    body: FIXME File.rename can be used for directories too....
+full_name: Ole::Storage::FileClass#rename
+is_singleton: false
+name: rename
+params: (from_path, to_path)
+visibility: public

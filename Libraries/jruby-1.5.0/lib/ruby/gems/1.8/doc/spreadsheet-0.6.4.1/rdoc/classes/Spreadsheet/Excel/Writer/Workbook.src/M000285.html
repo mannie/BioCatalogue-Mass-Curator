@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_string_part (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 525</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_string_part</span> <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">op</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">wide</span>
+    <span class="ruby-identifier">bef</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-comment cmt">## if we're writing wide characters, we need to make sure we don't cut</span>
+    <span class="ruby-comment cmt">#  characters in half</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">wide</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@recordsize_limit</span>
+      <span class="ruby-identifier">remove</span> = <span class="ruby-ivar">@recordsize_limit</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">size</span>
+      <span class="ruby-identifier">remove</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">remove</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>
+      <span class="ruby-identifier">rest</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">slice!</span>(<span class="ruby-identifier">remove</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>)
+      <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">op</span>, <span class="ruby-identifier">data</span>
+      <span class="ruby-identifier">data</span> = <span class="ruby-identifier">rest</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">data</span> = <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">op</span>, <span class="ruby-identifier">data</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">op</span> = <span class="ruby-value">0x003c</span>
+    <span class="ruby-comment cmt"># Unicode strings are split in a special way. At the beginning of each</span>
+    <span class="ruby-comment cmt"># CONTINUE record the option flags byte is repeated. Only the</span>
+    <span class="ruby-comment cmt"># character size flag will be set in this flags byte, the Rich-Text</span>
+    <span class="ruby-comment cmt"># flag and the Far-East flag are set to zero.</span>
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">wide</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+        <span class="ruby-comment cmt"># check if we can compress the rest of the string</span>
+        <span class="ruby-identifier">data</span>, <span class="ruby-identifier">wide</span> = <span class="ruby-identifier">compress_unicode_string</span> <span class="ruby-identifier">data</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">data</span> = [<span class="ruby-identifier">wide</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'C'</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">data</span>
+    <span class="ruby-keyword kw">end</span>
+    [<span class="ruby-identifier">op</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">wide</span>]
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

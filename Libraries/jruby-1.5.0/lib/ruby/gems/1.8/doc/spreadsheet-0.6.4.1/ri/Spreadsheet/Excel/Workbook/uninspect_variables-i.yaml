@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Workbook#uninspect_variables
+is_singleton: false
+name: uninspect_variables
+params: ()
+visibility: public

@@ -1,0 +1,25 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: name
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Font formatting data
+constants: []
+
+full_name: Spreadsheet::Font
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Datatypes
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Encodings
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: bold=
+name: Font
+superclass: Object

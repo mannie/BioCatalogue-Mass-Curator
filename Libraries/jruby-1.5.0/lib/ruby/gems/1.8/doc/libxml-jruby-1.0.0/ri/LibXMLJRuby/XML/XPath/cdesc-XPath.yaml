@@ -1,0 +1,18 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: []
+
+comment: 
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: NODESET
+    value: nil
+full_name: LibXMLJRuby::XML::XPath
+includes: []
+
+instance_methods: []
+
+name: XPath
+superclass: 

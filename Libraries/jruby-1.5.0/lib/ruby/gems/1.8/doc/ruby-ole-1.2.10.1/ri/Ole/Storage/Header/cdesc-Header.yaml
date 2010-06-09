@@ -1,0 +1,46 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: A class which wraps the ole header
+  - !ruby/struct:SM::Flow::P 
+    body: "Header.new can be both used to load from a string, or to create from defaults. Serialization is accomplished with the #to_s method."
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: PACK
+    value: "'a8 a16 v2 a2 v2 a6 V3 a4 V5'"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SIZE
+    value: "0x4c"
+  - !ruby/object:RI::Constant 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: i have seen it pointed out that the first 4 bytes of hex, 0xd0cf11e0, is supposed to spell out docfile. hmmm :)
+    name: MAGIC
+    value: "\"\\xd0\\xcf\\x11\\xe0\\xa1\\xb1\\x1a\\xe1\""
+  - !ruby/object:RI::Constant 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: what you get if creating new header from scratch. AllocationTable::EOC isn't available yet. meh.
+    name: EOC
+    value: "0xfffffffe"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: DEFAULT
+    value: "[         MAGIC, 0.chr * 16, 59, 3, \"\\xfe\\xff\", 9, 6,         0.chr * 6, 0, 1, EOC, 0.chr * 4,         4096, EOC, 0, EOC, 0"
+full_name: Ole::Storage::Header
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: to_s
+  - !ruby/object:RI::MethodSummary 
+    name: validate!
+name: Header
+superclass: Struct.new(         :magic, :clsid, :minor_ver, :major_ver, :byte_order, :b_shift, :s_shift,         :reserved, :csectdir, :num_bat, :dirent_start, :transacting_signature, :threshold,         :sbat_start, :num_sbat, :mbat_start, :num_mbat

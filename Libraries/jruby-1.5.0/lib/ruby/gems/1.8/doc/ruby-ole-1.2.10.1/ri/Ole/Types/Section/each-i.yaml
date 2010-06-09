@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: id, read_property(property_offset).last
+comment: 
+full_name: Ole::Types::Section#each
+is_singleton: false
+name: each
+params: () {|id, read_property(property_offset).last| ...}
+visibility: public

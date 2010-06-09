@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Worksheet#encode_rk
+is_singleton: false
+name: encode_rk
+params: (value)
+visibility: public

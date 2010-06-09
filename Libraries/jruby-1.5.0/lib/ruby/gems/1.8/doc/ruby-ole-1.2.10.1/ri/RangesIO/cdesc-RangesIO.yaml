@@ -1,0 +1,91 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: io
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: mode
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: pos
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: ranges
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: size
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+  - !ruby/object:RI::MethodSummary 
+    name: open
+comment: 
+  - !ruby/struct:SM::Flow::H 
+    level: 1
+    text: Introduction
+  - !ruby/struct:SM::Flow::P 
+    body: <tt>RangesIO</tt> is a basic class for wrapping another IO object allowing you to arbitrarily reorder slices of the input file by providing a list of ranges. Intended as an initial measure to curb inefficiencies in the Dirent#data method just reading all of a file's data in one hit, with no method to stream it.
+  - !ruby/struct:SM::Flow::P 
+    body: This class will encapuslate the ranges (corresponding to big or small blocks) of any ole file and thus allow reading/writing directly to the source bytes, in a streamed fashion (so just getting 16 bytes doesn't read the whole thing).
+  - !ruby/struct:SM::Flow::P 
+    body: In the simplest case it can be used with a single range to provide a limited io to a section of a file.
+  - !ruby/struct:SM::Flow::H 
+    level: 1
+    text: Limitations
+  - !ruby/object:SM::Flow::LIST 
+    contents: 
+      - !ruby/struct:SM::Flow::LI 
+        label: "*"
+        body: No buffering. by design at the moment. Intended for large reads
+    type: :BULLET
+  - !ruby/struct:SM::Flow::H 
+    level: 1
+    text: TODO
+  - !ruby/struct:SM::Flow::P 
+    body: On further reflection, this class is something of a joining/optimization of two separate IO classes. a SubfileIO, for providing access to a range within a File as a separate IO object, and a ConcatIO, allowing the presentation of a bunch of io objects as a single unified whole.
+  - !ruby/struct:SM::Flow::P 
+    body: I will need such a ConcatIO if I'm to provide Mime#to_io, a method that will convert a whole mime message into an IO stream, that can be read from. It will just be the concatenation of a series of IO objects, corresponding to headers and boundaries, as StringIO's, and SubfileIO objects, coming from the original message proper, or RangesIO as provided by the Attachment#data, that will then get wrapped by Mime in a Base64IO or similar, to get encoded on-the- fly. Thus the attachment, in its plain or encoded form, and the message as a whole never exists as a single string in memory, as it does now. This is a fair bit of work to achieve, but generally useful I believe.
+  - !ruby/struct:SM::Flow::P 
+    body: This class isn't ole specific, maybe move it to my general ruby stream project.
+constants: []
+
+full_name: RangesIO
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: "<<"
+  - !ruby/object:RI::MethodSummary 
+    name: close
+  - !ruby/object:RI::MethodSummary 
+    name: eof?
+  - !ruby/object:RI::MethodSummary 
+    name: gets
+  - !ruby/object:RI::MethodSummary 
+    name: inspect
+  - !ruby/object:RI::MethodSummary 
+    name: pos=
+  - !ruby/object:RI::MethodSummary 
+    name: ranges=
+  - !ruby/object:RI::MethodSummary 
+    name: read
+  - !ruby/object:RI::MethodSummary 
+    name: readline
+  - !ruby/object:RI::MethodSummary 
+    name: rewind
+  - !ruby/object:RI::MethodSummary 
+    name: seek
+  - !ruby/object:RI::MethodSummary 
+    name: size=
+  - !ruby/object:RI::MethodSummary 
+    name: truncate
+  - !ruby/object:RI::MethodSummary 
+    name: write
+name: RangesIO
+superclass: Object

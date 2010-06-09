@@ -45,11 +45,15 @@ EVENT_HANDLERS = %w{ AppWindowListener.rb
                      SearchAction.rb
                      UploadSpreadsheetAction.rb }.freeze
 
-LIBRARIES = %w{ LoggerHelper.rb
+LIBRARIES = %w{ Application.rb
+                Cache.rb
+                Component.rb
+                LoggerHelper.rb
+                Notification.rb
                 SpreadsheetConstants.rb
                 SpreadsheetGeneration.rb
                 SpreadsheetParsing.rb
-                Utilities.rb }.freeze
+                XMLUtils.rb }.freeze
 
 MODELS = %w{ BioCatalogueClient.rb
              Service.rb
@@ -73,6 +77,7 @@ USER_INTERFACE = %w{ BrowsingStatusPanel.rb
 # ========================================
 
 # Java Classes To Include
+JAR_ARCHIVES = %w{ BrowserLauncher2-1_3.jar }.freeze
 
 AWT_CLASSES = %w{ BorderLayout
                   Color

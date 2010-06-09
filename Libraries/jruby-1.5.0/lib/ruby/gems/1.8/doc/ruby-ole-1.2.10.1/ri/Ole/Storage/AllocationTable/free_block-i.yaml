@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Ole::Storage::AllocationTable#free_block
+is_singleton: false
+name: free_block
+params: ()
+visibility: public

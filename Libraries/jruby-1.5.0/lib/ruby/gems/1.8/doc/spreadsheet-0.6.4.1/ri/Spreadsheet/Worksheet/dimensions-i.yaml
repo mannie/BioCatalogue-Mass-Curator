@@ -1,0 +1,16 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/object:SM::Flow::LIST 
+    contents: 
+      - !ruby/struct:SM::Flow::LI 
+        label: "Dimensions:"
+        body: "[ first used row, first unused row, first used column, first unused column ] ( First used means that all rows or columns before that are empty. First unused means that this and all following rows or columns are empty. )"
+    type: :NOTE
+full_name: Spreadsheet::Worksheet#dimensions
+is_singleton: false
+name: dimensions
+params: ()
+visibility: public

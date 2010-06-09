@@ -1,0 +1,49 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: available
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: chars
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: continued_chars
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: flags
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: phonetic
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: richtext
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: wide
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Shared String Table Entry
+constants: []
+
+full_name: Spreadsheet::Excel::SstEntry
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Encodings
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: content
+  - !ruby/object:RI::MethodSummary 
+    name: continue
+name: SstEntry
+superclass: Object

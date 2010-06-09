@@ -21,7 +21,8 @@
 =end
 
 class LoadServicesAction
-  
+  java_implements ActionListener
+
   @@resultsPanelForPage = {}
   @@serviceSelectPanel = nil
   
@@ -48,13 +49,13 @@ class LoadServicesAction
 
    
   def self.setBusyExporting(exporting)
-    MainWindow.SEARCH_PANEL.setVisible(!exporting)
-    MainWindow.BROWSING_STATUS_PANEL.setVisible(!exporting)
+    Component.searchPanel.setVisible(!exporting)
+    Component.browsingStatusPanel.setVisible(!exporting)
     @@serviceSelectPanel.previousPageButton.setVisible(!exporting)
     @@serviceSelectPanel.nextPageButton.setVisible(!exporting)
     @@serviceSelectPanel.mainPanel.setVisible(!exporting)
     
-    Utilities::Components.flashComponent(@@serviceSelectPanel)
+    Component.flash(@@serviceSelectPanel)
   end # self.setBusyExporting
   
 # --------------------
@@ -67,21 +68,21 @@ class LoadServicesAction
     if (panel = @@resultsPanelForPage[@pageNumber])
       @@serviceSelectPanel = panel
             
-      panel.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
-      panel.add(MainWindow.BROWSING_STATUS_PANEL, BorderLayout::SOUTH)
+      panel.add(Component.searchPanel, BorderLayout::NORTH)
+      panel.add(Component.browsingStatusPanel, BorderLayout::SOUTH)
       
-      Utilities::Application.syncCollectionWithCache(panel.localServiceCache)
+      Application.syncCollectionWithCache(panel.localServiceCache)
     else
       @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
       @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
     end
     
     # update status.actions panel
-    MainWindow.BROWSING_STATUS_PANEL.currentPage = @pageNumber
-    MainWindow.BROWSING_STATUS_PANEL.exportButton.setEnabled(
-        !BioCatalogueClient.selectedServices.empty?) unless
+    Component.browsingStatusPanel.currentPage = @pageNumber
+    Component.browsingStatusPanel.exportButton.setEnabled(
+        !Cache.selectedServices.empty?) unless
         GenerateSpreadsheetAction.isBusyExporting
-    MainWindow.BROWSING_STATUS_PANEL.refresh
+    Component.browsingStatusPanel.refresh
     
     # update full view to show new services
     @buttonContainer.setVisible(false)

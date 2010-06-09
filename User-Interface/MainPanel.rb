@@ -58,7 +58,7 @@ private
     uploadButton.addActionListener(UploadSpreadsheetAction.new(self))
     
     self.add(buttonPanel)
-    self.add(MainWindow.SEARCH_PANEL, BorderLayout::NORTH)
+    self.add(Component.searchPanel, BorderLayout::NORTH)
 
   end # initUI
 end

@@ -21,6 +21,7 @@
 =end
 
 class PreviewAction
+  java_implements ActionListener
 
   def initialize(container, service=nil)
     super()
@@ -38,7 +39,7 @@ class PreviewAction
     @@browserLauncher.setNewWindowPolicy(false)
     
     @@browserLauncher.openURLinBrowser(
-        Utilities::Application.weblinkWithIDForResource(@service.id).to_s)
+        Application.weblinkWithIDForResource(@service.id).to_s)
   end # actionPerformed
 
 end

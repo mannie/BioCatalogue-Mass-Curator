@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_extsst (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 273</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_extsst</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">offsets</span>, <span class="ruby-identifier">writer</span>
+    <span class="ruby-identifier">header</span> = [<span class="ruby-constant">SST_CHUNKSIZE</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'v'</span>)
+    <span class="ruby-identifier">data</span> = <span class="ruby-identifier">offsets</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pair</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">push</span>(<span class="ruby-value">0</span>).<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'Vv2'</span>) <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">writer</span>, <span class="ruby-value">0x00ff</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

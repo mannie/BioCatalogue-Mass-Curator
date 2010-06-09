@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>node_type_name (LibXMLJRuby::XML::Node)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/libxml-jruby/xml/node.rb, line 101</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">node_type_name</span>
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">node_type</span>
+          <span class="ruby-comment cmt"># Most common choices first</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ATTRIBUTE_NODE</span>
+            <span class="ruby-value str">'attribute'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">DOCUMENT_NODE</span>
+            <span class="ruby-value str">'document_xml'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ELEMENT_NODE</span>
+            <span class="ruby-value str">'element'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">TEXT_NODE</span>
+            <span class="ruby-value str">'text'</span>
+          
+          <span class="ruby-comment cmt"># Now the rest  </span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ATTRIBUTE_DECL</span>
+            <span class="ruby-value str">'attribute_decl'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CDATA_SECTION_NODE</span>
+            <span class="ruby-value str">'cdata'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">COMMENT_NODE</span>
+            <span class="ruby-value str">'comment'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">DOCB_DOCUMENT_NODE</span>
+            <span class="ruby-value str">'document_docbook'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">DOCUMENT_FRAG_NODE</span>
+            <span class="ruby-value str">'fragment'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">DOCUMENT_TYPE_NODE</span>
+            <span class="ruby-value str">'doctype'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">DTD_NODE</span>
+            <span class="ruby-value str">'dtd'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ELEMENT_DECL</span>
+            <span class="ruby-value str">'elem_decl'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ENTITY_DECL</span>
+            <span class="ruby-value str">'entity_decl'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ENTITY_NODE</span>
+            <span class="ruby-value str">'entity'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ENTITY_REF_NODE</span>
+            <span class="ruby-value str">'entity_ref'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">HTML_DOCUMENT_NODE</span>
+            <span class="ruby-value str">'document_html'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">NAMESPACE_DECL</span>
+            <span class="ruby-value str">'namespace'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">NOTATION_NODE</span>
+            <span class="ruby-value str">'notation'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">PI_NODE</span>
+            <span class="ruby-value str">'pi'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">XINCLUDE_START</span>
+            <span class="ruby-value str">'xinclude_start'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">XINCLUDE_END</span>
+            <span class="ruby-value str">'xinclude_end'</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">raise</span>(<span class="ruby-constant">UnknownType</span>, <span class="ruby-value str">&quot;Unknown node type: %n&quot;</span>, <span class="ruby-identifier">node</span>.<span class="ruby-identifier">node_type</span>);
+        <span class="ruby-keyword kw">end</span>          
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

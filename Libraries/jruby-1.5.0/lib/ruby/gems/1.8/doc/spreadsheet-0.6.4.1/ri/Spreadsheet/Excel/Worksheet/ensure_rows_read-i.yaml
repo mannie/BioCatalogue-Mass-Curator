@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Worksheet#ensure_rows_read
+is_singleton: false
+name: ensure_rows_read
+params: ()
+visibility: public

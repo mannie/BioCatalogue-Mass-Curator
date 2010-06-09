@@ -41,7 +41,7 @@ class SelectedServicesWindow < JFrame
     c.weightx
     c.gridy = 0
 
-    BioCatalogueClient.selectedServices.each { |id, service|
+    Cache.selectedServices.each { |id, service|
       listPanel.add(ServiceListingPanel.new(service, false))
       c.gridy += 1
     }

@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Set the Format for the Cell at <em>idx</em> (0-based).
+full_name: Spreadsheet::Row#set_format
+is_singleton: false
+name: set_format
+params: (idx, fmt)
+visibility: public

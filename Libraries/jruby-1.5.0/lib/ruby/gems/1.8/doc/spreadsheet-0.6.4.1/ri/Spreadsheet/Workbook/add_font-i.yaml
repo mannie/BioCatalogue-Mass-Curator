@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Add a Font to the Workbook. Used by the parser. You should not need to use this Method.
+full_name: Spreadsheet::Workbook#add_font
+is_singleton: false
+name: add_font
+params: (font)
+visibility: public

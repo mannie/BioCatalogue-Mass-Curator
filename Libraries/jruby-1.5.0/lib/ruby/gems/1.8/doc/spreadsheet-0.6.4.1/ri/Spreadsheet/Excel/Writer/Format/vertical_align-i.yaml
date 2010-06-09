@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Format#vertical_align
+is_singleton: false
+name: vertical_align
+params: ()
+visibility: public

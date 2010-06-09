@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Ole::Types::FileTime::from_time
+is_singleton: true
+name: from_time
+params: (time)
+visibility: public

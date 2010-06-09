@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Ole::Types::Lpstr::dump
+is_singleton: true
+name: dump
+params: (str)
+visibility: public

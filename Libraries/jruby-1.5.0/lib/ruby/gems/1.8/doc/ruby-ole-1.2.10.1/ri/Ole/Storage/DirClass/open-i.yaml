@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: dir
+comment: 
+full_name: Ole::Storage::DirClass#open
+is_singleton: false
+name: open
+params: (path) {|dir| ...}
+visibility: public

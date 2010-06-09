@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Workbook#write_protect
+is_singleton: false
+name: write_protect
+params: (workbook, writer)
+visibility: public

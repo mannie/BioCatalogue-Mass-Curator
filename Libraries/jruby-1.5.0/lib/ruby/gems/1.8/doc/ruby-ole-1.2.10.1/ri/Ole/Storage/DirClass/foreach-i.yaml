@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Ole::Storage::DirClass#foreach
+is_singleton: false
+name: foreach
+params: (path, &block)
+visibility: public

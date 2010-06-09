@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: "The main writer method. Calls #write_from_scratch or #write_changes depending on the class and state of <em>workbook</em>."
+full_name: Spreadsheet::Excel::Writer::Workbook#write_workbook
+is_singleton: false
+name: write_workbook
+params: (workbook, io)
+visibility: public

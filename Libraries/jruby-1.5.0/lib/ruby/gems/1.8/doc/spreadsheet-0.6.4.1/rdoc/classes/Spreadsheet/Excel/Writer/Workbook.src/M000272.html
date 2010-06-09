@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_font (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 278</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_font</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">font</span>
+    <span class="ruby-comment cmt"># TODO: Colors/Palette index</span>
+    <span class="ruby-identifier">size</span>      = <span class="ruby-identifier">font</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">*</span> <span class="ruby-constant">TWIPS</span>
+    <span class="ruby-identifier">color</span>     = <span class="ruby-constant">SEDOC_ROLOC</span>[<span class="ruby-identifier">font</span>.<span class="ruby-identifier">color</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">SEDOC_ROLOC</span>[<span class="ruby-identifier">:text</span>]
+    <span class="ruby-identifier">weight</span>    = <span class="ruby-constant">FONT_WEIGHTS</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">font</span>.<span class="ruby-identifier">weight</span>, <span class="ruby-identifier">font</span>.<span class="ruby-identifier">weight</span>)
+    <span class="ruby-identifier">weight</span>    = [[<span class="ruby-identifier">weight</span>, <span class="ruby-value">1000</span>].<span class="ruby-identifier">min</span>, <span class="ruby-value">100</span>].<span class="ruby-identifier">max</span>
+    <span class="ruby-identifier">esc</span>       = <span class="ruby-constant">SEPYT_TNEMEPACSE</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">font</span>.<span class="ruby-identifier">escapement</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">underline</span> = <span class="ruby-constant">SEPYT_ENILREDNU</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">font</span>.<span class="ruby-identifier">underline</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">family</span>    = <span class="ruby-constant">SEILIMAF_TNOF</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">font</span>.<span class="ruby-identifier">family</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">encoding</span>  = <span class="ruby-constant">SGNIDOCNE_TNOF</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">font</span>.<span class="ruby-identifier">encoding</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">options</span>   = <span class="ruby-value">0</span>
+    <span class="ruby-identifier">options</span>  <span class="ruby-operator">|=</span> <span class="ruby-value">0x0001</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">weight</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">600</span>
+    <span class="ruby-identifier">options</span>  <span class="ruby-operator">|=</span> <span class="ruby-value">0x0002</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">font</span>.<span class="ruby-identifier">italic?</span>
+    <span class="ruby-identifier">options</span>  <span class="ruby-operator">|=</span> <span class="ruby-value">0x0004</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">underline</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">options</span>  <span class="ruby-operator">|=</span> <span class="ruby-value">0x0008</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">font</span>.<span class="ruby-identifier">strikeout?</span>
+    <span class="ruby-identifier">options</span>  <span class="ruby-operator">|=</span> <span class="ruby-value">0x0010</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">font</span>.<span class="ruby-identifier">outline?</span>
+    <span class="ruby-identifier">options</span>  <span class="ruby-operator">|=</span> <span class="ruby-value">0x0020</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">font</span>.<span class="ruby-identifier">shadow?</span>
+    <span class="ruby-identifier">data</span> = [
+      <span class="ruby-identifier">size</span>,     <span class="ruby-comment cmt"># Height of the font (in twips = 1/20 of a point)</span>
+      <span class="ruby-identifier">options</span>,  <span class="ruby-comment cmt"># Option flags:</span>
+                <span class="ruby-comment cmt"># Bit  Mask    Contents</span>
+                <span class="ruby-comment cmt">#   0  0x0001  1 = Characters are bold (redundant, see below)</span>
+                <span class="ruby-comment cmt">#   1  0x0002  1 = Characters are italic</span>
+                <span class="ruby-comment cmt">#   2  0x0004  1 = Characters are underlined (redundant)</span>
+                <span class="ruby-comment cmt">#   3  0x0008  1 = Characters are struck out</span>
+                <span class="ruby-comment cmt">#   4  0x0010  1 = Characters are outlined (djberger)</span>
+                <span class="ruby-comment cmt">#   5  0x0020  1 = Characters are shadowed (djberger)</span>
+      <span class="ruby-identifier">color</span>,    <span class="ruby-comment cmt"># Palette index (➜ 6.70)</span>
+      <span class="ruby-identifier">weight</span>,   <span class="ruby-comment cmt"># Font weight (100-1000). Standard values are</span>
+                <span class="ruby-comment cmt">#      0x0190 (400) for normal text and</span>
+                <span class="ruby-comment cmt">#      0x02bc (700) for bold text.</span>
+      <span class="ruby-identifier">esc</span>,      <span class="ruby-comment cmt"># Escapement type: 0x0000 = None</span>
+                <span class="ruby-comment cmt">#                  0x0001 = Superscript</span>
+                <span class="ruby-comment cmt">#                  0x0002 = Subscript</span>
+      <span class="ruby-identifier">underline</span>,<span class="ruby-comment cmt"># Underline type:  0x00 = None</span>
+                <span class="ruby-comment cmt">#                  0x01 = Single</span>
+                <span class="ruby-comment cmt">#                  0x02 = Double</span>
+                <span class="ruby-comment cmt">#                  0x21 = Single accounting</span>
+                <span class="ruby-comment cmt">#                  0x22 = Double accounting</span>
+      <span class="ruby-identifier">family</span>,   <span class="ruby-comment cmt"># Font family:     0x00 = None (unknown or don't care)</span>
+                <span class="ruby-comment cmt">#                  0x01 = Roman (variable width, serifed)</span>
+                <span class="ruby-comment cmt">#                  0x02 = Swiss (variable width, sans-serifed)</span>
+                <span class="ruby-comment cmt">#                  0x03 = Modern (fixed width,</span>
+                <span class="ruby-comment cmt">#                                 serifed or sans-serifed)</span>
+                <span class="ruby-comment cmt">#                  0x04 = Script (cursive)</span>
+                <span class="ruby-comment cmt">#                  0x05 = Decorative (specialised,</span>
+                <span class="ruby-comment cmt">#                                       e.g. Old English, Fraktur)</span>
+      <span class="ruby-identifier">encoding</span>, <span class="ruby-comment cmt"># Character set: 0x00 =   0 = ANSI Latin</span>
+                <span class="ruby-comment cmt">#                0x01 =   1 = System default</span>
+                <span class="ruby-comment cmt">#                0x02 =   2 = Symbol</span>
+                <span class="ruby-comment cmt">#                0x4d =  77 = Apple Roman</span>
+                <span class="ruby-comment cmt">#                0x80 = 128 = ANSI Japanese Shift-JIS</span>
+                <span class="ruby-comment cmt">#                0x81 = 129 = ANSI Korean (Hangul)</span>
+                <span class="ruby-comment cmt">#                0x82 = 130 = ANSI Korean (Johab)</span>
+                <span class="ruby-comment cmt">#                0x86 = 134 = ANSI Chinese Simplified GBK</span>
+                <span class="ruby-comment cmt">#                0x88 = 136 = ANSI Chinese Traditional BIG5</span>
+                <span class="ruby-comment cmt">#                0xa1 = 161 = ANSI Greek</span>
+                <span class="ruby-comment cmt">#                0xa2 = 162 = ANSI Turkish</span>
+                <span class="ruby-comment cmt">#                0xa3 = 163 = ANSI Vietnamese</span>
+                <span class="ruby-comment cmt">#                0xb1 = 177 = ANSI Hebrew</span>
+                <span class="ruby-comment cmt">#                0xb2 = 178 = ANSI Arabic</span>
+                <span class="ruby-comment cmt">#                0xba = 186 = ANSI Baltic</span>
+                <span class="ruby-comment cmt">#                0xcc = 204 = ANSI Cyrillic</span>
+                <span class="ruby-comment cmt">#                0xde = 222 = ANSI Thai</span>
+                <span class="ruby-comment cmt">#                0xee = 238 = ANSI Latin II (Central European)</span>
+                <span class="ruby-comment cmt">#                0xff = 255 = OEM Latin I</span>
+    ]
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">unicode_string</span> <span class="ruby-identifier">font</span>.<span class="ruby-identifier">name</span> <span class="ruby-comment cmt"># Font name: Unicode string,</span>
+                                    <span class="ruby-comment cmt"># 8-bit string length (➜ 3.4)</span>
+    <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">opcode</span>(<span class="ruby-identifier">:font</span>), <span class="ruby-identifier">data</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">binfmt</span>(<span class="ruby-identifier">:font</span>)), <span class="ruby-identifier">name</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

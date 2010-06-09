@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Insert a Row at <em>idx</em> (0-based) containing <em>cells</em>
+full_name: Spreadsheet::Worksheet#insert_row
+is_singleton: false
+name: insert_row
+params: (idx, cells=[])
+visibility: public

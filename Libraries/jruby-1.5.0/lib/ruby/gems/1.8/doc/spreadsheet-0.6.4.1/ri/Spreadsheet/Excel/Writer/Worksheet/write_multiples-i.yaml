@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Worksheet#write_multiples
+is_singleton: false
+name: write_multiples
+params: (row, idx, multiples)
+visibility: public

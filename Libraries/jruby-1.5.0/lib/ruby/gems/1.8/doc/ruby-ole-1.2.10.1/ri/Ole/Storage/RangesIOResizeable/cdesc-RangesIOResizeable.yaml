@@ -1,0 +1,40 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: bat
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: first_block
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: "like normal RangesIO, but Ole::Storage specific. the ranges are backed by an AllocationTable, and can be resized. used for read/write to 2 streams:"
+  - !ruby/object:SM::Flow::LIST 
+    contents: 
+      - !ruby/struct:SM::Flow::LI 
+        label: "1."
+        body: serialized dirent data
+      - !ruby/struct:SM::Flow::LI 
+        label: "2."
+        body: sbat table data
+      - !ruby/struct:SM::Flow::LI 
+        label: "3."
+        body: all dirents but through RangesIOMigrateable below
+    type: :NUMBER
+  - !ruby/struct:SM::Flow::P 
+    body: Note that all internal access to first_block is through accessors, as it is sometimes useful to redirect it.
+constants: []
+
+full_name: Ole::Storage::RangesIOResizeable
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: truncate
+name: RangesIOResizeable
+superclass: RangesIO

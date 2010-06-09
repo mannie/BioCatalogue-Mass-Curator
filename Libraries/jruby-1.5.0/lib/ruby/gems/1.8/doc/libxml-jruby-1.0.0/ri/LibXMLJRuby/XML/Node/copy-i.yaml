@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: LibXMLJRuby::XML::Node#copy
+is_singleton: false
+name: copy
+params: (deep = false)
+visibility: public

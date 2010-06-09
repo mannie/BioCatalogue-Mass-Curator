@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Workbook#write_window1
+is_singleton: false
+name: write_window1
+params: (workbook, writer)
+visibility: public

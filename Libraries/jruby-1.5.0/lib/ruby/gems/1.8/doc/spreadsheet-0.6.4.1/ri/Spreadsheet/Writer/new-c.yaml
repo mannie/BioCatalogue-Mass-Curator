@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Writer::new
+is_singleton: true
+name: new
+params: (io_or_path)
+visibility: public

@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Workbook#add_shared_string
+is_singleton: false
+name: add_shared_string
+params: (str)
+visibility: public

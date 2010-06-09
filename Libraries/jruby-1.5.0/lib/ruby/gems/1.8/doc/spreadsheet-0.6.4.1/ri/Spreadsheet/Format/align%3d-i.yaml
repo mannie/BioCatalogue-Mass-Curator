@@ -1,0 +1,14 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Combined method for both horizontal and vertical alignment. Sets the first valid value (e.g. Format#align = :justify only sets the horizontal alignment. Use one of the aliases prefixed with :v if you need to disambiguate.)
+  - !ruby/struct:SM::Flow::P 
+    body: This is essentially a backward-compatibility method and may be removed at some point in the future.
+full_name: Spreadsheet::Format#align=
+is_singleton: false
+name: align=
+params: (location)
+visibility: public

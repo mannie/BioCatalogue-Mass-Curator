@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Workbook#worksheets
+is_singleton: false
+name: worksheets
+params: (workbook)
+visibility: public

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_refmode (Spreadsheet::Excel::Writer::Worksheet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/worksheet.rb, line 644</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_refmode</span>
+    <span class="ruby-comment cmt"># • The “RC” mode uses numeric indexes for rows and columns, for example</span>
+    <span class="ruby-comment cmt">#   “R(1)C(-1)”, or “R1C1:R2C2”.</span>
+    <span class="ruby-comment cmt"># • The “A1” mode uses characters for columns and numbers for rows, for</span>
+    <span class="ruby-comment cmt">#   example “B1”, or “$A$1:$B$2”.</span>
+    <span class="ruby-identifier">mode</span> = <span class="ruby-value">1</span> <span class="ruby-comment cmt"># 0 = RC mode; 1 = A1 mode</span>
+    <span class="ruby-identifier">write_op</span> <span class="ruby-value">0x000f</span>, [<span class="ruby-identifier">mode</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'v'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Workbook#collect_formats
+is_singleton: false
+name: collect_formats
+params: (workbook, opts={})
+visibility: public

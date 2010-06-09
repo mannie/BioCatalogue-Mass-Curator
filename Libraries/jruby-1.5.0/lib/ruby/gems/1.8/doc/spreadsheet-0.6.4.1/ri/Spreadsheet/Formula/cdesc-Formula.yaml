@@ -1,0 +1,28 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: data
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: shared
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: value
+    rw: RW
+class_methods: []
+
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: "Formula implementation. At the moment this is just a placeholder. You may access the last calculated #value, other attributes are needed for writing the Formula back into modified Excel Files."
+constants: []
+
+full_name: Spreadsheet::Formula
+includes: []
+
+instance_methods: []
+
+name: Formula
+superclass: Object

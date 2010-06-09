@@ -1,0 +1,19 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Parent Class for all Writers. Implements the copying of unmodified Spreadsheet documents.
+constants: []
+
+full_name: Spreadsheet::Writer
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: write
+name: Writer
+superclass: Object

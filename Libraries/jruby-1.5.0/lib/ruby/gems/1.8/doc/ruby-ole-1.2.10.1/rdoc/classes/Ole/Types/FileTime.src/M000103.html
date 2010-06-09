@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>load (Ole::Types::FileTime)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ole/types/base.rb, line 97</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load</span> <span class="ruby-identifier">str</span>
+        <span class="ruby-identifier">low</span>, <span class="ruby-identifier">high</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">unpack</span> <span class="ruby-value str">'V2'</span>
+        <span class="ruby-comment cmt"># we ignore these, without even warning about it</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">low</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">high</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+        <span class="ruby-comment cmt"># the + 0.00001 here stinks a bit...</span>
+        <span class="ruby-identifier">seconds</span> = (<span class="ruby-identifier">high</span> <span class="ruby-operator">*</span> (<span class="ruby-value">1</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">32</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">low</span>) <span class="ruby-operator">/</span> <span class="ruby-value">1e7</span> <span class="ruby-operator">+</span> <span class="ruby-value">0</span><span class="ruby-value">.00001</span>
+        <span class="ruby-constant">EPOCH</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">seconds</span> <span class="ruby-operator">/</span> <span class="ruby-value">86400</span> <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">return</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

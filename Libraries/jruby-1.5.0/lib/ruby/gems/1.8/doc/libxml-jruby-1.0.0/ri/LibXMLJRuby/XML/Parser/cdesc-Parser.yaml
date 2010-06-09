@@ -1,0 +1,107 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: check_lib_versions
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: debug_entities
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: default_compression
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: default_keep_blanks
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: default_line_numbers
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: default_substitute_entities
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: default_tree_indent_string
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: default_validity_checking
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: default_warnings
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: features
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: filename
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: indent_tree_output
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: io
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: string
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: file
+  - !ruby/object:RI::MethodSummary 
+    name: io
+  - !ruby/object:RI::MethodSummary 
+    name: new
+  - !ruby/object:RI::MethodSummary 
+    name: register_error_handler
+  - !ruby/object:RI::MethodSummary 
+    name: string
+comment: 
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: VERNUM
+    value: "0"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: VERSION
+    value: "'0'"
+full_name: LibXMLJRuby::XML::Parser
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: document_builder
+  - !ruby/object:RI::MethodSummary 
+    name: document_builder_factory
+  - !ruby/object:RI::MethodSummary 
+    name: filename=
+  - !ruby/object:RI::MethodSummary 
+    name: input_source
+  - !ruby/object:RI::MethodSummary 
+    name: io=
+  - !ruby/object:RI::MethodSummary 
+    name: parse
+  - !ruby/object:RI::MethodSummary 
+    name: parse_file
+  - !ruby/object:RI::MethodSummary 
+    name: parse_io
+  - !ruby/object:RI::MethodSummary 
+    name: parse_string
+  - !ruby/object:RI::MethodSummary 
+    name: string=
+  - !ruby/object:RI::MethodSummary 
+    name: string_reader
+name: Parser
+superclass: Object

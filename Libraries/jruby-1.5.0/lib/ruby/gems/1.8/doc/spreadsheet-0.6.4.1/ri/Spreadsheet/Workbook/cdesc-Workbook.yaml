@@ -1,0 +1,77 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: active_worksheet
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: default_format
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: encoding
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: fonts
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: formats
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: io
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: version
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: worksheets
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: The Workbook class represents a Spreadsheet-Document and is the entry point for all Spreadsheet manipulation.
+  - !ruby/struct:SM::Flow::P 
+    body: "Interesting Attributes:"
+  - !ruby/object:SM::Flow::LIST 
+    contents: 
+      - !ruby/struct:SM::Flow::LI 
+        label: "#default_format:"
+        body: The default format used for all cells in this Workbook. that have no format set explicitly or in Row#default_format or Worksheet#default_format.
+    type: :NOTE
+constants: []
+
+full_name: Spreadsheet::Workbook
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Encodings
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: add_font
+  - !ruby/object:RI::MethodSummary 
+    name: add_format
+  - !ruby/object:RI::MethodSummary 
+    name: add_worksheet
+  - !ruby/object:RI::MethodSummary 
+    name: create_worksheet
+  - !ruby/object:RI::MethodSummary 
+    name: font
+  - !ruby/object:RI::MethodSummary 
+    name: format
+  - !ruby/object:RI::MethodSummary 
+    name: inspect
+  - !ruby/object:RI::MethodSummary 
+    name: worksheet
+  - !ruby/object:RI::MethodSummary 
+    name: write
+  - !ruby/object:RI::MethodSummary 
+    name: writer
+name: Workbook
+superclass: Object

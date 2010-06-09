@@ -1,0 +1,117 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: Low level internals, you probably shouldn't need to mess with these
+    name: bbat
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: The underlying io object to/from which the ole object is serialized, whether we should close it, and whether it is writeable
+    name: close_parent
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: "The tree structure in its original flattened form. only valid after #load, or #flush."
+    name: dirents
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: Low level internals, you probably shouldn't need to mess with these
+    name: header
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: The underlying io object to/from which the ole object is serialized, whether we should close it, and whether it is writeable
+    name: io
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: options used at creation time
+    name: params
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: The top of the ole tree structure
+    name: root
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: Low level internals, you probably shouldn't need to mess with these
+    name: sb_file
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: Low level internals, you probably shouldn't need to mess with these
+    name: sbat
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: The underlying io object to/from which the ole object is serialized, whether we should close it, and whether it is writeable
+    name: writeable
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+  - !ruby/object:RI::MethodSummary 
+    name: open
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: This class is the primary way the user interacts with an OLE storage file.
+  - !ruby/struct:SM::Flow::H 
+    level: 1
+    text: TODO
+  - !ruby/object:SM::Flow::LIST 
+    contents: 
+      - !ruby/struct:SM::Flow::LI 
+        label: "*"
+        body: the custom header cruft for Header and Dirent needs some love.
+      - !ruby/struct:SM::Flow::LI 
+        label: "*"
+        body: "i have a number of classes doing load/save combos: Header, AllocationTable, Dirent, and, in a manner of speaking, but arguably different, Storage itself. they have differing api's which would be nice to rethink. AllocationTable::Big must be created aot now, as it is used for all subsequent reads."
+    type: :BULLET
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: VERSION
+    value: "'1.2.10.1'"
+full_name: Ole::Storage
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: bat_for_size
+  - !ruby/object:RI::MethodSummary 
+    name: clear
+  - !ruby/object:RI::MethodSummary 
+    name: close
+  - !ruby/object:RI::MethodSummary 
+    name: dir
+  - !ruby/object:RI::MethodSummary 
+    name: dirent_from_path
+  - !ruby/object:RI::MethodSummary 
+    name: file
+  - !ruby/object:RI::MethodSummary 
+    name: flush
+  - !ruby/object:RI::MethodSummary 
+    name: inspect
+  - !ruby/object:RI::MethodSummary 
+    name: load
+  - !ruby/object:RI::MethodSummary 
+    name: meta_data
+  - !ruby/object:RI::MethodSummary 
+    name: repack
+  - !ruby/object:RI::MethodSummary 
+    name: repack_using_io
+name: Storage
+superclass: Object

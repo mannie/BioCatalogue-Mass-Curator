@@ -32,19 +32,7 @@ class MainWindow < JFrame
     
     return self
   end # initialize
-  
-# --------------------
-
-  def self.SEARCH_PANEL
-    @@SEARCH_PANEL ||= SearchPanel.new
-    return @@SEARCH_PANEL
-  end # self.SEARCH_PANEL
-  
-  def self.BROWSING_STATUS_PANEL
-    @@BROWSING_STATUS_PANEL ||= BrowsingStatusPanel.new
-    return @@BROWSING_STATUS_PANEL
-  end # self.BROWSING_STATUS_PANEL
-  
+    
 private
 
   def initUI
@@ -58,7 +46,7 @@ private
     self.setMinimumSize(Dimension.new(800, 550))
     self.pack
     
-    Utilities::Components.centerComponentToDisplay(self)
+    Component.centerToDisplay(self)
     
     self.setVisible(true)
   end # initUI

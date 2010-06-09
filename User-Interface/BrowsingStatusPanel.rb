@@ -23,7 +23,6 @@
 class BrowsingStatusPanel < JPanel
 
   attr_reader :exportButton
-
   attr_accessor :currentPage, :pageCount
 
   @@lastLabelUsed = nil
@@ -60,7 +59,7 @@ class BrowsingStatusPanel < JPanel
     self.add(@@lastLabelUsed)
     self.add(@exportButton, BorderLayout::EAST)
 
-    Utilities::Components.flashComponent(self)
+    Component.flash(self)
   end
   
 end

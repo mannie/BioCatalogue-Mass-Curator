@@ -1,0 +1,25 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: code
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: This class encapsulates Excel Error-Codes
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: ERROR_VALUES
+    value: "{     0x00 => '#NULL!',  # Intersection of two cell ranges is empty     0x07 => '#DIV/0!', # Division by zero     0x0F => '#VALUE!', # Wrong type of operand     0x17 => '#REF!',   # Illegal or deleted cell reference     0x1D => '#NAME?',  # Wrong function or range name     0x24 => '#NUM!',   # Value range overflow     0x2A => '#N/A!',   # Argument or function not available   }"
+full_name: Spreadsheet::Excel::Error
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: value
+name: Error
+superclass: Object

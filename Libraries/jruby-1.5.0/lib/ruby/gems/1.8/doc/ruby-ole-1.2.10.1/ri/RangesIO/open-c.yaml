@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: ranges_io
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: add block form. TODO add test for this
+full_name: RangesIO::open
+is_singleton: true
+name: open
+params: (*args, &block) {|ranges_io| ...}
+visibility: public

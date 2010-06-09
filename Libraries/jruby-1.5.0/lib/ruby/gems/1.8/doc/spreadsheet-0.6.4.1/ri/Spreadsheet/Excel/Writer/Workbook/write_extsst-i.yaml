@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Workbook#write_extsst
+is_singleton: false
+name: write_extsst
+params: (workbook, offsets, writer)
+visibility: public

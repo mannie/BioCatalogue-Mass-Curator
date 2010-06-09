@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: DateTime.new is slow... faster version for FileTime
+full_name: Ole::Types::FileTime::new
+is_singleton: true
+name: new
+params: (year, month, day, hour=0, min=0, sec=0, usec=0)
+visibility: public

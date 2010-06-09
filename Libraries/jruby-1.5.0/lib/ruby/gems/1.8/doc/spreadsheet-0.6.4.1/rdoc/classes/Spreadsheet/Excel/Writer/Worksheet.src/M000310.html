@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_colinfo (Spreadsheet::Excel::Writer::Worksheet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/worksheet.rb, line 302</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_colinfo</span> <span class="ruby-identifier">bunch</span>
+    <span class="ruby-identifier">col</span> = <span class="ruby-identifier">bunch</span>.<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">width</span> = <span class="ruby-identifier">col</span>.<span class="ruby-identifier">width</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">*</span> <span class="ruby-value">256</span>
+    <span class="ruby-identifier">xf_idx</span> = <span class="ruby-ivar">@workbook</span>.<span class="ruby-identifier">xf_index</span> <span class="ruby-ivar">@worksheet</span>.<span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">col</span>.<span class="ruby-identifier">default_format</span>
+    <span class="ruby-identifier">opts</span> =  <span class="ruby-value">0</span>
+    <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-value">0x0001</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">hidden?</span>
+    <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">outline_level</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">8</span>
+    <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-value">0x1000</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">collapsed?</span>
+    <span class="ruby-identifier">data</span> = [
+      <span class="ruby-identifier">col</span>.<span class="ruby-identifier">idx</span>,        <span class="ruby-comment cmt"># Index to first column in the range</span>
+      <span class="ruby-identifier">bunch</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">idx</span>, <span class="ruby-comment cmt"># Index to last column in the range</span>
+      <span class="ruby-identifier">width</span>.<span class="ruby-identifier">to_i</span>,     <span class="ruby-comment cmt"># Width of the columns in 1/256 of the width of the zero</span>
+                      <span class="ruby-comment cmt"># character, using default font (first FONT record in the</span>
+                      <span class="ruby-comment cmt"># file)</span>
+      <span class="ruby-identifier">xf_idx</span>.<span class="ruby-identifier">to_i</span>,    <span class="ruby-comment cmt"># Index to XF record (➜ 6.115) for default column formatting</span>
+      <span class="ruby-identifier">opts</span>,           <span class="ruby-comment cmt"># Option flags:</span>
+                      <span class="ruby-comment cmt"># Bits  Mask    Contents</span>
+                      <span class="ruby-comment cmt">#    0  0x0001  1 = Columns are hidden</span>
+                      <span class="ruby-comment cmt"># 10-8  0x0700  Outline level of the columns</span>
+                      <span class="ruby-comment cmt">#               (0 = no outline)</span>
+                      <span class="ruby-comment cmt">#   12  0x1000  1 = Columns are collapsed</span>
+    ]
+    <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">opcode</span>(<span class="ruby-identifier">:colinfo</span>), <span class="ruby-identifier">data</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">binfmt</span>(<span class="ruby-identifier">:colinfo</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

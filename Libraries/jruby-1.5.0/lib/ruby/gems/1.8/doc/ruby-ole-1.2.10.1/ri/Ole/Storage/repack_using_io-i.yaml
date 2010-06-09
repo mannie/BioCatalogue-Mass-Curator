@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Ole::Storage#repack_using_io
+is_singleton: false
+name: repack_using_io
+params: (temp_io)
+visibility: public

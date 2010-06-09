@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: quick shortcut. chain can be either a head (in which case the table is used to turn it into a chain), or a chain. it is converted to ranges, then to rangesio.
+full_name: Ole::Storage::AllocationTable#open
+is_singleton: false
+name: open
+params: (chain, size=nil, &block)
+visibility: public

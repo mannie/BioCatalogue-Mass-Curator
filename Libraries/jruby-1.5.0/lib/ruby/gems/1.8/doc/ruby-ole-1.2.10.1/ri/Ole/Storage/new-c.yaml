@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: <tt>arg</tt> should be either a filename, or an <tt>IO</tt> object, and needs to be seekable. <tt>mode</tt> is optional, and should be a regular mode string.
+full_name: Ole::Storage::new
+is_singleton: true
+name: new
+params: (arg, mode=nil, params={})
+visibility: public

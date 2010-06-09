@@ -1,0 +1,27 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: dump
+  - !ruby/object:RI::MethodSummary 
+    name: load
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: for VT_LPWSTR
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: FROM_UTF16
+    value: Iconv.new 'utf-8', 'utf-16le'
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: TO_UTF16
+    value: Iconv.new 'utf-16le', 'utf-8'
+full_name: Ole::Types::Lpwstr
+includes: []
+
+instance_methods: []
+
+name: Lpwstr
+superclass: String

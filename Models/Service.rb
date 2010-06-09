@@ -33,9 +33,9 @@ class Service
       @id = serviceURIString.split('/')[-1].to_i
  
       serviceURIString << "/variants.xml"        
-      xmlDocument = Utilities::XML.getXMLDocumentFromURI(serviceURIString)
+      xmlDocument = XMLUtils.getXMLDocumentFromURI(serviceURIString)
     
-      propertyNodes = Utilities::XML.getValidChildren(xmlDocument.root)
+      propertyNodes = XMLUtils.getValidChildren(xmlDocument.root)
       propertyNodes.each do |propertyNode|
         case propertyNode.name
           when 'name'
@@ -43,13 +43,13 @@ class Service
           when 'dc:description'
             @description = propertyNode.content
           when 'serviceTechnologyTypes'
-            @technology = Utilities::XML.getContentOfFirstChild(propertyNode)
+            @technology = XMLUtils.getContentOfFirstChild(propertyNode)
           when 'variants'
-            variants = Utilities::XML.selectNodesWithNameFrom(
+            variants = XMLUtils.selectNodesWithNameFrom(
                 "#{@technology.downcase}Service", propertyNode)
             variants.each { |node|
-              @variantURI = Utilities::XML.getAttributeFromNode(
-                "xlink:href", node).value
+              @variantURI = XMLUtils.getAttributeFromNode(
+                  "xlink:href", node).value
               break if @variantURI
             }
             
@@ -59,15 +59,15 @@ class Service
       
       @selectedStatusChangeListener = CheckBoxListener.new(self)
       
-      Utilities::Application.addServiceToCache(self)
+      Cache.addService(self)
       
     rescue Exception => ex
       log('e', ex)
-      Utilities::Application.removeServiceFromCache(self)
+      Cache.removeService(self)
     end # begin rescue
     
     if @name.nil?
-      Utilities::Application.removeServiceFromCache(self)
+      Cache.removeService(self)
       @id = -1
     end
     
@@ -80,17 +80,16 @@ class Service
     @components = {}
   
     begin
-      xmlDocument = Utilities::XML.getXMLDocumentFromURI(@variantURI.to_s + 
-          '.xml')
+      xmlDocument = XMLUtils.getXMLDocumentFromURI(@variantURI.to_s + '.xml')
       
       nodeName = (@technology=="SOAP" ? "operations" : nil)
       raise "Only support for SOAP is currently available" if nodeName.nil?
       
-      operationsNode = Utilities::XML.selectNodesWithNameFrom(nodeName, 
-          xmlDocument.root)[0]
+      operationsNode = XMLUtils.selectNodesWithNameFrom(
+          nodeName, xmlDocument.root)[0]
       
-      Utilities::XML.getValidChildren(operationsNode).each { |op|
-        uriString = Utilities::XML.getAttributeFromNode("xlink:href", op).value
+      XMLUtils.getValidChildren(operationsNode).each { |op|
+        uriString = XMLUtils.getAttributeFromNode("xlink:href", op).value
         
         component = ServiceComponent.new(uriString)
         next if component.id == -1
@@ -98,7 +97,7 @@ class Service
         @components.merge!(component.id => component)
       }
       
-      Utilities::Application.addServiceToCache(self)
+      Cache.addService(self)
       @componentsFetched = true
       
       return true
@@ -109,7 +108,7 @@ class Service
   end # fetchComponents
 
   def isSelectedForAnnotation
-    !BioCatalogueClient.selectedServices[@id].nil?
+    !Cache.selectedServices[@id].nil?
   end # isSelectedForAnnotation
 
   def to_s

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>rename (Ole::Storage::FileClass)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ole/storage/file_system.rb, line 207</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rename</span> <span class="ruby-identifier">from_path</span>, <span class="ruby-identifier">to_path</span>
+        <span class="ruby-comment cmt"># check what we want to rename from exists. do it this</span>
+        <span class="ruby-comment cmt"># way to allow directories.</span>
+        <span class="ruby-identifier">dirent</span> = <span class="ruby-ivar">@ole</span>.<span class="ruby-identifier">dirent_from_path</span> <span class="ruby-identifier">from_path</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>, <span class="ruby-identifier">from_path</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">dirent</span>
+        <span class="ruby-comment cmt"># delete what we want to rename to if necessary</span>
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">unlink</span> <span class="ruby-identifier">to_path</span>
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+          <span class="ruby-comment cmt"># we actually get here, but rcov doesn't think so. add 1 + 1 to</span>
+          <span class="ruby-comment cmt"># keep rcov happy for now... :)</span>
+          <span class="ruby-value">1</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-comment cmt"># reparent the dirent</span>
+        <span class="ruby-identifier">to_parent_path</span>, <span class="ruby-identifier">to_basename</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">split</span> <span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">to_path</span>)
+        <span class="ruby-identifier">from_parent</span> = <span class="ruby-identifier">dirent</span>.<span class="ruby-identifier">parent</span>
+        <span class="ruby-identifier">to_parent</span> = <span class="ruby-ivar">@ole</span>.<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">:dirent_from_path</span>, <span class="ruby-identifier">to_parent_path</span>, <span class="ruby-identifier">to_path</span>
+        <span class="ruby-identifier">from_parent</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">dirent</span>, <span class="ruby-keyword kw">false</span>
+        <span class="ruby-comment cmt"># and also change its name</span>
+        <span class="ruby-identifier">dirent</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">to_basename</span>
+        <span class="ruby-identifier">to_parent</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dirent</span>
+        <span class="ruby-value">0</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

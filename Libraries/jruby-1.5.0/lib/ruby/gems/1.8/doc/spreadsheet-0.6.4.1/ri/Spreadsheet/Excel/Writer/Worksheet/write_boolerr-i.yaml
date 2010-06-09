@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Write a cell with a Boolean or Error value
+full_name: Spreadsheet::Excel::Writer::Worksheet#write_boolerr
+is_singleton: false
+name: write_boolerr
+params: (row, idx)
+visibility: public

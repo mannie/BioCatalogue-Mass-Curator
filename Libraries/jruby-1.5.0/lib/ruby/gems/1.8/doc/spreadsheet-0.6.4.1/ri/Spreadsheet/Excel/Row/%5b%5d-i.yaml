@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Access data in this Row like you would in an Array. If a cell is formatted as a Date or DateTime, the decoded Date or DateTime value is returned.
+full_name: Spreadsheet::Excel::Row#[]
+is_singleton: false
+name: "[]"
+params: (idx, len=nil)
+visibility: public

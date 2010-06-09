@@ -21,7 +21,8 @@
 =end
 
 class CheckBoxListener
-
+  java_implements ChangeListener
+  
   def initialize(service)
     super()
     @service = service
@@ -30,11 +31,14 @@ class CheckBoxListener
 
 # --------------------
 
-  def stateChanged(event)    
-    if event.getSource.isSelected
-      Utilities::Application.selectServiceForAnnotation(@service)
+  def stateChanged(event)
+    if !event.getSource.getParent.showDetail && event.getSource.isSelected
+      Cache.deselectServiceForAnnotation(@service)
+      Cache.updateServiceListings
+    elsif event.getSource.isSelected
+      Cache.selectServiceForAnnotation(@service)
     else
-      Utilities::Application.deselectServiceForAnnotation(@service)
+      Cache.deselectServiceForAnnotation(@service)
     end
     
     SELECTED_SERVICES_WINDOW.refreshSelectedServices
@@ -43,9 +47,9 @@ class CheckBoxListener
     
     return if GenerateSpreadsheetAction.isBusyExporting
 
-    MainWindow.BROWSING_STATUS_PANEL.exportButton.setEnabled(
-        !BioCatalogueClient.selectedServices.empty?)
-    MainWindow.BROWSING_STATUS_PANEL.refresh
+    Component.browsingStatusPanel.exportButton.setEnabled(
+        !Cache.selectedServices.empty?)
+    Component.browsingStatusPanel.refresh
   end # stateChanged
   
 end

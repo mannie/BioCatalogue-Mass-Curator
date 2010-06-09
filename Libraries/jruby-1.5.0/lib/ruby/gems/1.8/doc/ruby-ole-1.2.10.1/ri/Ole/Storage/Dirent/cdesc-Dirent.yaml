@@ -1,0 +1,130 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: This returns all the children of this <tt>Dirent</tt>. It is filled in when the tree structure is recreated.
+    name: children
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: create_time
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: i think its just used by the tree building
+    name: idx
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: modify_time
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: name
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: these are for internal use and are used for faster lookup.
+    name: name_lookup
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: ole
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: parent
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: parent
+    rw: W
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: type
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: copy
+  - !ruby/object:RI::MethodSummary 
+    name: flatten_helper
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: A class which wraps an ole directory entry. Can be either a directory (<tt>Dirent#dir?</tt>) or a file (<tt>Dirent#file?</tt>)
+  - !ruby/struct:SM::Flow::P 
+    body: Most interaction with <tt>Ole::Storage</tt> is through this class. The 2 most important functions are <tt>Dirent#children</tt>, and <tt>Dirent#data</tt>.
+  - !ruby/struct:SM::Flow::P 
+    body: was considering separate classes for dirs and files. some methods/attrs only applicable to one or the other.
+  - !ruby/struct:SM::Flow::P 
+    body: "As with the other classes, #to_s performs the serialization."
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: PACK
+    value: "'a64 v C C V3 a16 V a8 a8 V2 a4'"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SIZE
+    value: "128"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: TYPE_MAP
+    value: "{         # this is temporary         0 => :empty,         1 => :dir,         2 => :file,         5 => :root"
+  - !ruby/object:RI::Constant 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: something to do with the fact that the tree is supposed to be red-black
+    name: COLOUR_MAP
+    value: "{         0 => :red,         1 => :black"
+  - !ruby/object:RI::Constant 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: used in the next / prev / child stuff to show that the tree ends here. also used for first_block for directory.
+    name: EOT
+    value: "0xffffffff"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: DEFAULT
+    value: "[         0.chr * 2, 2, 0, # will get overwritten         1, EOT, EOT, EOT,         0.chr * 16, 0, nil, nil,         AllocationTable::EOC, 0, 0.chr * 4"
+full_name: Ole::Storage::Dirent
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: RecursivelyEnumerable
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: /
+  - !ruby/object:RI::MethodSummary 
+    name: "<<"
+  - !ruby/object:RI::MethodSummary 
+    name: "[]"
+  - !ruby/object:RI::MethodSummary 
+    name: children=
+  - !ruby/object:RI::MethodSummary 
+    name: delete
+  - !ruby/object:RI::MethodSummary 
+    name: dir?
+  - !ruby/object:RI::MethodSummary 
+    name: each_child
+  - !ruby/object:RI::MethodSummary 
+    name: file?
+  - !ruby/object:RI::MethodSummary 
+    name: flatten
+  - !ruby/object:RI::MethodSummary 
+    name: inspect
+  - !ruby/object:RI::MethodSummary 
+    name: name=
+  - !ruby/object:RI::MethodSummary 
+    name: open
+  - !ruby/object:RI::MethodSummary 
+    name: read
+  - !ruby/object:RI::MethodSummary 
+    name: time
+  - !ruby/object:RI::MethodSummary 
+    name: to_s
+name: Dirent
+superclass: Struct.new(         :name_utf16, :name_len, :type_id, :colour, :prev, :next, :child,         :clsid, :flags,

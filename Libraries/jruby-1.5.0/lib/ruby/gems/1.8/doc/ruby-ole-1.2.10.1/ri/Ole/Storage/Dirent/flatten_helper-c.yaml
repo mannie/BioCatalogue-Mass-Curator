@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: i think making the tree structure optimized is actually more complex than this, and requires some intelligent ordering of the children based on names, but as long as it is valid its ok. actually, i think its ok. gsf for example only outputs a singly-linked-list, where prev is always EOT.
+full_name: Ole::Storage::Dirent::flatten_helper
+is_singleton: true
+name: flatten_helper
+params: (children)
+visibility: public

@@ -1,0 +1,101 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: date_base
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: fonts
+    rw: R
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: "Writer class for Excel Workbooks. Most write_* method correspond to an Excel-Record/Opcode. Designed to be able to write several Workbooks in parallel (just because I can't imagine why you would want to do that doesn't mean it shouldn't be possible ;). You should not need to call any of its methods directly. If you think you do, look at #write_workbook"
+constants: []
+
+full_name: Spreadsheet::Excel::Writer::Workbook
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Excel::Writer::Biff8
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Excel::Internals
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: _write_sst
+  - !ruby/object:RI::MethodSummary 
+    name: cleanup
+  - !ruby/object:RI::MethodSummary 
+    name: collect_formats
+  - !ruby/object:RI::MethodSummary 
+    name: complete_sst_update?
+  - !ruby/object:RI::MethodSummary 
+    name: font_index
+  - !ruby/object:RI::MethodSummary 
+    name: number_format_index
+  - !ruby/object:RI::MethodSummary 
+    name: sanitize_worksheets
+  - !ruby/object:RI::MethodSummary 
+    name: sst_index
+  - !ruby/object:RI::MethodSummary 
+    name: worksheets
+  - !ruby/object:RI::MethodSummary 
+    name: write_bof
+  - !ruby/object:RI::MethodSummary 
+    name: write_bookbool
+  - !ruby/object:RI::MethodSummary 
+    name: write_boundsheets
+  - !ruby/object:RI::MethodSummary 
+    name: write_changes
+  - !ruby/object:RI::MethodSummary 
+    name: write_datemode
+  - !ruby/object:RI::MethodSummary 
+    name: write_dsf
+  - !ruby/object:RI::MethodSummary 
+    name: write_encoding
+  - !ruby/object:RI::MethodSummary 
+    name: write_eof
+  - !ruby/object:RI::MethodSummary 
+    name: write_extsst
+  - !ruby/object:RI::MethodSummary 
+    name: write_font
+  - !ruby/object:RI::MethodSummary 
+    name: write_fonts
+  - !ruby/object:RI::MethodSummary 
+    name: write_formats
+  - !ruby/object:RI::MethodSummary 
+    name: write_from_scratch
+  - !ruby/object:RI::MethodSummary 
+    name: write_op
+  - !ruby/object:RI::MethodSummary 
+    name: write_password
+  - !ruby/object:RI::MethodSummary 
+    name: write_placeholder
+  - !ruby/object:RI::MethodSummary 
+    name: write_precision
+  - !ruby/object:RI::MethodSummary 
+    name: write_protect
+  - !ruby/object:RI::MethodSummary 
+    name: write_refreshall
+  - !ruby/object:RI::MethodSummary 
+    name: write_sst
+  - !ruby/object:RI::MethodSummary 
+    name: write_sst_changes
+  - !ruby/object:RI::MethodSummary 
+    name: write_string_part
+  - !ruby/object:RI::MethodSummary 
+    name: write_styles
+  - !ruby/object:RI::MethodSummary 
+    name: write_tabid
+  - !ruby/object:RI::MethodSummary 
+    name: write_window1
+  - !ruby/object:RI::MethodSummary 
+    name: write_workbook
+  - !ruby/object:RI::MethodSummary 
+    name: write_xfs
+  - !ruby/object:RI::MethodSummary 
+    name: xf_index
+name: Workbook
+superclass: Spreadsheet::Writer

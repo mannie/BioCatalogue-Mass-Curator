@@ -1,0 +1,58 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: bof
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: date_base
+    rw: W
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: ole
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+  - !ruby/object:RI::MethodSummary 
+    name: open
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Excel-specific Workbook methods. These are mostly pertinent to the Excel reader. You should have no reason to use any of these.
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: BIFF_VERSIONS
+    value: "{     0x000 => 2,     0x007 => 2,     0x200 => 2,     0x300 => 3,     0x400 => 4,     0x500 => 5,     0x600 => 8,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: VERSION_STRINGS
+    value: "{     0x600 => 'Microsoft Excel 97/2000/XP',     0x500 => 'Microsoft Excel 95',   }"
+full_name: Spreadsheet::Excel::Workbook
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Encodings
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Excel::Offset
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: add_shared_string
+  - !ruby/object:RI::MethodSummary 
+    name: add_worksheet
+  - !ruby/object:RI::MethodSummary 
+    name: add_worksheet
+  - !ruby/object:RI::MethodSummary 
+    name: biff_version
+  - !ruby/object:RI::MethodSummary 
+    name: date_base
+  - !ruby/object:RI::MethodSummary 
+    name: shared_string
+  - !ruby/object:RI::MethodSummary 
+    name: sst_size
+  - !ruby/object:RI::MethodSummary 
+    name: uninspect_variables
+  - !ruby/object:RI::MethodSummary 
+    name: version_string
+name: Workbook
+superclass: Spreadsheet::Workbook

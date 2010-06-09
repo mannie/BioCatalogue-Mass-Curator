@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Spreadsheet::Datatypes</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Spreadsheet::Datatypes</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/spreadsheet/datatypes_rb.html">
+                lib/spreadsheet/datatypes.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This module defines convenience-methods for the definition of <a
+href="../Spreadsheet.html">Spreadsheet</a> attributes (<a
+href="Datatypes.html#M000372">boolean</a>, <a
+href="Datatypes.html#M000373">colors</a> and enumerations)
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000371">append_features</a>&nbsp;&nbsp;
+      <a href="#M000372">boolean</a>&nbsp;&nbsp;
+      <a href="#M000373">colors</a>&nbsp;&nbsp;
+      <a href="#M000374">enum</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Compatibility.html">Compatibility</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COLORS</td>
+          <td>=</td>
+          <td class="context-item-value">[ :builtin_black, :builtin_white, :builtin_red, :builtin_green,              :builtin_blue, :builtin_yellow, :builtin_magenta, :builtin_cyan,              :text, :border, :pattern_bg, :dialog_bg, :chart_text, :chart_bg,              :chart_border, :tooltip_bg, :tooltip_text, :aqua,              :black, :blue, :cyan, :brown, :fuchsia, :gray, :grey, :green,              :lime, :magenta, :navy, :orange, :purple, :red, :silver, :white,              :yellow ]</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Valid <a href="Datatypes.html#M000373">colors</a> for color attributes.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000371" class="method-detail">
+        <a name="M000371"></a>
+
+        <div class="method-heading">
+          <a href="Datatypes.src/M000371.html" target="Code" class="method-signature"
+            onclick="popupCode('Datatypes.src/M000371.html');return false;">
+          <span class="method-name">append_features</span><span class="method-args">(mod)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000372" class="method-detail">
+        <a name="M000372"></a>
+
+        <div class="method-heading">
+          <a href="Datatypes.src/M000372.html" target="Code" class="method-signature"
+            onclick="popupCode('Datatypes.src/M000372.html');return false;">
+          <span class="method-name">boolean</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Define instance methods to read and write <a
+href="Datatypes.html#M000372">boolean</a> attributes.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000373" class="method-detail">
+        <a name="M000373"></a>
+
+        <div class="method-heading">
+          <a href="Datatypes.src/M000373.html" target="Code" class="method-signature"
+            onclick="popupCode('Datatypes.src/M000373.html');return false;">
+          <span class="method-name">colors</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Define instance methods to read and write color attributes. For valid <a
+href="Datatypes.html#M000373">colors</a> see COLORS
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000374" class="method-detail">
+        <a name="M000374"></a>
+
+        <div class="method-heading">
+          <a href="Datatypes.src/M000374.html" target="Code" class="method-signature"
+            onclick="popupCode('Datatypes.src/M000374.html');return false;">
+          <span class="method-name">enum</span><span class="method-args">(key, *values)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Define instance methods to read and write enumeration attributes.
+</p>
+<ul>
+<li>The first argument designates the attribute name.
+
+</li>
+<li>The second argument designates the default value.
+
+</li>
+<li>All subsequent attributes are possible values.
+
+</li>
+<li>If the last attribute is a Hash, each value in the Hash designates aliases
+for the corresponding key.
+
+</li>
+</ul>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_from_scratch (Spreadsheet::Excel::Writer::Worksheet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/worksheet.rb, line 438</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_from_scratch</span>
+    <span class="ruby-comment cmt"># ●  BOF Type = worksheet (➜ 5.8)</span>
+    <span class="ruby-identifier">write_bof</span>
+    <span class="ruby-comment cmt"># ○  UNCALCED ➜ 5.105</span>
+    <span class="ruby-comment cmt"># ○  INDEX ➜ 4.7 (Row Blocks), ➜ 5.59</span>
+    <span class="ruby-comment cmt"># ○  Calculation Settings Block ➜ 4.3</span>
+    <span class="ruby-identifier">write_calccount</span>
+    <span class="ruby-identifier">write_refmode</span>
+    <span class="ruby-identifier">write_iteration</span>
+    <span class="ruby-identifier">write_saverecalc</span>
+    <span class="ruby-comment cmt"># ○  PRINTHEADERS ➜ 5.81</span>
+    <span class="ruby-comment cmt"># ○  PRINTGRIDLINES ➜ 5.80</span>
+    <span class="ruby-comment cmt"># ○  GRIDSET ➜ 5.52</span>
+    <span class="ruby-comment cmt"># ○  GUTS ➜ 5.53</span>
+    <span class="ruby-comment cmt"># ○  DEFAULTROWHEIGHT ➜ 5.31</span>
+    <span class="ruby-identifier">write_defaultrowheight</span>
+    <span class="ruby-comment cmt"># ○  WSBOOL ➜ 5.113</span>
+    <span class="ruby-identifier">write_wsbool</span>
+    <span class="ruby-comment cmt"># ○  Page Settings Block ➜ 4.4</span>
+    <span class="ruby-comment cmt"># ○  Worksheet Protection Block ➜ 4.18</span>
+    <span class="ruby-comment cmt"># ○  DEFCOLWIDTH ➜ 5.32</span>
+    <span class="ruby-identifier">write_defcolwidth</span>
+    <span class="ruby-comment cmt"># ○○ COLINFO ➜ 5.18</span>
+    <span class="ruby-identifier">write_colinfos</span>
+    <span class="ruby-comment cmt"># ○  SORT ➜ 5.99</span>
+    <span class="ruby-comment cmt"># ●  DIMENSIONS ➜ 5.35</span>
+    <span class="ruby-identifier">write_dimensions</span>
+    <span class="ruby-comment cmt"># ○○ Row Blocks ➜ 4.7</span>
+    <span class="ruby-identifier">write_rows</span>
+    <span class="ruby-comment cmt"># ●  Worksheet View Settings Block ➜ 4.5</span>
+    <span class="ruby-comment cmt"># ●  WINDOW2 ➜ 5.110</span>
+    <span class="ruby-identifier">write_window2</span>
+    <span class="ruby-comment cmt"># ○  SCL ➜ 5.92 (BIFF4-BIFF8 only)</span>
+    <span class="ruby-comment cmt"># ○  PANE ➜ 5.75</span>
+    <span class="ruby-comment cmt"># ○○ SELECTION ➜ 5.93</span>
+    <span class="ruby-comment cmt"># ○  STANDARDWIDTH ➜ 5.101</span>
+    <span class="ruby-comment cmt"># ○○ MERGEDCELLS ➜ 5.67</span>
+    <span class="ruby-comment cmt"># ○  LABELRANGES ➜ 5.64</span>
+    <span class="ruby-comment cmt"># ○  PHONETIC ➜ 5.77</span>
+    <span class="ruby-comment cmt"># ○  Conditional Formatting Table ➜ 4.12</span>
+    <span class="ruby-comment cmt"># ○  Hyperlink Table ➜ 4.13</span>
+    <span class="ruby-identifier">write_hyperlink_table</span>
+    <span class="ruby-comment cmt"># ○  Data Validity Table ➜ 4.14</span>
+    <span class="ruby-comment cmt"># ○  SHEETLAYOUT ➜ 5.96 (BIFF8X only)</span>
+    <span class="ruby-comment cmt"># ○  SHEETPROTECTION Additional protection, ➜ 5.98 (BIFF8X only)</span>
+    <span class="ruby-comment cmt"># ○  RANGEPROTECTION Additional protection, ➜ 5.84 (BIFF8X only)</span>
+    <span class="ruby-comment cmt"># ●  EOF ➜ 5.36</span>
+    <span class="ruby-identifier">write_eof</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

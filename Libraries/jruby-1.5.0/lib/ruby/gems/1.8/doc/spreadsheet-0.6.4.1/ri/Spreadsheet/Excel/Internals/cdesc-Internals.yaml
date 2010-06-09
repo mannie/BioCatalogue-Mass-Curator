@@ -1,0 +1,141 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: []
+
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Binary Formats and other configurations internal to Excel. This Module is likely to shrink as Support for older Versions of Excel grows and more Binary formats are moved away from here for disambiguation. If you need to work with constants defined in this module and are confused by names like SEDOC_ROLOC, try reading them backwards. (The reason for this weird naming convention is that according to my ri, Ruby 1.9 renames Hash#index to Hash#key without backward compatibility. Since I did not want to pepper my code with RUBY_VERSION-checks, I settled on this strategy to make the transition to Ruby 1.9 as simple as possible.
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: EIGHT_BYTE_DOUBLE
+    value: "[0.1].pack('E').size == 8 ? 'E' : 'e'"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: CODEPAGES
+    value: "{     367 => \"ASCII\",     437 => \"IBM437\", #(US)     720 => \"IBM720\", #(OEM Arabic)     737 => \"IBM737\", #(Greek)     775 => \"IBM775\", #(Baltic)     850 => \"IBM850\", #(Latin I)     852 => \"IBM852\", #(Latin II (Central European))     855 => \"IBM855\", #(Cyrillic)     857 => \"IBM857\", #(Turkish)     858 => \"IBM858\", #(Multilingual Latin I with Euro)     860 => \"IBM860\", #(Portuguese)     861 => \"IBM861\", #(Icelandic)     862 => \"IBM862\", #(Hebrew)     863 => \"IBM863\", #(Canadian (French))     864 => \"IBM864\", #(Arabic)     865 => \"IBM865\", #(Nordic)     866 => \"IBM866\", #(Cyrillic (Russian))     869 => \"IBM869\", #(Greek (Modern))     874 => \"WINDOWS-874\", #(Thai)     932 => \"WINDOWS-932\", #(Japanese Shift-JIS)     936 => \"WINDOWS-936\", #(Chinese Simplified GBK)     949 => \"WINDOWS-949\", #(Korean (Wansung))     950 => \"WINDOWS-950\", #(Chinese Traditional BIG5)     1200 => \"UTF-16LE\", #(BIFF8)     1250 => \"WINDOWS-1250\", #(Latin II) (Central European)     1251 => \"WINDOWS-1251\", #(Cyrillic)     1252 => \"WINDOWS-1252\", #(Latin I) (BIFF4-BIFF7)     1253 => \"WINDOWS-1253\", #(Greek)     1254 => \"WINDOWS-1254\", #(Turkish)     1255 => \"WINDOWS-1255\", #(Hebrew)     1256 => \"WINDOWS-1256\", #(Arabic)     1257 => \"WINDOWS-1257\", #(Baltic)     1258 => \"WINDOWS-1258\", #(Vietnamese)     1361 => \"WINDOWS-1361\", #(Korean (Johab))     10000 => \"MACINTOSH\",     32768 => \"MACINTOSH\",     32769 => \"WINDOWS-1252\", #(Latin I) (BIFF2-BIFF3)   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SEGAPEDOC
+    value: CODEPAGES.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: COLOR_CODES
+    value: "{     0x0000 => :builtin_black,     0x0001 => :builtin_white,     0x0002 => :builtin_red,     0x0003 => :builtin_green,     0x0004 => :builtin_blue,     0x0005 => :builtin_yellow,     0x0006 => :builtin_magenta,     0x0007 => :builtin_cyan,     0x0008 => :black,     0x0009 => :white,     0x000a => :red,     0x000b => :lime,     0x000c => :blue,     0x000d => :yellow,     0x000e => :magenta,     0x000f => :cyan,     0x0010 => :brown,     0x0011 => :green,     0x0012 => :navy,     0x0016 => :silver,     0x0017 => :gray,     0x001d => :orange,     0x0024 => :purple,     0x0040 => :border,     0x0041 => :pattern_bg,     0x0043 => :dialog_bg,     0x004d => :chart_text,     0x004e => :chart_bg,     0x004f => :chart_border,     0x0050 => :tooltip_bg,     0x0051 => :tooltip_text,     0x7fff => :text,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SEDOC_ROLOC
+    value: COLOR_CODES.invert.update( :aqua    => 0x000f,                                            :fuchsia => 0x000e,                                            :grey    => 0x0017 )
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: BINARY_FORMATS
+    value: "{     :blank      => 'v3',     :boolerr    => 'v3C2',     :colinfo    => 'v5x2',     :font       => 'v5C3x',     :labelsst   => 'v3V',     :number     => \"v3#{EIGHT_BYTE_DOUBLE}\",     :pagesetup  => \"v8#{EIGHT_BYTE_DOUBLE}2v\",     :rk         => 'v3V',     :row        => 'v4x4V',     :window2    => 'v4x2v2x4',     :xf         => 'v3C4V2v',   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+      - !ruby/struct:SM::Flow::P 
+        body: From BIFF5 on, the built-in number formats will be omitted. The built-in formats are dependent on the current regional settings of the operating system. The following table shows which number formats are used by default in a US-English environment. All indexes from 0 to 163 are reserved for built-in formats.
+    name: BUILTIN_FORMATS
+    value: "{ # TODO: locale support      0 => 'GENERAL',      1 => '0',      2 => '0.00',      3 => '#,##0',      4 => '#,##0.00',      5 => '\"$\"#,##0_);(\"$\"#,##0)',      6 => '\"$\"#,##0_);[Red](\"$\"#,##0)',      7 => '\"$\"#,##0.00_);(\"$\"#,##0.00)',      8 => '\"$\"#,##0.00_);[Red](\"$\"#,##0.00)',      9 => '0%',     10 => '0.00%',     11 => '0.00E+00',     12 => '# ?/?',     13 => '# ??/??',     14 => 'M/D/YY',     15 => 'D-MMM-YY',     16 => 'D-MMM',     17 => 'MMM-YY',     18 => 'h:mm AM/PM',     19 => 'h:mm:ss AM/PM',     20 => 'h:mm',     21 => 'h:mm:ss',     22 => 'M/D/YY h:mm',     37 => '_(#,##0_);(#,##0)',     38 => '_(#,##0_);[Red](#,##0)',     39 => '_(#,##0.00_);(#,##0.00)',     40 => '_(#,##0.00_);[Red](#,##0.00)',     41 => '_(\"$\"* #,##0_);_(\"$\"* (#,##0);_(\"$\"* \"-\"_);_(@_)',     42 => '_(* #,##0_);_(* (#,##0);_(* \"-\"_);_(@_)',     43 => '_(\"$\"* #,##0.00_);_(\"$\"* (#,##0.00);_(\"$\"* \"-\"??_);_(@_)',     44 => '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)',     45 => 'mm:ss',     46 => '[h]:mm:ss',     47 => 'mm:ss.0',     48 => '##0.0E+0',     49 => '@',   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: BUILTIN_STYLES
+    value: "{     0x00 => 'Normal',     0x01 => 'RowLevel_lv',     0x02 => 'ColLevel_lv',     0x03 => 'Comma',     0x04 => 'Currency',     0x05 => 'Percent',     0x06 => 'Comma',     0x07 => 'Currency',     0x08 => 'Hyperlink',     0x09 => 'Followed Hyperlink',   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: ESCAPEMENT_TYPES
+    value: "{     0x0001 => :superscript,     0x0002 => :subscript,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SEPYT_TNEMEPACSE
+    value: ESCAPEMENT_TYPES.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: FONT_ENCODINGS
+    value: "{     0x00 => :iso_latin1,     0x01 => :default,     0x02 => :symbol,     0x4d => :apple_roman,     0x80 => :shift_jis,     0x81 => :korean_hangul,     0x82 => :korean_johab,     0x86 => :chinese_simplified,     0x88 => :chinese_traditional,     0xa1 => :greek,     0xa2 => :turkish,     0xa3 => :vietnamese,     0xb1 => :hebrew,     0xb2 => :arabic,     0xba => :baltic,     0xcc => :cyrillic,     0xde => :thai,     0xee => :iso_latin2,     0xff => :oem_latin1,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SGNIDOCNE_TNOF
+    value: FONT_ENCODINGS.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: FONT_FAMILIES
+    value: "{     0x01 => :roman,     0x02 => :swiss,     0x03 => :modern,     0x04 => :script,     0x05 => :decorative,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SEILIMAF_TNOF
+    value: FONT_FAMILIES.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: FONT_WEIGHTS
+    value: "{     :bold   => 700,     :normal => 400,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: LEAP_ERROR
+    value: Date.new 1900, 2, 28
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: OPCODES
+    value: "{     :blank        => 0x0201, #    BLANK \xE2\x9E\x9C 6.7     :boolerr      => 0x0205, #    BOOLERR \xE2\x9E\x9C 6.10     :boundsheet   => 0x0085, # \xE2\x97\x8F\xE2\x97\x8F BOUNDSHEET \xE2\x9E\x9C 6.12     :codepage     => 0x0042, # \xE2\x97\x8B  CODEPAGE \xE2\x9E\x9C 6.17     :colinfo      => 0x007d, # \xE2\x97\x8B\xE2\x97\x8B COLINFO \xE2\x9E\x9C 6.18     :continue     => 0x003c, # \xE2\x97\x8B  CONTINUE \xE2\x9E\x9C 6.22     :datemode     => 0x0022, # \xE2\x97\x8B  DATEMODE \xE2\x9E\x9C 6.25     :dbcell       => 0x0a0b, # \xE2\x97\x8B  DBCELL     :dimensions   => 0x0200, # \xE2\x97\x8F  DIMENSIONS \xE2\x9E\x9C 6.31     :eof          => 0x000a, # \xE2\x97\x8F  EOF \xE2\x9E\x9C 6.36     :font         => 0x0031, # \xE2\x97\x8F\xE2\x97\x8F FONT \xE2\x9E\x9C 6.43     :format       => 0x041e, # \xE2\x97\x8B\xE2\x97\x8B FORMAT (Number Format) \xE2\x9E\x9C 6.45     :formula      => 0x0006, #    FORMULA \xE2\x9E\x9C 6.46     :hlink        => 0x01b8, #    HLINK \xE2\x9E\x9C 6.52 (BIFF8 only)     :label        => 0x0204, #    LABEL \xE2\x9E\x9C 6.59 (BIFF2-BIFF7)     :labelsst     => 0x00fd, #    LABELSST \xE2\x9E\x9C 6.61 (BIFF8 only)     :mulblank     => 0x00be, #    MULBLANK \xE2\x9E\x9C 6.64 (BIFF5-BIFF8)     :mulrk        => 0x00bd, #    MULRK \xE2\x9E\x9C 6.65 (BIFF5-BIFF8)     :number       => 0x0203, #    NUMBER \xE2\x9E\x9C 6.68     :rk           => 0x027e, #    RK \xE2\x9E\x9C 6.82 (BIFF3-BIFF8)     :row          => 0x0208, # \xE2\x97\x8F  ROW \xE2\x9E\x9C 6.83     :rstring      => 0x00d6, #    RSTRING \xE2\x9E\x9C 6.84 (BIFF5/BIFF7)     :sst          => 0x00fc, # \xE2\x97\x8F  SST \xE2\x9E\x9C 6.96     :string       => 0x0207, #    STRING \xE2\x9E\x9C 6.98     :style        => 0x0293, # \xE2\x97\x8F\xE2\x97\x8F STYLE \xE2\x9E\x9C 6.99     :xf           => 0x00e0, # \xE2\x97\x8F\xE2\x97\x8F XF \xE2\x9E\x9C 6.115     :sharedfmla   => 0x04bc, #    SHAREDFMLA \xE2\x9E\x9C 5.94     ########################## Unhandled Opcodes ################################     :extsst       => 0x00ff, # \xE2\x97\x8F  EXTSST \xE2\x9E\x9C 6.40     :index        => 0x020b, # \xE2\x97\x8B  INDEX \xE2\x9E\x9C 5.7 (Row Blocks), \xE2\x9E\x9C 6.55     :uncalced     => 0x005e, # \xE2\x97\x8B  UNCALCED \xE2\x9E\x9C 6.104     ########################## \xE2\x97\x8B  Calculation Settings Block \xE2\x9E\x9C 5.3     :calccount    => 0x000c, # \xE2\x97\x8B  CALCCOUNT \xE2\x9E\x9C 6.14     :calcmode     => 0x000d, # \xE2\x97\x8B  CALCMODE \xE2\x9E\x9C 6.15     :precision    => 0x000e, # \xE2\x97\x8B  PRECISION \xE2\x9E\x9C 6.74 (moved to Workbook Globals                              #                      Substream in BIFF5-BIFF8)     :refmode      => 0x000f, # \xE2\x97\x8B  REFMODE \xE2\x9E\x9C 6.80     :delta        => 0x0010, # \xE2\x97\x8B  DELTA \xE2\x9E\x9C 6.30     :iteration    => 0x0011, # \xE2\x97\x8B  ITERATION \xE2\x9E\x9C 6.57     :saverecalc   => 0x005f, # \xE2\x97\x8B  SAVERECALC \xE2\x9E\x9C 6.85 (BIFF3-BIFF8 only)     ########################## \xE2\x97\x8B  Workbook Protection Block \xE2\x9E\x9C 5.18     :protect      => 0x0012, # \xE2\x97\x8B  PROTECT                              #    Worksheet contents: 1 = protected (\xE2\x9E\x9C 6.77)     :windowprot   => 0x0019, # \xE2\x97\x8B  WINDOWPROTECT Window settings: 1 = protected                              #                  (BIFF4W only, \xE2\x9E\x9C 6.110)     :objectprot   => 0x0063, # \xE2\x97\x8B  OBJECTPROTECT                              #    Embedded objects: 1 = protected (\xE2\x9E\x9C 6.69)     :scenprotect  => 0x00dd, # \xE2\x97\x8B  SCENPROTECT                              #    Scenarios: 1 = protected (BIFF5-BIFF8, \xE2\x9E\x9C 6.86)     :password     => 0x0013, # \xE2\x97\x8B  PASSWORD Hash value of the password;                              #             0   = no password (\xE2\x9E\x9C 6.72)     ########################## \xE2\x97\x8B  File Protection Block \xE2\x9E\x9C 5.19     :writeprot    => 0x0086, # \xE2\x97\x8B  WRITEPROT File is write protected                              #    (BIFF3-BIFF8, \xE2\x9E\x9C 6.112), password in FILESHARING     :filepass     => 0x002f, # \xE2\x97\x8B  FILEPASS File is read/write-protected,                              #             encryption information (\xE2\x9E\x9C 6.41)     :writeaccess  => 0x005c, # \xE2\x97\x8B  WRITEACCESS User name (BIFF3-BIFF8, \xE2\x9E\x9C 6.111)     :filesharing  => 0x005b, # \xE2\x97\x8B  FILESHARING File sharing options                              #    (BIFF3-BIFF8, \xE2\x9E\x9C 6.42)     ########################## \xE2\x97\x8B  Link Table \xE2\x9E\x9C 5.10.3                              # \xE2\x97\x8F\xE2\x97\x8F SUPBOOK Block(s)                              #    Settings for a referenced document     :supbook      => 0x01ae, #    \xE2\x97\x8F  SUPBOOK \xE2\x9E\x9C 6.100     :externname   => 0x0223, #    \xE2\x97\x8B\xE2\x97\x8B EXTERNNAME \xE2\x9E\x9C 6.38     :xct          => 0x0059, #    \xE2\x97\x8B\xE2\x97\x8B \xE2\x97\x8F  XCT \xE2\x9E\x9C 6.114     :crn          => 0x005a, #       \xE2\x97\x8F\xE2\x97\x8F CRN \xE2\x9E\x9C 6.24     :externsheet  => 0x0017, # \xE2\x97\x8F  EXTERNSHEET \xE2\x9E\x9C 6.39     :name         => 0x0218, # \xE2\x97\x8B\xE2\x97\x8B NAME \xE2\x9E\x9C 6.66     ##########################     :window1      => 0x003d, # \xE2\x97\x8F  WINDOW1 \xE2\x9E\x9C 6.108 (has information on                              #              which Spreadsheet is 'active')     :backup       => 0x0040, # \xE2\x97\x8B  BACKUP \xE2\x9E\x9C 6.5     :country      => 0x008c, # \xE2\x97\x8B  COUNTRY (Make writeable?) \xE2\x9E\x9C 6.23     :hideobj      => 0x008d, # \xE2\x97\x8B  HIDEOBJ \xE2\x9E\x9C 6.52     :palette      => 0x0092, # \xE2\x97\x8B  PALETTE \xE2\x9E\x9C 6.70     :fngroupcnt   => 0x009c, # \xE2\x97\x8B  FNGROUPCOUNT     :bookbool     => 0x00da, # \xE2\x97\x8B  BOOKBOOL \xE2\x9E\x9C 6.9     :tabid        => 0x013d, # \xE2\x97\x8B  TABID     :useselfs     => 0x0160, # \xE2\x97\x8B  USESELFS (Natural Language Formulas) \xE2\x9E\x9C 6.105     :dsf          => 0x0161, # \xE2\x97\x8B  DSF (Double Stream File) \xE2\x9E\x9C 6.32     :refreshall   => 0x01b7, # \xE2\x97\x8B  REFRESHALL     ########################## \xE2\x97\x8F  Worksheet View Settings Block \xE2\x9E\x9C 5.5     :window2      => 0x023e, # \xE2\x97\x8F  WINDOW2 \xE2\x9E\x9C 5.110     :scl          => 0x00a0, # \xE2\x97\x8B  SCL \xE2\x9E\x9C 5.92 (BIFF4-BIFF8 only)     :pane         => 0x0041, # \xE2\x97\x8B  PANE \xE2\x9E\x9C 5.75     :selection    => 0x001d, # \xE2\x97\x8B\xE2\x97\x8B SELECTION \xE2\x9E\x9C 5.93     ########################## \xE2\x97\x8B  Page Settings Block \xE2\x9E\x9C 5.4     :hpagebreaks  => 0x001b, # \xE2\x97\x8B  HORIZONTALPAGEBREAKS \xE2\x9E\x9C 6.54     :vpagebreaks  => 0x001a, # \xE2\x97\x8B  VERTICALPAGEBREAKS \xE2\x9E\x9C 6.107     :header       => 0x0014, # \xE2\x97\x8B  HEADER \xE2\x9E\x9C 6.51     :footer       => 0x0015, # \xE2\x97\x8B  FOOTER \xE2\x9E\x9C 6.44     :hcenter      => 0x0083, # \xE2\x97\x8B  HCENTER \xE2\x9E\x9C 6.50 (BIFF3-BIFF8 only)     :vcenter      => 0x0084, # \xE2\x97\x8B  VCENTER \xE2\x9E\x9C 6.106 (BIFF3-BIFF8 only)     :leftmargin   => 0x0026, # \xE2\x97\x8B  LEFTMARGIN \xE2\x9E\x9C 6.62     :rightmargin  => 0x0027, # \xE2\x97\x8B  RIGHTMARGIN \xE2\x9E\x9C 6.81     :topmargin    => 0x0028, # \xE2\x97\x8B  TOPMARGIN \xE2\x9E\x9C 6.103     :bottommargin => 0x0029, # \xE2\x97\x8B  BOTTOMMARGIN \xE2\x9E\x9C 6.11                              # \xE2\x97\x8B  PLS (opcode unknown)     :pagesetup    => 0x00a1, # \xE2\x97\x8B  PAGESETUP \xE2\x9E\x9C 6.89 (BIFF4-BIFF8 only)     :bitmap       => 0x00e9, # \xE2\x97\x8B  BITMAP \xE2\x9E\x9C 6.6 (Background-Bitmap, BIFF8 only)     ##########################     :printheaders => 0x002a, # \xE2\x97\x8B  PRINTHEADERS \xE2\x9E\x9C 6.76     :printgridlns => 0x002b, # \xE2\x97\x8B  PRINTGRIDLINES \xE2\x9E\x9C 6.75     :gridset      => 0x0082, # \xE2\x97\x8B  GRIDSET \xE2\x9E\x9C 6.48     :guts         => 0x0080, # \xE2\x97\x8B  GUTS \xE2\x9E\x9C 6.49     :defrowheight => 0x0225, # \xE2\x97\x8B  DEFAULTROWHEIGHT \xE2\x9E\x9C 6.28     :wsbool       => 0x0081, # \xE2\x97\x8B  WSBOOL \xE2\x9E\x9C 6.113     :defcolwidth  => 0x0055, # \xE2\x97\x8B  DEFCOLWIDTH \xE2\x9E\x9C 6.29     :sort         => 0x0090, # \xE2\x97\x8B  SORT \xE2\x9E\x9C 6.95   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SEDOCPO
+    value: OPCODES.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: TWIPS
+    value: "20"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: UNDERLINE_TYPES
+    value: "{     0x0001 => :single,     0x0002 => :double,     0x0021 => :single_accounting,     0x0022 => :double_accounting,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SEPYT_ENILREDNU
+    value: UNDERLINE_TYPES.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: XF_H_ALIGN
+    value: "{     :default       => 0,     :left          => 1,     :center        => 2,     :right         => 3,     :fill          => 4,     :justify       => 5,     :merge         => 6,     :distributed   => 7,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: NGILA_H_FX
+    value: XF_H_ALIGN.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: XF_TEXT_DIRECTION
+    value: "{     :context       => 0,     :left_to_right => 1,     :right_to_left => 2,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: NOITCERID_TXET_FX
+    value: XF_TEXT_DIRECTION.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: XF_V_ALIGN
+    value: "{     :top         => 0,     :middle      => 1,     :bottom      => 2,     :justify     => 3,     :distributed => 4,   }"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: NGILA_V_FX
+    value: XF_V_ALIGN.invert
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: OPCODE_SIZE
+    value: "4"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: ROW_HEIGHT
+    value: "12.1"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: SST_CHUNKSIZE
+    value: "20"
+full_name: Spreadsheet::Excel::Internals
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: binfmt
+  - !ruby/object:RI::MethodSummary 
+    name: opcode
+name: Internals
+superclass: 

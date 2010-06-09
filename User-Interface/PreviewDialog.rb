@@ -42,7 +42,7 @@ private
     self.setSize(300, 500)
     self.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
     
-    Utilities::Components.centerComponentTo(self, @parent)
+    Component.centerToParent(self, @parent)
     
     log('w', nil, "Implement fetchMoreInformation for service")
     

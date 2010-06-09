@@ -1,0 +1,11 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: 
+  - !ruby/object:RI::AliasName 
+    name: seek
+block_params: 
+comment: 
+full_name: Ole::Storage::DirClass::Dir#pos=
+is_singleton: false
+name: pos=
+params: (pos)
+visibility: public

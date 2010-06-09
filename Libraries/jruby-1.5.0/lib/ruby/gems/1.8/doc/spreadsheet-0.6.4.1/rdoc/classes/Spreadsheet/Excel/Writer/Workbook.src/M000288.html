@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_window1 (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 583</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_window1</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">writer</span>
+    <span class="ruby-identifier">selected</span> = <span class="ruby-identifier">workbook</span>.<span class="ruby-identifier">worksheets</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sheet</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sheet</span>.<span class="ruby-identifier">selected</span> <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">actidx</span> = <span class="ruby-identifier">workbook</span>.<span class="ruby-identifier">worksheets</span>.<span class="ruby-identifier">index</span> <span class="ruby-identifier">selected</span>
+    <span class="ruby-identifier">data</span> = [
+      <span class="ruby-value">0x0000</span>, <span class="ruby-comment cmt"># Horizontal position of the document window</span>
+              <span class="ruby-comment cmt"># (in twips = 1/20 of a point)</span>
+      <span class="ruby-value">0x0000</span>, <span class="ruby-comment cmt"># Vertical position of the document window</span>
+              <span class="ruby-comment cmt"># (in twips = 1/20 of a point)</span>
+      <span class="ruby-value">0x4000</span>, <span class="ruby-comment cmt"># Width of the document window (in twips = 1/20 of a point)</span>
+      <span class="ruby-value">0x2000</span>, <span class="ruby-comment cmt"># Height of the document window (in twips = 1/20 of a point)</span>
+      <span class="ruby-value">0x0038</span>, <span class="ruby-comment cmt"># Option flags:</span>
+              <span class="ruby-comment cmt"># Bit  Mask    Contents</span>
+              <span class="ruby-comment cmt">#   0  0x0001  0 = Window is visible</span>
+              <span class="ruby-comment cmt">#              1 = Window is hidden</span>
+              <span class="ruby-comment cmt">#   1  0x0002  0 = Window is open</span>
+              <span class="ruby-comment cmt">#              1 = Window is minimised</span>
+              <span class="ruby-comment cmt">#   3  0x0008  0 = Horizontal scroll bar hidden</span>
+              <span class="ruby-comment cmt">#              1 = Horizontal scroll bar visible</span>
+              <span class="ruby-comment cmt">#   4  0x0010  0 = Vertical scroll bar hidden</span>
+              <span class="ruby-comment cmt">#              1 = Vertical scroll bar visible</span>
+              <span class="ruby-comment cmt">#   5  0x0020  0 = Worksheet tab bar hidden</span>
+              <span class="ruby-comment cmt">#              1 = Worksheet tab bar visible</span>
+      <span class="ruby-identifier">actidx</span>, <span class="ruby-comment cmt"># Index to active (displayed) worksheet</span>
+      <span class="ruby-value">0x0000</span>, <span class="ruby-comment cmt"># Index of first visible tab in the worksheet tab bar</span>
+      <span class="ruby-value">0x0001</span>, <span class="ruby-comment cmt"># Number of selected worksheets</span>
+              <span class="ruby-comment cmt"># (highlighted in the worksheet tab bar)</span>
+      <span class="ruby-value">0x00e5</span>, <span class="ruby-comment cmt"># Width of worksheet tab bar (in 1/1000 of window width).</span>
+              <span class="ruby-comment cmt"># The remaining space is used by the horizontal scrollbar.</span>
+    ]
+    <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">writer</span>, <span class="ruby-value">0x003d</span>, <span class="ruby-identifier">data</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'v*'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

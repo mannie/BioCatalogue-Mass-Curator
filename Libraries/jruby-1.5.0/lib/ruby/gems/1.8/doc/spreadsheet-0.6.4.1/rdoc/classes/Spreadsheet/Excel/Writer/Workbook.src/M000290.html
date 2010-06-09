@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_xfs (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 632</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_xfs</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">writer</span>
+    <span class="ruby-comment cmt"># The default cell format is always present in an Excel file, described by</span>
+    <span class="ruby-comment cmt"># the XF record with the fixed index 15 (0-based). By default, it uses the</span>
+    <span class="ruby-comment cmt"># worksheet/workbook default cell style, described by the very first XF</span>
+    <span class="ruby-comment cmt"># record (index 0).</span>
+    <span class="ruby-ivar">@formats</span>[<span class="ruby-identifier">workbook</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">fmt</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fmt</span>.<span class="ruby-identifier">write_xf</span> <span class="ruby-identifier">writer</span> <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

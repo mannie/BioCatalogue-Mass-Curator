@@ -22,6 +22,8 @@
 
 class ServiceListingPanel < JPanel
 
+  attr_reader :showDetail, :checkBox
+  
   def initialize(service, showDetail=true)
     super()
     
@@ -46,9 +48,9 @@ private
     c.gridx, c.gridy = 0, 0
     
     # add checkbox
-    checkBox = JCheckBox.new(@service.name, @service.isSelectedForAnnotation)
-    checkBox.addChangeListener(@service.selectedStatusChangeListener)
-    self.add(checkBox, c)
+    @checkBox = JCheckBox.new(@service.name, @service.isSelectedForAnnotation)
+    @checkBox.addChangeListener(@service.selectedStatusChangeListener)
+    self.add(@checkBox, c)
     
     if @showDetail
       # add preview button
@@ -62,7 +64,7 @@ private
       c.gridx, c.gridy = 0, 1
       c.insets.set(2, 50, 3, 5)
       uriLabel = JLabel.new(@service.technology + ": " + 
-          Utilities::Application.weblinkWithIDForResource(@service.id).to_s)
+          Application.weblinkWithIDForResource(@service.id).to_s)
       self.add(uriLabel, c)
     end # if @showDetail 
   end # initUI

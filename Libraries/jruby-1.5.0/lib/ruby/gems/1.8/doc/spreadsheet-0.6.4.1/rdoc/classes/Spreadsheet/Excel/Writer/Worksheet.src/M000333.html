@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_window2 (Spreadsheet::Excel::Writer::Worksheet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/worksheet.rb, line 750</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_window2</span>
+    <span class="ruby-comment cmt"># This record contains additional settings for the document window</span>
+    <span class="ruby-comment cmt"># (BIFF2-BIFF4) or for the window of a specific worksheet (BIFF5-BIFF8).</span>
+    <span class="ruby-comment cmt"># It is part of the Sheet View Settings Block (➜ 4.5).</span>
+    <span class="ruby-comment cmt"># Offset  Size  Contents</span>
+    <span class="ruby-comment cmt">#      0     2  Option flags:</span>
+    <span class="ruby-comment cmt">#               Bits  Mask    Contents</span>
+    <span class="ruby-comment cmt">#                  0  0x0001  0 = Show formula results</span>
+    <span class="ruby-comment cmt">#                             1 = Show formulas</span>
+    <span class="ruby-comment cmt">#                  1  0x0002  0 = Do not show grid lines</span>
+    <span class="ruby-comment cmt">#                             1 = Show grid lines</span>
+    <span class="ruby-comment cmt">#                  2  0x0004  0 = Do not show sheet headers</span>
+    <span class="ruby-comment cmt">#                             1 = Show sheet headers</span>
+    <span class="ruby-comment cmt">#                  3  0x0008  0 = Panes are not frozen</span>
+    <span class="ruby-comment cmt">#                             1 = Panes are frozen (freeze)</span>
+    <span class="ruby-comment cmt">#                  4  0x0010  0 = Show zero values as empty cells</span>
+    <span class="ruby-comment cmt">#                             1 = Show zero values</span>
+    <span class="ruby-comment cmt">#                  5  0x0020  0 = Manual grid line colour</span>
+    <span class="ruby-comment cmt">#                             1 = Automatic grid line colour</span>
+    <span class="ruby-comment cmt">#                  6  0x0040  0 = Columns from left to right</span>
+    <span class="ruby-comment cmt">#                             1 = Columns from right to left</span>
+    <span class="ruby-comment cmt">#                  7  0x0080  0 = Do not show outline symbols</span>
+    <span class="ruby-comment cmt">#                             1 = Show outline symbols</span>
+    <span class="ruby-comment cmt">#                  8  0x0100  0 = Keep splits if pane freeze is removed</span>
+    <span class="ruby-comment cmt">#                             1 = Remove splits if pane freeze is removed</span>
+    <span class="ruby-comment cmt">#                  9  0x0200  0 = Sheet not selected</span>
+    <span class="ruby-comment cmt">#                             1 = Sheet selected (BIFF5-BIFF8)</span>
+    <span class="ruby-comment cmt">#                 10  0x0400  0 = Sheet not active</span>
+    <span class="ruby-comment cmt">#                             1 = Sheet active (BIFF5-BIFF8)</span>
+    <span class="ruby-comment cmt">#                 11  0x0800  0 = Show in normal view</span>
+    <span class="ruby-comment cmt">#                             1 = Show in page break preview (BIFF8)</span>
+    <span class="ruby-comment cmt">#      2     2  Index to first visible row</span>
+    <span class="ruby-comment cmt">#      4     2  Index to first visible column</span>
+    <span class="ruby-comment cmt">#      6     2  Colour index of grid line colour (➜ 5.74).</span>
+    <span class="ruby-comment cmt">#               Note that in BIFF2-BIFF5 an RGB colour is written instead.</span>
+    <span class="ruby-comment cmt">#      8     2  Not used</span>
+    <span class="ruby-comment cmt">#     10     2  Cached magnification factor in page break preview (in percent)</span>
+    <span class="ruby-comment cmt">#               0 = Default (60%)</span>
+    <span class="ruby-comment cmt">#     12     2  Cached magnification factor in normal view (in percent)</span>
+    <span class="ruby-comment cmt">#               0 = Default (100%)</span>
+    <span class="ruby-comment cmt">#     14     4  Not used</span>
+    <span class="ruby-identifier">flags</span> = <span class="ruby-value">0x0536</span>  <span class="ruby-comment cmt"># Show grid lines, sheet headers, zero values. Automatic</span>
+                    <span class="ruby-comment cmt"># grid line colour, Remove slits if pane freeze is removed,</span>
+                    <span class="ruby-comment cmt"># Sheet is active.</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@worksheet</span>.<span class="ruby-identifier">selected</span>
+      <span class="ruby-identifier">flags</span> <span class="ruby-operator">|=</span> <span class="ruby-value">0x0200</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">data</span> = [ <span class="ruby-identifier">flags</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span> ].<span class="ruby-identifier">pack</span> <span class="ruby-identifier">binfmt</span>(<span class="ruby-identifier">:window2</span>)
+    <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">opcode</span>(<span class="ruby-identifier">:window2</span>), <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

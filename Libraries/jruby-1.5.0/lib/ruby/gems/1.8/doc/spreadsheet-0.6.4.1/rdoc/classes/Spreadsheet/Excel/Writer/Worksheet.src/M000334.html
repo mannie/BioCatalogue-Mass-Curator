@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_wsbool (Spreadsheet::Excel::Writer::Worksheet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/worksheet.rb, line 800</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_wsbool</span>
+    <span class="ruby-identifier">bits</span> = [
+         <span class="ruby-comment cmt">#   Bit  Mask    Contents</span>
+      <span class="ruby-value">1</span>, <span class="ruby-comment cmt">#     0  0x0001  0 = Do not show automatic page breaks</span>
+         <span class="ruby-comment cmt">#                1 = Show automatic page breaks</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt">#     4  0x0010  0 = Standard sheet</span>
+         <span class="ruby-comment cmt">#                1 = Dialogue sheet (BIFF5-BIFF8)</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt">#     5  0x0020  0 = No automatic styles in outlines</span>
+         <span class="ruby-comment cmt">#                1 = Apply automatic styles to outlines</span>
+      <span class="ruby-value">1</span>, <span class="ruby-comment cmt">#     6  0x0040  0 = Outline buttons above outline group</span>
+         <span class="ruby-comment cmt">#                1 = Outline buttons below outline group</span>
+      <span class="ruby-value">1</span>, <span class="ruby-comment cmt">#     7  0x0080  0 = Outline buttons left of outline group</span>
+         <span class="ruby-comment cmt">#                1 = Outline buttons right of outline group</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt">#     8  0x0100  0 = Scale printout in percent (➜ 6.89)</span>
+         <span class="ruby-comment cmt">#                1 = Fit printout to number of pages (➜ 6.89)</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt">#     9  0x0200  0 = Save external linked values</span>
+         <span class="ruby-comment cmt">#                    (BIFF3-BIFF4 only, ➜ 5.10)</span>
+         <span class="ruby-comment cmt">#                1 = Do not save external linked values</span>
+         <span class="ruby-comment cmt">#                    (BIFF3-BIFF4 only, ➜ 5.10)</span>
+      <span class="ruby-value">1</span>, <span class="ruby-comment cmt">#    10  0x0400  0 = Do not show row outline symbols</span>
+         <span class="ruby-comment cmt">#                1 = Show row outline symbols</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt">#    11  0x0800  0 = Do not show column outline symbols</span>
+         <span class="ruby-comment cmt">#                1 = Show column outline symbols</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt"># 13-12  0x3000  These flags specify the arrangement of windows.</span>
+         <span class="ruby-comment cmt">#                They are stored in BIFF4 only.</span>
+         <span class="ruby-comment cmt">#                00 = Arrange windows tiled</span>
+         <span class="ruby-comment cmt">#                01 = Arrange windows horizontal</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt">#                10 = Arrange windows vertical</span>
+         <span class="ruby-comment cmt">#                11 = Arrange windows cascaded</span>
+         <span class="ruby-comment cmt"># The following flags are valid for BIFF4-BIFF8 only:</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt">#    14  0x4000  0 = Standard expression evaluation</span>
+         <span class="ruby-comment cmt">#                1 = Alternative expression evaluation</span>
+      <span class="ruby-value">0</span>, <span class="ruby-comment cmt">#    15  0x8000  0 = Standard formula entries</span>
+         <span class="ruby-comment cmt">#                1 = Alternative formula entries</span>
+    ]
+    <span class="ruby-identifier">weights</span> = [<span class="ruby-value">4</span>,<span class="ruby-value">5</span>,<span class="ruby-value">6</span>,<span class="ruby-value">7</span>,<span class="ruby-value">8</span>,<span class="ruby-value">9</span>,<span class="ruby-value">10</span>,<span class="ruby-value">11</span>,<span class="ruby-value">12</span>,<span class="ruby-value">13</span>,<span class="ruby-value">14</span>,<span class="ruby-value">15</span>]
+    <span class="ruby-identifier">value</span> = <span class="ruby-identifier">bits</span>.<span class="ruby-identifier">inject</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">|</span> (<span class="ruby-identifier">b</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">weights</span>.<span class="ruby-identifier">shift</span>) <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">write_op</span> <span class="ruby-value">0x0081</span>, [<span class="ruby-identifier">value</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'v'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

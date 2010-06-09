@@ -1,0 +1,43 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: An <b>instance</b> of this class is supposed to provide similar methods to the class methods of Dir itself.
+  - !ruby/struct:SM::Flow::P 
+    body: Fairly complete - like zip/zipfilesystem's implementation, i provide everything except chroot and glob. glob could be done with a glob to regex conversion, and then simply match in the entries array... although recursive glob complicates that somewhat.
+  - !ruby/struct:SM::Flow::P 
+    body: Dir.chroot, Dir.glob, Dir.[], and Dir.tmpdir is the complete list of methods still missing.
+constants: []
+
+full_name: Ole::Storage::DirClass
+includes: []
+
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: chdir
+  - !ruby/object:RI::MethodSummary 
+    name: delete
+  - !ruby/object:RI::MethodSummary 
+    name: entries
+  - !ruby/object:RI::MethodSummary 
+    name: foreach
+  - !ruby/object:RI::MethodSummary 
+    name: getwd
+  - !ruby/object:RI::MethodSummary 
+    name: mkdir
+  - !ruby/object:RI::MethodSummary 
+    name: new
+  - !ruby/object:RI::MethodSummary 
+    name: open
+  - !ruby/object:RI::MethodSummary 
+    name: pwd
+  - !ruby/object:RI::MethodSummary 
+    name: rmdir
+  - !ruby/object:RI::MethodSummary 
+    name: unlink
+name: DirClass
+superclass: Object

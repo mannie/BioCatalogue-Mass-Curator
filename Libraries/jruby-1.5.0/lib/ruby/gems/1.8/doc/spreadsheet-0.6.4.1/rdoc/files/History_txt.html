@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: History.txt</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>History.txt</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>History.txt
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Jun 09 14:23:04 +0100 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h3>0.6.4.1 / 2009-09-17</h3>
+<ul>
+<li>3 Bugfixes
+
+<ul>
+<li>Fixes the issue reported by Thomas Preymesser and tracked down most of the
+way by Hugh McGowan in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=26647&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=26647&group_id=678&atid=2677</a>
+where reading the value of the first occurrence of a shared formula failed.
+
+</li>
+<li>Fixes the issue reported by Anonymous in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=26546&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=26546&group_id=678&atid=2677</a>
+where InvalidDate was raised for some Dates.
+
+</li>
+<li>Fixes the issue reported by John Lee in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=27110&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=27110&group_id=678&atid=2677</a>
+which is probably a duplicate of the Bug previously reported by Kadvin XJ
+in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=26182&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=26182&group_id=678&atid=2677</a>
+where unchanged rows were marked as changed in the Excel-Writer while the
+File was being written, triggering an Error.
+
+</li>
+</ul>
+</li>
+<li>1 minor enhancement
+
+<ul>
+<li>Detect row offsets from Cell data if Row-Ops are missing This fixes a bug
+reported by Alexander Logvinov in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=26513&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=26513&group_id=678&atid=2677</a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.4 / 2009-07-03</h3>
+<ul>
+<li>5 Bugfixes
+
+<ul>
+<li>Fixes the issue reported by Harley Mackenzie in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=24119&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=24119&group_id=678&atid=2677</a>
+where in some edge-cases numbers were stored incorrectly
+
+</li>
+<li>Fixes the issue reported and fixed by someone23 in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=25732&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=25732&group_id=678&atid=2677</a>
+where using Row-updater methods with blocks caused LocalJumpErrors
+
+</li>
+<li>Fixes the issue reported and fixed by Corey Burrows in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=25784&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=25784&group_id=678&atid=2677</a>
+where &quot;Setting the height of a row, either in Excel directly, or via
+the Spreadsheet::Row#height= method results in a row that Excel displays
+with the maximum row height (409).&quot;
+
+</li>
+<li>Fixes the issue reported by Don Park in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=25968&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=25968&group_id=678&atid=2677</a>
+where some Workbooks could not be parsed due to the OLE-entry being all
+uppercase
+
+</li>
+<li>Fixes the issue reported by Iwan Buetti in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=24414&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=24414&group_id=678&atid=2677</a>
+where parsing some Workbooks failed with an Invalid date error.
+
+</li>
+</ul>
+</li>
+<li>1 major enhancement
+
+<ul>
+<li><a href="../classes/Spreadsheet.html">Spreadsheet</a> now runs on Ruby 1.9
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.3.1 / 2009-02-13</h3>
+<ul>
+<li>3 Bugfixes
+
+<ul>
+<li>Only selects the First Worksheet by default This deals with an issue
+reported by Biörn Andersson in <a
+href="http://rubyforge.org/tracker/?func=detail&atid=2677&aid=23736&group_id=678">rubyforge.org/tracker/?func=detail&atid=2677&aid=23736&group_id=678</a>
+where data-edits in OpenOffice were propagated through all selected sheets.
+
+</li>
+<li>Honors Row, Column, Worksheet and Workbook-formats and thus fixes a Bug
+introduced in <a
+href="http://scm.ywesee.com/?p=spreadsheet;a=commit;h=52755ad76fdda151564b689107ca2fbb80af3b78">scm.ywesee.com/?p=spreadsheet;a=commit;h=52755ad76fdda151564b689107ca2fbb80af3b78</a>
+and reported in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=23875&group_id=678&atid=2678">rubyforge.org/tracker/index.php?func=detail&aid=23875&group_id=678&atid=2678</a>
+and by Joachim Schneider in <a
+href="http://rubyforge.org/forum/forum.php?thread_id=31056&forum_id=2920">rubyforge.org/forum/forum.php?thread_id=31056&forum_id=2920</a>
+
+</li>
+<li>Fixes a bug reported by Alexander Skwar in <a
+href="http://rubyforge.org/forum/forum.php?thread_id=31403&forum_id=2920">rubyforge.org/forum/forum.php?thread_id=31403&forum_id=2920</a>
+where the user-defined formatting of Dates and Times was overwritten with a
+default format, and other issues connected with writing Dates and Times
+into Spreadsheets.
+
+</li>
+</ul>
+</li>
+<li>1 minor enhancements
+
+<ul>
+<li><a href="../classes/Spreadsheet.html">Spreadsheet</a> shold now be
+completely warning-free, as requested by Eric Peterson in <a
+href="http://rubyforge.org/forum/forum.php?thread_id=31346&forum_id=2920">rubyforge.org/forum/forum.php?thread_id=31346&forum_id=2920</a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.3 / 2009-01-14</h3>
+<ul>
+<li>1 Bugfix
+
+<ul>
+<li>Fixes the issue reported by Corey Martella in <a
+href="http://rubyforge.org/forum/message.php?msg_id=63651">rubyforge.org/forum/message.php?msg_id=63651</a>
+as well as other issues engendered by the decision to always shorten Rows
+to the last non-nil value.
+
+</li>
+</ul>
+</li>
+<li>2 minor enhancements
+
+<ul>
+<li>Added bin/xlsopcodes, a tool for examining Excel files
+
+</li>
+<li>Documents created by <a href="../classes/Spreadsheet.html">Spreadsheet</a>
+can now be Printed in Excel and Excel-Viewer. This issue was reported by
+Spencer Turner in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=23287&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=23287&group_id=678&atid=2677</a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.2.1 / 2008-12-18</h3>
+<ul>
+<li>1 Bugfix
+
+<ul>
+<li>Using <a href="../classes/Spreadsheet.html">Spreadsheet</a> together with
+&#8216;jcode&#8217; could lead to broken Excel-Files Thanks to Eugene
+Mikhailov for tracking this one down in: <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=23085&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=23085&group_id=678&atid=2677</a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.2 / 2008-12-11</h3>
+<ul>
+<li>14 Bugfixes
+
+<ul>
+<li>Fixed a bug where #&lt;boolean&gt;! methods did not trigger a call to
+row_updated
+
+</li>
+<li>Corrected the Row-Format in both Reader and Writer (was Biff5 for some
+reason)
+
+</li>
+<li>Populates Row-instances with @default_format, @height, @outline_level and
+@hidden attributes
+
+</li>
+<li>Fixed a Bug where Workbooks deriving from a Template-Workbook without SST
+could not be saved Reported in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=22863&group_id=678&atid=2678">rubyforge.org/tracker/index.php?func=detail&aid=22863&group_id=678&atid=2678</a>
+
+</li>
+<li>Improved handling of Numeric Values (writes a RK-Entry for a Float only if
+it can be encoded with 4 leading zeroes, and a Number-Entry for an Integer
+only if it cannot be encoded as an RK)
+
+</li>
+<li>Fixes a bug where changes to a Row were ignored if they were outside of an
+existing Row-Block.
+
+</li>
+<li>Fixes a bug where MULRK-Entries sometimes only contained a single RK
+
+</li>
+<li>Fixes a bug where formatting was ignored if it was applied to empty Rows
+Reported by Zomba Lumix in <a
+href="http://rubyforge.org/forum/message.php?msg_id=61985">rubyforge.org/forum/message.php?msg_id=61985</a>
+
+</li>
+<li>Fixes a bug where modifying a Row in a loaded Workbook could lead to Rows
+with smaller indices being set to nil. Reported by Ivan Samsonov in <a
+href="http://rubyforge.org/forum/message.php?msg_id=62816">rubyforge.org/forum/message.php?msg_id=62816</a>
+
+</li>
+<li>Deals with rounding-problems when calculating Time Reported by Bughunter
+extraordinaire Bjørn Hjelle
+
+</li>
+<li>Correct splitting of wide characters in SST Reported by Michel Ziegler and
+by Eugene Mikhailov in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=23085&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=23085&group_id=678&atid=2677</a>
+
+</li>
+<li>Fix an off-by-one error in write_mulrk that caused Excel to complain that
+&#8216;Data may be lost&#8217;, reported by Emma in <a
+href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/321979">blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/321979</a>
+and by Chris Lowis in <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=22892&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=22892&group_id=678&atid=2677</a>
+
+</li>
+<li>Read formats correctly in read_mulrk Reported by Ivan Samsonov Fixes that
+part of <a
+href="http://rubyforge.org/forum/message.php?msg_id=62821">rubyforge.org/forum/message.php?msg_id=62821</a>
+which is a bug. Does nothing for the disappearance of Rich-Text formatting,
+which will not be addressed until 0.7.0
+
+</li>
+<li>Fixes a (benign?) bug, where adding text to a template-file resulted in a
+duplicate extsst-record.
+
+</li>
+</ul>
+</li>
+<li>2 minor enhancements
+
+<ul>
+<li>Improved recognition of Time-Formats
+
+</li>
+<li>Improvement to Robustness: allow Spreadsheet::Workbook.new Takes care of <a
+href="http://rubyforge.org/forum/message.php?msg_id=62941">rubyforge.org/forum/message.php?msg_id=62941</a>
+Reported by David Chamberlain
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.9 / 2008-11-07</h3>
+<ul>
+<li>1 Bugfix
+
+<ul>
+<li>Fixes a precision-issue in Excel::Row#datetime: Excel records Time-Values
+with more significant bits (but not necessarily more precise) than DateTime
+can handle. (Thanks to Bjørn Hjelle for the Bugreport)
+
+</li>
+</ul>
+</li>
+<li>1 minor enhancement
+
+<ul>
+<li>Added support for appending Worksheets to a Workbook (Thanks to Mohammed
+Rabbani for the report)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.8 / 2008-10-31</h3>
+<ul>
+<li>1 Bugfix
+
+<ul>
+<li>Fixes a bug where out-of-sequence reading of multiple Worksheets could lead
+to data from the wrong Sheet being returned. (Thanks to Bugreporter
+extraordinaire Bjørn Hjelle)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.7 / 2008-10-30</h3>
+<ul>
+<li>1 Bugfix
+
+<ul>
+<li>Fixes a bug where all Formulas were ignored. (Thanks to Bjørn Hjelle for
+the report)
+
+</li>
+</ul>
+</li>
+<li>1 minor enhancement
+
+<ul>
+<li>Allow the substitution of an IO object with a StringIO. (Thanks to luxor
+for the report)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.6 / 2008-10-28</h3>
+<ul>
+<li>2 Bugfixes
+
+<ul>
+<li>Fixed encoding and decoding of BigNums, negative and other large Numbers <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=22581&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=22581&group_id=678&atid=2677</a>
+
+</li>
+<li>Fix a bug where modifications to default columns weren&#8216;t stored <a
+href="http://rubyforge.org/forum/message.php?msg_id=61567">rubyforge.org/forum/message.php?msg_id=61567</a>
+
+</li>
+</ul>
+</li>
+<li>1 minor enhancement
+
+<ul>
+<li>Row#enriched_data won&#8216;t return a Bogus-Date if the data isn&#8216;t a
+Numeric value (Thanks to Bjørn Hjelle for the report)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.5 / 2008-10-24</h3>
+<ul>
+<li>2 Bugfixes
+
+<ul>
+<li>Removed obsolete code which triggered Iconv::InvalidEncoding on Systems
+with non-gnu Iconv: <a
+href="http://rubyforge.org/tracker/index.php?func=detail&aid=22541&group_id=678&atid=2677">rubyforge.org/tracker/index.php?func=detail&aid=22541&group_id=678&atid=2677</a>
+
+</li>
+<li>Handle empty Worksheets (Thanks to Charles Lowe for the Patches)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.4 / 2008-10-23</h3>
+<ul>
+<li>1 Bugfix
+
+<ul>
+<li>Biff8#wide now works properly even if $KCODE==&#8217;UTF-8&#8217; (Thanks
+to Bjørn Hjelle for the Bugreport)
+
+</li>
+</ul>
+</li>
+<li>1 minor enhancement
+
+<ul>
+<li>Read/Write functionality for Links (only URLs can be written as of now)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.3 / 2008-10-21</h3>
+<ul>
+<li>2 Bugfixes
+
+<ul>
+<li>Renamed UTF8 to UTF-8 to support freebsd (Thanks to Jacob Atzen for the
+Patch)
+
+</li>
+<li>Fixes a Bug where only the first Rowblock was read correctly if there were
+no DBCELL records terminating the Rowblocks. (Thanks to Bjørn Hjelle for
+the Bugreport)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.2 / 2008-10-20</h3>
+<ul>
+<li>2 Bugfixes
+
+<ul>
+<li>Corrected the Font-Encoding values in Excel::Internals (Thanks to Bjørn
+Hjelle for the Bugreport)
+
+</li>
+<li><a href="../classes/Spreadsheet.html">Spreadsheet</a> now skips
+Richtext-Formatting runs and Asian Phonetic Settings when reading the SST,
+fixing a problem where the presence of Richtext could lead to an incomplete
+SST.
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1.1 / 2008-10-20</h3>
+<ul>
+<li>1 Bugfix
+
+<ul>
+<li>Corrected the Manifest - included column.rb
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.1 / 2008-10-17</h3>
+<ul>
+<li>3 minor enhancements
+
+<ul>
+<li>Adds Column formatting and Worksheet#format_column
+
+</li>
+<li>Reads and writes correct Fonts (Font-indices &gt; 3 appear to be 1-based)
+
+</li>
+<li>Reads xf data
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>0.6.0 / 2008-10-13</h3>
+<ul>
+<li>1 major enhancement
+
+<ul>
+<li>Initial upload of the shiny new <a
+href="../classes/Spreadsheet.html">Spreadsheet</a> Gem after three weeks of
+grueling labor in the dark binary mines of Little-Endian Biff and long
+hours spent polishing the surfaces of documentation.
+
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

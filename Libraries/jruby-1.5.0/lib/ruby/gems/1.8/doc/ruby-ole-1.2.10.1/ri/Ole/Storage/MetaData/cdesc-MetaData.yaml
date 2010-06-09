@@ -1,0 +1,86 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: The MetaData class is designed to be high level interface to all the underlying meta data stored within different sections, themselves within different property set streams.
+  - !ruby/struct:SM::Flow::P 
+    body: With this class, you can simply get properties using their names, without needing to know about the underlying guids, property ids etc.
+  - !ruby/struct:SM::Flow::P 
+    body: "Example:"
+  - !ruby/struct:SM::Flow::VERB 
+    body: "  Ole::Storage.open('test.doc') { |ole| p ole.meta_data.doc_author }\n"
+  - !ruby/struct:SM::Flow::P 
+    body: "TODO:"
+  - !ruby/object:SM::Flow::LIST 
+    contents: 
+      - !ruby/struct:SM::Flow::LI 
+        label: "*"
+        body: add write support
+      - !ruby/struct:SM::Flow::LI 
+        label: "*"
+        body: fix some of the missing type coercion (eg FileTime)
+      - !ruby/struct:SM::Flow::LI 
+        label: "*"
+        body: maybe add back the ability to access individual property sets as a unit directly. ie <tt>ole.summary_information</tt>. Is this useful?
+      - !ruby/struct:SM::Flow::LI 
+        label: "*"
+        body: full key support, for unknown keys, like <tt>ole.meta_data[myguid, myid]</tt>. probably needed for user-defined properties too.
+    type: :BULLET
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: FILE_MAP
+    value: "{         Types::PropertySet::FMTID_SummaryInformation => \"\\005SummaryInformation\",         Types::PropertySet::FMTID_DocSummaryInfo => \"\\005DocumentSummaryInformation\""
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: FORMAT_MAP
+    value: "{         'MSWordDoc' => :doc"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: CLSID_EXCEL97
+    value: Types::Clsid.parse "{00020820-0000-0000-c000-000000000046}"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: CLSID_EXCEL95
+    value: Types::Clsid.parse "{00020810-0000-0000-c000-000000000046}"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: CLSID_WORD97
+    value: Types::Clsid.parse "{00020906-0000-0000-c000-000000000046}"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: CLSID_WORD95
+    value: Types::Clsid.parse "{00020900-0000-0000-c000-000000000046}"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: CLSID_MAP
+    value: "{         CLSID_EXCEL97 => :xls,         CLSID_EXCEL95 => :xls,         CLSID_WORD97  => :doc,         CLSID_WORD95  => :doc"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: MIME_TYPES
+    value: "{         :xls => 'application/vnd.ms-excel',         :doc => 'application/msword',         :ppt => 'application/vnd.ms-powerpoint',         # not registered at IANA, but seems most common usage         :msg => 'application/vnd.ms-outlook',         # this is my default fallback option. also not registered at IANA.         # file(1)'s default is application/msword, which is useless...         nil  => 'application/x-ole-storage'"
+full_name: Ole::Storage::MetaData
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Enumerable
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: "[]"
+  - !ruby/object:RI::MethodSummary 
+    name: "[]="
+  - !ruby/object:RI::MethodSummary 
+    name: each
+  - !ruby/object:RI::MethodSummary 
+    name: file_format
+  - !ruby/object:RI::MethodSummary 
+    name: method_missing
+  - !ruby/object:RI::MethodSummary 
+    name: mime_type
+  - !ruby/object:RI::MethodSummary 
+    name: to_h
+name: MetaData
+superclass: Object

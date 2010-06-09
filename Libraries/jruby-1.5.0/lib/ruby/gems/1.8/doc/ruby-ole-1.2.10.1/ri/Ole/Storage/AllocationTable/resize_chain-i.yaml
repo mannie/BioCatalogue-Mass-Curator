@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: must return first_block. modifies <tt>blocks</tt> in place
+full_name: Ole::Storage::AllocationTable#resize_chain
+is_singleton: false
+name: resize_chain
+params: (blocks, size)
+visibility: public

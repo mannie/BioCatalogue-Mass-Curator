@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Access the contents of this Shared String
+full_name: Spreadsheet::Excel::SstEntry#content
+is_singleton: false
+name: content
+params: ()
+visibility: public

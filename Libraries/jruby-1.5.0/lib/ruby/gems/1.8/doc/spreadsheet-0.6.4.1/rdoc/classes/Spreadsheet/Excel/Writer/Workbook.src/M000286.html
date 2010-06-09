@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_styles (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 552</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_styles</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">writer</span>
+    <span class="ruby-comment cmt"># TODO: Style implementation. The following is simply a standard builtin</span>
+    <span class="ruby-comment cmt">#       style.</span>
+    <span class="ruby-comment cmt"># TODO: User defined styles</span>
+    <span class="ruby-identifier">data</span> = [
+      <span class="ruby-value">0x8000</span>, <span class="ruby-comment cmt">#   Bit  Mask    Contents</span>
+              <span class="ruby-comment cmt"># 11- 0  0x0fff  Index to style XF record (➜ 6.115)</span>
+              <span class="ruby-comment cmt">#    15  0x8000  Always 1 for built-in styles</span>
+      <span class="ruby-value">0x00</span>,   <span class="ruby-comment cmt"># Identifier of the built-in cell style:</span>
+              <span class="ruby-comment cmt"># 0x00 = Normal</span>
+              <span class="ruby-comment cmt"># 0x01 = RowLevel_lv (see next field)</span>
+              <span class="ruby-comment cmt"># 0x02 = ColLevel_lv (see next field)</span>
+              <span class="ruby-comment cmt"># 0x03 = Comma</span>
+              <span class="ruby-comment cmt"># 0x04 = Currency</span>
+              <span class="ruby-comment cmt"># 0x05 = Percent</span>
+              <span class="ruby-comment cmt"># 0x06 = Comma [0] (BIFF4-BIFF8)</span>
+              <span class="ruby-comment cmt"># 0x07 = Currency [0] (BIFF4-BIFF8)</span>
+              <span class="ruby-comment cmt"># 0x08 = Hyperlink (BIFF8)</span>
+              <span class="ruby-comment cmt"># 0x09 = Followed Hyperlink (BIFF8)</span>
+      <span class="ruby-value">0xff</span>,   <span class="ruby-comment cmt"># Level for RowLevel or ColLevel style (zero-based, lv),</span>
+              <span class="ruby-comment cmt"># 0xff otherwise</span>
+              <span class="ruby-comment cmt"># The RowLevel and ColLevel styles specify the formatting of</span>
+              <span class="ruby-comment cmt"># subtotal cells in a specific outline level. The level is</span>
+              <span class="ruby-comment cmt"># specified by the last field in the STYLE record. Valid values</span>
+              <span class="ruby-comment cmt"># are 0…6 for the outline levels 1…7.</span>
+    ]
+    <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">writer</span>, <span class="ruby-value">0x0293</span>, <span class="ruby-identifier">data</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'vC2'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

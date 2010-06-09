@@ -1,0 +1,39 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: dump
+  - !ruby/object:RI::MethodSummary 
+    name: load
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: The OLE variant types, extracted from http://www.marin.clara.net/COM/variant_type_definitions.htm.
+  - !ruby/struct:SM::Flow::P 
+    body: A subset is also in WIN32OLE::VARIANT, but its not cross platform (obviously).
+  - !ruby/struct:SM::Flow::P 
+    body: "Use like:"
+  - !ruby/struct:SM::Flow::VERB 
+    body: "  p Ole::Types::Variant::NAMES[0x001f] =&gt; 'VT_LPWSTR'\n  p Ole::Types::VT_DATE # =&gt; 7\n"
+  - !ruby/struct:SM::Flow::P 
+    body: The serialization / deserialization functions should be fixed to make it easier to work with. like
+  - !ruby/struct:SM::Flow::VERB 
+    body: "  Ole::Types.from_str(VT_DATE, data) # and\n  Ole::Types.to_str(VT_DATE, data)\n"
+  - !ruby/struct:SM::Flow::P 
+    body: Or similar, rather than having to do VT_* &lt;=&gt; ad hoc class name etc as it is currently.
+constants: 
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: NAMES
+    value: "{         0x0000 => 'VT_EMPTY',         0x0001 => 'VT_NULL',         0x0002 => 'VT_I2',         0x0003 => 'VT_I4',         0x0004 => 'VT_R4',         0x0005 => 'VT_R8',         0x0006 => 'VT_CY',         0x0007 => 'VT_DATE',         0x0008 => 'VT_BSTR',         0x0009 => 'VT_DISPATCH',         0x000a => 'VT_ERROR',         0x000b => 'VT_BOOL',         0x000c => 'VT_VARIANT',         0x000d => 'VT_UNKNOWN',         0x000e => 'VT_DECIMAL',         0x0010 => 'VT_I1',         0x0011 => 'VT_UI1',         0x0012 => 'VT_UI2',         0x0013 => 'VT_UI4',         0x0014 => 'VT_I8',         0x0015 => 'VT_UI8',         0x0016 => 'VT_INT',         0x0017 => 'VT_UINT',         0x0018 => 'VT_VOID',         0x0019 => 'VT_HRESULT',         0x001a => 'VT_PTR',         0x001b => 'VT_SAFEARRAY',         0x001c => 'VT_CARRAY',         0x001d => 'VT_USERDEFINED',         0x001e => 'VT_LPSTR',         0x001f => 'VT_LPWSTR',         0x0040 => 'VT_FILETIME',         0x0041 => 'VT_BLOB',         0x0042 => 'VT_STREAM',         0x0043 => 'VT_STORAGE',         0x0044 => 'VT_STREAMED_OBJECT',         0x0045 => 'VT_STORED_OBJECT',         0x0046 => 'VT_BLOB_OBJECT',         0x0047 => 'VT_CF',         0x0048 => 'VT_CLSID',         0x0fff => 'VT_ILLEGALMASKED',         0x0fff => 'VT_TYPEMASK',         0x1000 => 'VT_VECTOR',         0x2000 => 'VT_ARRAY',         0x4000 => 'VT_BYREF',         0x8000 => 'VT_RESERVED',         0xffff => 'VT_ILLEGAL'"
+  - !ruby/object:RI::Constant 
+    comment: 
+    name: CLASS_MAP
+    value: "{         # haven't seen one of these. wonder if its same as FILETIME?         #'VT_DATE' => ?,         'VT_LPSTR' => Lpstr,         'VT_LPWSTR' => Lpwstr,         'VT_FILETIME' => FileTime,         'VT_CLSID' => Clsid"
+full_name: Ole::Types::Variant
+includes: []
+
+instance_methods: []
+
+name: Variant
+superclass: 

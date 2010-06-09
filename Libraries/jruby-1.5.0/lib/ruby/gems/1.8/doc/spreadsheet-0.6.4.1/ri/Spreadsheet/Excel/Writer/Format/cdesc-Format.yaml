@@ -1,0 +1,61 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: format
+    rw: R
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: xf_index
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: boolean
+  - !ruby/object:RI::MethodSummary 
+    name: color
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: This class encapsulates everything that is needed to write an XF record.
+constants: []
+
+full_name: Spreadsheet::Excel::Writer::Format
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Spreadsheet::Excel::Internals
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: color_code
+  - !ruby/object:RI::MethodSummary 
+    name: font_index
+  - !ruby/object:RI::MethodSummary 
+    name: horizontal_align
+  - !ruby/object:RI::MethodSummary 
+    name: num_format
+  - !ruby/object:RI::MethodSummary 
+    name: text_direction
+  - !ruby/object:RI::MethodSummary 
+    name: vertical_align
+  - !ruby/object:RI::MethodSummary 
+    name: write_op
+  - !ruby/object:RI::MethodSummary 
+    name: write_xf
+  - !ruby/object:RI::MethodSummary 
+    name: xf_align
+  - !ruby/object:RI::MethodSummary 
+    name: xf_borders
+  - !ruby/object:RI::MethodSummary 
+    name: xf_brdcolors
+  - !ruby/object:RI::MethodSummary 
+    name: xf_indent
+  - !ruby/object:RI::MethodSummary 
+    name: xf_pattern
+  - !ruby/object:RI::MethodSummary 
+    name: xf_rotation
+  - !ruby/object:RI::MethodSummary 
+    name: xf_type_prot
+  - !ruby/object:RI::MethodSummary 
+    name: xf_used_attr
+name: Format
+superclass: DelegateClassSpreadsheet::Format

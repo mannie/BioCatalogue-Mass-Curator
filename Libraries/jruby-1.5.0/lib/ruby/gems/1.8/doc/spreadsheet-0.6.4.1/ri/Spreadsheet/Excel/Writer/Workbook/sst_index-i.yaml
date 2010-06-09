@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Workbook#sst_index
+is_singleton: false
+name: sst_index
+params: (worksheet, str)
+visibility: public

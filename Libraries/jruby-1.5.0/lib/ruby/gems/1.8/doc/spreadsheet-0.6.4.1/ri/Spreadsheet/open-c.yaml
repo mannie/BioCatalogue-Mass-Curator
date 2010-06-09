@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Parses a Spreadsheet Document and returns a Workbook object. At present, only Excel-Documents can be read.
+full_name: Spreadsheet::open
+is_singleton: true
+name: open
+params: (io_or_path, mode="rb+", &block)
+visibility: public

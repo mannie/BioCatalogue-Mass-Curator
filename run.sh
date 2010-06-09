@@ -19,10 +19,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 
+# ========================================
 
-
-JRUBY=/usr/local/jruby-1.5.0/bin/jruby # CHANGE THIS TO MATCH YOUR ENVIRONMENT
 PROJECT_DIR=$(dirname $0)
+JRUBY=$PROJECT_DIR/Libraries//jruby-1.5.0/bin/jruby
 
 $JRUBY $PROJECT_DIR/Other-Sources/main.rb
 

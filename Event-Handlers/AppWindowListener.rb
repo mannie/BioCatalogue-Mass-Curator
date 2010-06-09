@@ -21,7 +21,8 @@
 =end
 
 class AppWindowListener
-
+  java_implements WindowListener
+  
   def windowActivated(event)
   end # windowActivated
   

@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: GUIDE.txt</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>GUIDE.txt</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>GUIDE.txt
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Jun 09 14:23:04 +0100 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>Getting Started with <a href="../classes/Spreadsheet.html">Spreadsheet</a></h1>
+<p>
+This guide is meant to get you started using <a
+href="../classes/Spreadsheet.html">Spreadsheet</a>. By the end of it, you
+should be able to read and write Spreadsheets.
+</p>
+<h2>Reading is easy!</h2>
+<p>
+First, make sure all that code is loaded:
+</p>
+<pre>
+  require 'spreadsheet'
+</pre>
+<p>
+Worksheets come in various Encodings. You need to tell <a
+href="../classes/Spreadsheet.html">Spreadsheet</a> which Encoding you want
+to deal with. The Default is UTF-8
+</p>
+<pre>
+  Spreadsheet.client_encoding = 'UTF-8'
+</pre>
+<p>
+Let&#8216;s open a workbook:
+</p>
+<pre>
+  book = Spreadsheet.open '/path/to/an/excel-file.xls'
+</pre>
+<p>
+We can either access all the Worksheets in a Workbook&#8230;
+</p>
+<pre>
+  book.worksheets
+</pre>
+<p>
+&#8230;or access them by index or name (encoded in your client_encoding)
+</p>
+<pre>
+  sheet1 = book.worksheet 0
+  sheet2 = Book.worksheet 'Sheet1'
+</pre>
+<p>
+Now you can either iterate over all rows that contain some data. A call to
+Worksheet.each without argument will omit empty rows at the beginning of
+the Worksheet:
+</p>
+<pre>
+  sheet1.each do |row|
+    # do something interesting with a row
+  end
+</pre>
+<p>
+Or you can tell Worksheet how many rows should be omitted at the beginning.
+The following starts at the 3rd row, regardless of whether or not it or the
+preceding rows contain any data:
+</p>
+<pre>
+  sheet2.each 2 do |row|
+    # do something interesting with a row
+  end
+</pre>
+<p>
+Or you can access rows directly, by their index (0-based):
+</p>
+<pre>
+  row = sheet1.row(3)
+</pre>
+<p>
+To access the values stored in a Row, treat the Row like an <a
+href="../classes/Array.html">Array</a>.
+</p>
+<pre>
+  row[0]
+</pre>
+<p>
+-&gt; this will return a String, a Float, an Integer, a Formula, a Link or
+a Date or DateTime object - or nil if the cell is empty.
+</p>
+<p>
+More information about the formatting of a cell can be found in the Format
+with the equivalent index
+</p>
+<pre>
+  row.format 2
+</pre>
+<h2>Writing is easy</h2>
+<p>
+As before, make sure you have <a
+href="../classes/Spreadsheet.html">Spreadsheet</a> required and the
+client_encoding set. Then make a new Workbook:
+</p>
+<pre>
+  book = Spreadsheet::Workbook.new
+</pre>
+<p>
+Add a Worksheet and you&#8216;re good to go:
+</p>
+<pre>
+  sheet1 = book.create_worksheet
+</pre>
+<p>
+This will create a Worksheet with the Name &quot;Worksheet1&quot;. If you
+prefer another name, you may do either of the following:
+</p>
+<pre>
+  sheet2 = book.create_worksheet :name =&gt; 'My Second Worksheet'
+  sheet1.name = 'My First Worksheet'
+</pre>
+<p>
+Now, add data to the Worksheet, using either Worksheet#[]=,
+Worksheet#update_row, or work directly on Row using any of the <a
+href="../classes/Array.html">Array</a>-Methods that modify an <a
+href="../classes/Array.html">Array</a> in place:
+</p>
+<pre>
+  sheet1.row(0).concat %w{Name Country Acknowlegement}
+  sheet1[1,0] = 'Japan'
+  row = sheet1.row(1)
+  row.push 'Creator of Ruby'
+  row.unshift 'Yukihiro Matsumoto'
+  sheet1.row(2).replace [ 'Daniel J. Berger', 'U.S.A.',
+                          'Author of original code for Spreadsheet::Excel' ]
+  sheet1.row(3).push 'Charles Lowe', 'Author of the ruby-ole Library'
+  sheet1.row(3).insert 1, 'Unknown'
+  sheet1.update_row 4, 'Hannes Wyss', 'Switzerland', 'Author'
+</pre>
+<p>
+Add some Formatting for flavour:
+</p>
+<pre>
+  sheet1.row(0).height = 18
+
+  format = Spreadsheet::Format.new :color =&gt; :blue,
+                                   :weight =&gt; :bold,
+                                   :size =&gt; 18
+  sheet1.row(0).default_format = format
+
+  bold = Spreadsheet::Format.new :weight =&gt; :bold
+  4.times do |x| sheet1.row(x + 1).set_format(0, bold) end
+</pre>
+<p>
+And finally, write the Excel File:
+</p>
+<pre>
+  book.write '/path/to/output/excel-file.xls'
+</pre>
+<h2>Modifying an existing Document</h2>
+<p>
+<a href="../classes/Spreadsheet.html">Spreadsheet</a> has some limited
+support for modifying an existing Document. This is done by copying
+verbatim those parts of an Excel-document which <a
+href="../classes/Spreadsheet.html">Spreadsheet</a> can&#8216;t modify
+(yet), recalculating relevant offsets, and writing the data that can be
+changed. Here&#8216;s what should work:
+</p>
+<ul>
+<li>Adding, changing and deleting cells.
+
+</li>
+<li>You should be able to fill in Data to be evaluated by predefined Formulas
+
+</li>
+</ul>
+<p>
+Limitations:
+</p>
+<ul>
+<li><a href="../classes/Spreadsheet.html">Spreadsheet</a> can only write BIFF8
+(Excel97 and higher). The results of modifying an earlier version of Excel
+are undefined.
+
+</li>
+<li><a href="../classes/Spreadsheet.html">Spreadsheet</a> does not modify
+Formatting at present. That means in particular that if you set the Value
+of a Cell to a Date, it can only be read as a Date if its Format was set
+correctly prior to the change.
+
+</li>
+<li>Although it is theoretically possible, it is not recommended to write the
+resulting Document back to the same File/IO that it was read from.
+
+</li>
+</ul>
+<p>
+And here&#8216;s how it works:
+</p>
+<pre>
+  book = Spreadsheet.open '/path/to/an/excel-file.xls'
+  sheet = book.worksheet 0
+  sheet.each do |row|
+    row[0] *= 2
+  end
+  book.write '/path/to/output/excel-file.xls'
+</pre>
+<h2>Date and DateTime</h2>
+<p>
+Excel does not know a separate Datatype for Dates. Instead it encodes Dates
+into standard floating-point numbers and recognizes a Date-Cell by its
+formatting-string:
+</p>
+<pre>
+  row.format(3).number_format
+</pre>
+<p>
+Whenever a Cell&#8216;s Format describes a Date or Time, <a
+href="../classes/Spreadsheet.html">Spreadsheet</a> will give you the
+decoded Date or DateTime value. Should you need to access the underlying
+Float, you may do the following:
+</p>
+<pre>
+  row.at(3)
+</pre>
+<p>
+If for some reason the Date-recognition fails, you may force Date-decoding:
+</p>
+<pre>
+  row.date(3)
+  row.datetime(3)
+</pre>
+<p>
+When you set the value of a Cell to a Date, Time or DateTime, <a
+href="../classes/Spreadsheet.html">Spreadsheet</a> will try to set the
+cell&#8216;s number-format to a corresponding value (one of Excel&#8216;s
+builtin formats). If you have already defined a Date- or DateTime-format,
+<a href="../classes/Spreadsheet.html">Spreadsheet</a> will use that
+instead. If a format has already been applied to a particular Cell, <a
+href="../classes/Spreadsheet.html">Spreadsheet</a> will leave it untouched:
+</p>
+<pre>
+  row[4] = Date.new 1975, 8, 21
+  # -&gt; assigns the builtin Date-Format: 'M/D/YY'
+  book.add_format Format.new(:number_format =&gt; 'DD.MM.YYYY hh:mm:ss')
+  row[5] = DateTime.new 2008, 10, 12, 11, 59
+  # -&gt; assigns the added DateTime-Format: 'DD.MM.YYYY hh:mm:ss'
+  row.set_format 6, Format.new(:number_format =&gt; 'D-MMM-YYYY')
+  row[6] = Time.new 2008, 10, 12
+  # -&gt; the Format of cell 6 is left unchanged.
+</pre>
+<h2>More about Encodings</h2>
+<p>
+<a href="../classes/Spreadsheet.html">Spreadsheet</a> assumes it&#8216;s
+running on Ruby 1.8 with Iconv-support. It is your responsibility to handle
+Conversion Errors, or to prevent them e.g. by using the Iconv
+Transliteration and Ignore flags: Spreadsheet.client_encoding =
+&#8216;LATIN1//TRANSLIT//IGNORE&#8216;
+</p>
+<h2>Backward Compatibility</h2>
+<p>
+<a href="../classes/Spreadsheet.html">Spreadsheet</a> is designed to be a
+drop-in replacement for both ParseExcel and <a
+href="../classes/Spreadsheet/Excel.html">Spreadsheet::Excel</a>. It
+provides a number of require-paths for backward compatibility with its
+predecessors. If you have been working with ParseExcel, you have probably
+used one or more of the following:
+</p>
+<pre>
+  require 'parseexcel'
+  require 'parseexcel/parseexcel'
+  require 'parseexcel/parser'
+</pre>
+<p>
+Either of the above will define the ParseExcel.parse method as a facade to
+<a href="../classes/Spreadsheet.html#M000225">Spreadsheet.open</a>.
+Additionally, this will alter Spreadsheets behavior to define the
+ParseExcel::Worksheet::Cell class and fill each parsed Row with instances
+thereof, which in turn provide ParseExcel&#8216;s Cell#to_s(encoding) and
+Cell#date methods. You will have to manually uninstall the parseexcel
+library.
+</p>
+<p>
+If you are upgrading from <a
+href="../classes/Spreadsheet/Excel.html">Spreadsheet::Excel</a>, you were
+probably using Workbook#add_worksheet and Worksheet#write, write_row or
+write_column. Use the following to load the code which provides them:
+</p>
+<pre>
+  require 'spreadsheet/excel'
+</pre>
+<p>
+Again, you will have to manually uninstall the spreadsheet-excel library.
+</p>
+<p>
+If you perform fancy formatting, you may run into trouble as the Format
+implementation has changed considerably. If that is the case, please drop
+me a line at hannes.wyss@gmail.com and I will try to help you. Don&#8216;t
+forget to include the offending code-snippet!
+</p>
+<p>
+All compatibility code is deprecated and will be removed in version 1.0.0
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

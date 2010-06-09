@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>_unicode_string (Spreadsheet::Excel::Writer::Biff8)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/biff8.rb, line 42</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">_unicode_string</span> <span class="ruby-identifier">string</span>, <span class="ruby-identifier">count_length</span>=<span class="ruby-value">1</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-identifier">internal</span> <span class="ruby-identifier">string</span>
+    <span class="ruby-identifier">size</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">send</span>(<span class="ruby-ivar">@@bytesize</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>
+    <span class="ruby-identifier">fmt</span> = <span class="ruby-identifier">count_length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-value str">'C2'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'vC'</span>
+    <span class="ruby-identifier">data</span>, <span class="ruby-identifier">wide</span> = <span class="ruby-identifier">compress_unicode_string</span> <span class="ruby-identifier">data</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">wide</span>
+    <span class="ruby-identifier">header</span> = [
+      <span class="ruby-identifier">size</span>, <span class="ruby-comment cmt"># Length of the string (character count, ln)</span>
+      <span class="ruby-identifier">opts</span>, <span class="ruby-comment cmt"># Option flags:</span>
+            <span class="ruby-comment cmt"># Bit  Mask  Contents</span>
+            <span class="ruby-comment cmt">#   0  0x01  Character compression (ccompr):</span>
+            <span class="ruby-comment cmt">#            0 = Compressed (8-bit characters)</span>
+            <span class="ruby-comment cmt">#            1 = Uncompressed (16-bit characters)</span>
+            <span class="ruby-comment cmt">#   2  0x04  Asian phonetic settings (phonetic):</span>
+            <span class="ruby-comment cmt">#            0 = Does not contain Asian phonetic settings</span>
+            <span class="ruby-comment cmt">#            1 = Contains Asian phonetic settings</span>
+            <span class="ruby-comment cmt">#   3  0x08  Rich-Text settings (richtext):</span>
+            <span class="ruby-comment cmt">#            0 = Does not contain Rich-Text settings</span>
+            <span class="ruby-comment cmt">#            1 = Contains Rich-Text settings</span>
+      <span class="ruby-comment cmt">#0x00,# (optional, only if richtext=1) Number of Rich-Text</span>
+            <span class="ruby-comment cmt">#                                formatting runs (rt)</span>
+      <span class="ruby-comment cmt">#0x00,# (optional, only if phonetic=1) Size of Asian phonetic</span>
+            <span class="ruby-comment cmt">#                                settings block (in bytes, sz)</span>
+    ].<span class="ruby-identifier">pack</span> <span class="ruby-identifier">fmt</span>
+    <span class="ruby-identifier">data</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">''</span> <span class="ruby-comment cmt"># (optional, only if richtext=1)</span>
+               <span class="ruby-comment cmt"># List of rt formatting runs (➜ 3.2)</span>
+    <span class="ruby-identifier">data</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">''</span> <span class="ruby-comment cmt"># (optional, only if phonetic=1)</span>
+               <span class="ruby-comment cmt"># Asian Phonetic Settings Block (➜ 3.4.2)</span>
+    [<span class="ruby-identifier">header</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">wide</span>]
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

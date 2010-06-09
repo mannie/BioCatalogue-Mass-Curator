@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: could be useful with mis-behaving ole documents. or to just clean them up.
+full_name: Ole::Storage#repack
+is_singleton: false
+name: repack
+params: (temp=:file)
+visibility: public

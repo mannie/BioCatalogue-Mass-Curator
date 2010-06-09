@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>load (Ole::Storage)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ole/storage/base.rb, line 105</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load</span>
+      <span class="ruby-comment cmt"># we always read 512 for the header block. if the block size ends up being different,</span>
+      <span class="ruby-comment cmt"># what happens to the 109 fat entries. are there more/less entries?</span>
+      <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">rewind</span>
+      <span class="ruby-identifier">header_block</span> = <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">read</span> <span class="ruby-value">512</span>
+      <span class="ruby-ivar">@header</span> = <span class="ruby-constant">Header</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">header_block</span>
+
+      <span class="ruby-comment cmt"># create an empty bbat.</span>
+      <span class="ruby-ivar">@bbat</span> = <span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">Big</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">self</span>
+      <span class="ruby-identifier">bbat_chain</span> = <span class="ruby-identifier">header_block</span>[<span class="ruby-constant">Header</span><span class="ruby-operator">::</span><span class="ruby-constant">SIZE</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>].<span class="ruby-identifier">unpack</span> <span class="ruby-value str">'V*'</span>
+      <span class="ruby-identifier">mbat_block</span> = <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">mbat_start</span>
+      <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">num_mbat</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span>
+        <span class="ruby-identifier">blocks</span> = <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">read</span>([<span class="ruby-identifier">mbat_block</span>]).<span class="ruby-identifier">unpack</span> <span class="ruby-value str">'V*'</span>
+        <span class="ruby-identifier">mbat_block</span> = <span class="ruby-identifier">blocks</span>.<span class="ruby-identifier">pop</span>
+        <span class="ruby-identifier">bbat_chain</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">blocks</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-comment cmt"># am i using num_bat in the right way?</span>
+      <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">load</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">bbat_chain</span>[<span class="ruby-value">0</span>, <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">num_bat</span>])
+  
+      <span class="ruby-comment cmt"># get block chain for directories, read it, then split it into chunks and load the</span>
+      <span class="ruby-comment cmt"># directory entries. semantics changed - used to cut at first dir where dir.type == 0</span>
+      <span class="ruby-ivar">@dirents</span> = <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@header</span>.<span class="ruby-identifier">dirent_start</span>).<span class="ruby-identifier">to_enum</span>(<span class="ruby-identifier">:each_chunk</span>, <span class="ruby-constant">Dirent</span><span class="ruby-operator">::</span><span class="ruby-constant">SIZE</span>).
+        <span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">str</span><span class="ruby-operator">|</span> <span class="ruby-constant">Dirent</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">str</span> }.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">type_id</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> }
+
+      <span class="ruby-comment cmt"># now reorder from flat into a tree</span>
+      <span class="ruby-comment cmt"># links are stored in some kind of balanced binary tree</span>
+      <span class="ruby-comment cmt"># check that everything is visited at least, and at most once</span>
+      <span class="ruby-comment cmt"># similarly with the blocks of the file.</span>
+      <span class="ruby-comment cmt"># was thinking of moving this to Dirent.to_tree instead.</span>
+      <span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@dirents</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_tree</span> <span class="ruby-identifier">idx</span>=<span class="ruby-value">0</span>
+          <span class="ruby-keyword kw">return</span> [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">idx</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Dirent</span><span class="ruby-operator">::</span><span class="ruby-constant">EOT</span>
+          <span class="ruby-identifier">d</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">idx</span>]
+          <span class="ruby-identifier">d</span>.<span class="ruby-identifier">children</span> = <span class="ruby-identifier">to_tree</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">child</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-constant">FormatError</span>, <span class="ruby-node">&quot;directory #{d.inspect} used twice&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">idx</span>
+          <span class="ruby-identifier">d</span>.<span class="ruby-identifier">idx</span> = <span class="ruby-identifier">idx</span>
+          <span class="ruby-identifier">to_tree</span>(<span class="ruby-identifier">d</span>.<span class="ruby-identifier">prev</span>) <span class="ruby-operator">+</span> [<span class="ruby-identifier">d</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">to_tree</span>(<span class="ruby-identifier">d</span>.<span class="ruby-identifier">next</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-ivar">@root</span> = <span class="ruby-ivar">@dirents</span>.<span class="ruby-identifier">to_tree</span>.<span class="ruby-identifier">first</span>
+      <span class="ruby-comment cmt"># silence this warning by default, its not really important (issue #5).</span>
+      <span class="ruby-comment cmt"># fairly common one appears to be &quot;R&quot; (from office OS X?) which smells</span>
+      <span class="ruby-comment cmt"># like some kind of UTF16 snafu, but scottwillson also has had some kanji...</span>
+      <span class="ruby-comment cmt">#Log.warn &quot;root name was #{@root.name.inspect}&quot; unless @root.name == 'Root Entry'</span>
+      <span class="ruby-identifier">unused</span> = <span class="ruby-ivar">@dirents</span>.<span class="ruby-identifier">reject</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:idx</span>).<span class="ruby-identifier">length</span>
+      <span class="ruby-constant">Log</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;#{unused} unused directories&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">unused</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+
+      <span class="ruby-comment cmt"># FIXME i don't currently use @header.num_sbat which i should</span>
+      <span class="ruby-comment cmt"># hmm. nor do i write it. it means what exactly again?</span>
+      <span class="ruby-comment cmt"># which mode to use here?</span>
+      <span class="ruby-ivar">@sb_file</span> = <span class="ruby-constant">RangesIOResizeable</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@bbat</span>, <span class="ruby-identifier">:first_block</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">first_block</span>, <span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">size</span>
+      <span class="ruby-ivar">@sbat</span> = <span class="ruby-constant">AllocationTable</span><span class="ruby-operator">::</span><span class="ruby-constant">Small</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">self</span>
+      <span class="ruby-ivar">@sbat</span>.<span class="ruby-identifier">load</span> <span class="ruby-ivar">@bbat</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@header</span>.<span class="ruby-identifier">sbat_start</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

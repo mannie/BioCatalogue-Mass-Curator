@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (Ole::Storage::Dirent)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ole/storage/base.rb, line 739</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">ole</span>, <span class="ruby-identifier">values</span>=<span class="ruby-constant">DEFAULT</span>, <span class="ruby-identifier">params</span>={}
+        <span class="ruby-ivar">@ole</span> = <span class="ruby-identifier">ole</span>        
+        <span class="ruby-identifier">values</span>, <span class="ruby-identifier">params</span> = <span class="ruby-constant">DEFAULT</span>, <span class="ruby-identifier">values</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">values</span>
+        <span class="ruby-identifier">values</span> = <span class="ruby-identifier">values</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-constant">PACK</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">values</span>
+        <span class="ruby-keyword kw">super</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">values</span>)
+
+        <span class="ruby-comment cmt"># extra parsing from the actual struct values</span>
+        <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:name</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">Variant</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">VT_LPWSTR</span>, <span class="ruby-identifier">name_utf16</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">name_len</span>])
+        <span class="ruby-ivar">@type</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:type</span>]
+          <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">TYPE_MAP</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:type</span>])
+            <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;unknown type #{params[:type].inspect}&quot;</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:type</span>]
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-constant">TYPE_MAP</span>[<span class="ruby-identifier">type_id</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">FormatError</span>, <span class="ruby-node">&quot;unknown type_id #{type_id.inspect}&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-comment cmt"># further extra type specific stuff</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file?</span>
+          <span class="ruby-identifier">default_time</span> = <span class="ruby-ivar">@ole</span>.<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:update_timestamps</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">FileTime</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+          <span class="ruby-ivar">@create_time</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">default_time</span>
+          <span class="ruby-ivar">@modify_time</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">default_time</span>
+          <span class="ruby-ivar">@create_time</span> = <span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">Variant</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">VT_FILETIME</span>, <span class="ruby-identifier">create_time_str</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">create_time_str</span>
+          <span class="ruby-ivar">@modify_time</span> = <span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">Variant</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">VT_FILETIME</span>, <span class="ruby-identifier">create_time_str</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">modify_time_str</span>
+          <span class="ruby-ivar">@children</span> = <span class="ruby-keyword kw">nil</span>
+          <span class="ruby-ivar">@name_lookup</span> = <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-ivar">@create_time</span> = <span class="ruby-keyword kw">nil</span>
+          <span class="ruby-ivar">@modify_time</span> = <span class="ruby-keyword kw">nil</span>
+          <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">size</span> = <span class="ruby-value">0</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:root</span>
+          <span class="ruby-ivar">@children</span> = []
+          <span class="ruby-ivar">@name_lookup</span> = {}
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-ivar">@parent</span> = <span class="ruby-keyword kw">nil</span>
+        
+        <span class="ruby-comment cmt"># to silence warnings. used for tree building at load time</span>
+        <span class="ruby-comment cmt"># only.</span>
+        <span class="ruby-ivar">@idx</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

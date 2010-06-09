@@ -44,7 +44,7 @@ private
     
     self.setMinimumSize(Dimension.new(300, 100))
 
-    Utilities::Components.centerComponentTo(self, MAIN_WINDOW)
+    Component.centerToParent(self, MAIN_WINDOW)
     self.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
 
     self.setVisible(true)
@@ -63,7 +63,7 @@ private
     c.gridy = 0
 
     begin
-      xmlDocument = Utilities::XML.getXMLDocumentFromURI(
+      xmlDocument = XMLUtils.getXMLDocumentFromURI(
           BioCatalogueClient.searchEndpoint(@query, 'xml', @limit))
     rescue Exception => ex
       log('e', ex)
@@ -74,10 +74,10 @@ private
     xmlDocument.root.each { |node|
       case node.name
         when 'results'
-          serviceNodes = Utilities::XML.selectNodesWithNameFrom("service", node)
+          serviceNodes = XMLUtils.selectNodesWithNameFrom("service", node)
           serviceNodes.each { |node|
-            attr = Utilities::XML.getAttributeFromNode("xlink:href", node)
-            service = Utilities::Application.serviceWithURI(attr.value)
+            attr = XMLUtils.getAttributeFromNode("xlink:href", node)
+            service = Application.serviceWithURI(attr.value)
             
             next if service.nil? # URI attribute
             

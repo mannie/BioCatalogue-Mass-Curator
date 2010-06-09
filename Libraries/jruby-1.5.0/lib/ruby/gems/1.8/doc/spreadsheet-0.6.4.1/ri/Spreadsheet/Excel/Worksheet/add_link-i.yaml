@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Worksheet#add_link
+is_singleton: false
+name: add_link
+params: (row, column, link)
+visibility: public

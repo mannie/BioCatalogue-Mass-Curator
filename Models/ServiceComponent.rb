@@ -32,8 +32,8 @@ class ServiceComponent
     begin
       @id = uriString.split('/')[-1].to_i
       
-      xmlDocument = Utilities::XML.getXMLDocumentFromURI(uriString)
-      propertyNodes = Utilities::XML.getValidChildren(xmlDocument.root)
+      xmlDocument = XMLUtils.getXMLDocumentFromURI(uriString)
+      propertyNodes = XMLUtils.getValidChildren(xmlDocument.root)
       
       propertyNodes.each do |propertyNode|
         case propertyNode.name
@@ -42,14 +42,12 @@ class ServiceComponent
           when 'dc:description'
             @description = propertyNode.content
           when 'inputs'
-            inputs = Utilities::XML.selectNodesWithNameFrom("soapInput",
-                propertyNode)
+            inputs = XMLUtils.selectNodesWithNameFrom("soapInput", propertyNode)
             inputs.each { |inputNode|              
               addServiceComponentPortFromNodeTo(inputNode, @inputs)
             } # inputs.each
           when 'outputs'
-            outputs = Utilities::XML.selectNodesWithNameFrom("soapOutput",
-                propertyNode)
+            outputs = XMLUtils.selectNodesWithNameFrom("soapOutput", propertyNode)
             outputs.each { |outputNode|
               addServiceComponentPortFromNodeTo(outputNode, @outputs)
             } # outputs.each
@@ -79,19 +77,19 @@ class ServiceComponent
 private
   
   def addServiceComponentPortFromNodeTo(node, destination)
-    id = Utilities::XML.getAttributeFromNode('xlink:href', node)
+    id = XMLUtils.getAttributeFromNode('xlink:href', node)
     id = id.value.split('/')[-1].to_i
               
     name, desc = nil, nil
     
-    Utilities::XML.getValidChildren(node).each { |propertyNode|
+    XMLUtils.getValidChildren(node).each { |propertyNode|
       case propertyNode.name
         when 'name'
           name = propertyNode.content
         when 'dc:description'
           desc = propertyNode.content
       end # case
-    } # Utilities::XML.getValidChildren(outputNode).each
+    } # XMLUtils.getValidChildren(outputNode).each
     
     destination.merge!(id => ServiceComponentPort.new(id, name, desc))
   end # getComponentPortFromNode

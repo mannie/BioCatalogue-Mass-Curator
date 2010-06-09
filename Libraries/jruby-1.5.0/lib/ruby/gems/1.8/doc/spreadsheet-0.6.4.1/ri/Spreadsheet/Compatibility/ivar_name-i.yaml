@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Compatibility#ivar_name
+is_singleton: false
+name: ivar_name
+params: (symbol)
+visibility: public

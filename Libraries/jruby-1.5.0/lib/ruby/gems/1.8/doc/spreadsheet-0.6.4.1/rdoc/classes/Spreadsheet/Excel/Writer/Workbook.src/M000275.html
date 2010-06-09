@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_from_scratch (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 384</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_from_scratch</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">io</span>
+    <span class="ruby-identifier">sanitize_worksheets</span> <span class="ruby-identifier">workbook</span>.<span class="ruby-identifier">worksheets</span>
+    <span class="ruby-identifier">collect_formats</span> <span class="ruby-identifier">workbook</span>
+    <span class="ruby-identifier">sheets</span> = <span class="ruby-identifier">worksheets</span> <span class="ruby-identifier">workbook</span>
+    <span class="ruby-identifier">buffer1</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span> <span class="ruby-value str">''</span>
+    <span class="ruby-comment cmt"># ●  BOF Type = workbook globals (➜ 6.8)</span>
+    <span class="ruby-identifier">write_bof</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>, <span class="ruby-identifier">:globals</span>
+    <span class="ruby-comment cmt"># ○  File Protection Block ➜ 4.19</span>
+    <span class="ruby-comment cmt"># ○  WRITEACCESS User name (BIFF3-BIFF8, ➜ 5.112)</span>
+    <span class="ruby-comment cmt"># ○  FILESHARING File sharing options (BIFF3-BIFF8, ➜ 5.44)</span>
+    <span class="ruby-comment cmt"># ○  CODEPAGE ➜ 6.17</span>
+    <span class="ruby-identifier">write_encoding</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  DSF ➜ 6.32</span>
+    <span class="ruby-identifier">write_dsf</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  TABID</span>
+    <span class="ruby-identifier">write_tabid</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  FNGROUPCOUNT</span>
+    <span class="ruby-comment cmt"># ○  Workbook Protection Block ➜ 4.18</span>
+    <span class="ruby-comment cmt"># ○  WINDOWPROTECT Window settings: 1 = protected (➜ 5.111)</span>
+    <span class="ruby-comment cmt"># ○  PROTECT Cell contents: 1 = protected (➜ 5.82)</span>
+    <span class="ruby-identifier">write_protect</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  OBJECTPROTECT Embedded objects: 1 = protected (➜ 5.72)</span>
+    <span class="ruby-comment cmt"># ○  PASSWORD Hash value of the password; 0 = No password (➜ 5.76)</span>
+    <span class="ruby-identifier">write_password</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  BACKUP ➜ 5.5</span>
+    <span class="ruby-comment cmt"># ○  HIDEOBJ ➜ 5.56</span>
+    <span class="ruby-comment cmt"># ●  WINDOW1 ➜ 5.109</span>
+    <span class="ruby-identifier">write_window1</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  DATEMODE ➜ 5.28</span>
+    <span class="ruby-identifier">write_datemode</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  PRECISION ➜ 5.79</span>
+    <span class="ruby-identifier">write_precision</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  REFRESHALL</span>
+    <span class="ruby-identifier">write_refreshall</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  BOOKBOOL ➜ 5.9</span>
+    <span class="ruby-identifier">write_bookbool</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ●● FONT ➜ 5.45</span>
+    <span class="ruby-identifier">write_fonts</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○○ FORMAT ➜ 5.49</span>
+    <span class="ruby-identifier">write_formats</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ●● XF ➜ 5.115</span>
+    <span class="ruby-identifier">write_xfs</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ●● STYLE ➜ 5.103</span>
+    <span class="ruby-identifier">write_styles</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer1</span>
+    <span class="ruby-comment cmt"># ○  PALETTE ➜ 5.74</span>
+    <span class="ruby-comment cmt"># ○  USESELFS ➜ 5.106</span>
+    <span class="ruby-identifier">buffer1</span>.<span class="ruby-identifier">rewind</span>
+    <span class="ruby-comment cmt"># ●● BOUNDSHEET ➜ 5.95</span>
+    <span class="ruby-identifier">buffer2</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span> <span class="ruby-value str">''</span>
+    <span class="ruby-comment cmt"># ○  COUNTRY ➜ 5.22</span>
+    <span class="ruby-comment cmt"># ○  Link Table ➜ 4.10.3</span>
+    <span class="ruby-comment cmt"># ○○ NAME ➜ 6.66</span>
+    <span class="ruby-comment cmt"># ○  Shared String Table ➜ 4.11</span>
+    <span class="ruby-comment cmt"># ●  SST ➜ 5.100</span>
+    <span class="ruby-comment cmt"># ●  EXTSST ➜ 5.42</span>
+    <span class="ruby-identifier">write_sst</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer2</span>, <span class="ruby-identifier">buffer1</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-comment cmt"># ●  EOF ➜ 5.37</span>
+    <span class="ruby-identifier">write_eof</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">buffer2</span>
+    <span class="ruby-identifier">buffer2</span>.<span class="ruby-identifier">rewind</span>
+    <span class="ruby-comment cmt"># worksheet data can only be assembled after write_sst</span>
+    <span class="ruby-identifier">sheets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">worksheet</span><span class="ruby-operator">|</span> <span class="ruby-identifier">worksheet</span>.<span class="ruby-identifier">write_from_scratch</span> <span class="ruby-keyword kw">end</span>
+    <span class="ruby-constant">Ole</span><span class="ruby-operator">::</span><span class="ruby-constant">Storage</span>.<span class="ruby-identifier">open</span> <span class="ruby-identifier">io</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ole</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">ole</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">open</span> <span class="ruby-value str">'Workbook'</span>, <span class="ruby-value str">'w'</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">writer</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">writer</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">buffer1</span>.<span class="ruby-identifier">read</span>
+        <span class="ruby-identifier">write_boundsheets</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">buffer1</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">buffer2</span>.<span class="ruby-identifier">size</span>
+        <span class="ruby-identifier">writer</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">buffer2</span>.<span class="ruby-identifier">read</span>
+        <span class="ruby-identifier">sheets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">worksheet</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">writer</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">worksheet</span>.<span class="ruby-identifier">data</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

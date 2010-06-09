@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: "Write multiple consecutive cells with RK values (see #write_rk)"
+full_name: Spreadsheet::Excel::Writer::Worksheet#write_mulrk
+is_singleton: false
+name: write_mulrk
+params: (row, idx, multiples)
+visibility: public

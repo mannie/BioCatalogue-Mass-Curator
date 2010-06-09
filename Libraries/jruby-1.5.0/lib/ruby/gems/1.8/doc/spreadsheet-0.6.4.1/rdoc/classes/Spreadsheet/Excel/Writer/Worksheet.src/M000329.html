@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_row (Spreadsheet::Excel::Writer::Worksheet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/worksheet.rb, line 657</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_row</span> <span class="ruby-identifier">row</span>
+    <span class="ruby-comment cmt"># Offset  Size  Contents</span>
+    <span class="ruby-comment cmt">#      0     2  Index of this row</span>
+    <span class="ruby-comment cmt">#      2     2  Index to column of the first cell which</span>
+    <span class="ruby-comment cmt">#               is described by a cell record</span>
+    <span class="ruby-comment cmt">#      4     2  Index to column of the last cell which is</span>
+    <span class="ruby-comment cmt">#               described by a cell record, increased by 1</span>
+    <span class="ruby-comment cmt">#      6     2  Bit   Mask    Contents</span>
+    <span class="ruby-comment cmt">#               14-0  0x7fff  Height of the row, in twips = 1/20 of a point</span>
+    <span class="ruby-comment cmt">#                 15  0x8000  0 = Row has custom height;</span>
+    <span class="ruby-comment cmt">#                             1 = Row has default height</span>
+    <span class="ruby-comment cmt">#      8     2  Not used</span>
+    <span class="ruby-comment cmt">#     10     2  In BIFF3-BIFF4 this field contains a relative offset to</span>
+    <span class="ruby-comment cmt">#               calculate stream position of the first cell record for this</span>
+    <span class="ruby-comment cmt">#               row (➜ 5.7.1). In BIFF5-BIFF8 this field is not used</span>
+    <span class="ruby-comment cmt">#               anymore, but the DBCELL record (➜ 6.26) instead.</span>
+    <span class="ruby-comment cmt">#     12     4  Option flags and default row formatting:</span>
+    <span class="ruby-comment cmt">#                  Bit  Mask        Contents</span>
+    <span class="ruby-comment cmt">#                  2-0  0x00000007  Outline level of the row</span>
+    <span class="ruby-comment cmt">#                    4  0x00000010  1 = Outline group starts or ends here</span>
+    <span class="ruby-comment cmt">#                                       (depending on where the outline</span>
+    <span class="ruby-comment cmt">#                                       buttons are located, see WSBOOL</span>
+    <span class="ruby-comment cmt">#                                       record, ➜ 6.113), and is collapsed</span>
+    <span class="ruby-comment cmt">#                    5  0x00000020  1 = Row is hidden (manually, or by a</span>
+    <span class="ruby-comment cmt">#                                       filter or outline group)</span>
+    <span class="ruby-comment cmt">#                    6  0x00000040  1 = Row height and default font height</span>
+    <span class="ruby-comment cmt">#                                       do not match</span>
+    <span class="ruby-comment cmt">#                    7  0x00000080  1 = Row has explicit default format (fl)</span>
+    <span class="ruby-comment cmt">#                    8  0x00000100  Always 1</span>
+    <span class="ruby-comment cmt">#                27-16  0x0fff0000  If fl = 1: Index to default XF record</span>
+    <span class="ruby-comment cmt">#                                              (➜ 6.115)</span>
+    <span class="ruby-comment cmt">#                   28  0x10000000  1 = Additional space above the row.</span>
+    <span class="ruby-comment cmt">#                                       This flag is set, if the upper</span>
+    <span class="ruby-comment cmt">#                                       border of at least one cell in this</span>
+    <span class="ruby-comment cmt">#                                       row or if the lower border of at</span>
+    <span class="ruby-comment cmt">#                                       least one cell in the row above is</span>
+    <span class="ruby-comment cmt">#                                       formatted with a thick line style.</span>
+    <span class="ruby-comment cmt">#                                       Thin and medium line styles are not</span>
+    <span class="ruby-comment cmt">#                                       taken into account.</span>
+    <span class="ruby-comment cmt">#                   29  0x20000000  1 = Additional space below the row.</span>
+    <span class="ruby-comment cmt">#                                       This flag is set, if the lower</span>
+    <span class="ruby-comment cmt">#                                       border of at least one cell in this</span>
+    <span class="ruby-comment cmt">#                                       row or if the upper border of at</span>
+    <span class="ruby-comment cmt">#                                       least one cell in the row below is</span>
+    <span class="ruby-comment cmt">#                                       formatted with a medium or thick</span>
+    <span class="ruby-comment cmt">#                                       line style. Thin line styles are</span>
+    <span class="ruby-comment cmt">#                                       not taken into account.</span>
+    <span class="ruby-identifier">height</span> = <span class="ruby-identifier">row</span>.<span class="ruby-identifier">height</span> <span class="ruby-operator">||</span> <span class="ruby-constant">ROW_HEIGHT</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">row</span>.<span class="ruby-identifier">outline_level</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">0x00000007</span>
+    <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-value">0x00000010</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">collapsed?</span>
+    <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-value">0x00000020</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">hidden?</span>
+    <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-value">0x00000040</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">height</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">ROW_HEIGHT</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fmt</span> = <span class="ruby-identifier">row</span>.<span class="ruby-identifier">default_format</span>
+      <span class="ruby-identifier">xf_idx</span> = <span class="ruby-ivar">@workbook</span>.<span class="ruby-identifier">xf_index</span> <span class="ruby-ivar">@worksheet</span>.<span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">fmt</span>
+      <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-value">0x00000080</span>
+      <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-identifier">xf_idx</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">16</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opts</span> <span class="ruby-operator">|=</span> <span class="ruby-value">0x00000100</span>
+    <span class="ruby-identifier">height</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">height</span> <span class="ruby-operator">==</span> <span class="ruby-constant">ROW_HEIGHT</span>
+               (<span class="ruby-identifier">height</span> <span class="ruby-operator">*</span> <span class="ruby-constant">TWIPS</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">|</span> <span class="ruby-value">0x8000</span>
+             <span class="ruby-keyword kw">else</span>
+               <span class="ruby-identifier">height</span> <span class="ruby-operator">*</span> <span class="ruby-constant">TWIPS</span>
+             <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># TODO: Row spacing</span>
+    <span class="ruby-identifier">data</span> = [
+      <span class="ruby-identifier">row</span>.<span class="ruby-identifier">idx</span>,
+      <span class="ruby-identifier">row</span>.<span class="ruby-identifier">first_used</span>,
+      <span class="ruby-identifier">row</span>.<span class="ruby-identifier">first_unused</span>,
+      <span class="ruby-identifier">height</span>,
+      <span class="ruby-identifier">opts</span>,
+    ].<span class="ruby-identifier">pack</span> <span class="ruby-identifier">binfmt</span>(<span class="ruby-identifier">:row</span>)
+    <span class="ruby-identifier">write_op</span> <span class="ruby-identifier">opcode</span>(<span class="ruby-identifier">:row</span>), <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write_workbook (Spreadsheet::Excel::Writer::Workbook)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/spreadsheet/excel/writer/workbook.rb, line 617</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_workbook</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">io</span>
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">workbook</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Excel</span><span class="ruby-operator">::</span><span class="ruby-constant">Workbook</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">workbook</span>.<span class="ruby-identifier">io</span>
+      <span class="ruby-ivar">@date_base</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span> <span class="ruby-value">1899</span>, <span class="ruby-value">12</span>, <span class="ruby-value">31</span>
+      <span class="ruby-identifier">write_from_scratch</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">io</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-ivar">@date_base</span> = <span class="ruby-identifier">workbook</span>.<span class="ruby-identifier">date_base</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">workbook</span>.<span class="ruby-identifier">changes</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-keyword kw">super</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">write_changes</span> <span class="ruby-identifier">workbook</span>, <span class="ruby-identifier">io</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">ensure</span>
+    <span class="ruby-identifier">cleanup</span> <span class="ruby-identifier">workbook</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

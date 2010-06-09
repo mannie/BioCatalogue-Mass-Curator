@@ -1,0 +1,13 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: 
+  - !ruby/object:RI::AliasName 
+    name: readline
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: i can wrap it in a buffered io stream that provides gets, and appropriately handle pos, truncate. mostly added just to past the tests. FIXME
+full_name: RangesIO#gets
+is_singleton: false
+name: gets
+params: ()
+visibility: public

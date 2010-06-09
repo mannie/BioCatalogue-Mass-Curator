@@ -1,0 +1,54 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: dos
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: fragment
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: target_frame
+    rw: RW
+  - !ruby/object:RI::Attribute 
+    comment: 
+    name: url
+    rw: RW
+class_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: new
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: The Link class. Is a Subclass of String, which lets you treat a Cell that contains a Link just as if it was a String (containing the link's description if there is one or the url with fragment otherwise), but gives you access to the url, fragment and target_frame if you need it.
+  - !ruby/struct:SM::Flow::P 
+    body: Interesting Attributes
+  - !ruby/object:SM::Flow::LIST 
+    contents: 
+      - !ruby/struct:SM::Flow::LI 
+        label: "#url          :"
+        body: The Uniform Resource Location this Link points to.
+      - !ruby/struct:SM::Flow::LI 
+        label: "#fragment     :"
+        body: "Also called text mark: http://example.com/page.html#fragment"
+      - !ruby/struct:SM::Flow::LI 
+        label: "#target_frame :"
+        body: Which frame a Link should be opened in, should also support the special frames _blank, _parent, _self and _top.
+      - !ruby/struct:SM::Flow::LI 
+        label: "#dos          :"
+        body: Excel may store a DOS-Filename together with the long Filename introduced in VFAT. You probably will not need this, but if you do, here is where you can find it.
+    type: :NOTE
+constants: []
+
+full_name: Spreadsheet::Link
+includes: 
+  - !ruby/object:RI::IncludedModule 
+    name: Encodings
+instance_methods: 
+  - !ruby/object:RI::MethodSummary 
+    name: href
+  - !ruby/object:RI::MethodSummary 
+    name: to_uri
+name: Link
+superclass: String

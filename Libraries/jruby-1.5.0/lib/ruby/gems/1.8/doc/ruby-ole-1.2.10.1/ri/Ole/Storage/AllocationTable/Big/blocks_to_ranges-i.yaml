@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+  - !ruby/struct:SM::Flow::P 
+    body: Big blocks are kind of -1 based, in order to not clash with the header.
+full_name: Ole::Storage::AllocationTable::Big#blocks_to_ranges
+is_singleton: false
+name: blocks_to_ranges
+params: (chain, size=nil)
+visibility: public

@@ -25,8 +25,6 @@ class BioCatalogueClient
   def initialize(base="http://www.biocatalogue.org")
     @@HOST ||= URI.parse(base)
     
-    @@selectedServices ||= {}
-    @@cachedServices ||= {}
     @@SEARCH ||= SearchAction.new
     @@user = nil
   end # initialize
@@ -44,16 +42,7 @@ class BioCatalogueClient
   def self.HOST
     @@HOST
   end # self.HOST
-  
-  def self.cachedServices
-    @@cachedServices
-  end # self.cachedServices
-  
-  def self.selectedServices
-    @@selectedServices.reject! { |id, service| id == -1 }
-    @@selectedServices
-  end # self.selectedServices
-  
+    
   def self.searchEndpoint(query, format=nil, perPage=25, page=1,
       scope='services')
     query = URI.escape(query)

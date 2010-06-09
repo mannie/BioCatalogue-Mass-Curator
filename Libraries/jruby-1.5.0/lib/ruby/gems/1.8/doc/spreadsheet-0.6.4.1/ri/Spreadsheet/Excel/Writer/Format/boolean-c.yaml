@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: Spreadsheet::Excel::Writer::Format::boolean
+is_singleton: true
+name: boolean
+params: (*args)
+visibility: public

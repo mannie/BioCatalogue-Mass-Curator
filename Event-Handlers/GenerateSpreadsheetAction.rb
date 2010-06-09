@@ -21,7 +21,8 @@
 =end
 
 class GenerateSpreadsheetAction
-  
+  java_implements ActionListener
+
   @@isBusyExporting = false
   
   def initialize(container)
@@ -61,14 +62,14 @@ class GenerateSpreadsheetAction
         event.getSource.setText("Exporting...")
         
         file = SpreadsheetGeneration.generateSpreadsheet(
-            BioCatalogueClient.selectedServices, dir.path)
+            Cache.selectedServices, dir.path)
 
         if file
-          Utilities::Notification.informationDialog(
+          Notification.informationDialog(
               "The selected services have been successfully exported to:\n" + 
               file.path, "Export Complete")
         else
-          Utilities::Notification.errorDialog(
+          Notification.errorDialog(
               "An error occured while trying to export the selected services.")
         end
         

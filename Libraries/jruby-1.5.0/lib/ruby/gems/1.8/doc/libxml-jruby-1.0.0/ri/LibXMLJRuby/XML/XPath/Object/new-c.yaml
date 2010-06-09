@@ -1,0 +1,10 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: LibXMLJRuby::XML::XPath::Object::new
+is_singleton: true
+name: new
+params: (expr, document, nslist = nil)
+visibility: public
