@@ -22,6 +22,8 @@
 		360266D811C11A30006CE00E /* open.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = open.gif; sourceTree = "<group>"; };
 		360FD7D211A410BA00AEC536 /* ReadMe.rdoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.rdoc; sourceTree = "<group>"; };
 		360FD7D311A410BF00AEC536 /* Licence */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licence; sourceTree = "<group>"; };
+		3622733211C1324A00B47BBE /* AppKeyListener.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppKeyListener.rb; sourceTree = "<group>"; };
+		3622738111C13DA900B47BBE /* home.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = home.gif; sourceTree = "<group>"; };
 		3627349C11A6BAE400269B2C /* GenerateSpreadsheetAction.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = GenerateSpreadsheetAction.rb; sourceTree = "<group>"; };
 		3627357211A6CB9000269B2C /* AppWindowListener.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppWindowListener.rb; sourceTree = "<group>"; };
 		3627392911AAAF9D00269B2C /* ServiceCheckBoxListener.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ServiceCheckBoxListener.rb; sourceTree = "<group>"; };
@@ -7556,6 +7558,7 @@
 			isa = PBXGroup;
 			children = (
 				360266D111C119D7006CE00E /* northeast_blue_arrow.png */,
+				3622738111C13DA900B47BBE /* home.gif */,
 				360266D811C11A30006CE00E /* open.gif */,
 				360266C411C11804006CE00E /* excel.gif */,
 				360266B711C114D7006CE00E /* search.png */,
@@ -7573,6 +7576,7 @@
 			isa = PBXGroup;
 			children = (
 				360265EB11C0F5EE006CE00E /* AppComponentListener.rb */,
+				3622733211C1324A00B47BBE /* AppKeyListener.rb */,
 				3627357211A6CB9000269B2C /* AppWindowListener.rb */,
 				3627349C11A6BAE400269B2C /* GenerateSpreadsheetAction.rb */,
 				36F905D111A58885009E69E2 /* GoBackAction.rb */,

@@ -26,10 +26,10 @@
 require 'java'
 
 # Import Java Libraries
-AWT_CLASSES.each { |awt| java_import "java.awt." << awt }
+AWT.each { |awt| java_import "java.awt." << awt }
 AWT_EVENTS.each { |event| java_import "java.awt.event." << event }
 
-SWING_CLASSES.each { |swing| java_import "javax.swing." << swing }
+SWING.each { |swing| java_import "javax.swing." << swing }
 SWING_EVENTS.each { |event| java_import "javax.swing.event." << event }
 
 JAR_ARCHIVES.each { |jar| require File.join(LIBRARIES_DIR, jar) }

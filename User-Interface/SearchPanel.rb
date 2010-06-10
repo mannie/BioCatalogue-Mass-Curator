@@ -41,13 +41,17 @@ class SearchPanel < JPanel
     # text field
     c.gridx = 0
     c.weightx = 50
-    self.add(@searchField = JTextField.new("emboss"), c)
+    self.add(@searchField = JTextField.new, c)
+    @searchField.addKeyListener(AppKeyListener.new)
           
     # search button
     c.gridx = 1
     c.weightx = 1
     @searchButton = JButton.new("Search", Resource.iconFor('search'))
     @searchButton.addActionListener(BioCatalogueClient.SEARCH)
+    @searchButton.setEnabled(false)
     self.add(@searchButton, c)
+    
   end # initUI
-end
+
+end # SearchPanel

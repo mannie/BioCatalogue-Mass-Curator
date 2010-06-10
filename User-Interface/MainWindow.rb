@@ -28,7 +28,7 @@ class MainWindow < JFrame
     super(title)
     initUI    
         
-    addWindowListener(AppWindowListener.new)
+    self.addWindowListener(AppWindowListener.new)
     
     return self
   end # initialize

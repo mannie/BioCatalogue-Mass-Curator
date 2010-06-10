@@ -22,7 +22,7 @@
 
 class BrowsingStatusPanel < JPanel
 
-  attr_reader :exportButton
+  attr_reader :exportButton, :backButton
   attr_accessor :currentPage, :pageCount
 
   @@lastLabelUsed = nil
@@ -39,7 +39,7 @@ class BrowsingStatusPanel < JPanel
   def initUI
     self.setLayout(BorderLayout.new)
     
-    @backButton = JButton.new("Go Back")
+    @backButton = JButton.new("Go Back", Resource.iconFor('home'))
     @backButton.addActionListener(GoBackAction.new(self))
 
     @exportButton = JButton.new("Export", Resource.iconFor('excel'))

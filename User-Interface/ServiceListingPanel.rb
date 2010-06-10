@@ -37,11 +37,11 @@ class ServiceListingPanel < JPanel
 
   def refresh
     @checkBox.setSelected(@service.isSelectedForAnnotation)
-  end
+  end # refresh
   
   def dispose
     Cache.removeServiceListing(@service, self)
-  end
+  end # dispose
   
 private
   
@@ -61,15 +61,15 @@ private
     @checkBox = JCheckBox.new(@service.name, @service.isSelectedForAnnotation)
     @checkBox.addChangeListener(@service.selectedStatusChangeListener)
     self.add(@checkBox, c)
-    
+  
+    # add preview button
+    c.weightx = GridBagConstraints::REMAINDER
+    c.gridx = 1
+    previewButton = JButton.new("Preview", Resource.iconFor('url'))
+    previewButton.addActionListener(PreviewAction.new(self, @service))
+    self.add(previewButton, c)
+
     if @showDetail
-      # add preview button
-      c.weightx = GridBagConstraints::REMAINDER
-      c.gridx = 1
-      previewButton = JButton.new("Preview", Resource.iconFor('url'))
-      previewButton.addActionListener(PreviewAction.new(self, @service))
-      self.add(previewButton, c)
-      
       # add link to biocatalogue
       c.gridx, c.gridy = 0, 1
       c.insets.set(2, 50, 3, 5)
@@ -80,4 +80,4 @@ private
     end # if @showDetail 
   end # initUI
   
-end
+end # ServiceListingPanel

@@ -28,8 +28,17 @@ class UploadSpreadsheetPanel < JPanel
   
   def initialize
     super()
+    
     @uploadSpreadsheetAction = UploadSpreadsheetAction.new(self)
     
+    @selectedSpreadsheetLabel = JLabel.new("no file selected", 
+        SwingConstants::CENTER)
+    @selectedSpreadsheetLabel.setEnabled(false)
+  
+    @selectSpreadsheetButton = JButton.new("Select File", 
+        Resource.iconFor('folder'))
+    @selectSpreadsheetButton.addActionListener(@uploadSpreadsheetAction)
+
     initUI
     return self
   end # initialize
@@ -39,17 +48,15 @@ private
   def initUI
     self.setLayout(BorderLayout.new)
     
-    self.add(selectFilePanel, BorderLayout::NORTH)
-    self.add(credentialsPanel)
-    self.add(buttonPanel, BorderLayout::SOUTH)    
-
+    self.add(mainPanel)
+    self.add(buttonPanel, BorderLayout::SOUTH)
   end # initUI
   
   def buttonPanel
     panel = JPanel.new
     panel.setLayout(BorderLayout.new)
     
-    backButton = JButton.new("Go Back")
+    backButton = JButton.new("Go Back", Resource.iconFor('home'))
     backButton.addActionListener(GoBackAction.new(self))
     panel.add(backButton, BorderLayout::WEST)
     
@@ -61,25 +68,15 @@ private
     return panel
   end # buttonPanel
     
-  def credentialsPanel
+  def mainPanel
     panel = JPanel.new
-
     panel.setLayout(GridBagLayout.new)
 
     # set constraints
     c = GridBagConstraints.new
-    c.insets = (insets = Insets.new(0, 0, 15, 0))
+    c.insets = Insets.new(0, 0, 75, 0)
     c.gridx, c.gridy = 1, 0
     c.ipadx = 10
-=begin
-    # "Login to BioCat" label
-    c.anchor = GridBagConstraints::WEST
-    loginLabel = JLabel.new("<html><b>Log in to BioCatalogue</b></html>")
-    loginLabel.setFont(loginLabel.getFont().deriveFont(13.0))
-    panel.add(loginLabel, c);
-=end
-    # update constraints
-    c.insets.set(0, 0, 3, 0)
 
     # selected spreadsheet label 
     c.gridy += 1
@@ -91,6 +88,9 @@ private
     c.anchor = GridBagConstraints::WEST
     c.gridx = 0
     panel.add(@selectSpreadsheetButton, c)
+
+    # update constraints
+    c.insets.set(0, 0, 3, 0)
     
     # username label 
     c.gridy += 1
@@ -110,38 +110,15 @@ private
     c.gridy += 1
     c.gridx = 0
     passwordLabel = JLabel.new("BioCatalogue Password:")
-    passwordLabel.setLabelFor(@passwordField = JPasswordField.new("chocolate", 30))
+    passwordLabel.setLabelFor(@passwordField = JPasswordField.new(30))
     panel.add(passwordLabel, c)
     
     # password field
     c.anchor = GridBagConstraints::WEST
     c.gridx = 1
     panel.add(@passwordField, c)
-=begin
-    # remember me checkbox and label
-    c.gridy += 1
-    c.insets.set(25, 0, 2, 0)
-    rememberMeCheckBox = JCheckBox.new("Remember me")
-    rememberMeCheckBox.setBorder(BorderFactory.createEmptyBorder())
-    panel.add(rememberMeCheckBox, c)
-=end
-    return panel
-  end # credentialsPanel
 
-  def selectFilePanel
-    panel = JPanel.new
-    panel.setLayout(BorderLayout.new)
-
-    @selectedSpreadsheetLabel = JLabel.new("no file selected", 
-        SwingConstants::CENTER)
-    @selectedSpreadsheetLabel.setEnabled(false)
-    panel.add(@selectedSpreadsheetLabel)
-  
-    @selectSpreadsheetButton = JButton.new("Select File")
-    @selectSpreadsheetButton.addActionListener(@uploadSpreadsheetAction)
-    panel.add(@selectSpreadsheetButton, BorderLayout::EAST)
-    
     return panel
-  end # selectFilePanel
+  end # mainPanel
   
 end

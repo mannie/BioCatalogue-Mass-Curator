@@ -32,6 +32,8 @@ module Resource
   
   def self.iconFor(key)
     begin
+      key ||= ''
+      
       case key.downcase
         when 'right-arrow', 'forward-arrow'
           @@R_ARROW ||= self.iconWithResource("arrow_right.png").freeze
@@ -53,6 +55,8 @@ module Resource
           @@FOLDER ||= self.iconWithResource("open.gif").freeze
         when 'upload'
           @@UPLOAD ||= self.iconWithResource("northeast_blue_arrow.png").freeze
+        when 'home'
+          @@HOME ||= self.iconWithResource("home.gif").freeze
         else
           raise "Icon for key '#{key}' not found"
       end

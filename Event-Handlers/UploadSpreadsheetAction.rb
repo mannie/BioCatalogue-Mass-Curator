@@ -68,38 +68,44 @@ class UploadSpreadsheetAction
         return if @selectedFilePath.nil?
                 
         Thread.new("Posting annotation data") {
-          @buttonContainer.uploadSpreadsheetButton.setEnabled(false)
-          @buttonContainer.uploadSpreadsheetButton.setText("Uploading...")
-
+          event.getSource.setEnabled(false)
+          event.getSource.setText("Uploading...")
+          event.getSource.setIcon(Resource.iconFor('busy'))
+          
           jsonOutput = SpreadsheetParsing.generateJSONFromSpreadsheet(
               @selectedFilePath)
           
           if jsonOutput
+            proceed = true
+            
             if jsonOutput.empty?
               Notification.informationDialog(
                   "No new annotations could be found in the spreadsheet.\n" +
                   "Nothing has been sent to BioCatalogue.", 
                   "No New Annotations Found")
-              return
+              proceed = false
             end
             
-            user = @buttonContainer.usernameField.getText
-            pass = @buttonContainer.passwordField.getText
-            
-            if Application.postAnnotationData(jsonOutput, user, pass)
-              Notification.informationDialog(
-                  "Your annotations have been successfully sent.", "Success")
-            else
-              Notification.errorDialog(
-                  "An error occured while trying to send your annotations.")
-            end            
+            if proceed
+              user = @buttonContainer.usernameField.getText
+              pass = @buttonContainer.passwordField.getText
+              
+              if Application.postAnnotationData(jsonOutput, user, pass)
+                Notification.informationDialog(
+                    "Your annotations have been successfully sent.", "Success")
+              else
+                Notification.errorDialog(
+                    "An error occured while trying to send your annotations.")
+              end
+            end # if proceed
           else
             Notification.errorDialog(
                 "An error occured while uploading your spreadsheet.")
           end # if jsonOutput 
           
-          @buttonContainer.uploadSpreadsheetButton.setText("Upload") 
-          @buttonContainer.uploadSpreadsheetButton.setEnabled(true)
+          event.getSource.setIcon(Resource.iconFor('upload'))
+          event.getSource.setText("Upload")
+          event.getSource.setEnabled(true)
         } # Thread.new
       end # elsif event.getSource==@buttonContainer.uploadSpreadsheetButton
 

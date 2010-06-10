@@ -46,7 +46,6 @@ class LoadServicesAction
   def self.setServicesPanelVisible(visible)
     @@serviceSelectPanel.setVisible(visible) if @@serviceSelectPanel
   end # self.setServicesPanelVisible
-
    
   def self.setBusyExporting(exporting)
     Component.searchPanel.setVisible(!exporting)
@@ -60,37 +59,63 @@ class LoadServicesAction
   
 # --------------------
   
-  def actionPerformed(event)    
+  def actionPerformed(event)
     # set page number to be used by the GoBackAction
     @@currentPage = @pageNumber
-        
-    # load new service select panel
-    if (panel = @@resultsPanelForPage[@pageNumber])
-      @@serviceSelectPanel = panel
-            
-      panel.add(Component.searchPanel, BorderLayout::NORTH)
-      panel.add(Component.browsingStatusPanel, BorderLayout::SOUTH)
+    
+    Thread.new("Loading page ##{@pageNumber}") {
+      # disable event source
+      event.getSource.setEnabled(false)
       
-      Cache.syncWithCollection(panel.localServiceCache)
-      Cache.updateServiceListings(panel.localListingCache)
-    else
-      @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
-      @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
-    end
-    
-    # update status.actions panel
-    Component.browsingStatusPanel.currentPage = @pageNumber
-    Component.browsingStatusPanel.exportButton.setEnabled(
-        !Cache.selectedServices.empty?) unless
-        GenerateSpreadsheetAction.isBusyExporting
-    Component.browsingStatusPanel.refresh
-    
-    # update full view to show new services
-    @buttonContainer.setVisible(false)
-    @@serviceSelectPanel.setVisible(true)
-    
-    MAIN_WINDOW.getContentPane.add(@@serviceSelectPanel)
-    MAIN_WINDOW.getContentPane.repaint
+      if @buttonContainer.class==MainPanel
+        @buttonContainer.setEnabled(false)
+        
+        originalCaption = event.getSource.getText
+        event.getSource.setText("Loading...")
+      end
+      
+      originalIcon = event.getSource.getIcon
+      event.getSource.setIcon(Resource.iconFor('busy'))
+      
+      # load new service select panel
+      if (panel = @@resultsPanelForPage[@pageNumber])
+        @@serviceSelectPanel = panel
+              
+        panel.add(Component.searchPanel, BorderLayout::NORTH)
+        panel.add(Component.browsingStatusPanel, BorderLayout::SOUTH)
+        
+        Cache.syncWithCollection(panel.localServiceCache)
+        Cache.updateServiceListings(panel.localListingCache)
+      else
+        @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
+        @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
+      end
+      
+      # update status.actions panel
+      Component.browsingStatusPanel.currentPage = @pageNumber
+      Component.browsingStatusPanel.exportButton.setEnabled(
+          !Cache.selectedServices.empty?) unless
+          GenerateSpreadsheetAction.isBusyExporting
+      Component.browsingStatusPanel.refresh
+      
+      # update full view to show new services
+      @buttonContainer.setVisible(false)
+      @@serviceSelectPanel.setVisible(true)
+      
+      MAIN_WINDOW.getContentPane.add(@@serviceSelectPanel)
+      MAIN_WINDOW.getContentPane.repaint
+      Component.flash(@@serviceSelectPanel)
+      
+      # re-enable event source 
+      event.getSource.setIcon(originalIcon)
+      
+      if @buttonContainer.class==MainPanel
+        event.getSource.setText(originalCaption)
+        @buttonContainer.setEnabled(true)
+      end
+      
+      event.getSource.setEnabled(true)
+    }
   end # actionPerformed
 
 end

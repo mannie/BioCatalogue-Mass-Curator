@@ -31,20 +31,25 @@ class SearchAction
 # --------------------
 
   def actionPerformed(event)
-    query = Component.searchPanel.searchField.getText
+    query = Component.searchField.getText
+    query.strip!
     
     unless query.empty?      
       Thread.new("Searching for: '#{}'") {
-        Component.searchPanel.searchButton.setText("Searching...")
-        Component.searchPanel.searchButton.setEnabled(false)
         Component.searchPanel.searchField.setEnabled(false)
-        
+        Component.searchPanel.searchButton.setEnabled(false)
+        Component.searchPanel.searchButton.setIcon(Resource.iconFor('busy'))
+        Component.searchPanel.searchButton.setText("Searching...")
+
         SearchResultsWindow.new(query)
         
         Component.searchPanel.searchButton.setText("Search")
+        Component.searchPanel.searchButton.setIcon(Resource.iconFor('search'))
         Component.searchPanel.searchButton.setEnabled(true)
         Component.searchPanel.searchField.setEnabled(true)
       }
+    else
+      Component.searchButton.setEnabled(false)
     end
   end # actionPerformed
 

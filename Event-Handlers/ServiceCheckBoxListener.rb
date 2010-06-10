@@ -33,16 +33,16 @@ class ServiceCheckBoxListener
 
   def stateChanged(event)
     if !event.getSource.getParent.showDetail && event.getSource.isSelected
-      Thread.new("Updating listings...") { 
+      Thread.new("Deselecting service for annotation + disposal...") { 
         event.getSource.getParent.dispose
         Cache.deselectServiceForAnnotation(@service)  
       }
     elsif event.getSource.isSelected
-      Thread.new("Updating listings...") { 
+      Thread.new("Selecting service for annotation...") { 
         Cache.selectServiceForAnnotation(@service)
       }
     else
-      Thread.new("Updating listings...") { 
+      Thread.new("Deselecting service for annotation...") { 
         Cache.deselectServiceForAnnotation(@service)
       }
     end
@@ -58,4 +58,4 @@ class ServiceCheckBoxListener
     Component.browsingStatusPanel.refresh
   end # stateChanged
   
-end
+end # ServiceCheckBoxListener

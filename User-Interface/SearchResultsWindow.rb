@@ -43,12 +43,12 @@ private
     self.getContentPane.add(searchResultsPanel)
     
     self.setMinimumSize(Dimension.new(300, 100))
-
-    Component.centerToParent(self, MAIN_WINDOW)
+    self.pack
+    
     self.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
 
+    Component.centerToParent(self, MAIN_WINDOW)
     self.setVisible(true)
-    self.pack
   end # initUI
 
   def searchResultsPanel
@@ -89,8 +89,8 @@ private
     } # xmlDocument.root.each
     
     return (@localServiceCache.empty? ? 
-        JLabel.new("No services matched '#{@query}'") : 
+        JLabel.new("No services matched '#{@query}'", SwingConstants::CENTER) : 
         JScrollPane.new(panel))
   end # searchResultsPanel
   
-end
+end # SearchResultsWindow

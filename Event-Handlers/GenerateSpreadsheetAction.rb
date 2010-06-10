@@ -58,8 +58,8 @@ class GenerateSpreadsheetAction
         GenerateSpreadsheetAction.setBusyExporting(true)
 
         event.getSource.setEnabled(false)
-        originalButtonCaption = event.getSource.getText
         event.getSource.setText("Exporting...")
+        event.getSource.setIcon(Resource.iconFor('busy'))
         
         file = SpreadsheetGeneration.generateSpreadsheet(
             Cache.selectedServices, dir.path)
@@ -73,9 +73,10 @@ class GenerateSpreadsheetAction
               "An error occured while trying to export the selected services.")
         end
         
+        event.getSource.setIcon(Resource.iconFor('excel'))
+        event.getSource.setText("Export")
         event.getSource.setEnabled(true)
-        event.getSource.setText(originalButtonCaption)
-        
+                
         GenerateSpreadsheetAction.setBusyExporting(false)
       } # thread
     end # if file selected

@@ -52,6 +52,14 @@ module Component
     @@searchPanel ||= SearchPanel.new
   end # self.searchPanel
   
+  def self.searchField
+    self.searchPanel.searchField
+  end # self.searchField
+
+  def self.searchButton
+    self.searchPanel.searchButton
+  end # self.searchButton
+  
   def self.browsingStatusPanel
     @@browsingStatusPanel ||= BrowsingStatusPanel.new
   end # self.browsingStatusPanel

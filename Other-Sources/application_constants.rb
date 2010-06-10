@@ -36,8 +36,9 @@ USER_INTERFACE_DIR = File.join(APP_ROOT, "User-Interface").freeze
 
 # Application Source Files To Include
 
-EVENT_HANDLERS = %w{ AppWindowListener.rb
-                     AppComponentListener.rb
+EVENT_HANDLERS = %w{ AppComponentListener.rb
+                     AppKeyListener.rb
+                     AppWindowListener.rb
                      GenerateSpreadsheetAction.rb 
                      GoBackAction.rb
                      LoadServicesAction.rb
@@ -79,7 +80,7 @@ USER_INTERFACE = %w{ BrowsingStatusPanel.rb
 # Java Classes To Include
 JAR_ARCHIVES = %w{ BrowserLauncher2-1_3.jar }.freeze
 
-AWT_CLASSES = %w{ BorderLayout
+AWT = %w{ BorderLayout
                   Color
                   Dimension
                   FlowLayout 
@@ -91,9 +92,11 @@ AWT_CLASSES = %w{ BorderLayout
 
 AWT_EVENTS = %w{ ActionListener
                  ComponentListener
+                 KeyEvent
+                 KeyListener
                  WindowListener }.freeze
 
-SWING_CLASSES = %w{ filechooser.FileNameExtensionFilter
+SWING = %w{ filechooser.FileNameExtensionFilter
                     BorderFactory 
                     BoxLayout 
                     ImageIcon

@@ -43,7 +43,7 @@ private
     subPanel = JPanel.new
     subPanel.setLayout(GridLayout.new)
     
-    backButton = JButton.new("Back")
+    backButton = JButton.new("Back", Resource.iconFor('Home'))
     backButton.addActionListener(GoBackAction.new(self))
 
     subPanel.add(backButton)
@@ -90,7 +90,7 @@ private
     c.gridy += 1
     c.gridx = 0
     passwordLabel = JLabel.new("BioCatalogue Password:")
-    passwordLabel.setLabelFor(passwordField = JPasswordField.new("chocolate", 30))
+    passwordLabel.setLabelFor(passwordField = JPasswordField.new(30))
     panel.add(passwordLabel, c)
     
     # password field

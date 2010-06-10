@@ -47,6 +47,7 @@ module SpreadsheetParsing
           @header.size.times do |cell|
             case @header[cell]
               when "ID"
+                break unless row[cell]
                 id = row[cell]
               when "Type"
                 resource = Application.resourceNameFor(row[cell])

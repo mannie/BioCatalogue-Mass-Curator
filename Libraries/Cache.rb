@@ -94,7 +94,6 @@ module Cache
   end # self.removeServiceListing
   
   def self.updateServiceListings(collection)
-    puts collection.size if collection
     collection.each { |panel| panel.refresh } if collection
   end # self.updateServiceListings
   
