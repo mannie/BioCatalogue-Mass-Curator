@@ -30,9 +30,19 @@ class ServiceListingPanel < JPanel
     @service, @showDetail = service, showDetail
     initUI
     
+    Cache.addServiceListing(@service, self)
+    
     return self
   end # initialize
 
+  def refresh
+    @checkBox.setSelected(@service.isSelectedForAnnotation)
+  end
+  
+  def dispose
+    Cache.removeServiceListing(@service, self)
+  end
+  
 private
   
   def initUI
@@ -43,7 +53,7 @@ private
     c = GridBagConstraints.new
     c.anchor = GridBagConstraints::NORTHWEST
     c.fill = GridBagConstraints::HORIZONTAL
-    c.insets = Insets.new(2, 3, 2, 3)
+    c.insets = Insets.new(1, 2, 1, 2)
     c.weightx, c.weighty = 2, 1
     c.gridx, c.gridy = 0, 0
     
@@ -56,7 +66,7 @@ private
       # add preview button
       c.weightx = GridBagConstraints::REMAINDER
       c.gridx = 1
-      previewButton = JButton.new("Preview")
+      previewButton = JButton.new("Preview", Resource.iconFor('url'))
       previewButton.addActionListener(PreviewAction.new(self, @service))
       self.add(previewButton, c)
       
@@ -65,6 +75,7 @@ private
       c.insets.set(2, 50, 3, 5)
       uriLabel = JLabel.new(@service.technology + ": " + 
           Application.weblinkWithIDForResource(@service.id).to_s)
+      uriLabel.setIcon(Resource.iconFor('service'))
       self.add(uriLabel, c)
     end # if @showDetail 
   end # initUI

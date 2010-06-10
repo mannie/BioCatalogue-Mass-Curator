@@ -37,12 +37,13 @@ USER_INTERFACE_DIR = File.join(APP_ROOT, "User-Interface").freeze
 # Application Source Files To Include
 
 EVENT_HANDLERS = %w{ AppWindowListener.rb
-                     CheckBoxListener.rb
+                     AppComponentListener.rb
                      GenerateSpreadsheetAction.rb 
                      GoBackAction.rb
                      LoadServicesAction.rb
                      PreviewAction.rb
                      SearchAction.rb
+                     ServiceCheckBoxListener.rb
                      UploadSpreadsheetAction.rb }.freeze
 
 LIBRARIES = %w{ Application.rb
@@ -50,6 +51,7 @@ LIBRARIES = %w{ Application.rb
                 Component.rb
                 LoggerHelper.rb
                 Notification.rb
+                Resource.rb
                 SpreadsheetConstants.rb
                 SpreadsheetGeneration.rb
                 SpreadsheetParsing.rb
@@ -59,8 +61,6 @@ MODELS = %w{ BioCatalogueClient.rb
              Service.rb
              ServiceComponent.rb
              ServiceComponentPort.rb }.freeze
-
-RESOURCES = %w{  }.freeze
 
 USER_INTERFACE = %w{ BrowsingStatusPanel.rb
                      LoginPanel.rb
@@ -90,12 +90,13 @@ AWT_CLASSES = %w{ BorderLayout
                   Toolkit }.freeze
 
 AWT_EVENTS = %w{ ActionListener
+                 ComponentListener
                  WindowListener }.freeze
 
 SWING_CLASSES = %w{ filechooser.FileNameExtensionFilter
-                    plaf.basic.BasicArrowButton
                     BorderFactory 
                     BoxLayout 
+                    ImageIcon
                     JButton 
                     JCheckBox
                     JDialog

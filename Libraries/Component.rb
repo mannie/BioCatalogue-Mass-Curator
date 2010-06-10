@@ -50,17 +50,14 @@ module Component
 
   def self.searchPanel
     @@searchPanel ||= SearchPanel.new
-    return @@searchPanel
   end # self.searchPanel
   
   def self.browsingStatusPanel
     @@browsingStatusPanel ||= BrowsingStatusPanel.new
-    return @@browsingStatusPanel
   end # self.browsingStatusPanel
   
   def self.exportButton
-    @@browsingStatusPanel ||= BrowsingStatusPanel.new
-    return @@browsingStatusPanel.exportButton
+    self.browsingStatusPanel.exportButton
   end # self.exportButton
 
 end # module Component

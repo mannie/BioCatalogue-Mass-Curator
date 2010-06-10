@@ -23,6 +23,7 @@
 class SelectedServicesWindow < JFrame
   
   @@previouslyUsedPanel = nil
+  @@previouslyUsedListings= []
   
   def initialize(title="Services to export")
     super(title)
@@ -36,13 +37,18 @@ class SelectedServicesWindow < JFrame
     
     c = GridBagConstraints.new
     c.anchor = GridBagConstraints::NORTHWEST
-    c.insets = Insets.new(1, 2, 1, 2)
+    c.insets = Insets.new(1, 1, 1, 1)
     c.fill = GridBagConstraints::HORIZONTAL
     c.weightx
     c.gridy = 0
-
+    
+    @@previouslyUsedListings.each { |listingPanel| listingPanel.dispose }
+    
+    @@previouslyUsedListings= []
+    
     Cache.selectedServices.each { |id, service|
-      listPanel.add(ServiceListingPanel.new(service, false))
+      listPanel.add(listing = ServiceListingPanel.new(service, false))
+      @@previouslyUsedListings << listing
       c.gridy += 1
     }
     

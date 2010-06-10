@@ -57,7 +57,7 @@ class Service
         end # case
       end # propertyNodes.each
       
-      @selectedStatusChangeListener = CheckBoxListener.new(self)
+      @selectedStatusChangeListener = ServiceCheckBoxListener.new(self)
       
       Cache.addService(self)
       

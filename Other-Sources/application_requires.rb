@@ -50,5 +50,4 @@ require 'json/ext'
 EVENT_HANDLERS.each { |fname| require File.join(EVENT_HANDLERS_DIR, fname) }
 LIBRARIES.each { |fname| require File.join(LIBRARIES_DIR, fname) }
 MODELS.each { |fname| require File.join(MODELS_DIR, fname) }
-RESOURCES.each { |fname| require File.join(RESOURCES_DIR, fname) }
 USER_INTERFACE.each { |fname| require File.join(USER_INTERFACE_DIR, fname) }

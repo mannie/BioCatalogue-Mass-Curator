@@ -22,7 +22,7 @@
 
 class ServiceSelectPanel < JPanel
   
-  attr_reader :localServiceCache, :mainPanel
+  attr_reader :localServiceCache, :localListingCache, :mainPanel
   attr_reader :previousPageButton, :nextPageButton
   
   SERVICES_PER_PAGE ||= 10
@@ -47,15 +47,13 @@ private
     self.add(Component.browsingStatusPanel, BorderLayout::SOUTH)
         
     # button to previous page
-    @previousPageButton = BasicArrowButton.new(SwingConstants::WEST)
-#    @previousPageButton = JButton.new("<<")
+    @previousPageButton = JButton.new(Resource.iconFor('back-arrow'))
     @previousPageButton.addActionListener(LoadServicesAction.new(self, @page-1))
     @previousPageButton.setEnabled(false) if @page==1
     self.add(@previousPageButton, BorderLayout::WEST)
     
     # button to next page
-    @nextPageButton = BasicArrowButton.new(SwingConstants::EAST)
-#    @nextPageButton = JButton.new(">>")
+    @nextPageButton = JButton.new(Resource.iconFor('forward-arrow'))
     @nextPageButton.addActionListener(LoadServicesAction.new(self, @page+1))
     @nextPageButton.setEnabled(false) if @page==@lastPage
     self.add(@nextPageButton, BorderLayout::EAST)
@@ -83,6 +81,7 @@ private
     end
     
     @localServiceCache = []
+    @localListingCache = []
     
     xmlDocument.root.each { |node|
       case node.name
@@ -94,8 +93,11 @@ private
                      
             next if service.nil? # URI attribute
             
-            @localServiceCache << (service)
-            panel.add(ServiceListingPanel.new(service), c)
+            panel.add(listing = ServiceListingPanel.new(service), c)
+            
+            @localServiceCache << service
+            @localListingCache << listing
+            
             c.gridy += 1
           }
         when 'statistics'

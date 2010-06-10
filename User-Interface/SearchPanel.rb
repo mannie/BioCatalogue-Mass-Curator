@@ -43,10 +43,10 @@ class SearchPanel < JPanel
     c.weightx = 50
     self.add(@searchField = JTextField.new("emboss"), c)
           
-    # preview button
+    # search button
     c.gridx = 1
     c.weightx = 1
-    @searchButton = JButton.new("Search")
+    @searchButton = JButton.new("Search", Resource.iconFor('search'))
     @searchButton.addActionListener(BioCatalogueClient.SEARCH)
     self.add(@searchButton, c)
   end # initUI

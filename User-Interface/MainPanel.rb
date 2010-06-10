@@ -27,6 +27,7 @@ class MainPanel < JPanel
   def initialize
     super()
     initUI
+    
     return self
   end # initalize
   
@@ -43,22 +44,25 @@ private
     c.anchor = GridBagConstraints::CENTER
     c.fill = GridBagConstraints::BOTH
     c.gridwidth = 1
-    c.gridx = 0
-    c.gridy = 0
+    c.gridx, c.gridy = 0, 0
+    c.ipadx = 10
 
     # add buttons to panel
     # browse button
     @browseButtonAction = LoadServicesAction.new(self, 1)
-    buttonPanel.add(browseButton = JButton.new("Browse Services"), c)
+    browseButton = JButton.new("Browse Services", Resource.iconFor('scope'))
+    buttonPanel.add(browseButton, c)
     browseButton.addActionListener(@browseButtonAction)
     
     # upload button
     c.gridy += 1
-    buttonPanel.add(uploadButton = JButton.new("Upload A Spreadsheet"), c)
+    uploadButton = JButton.new("Upload A Spreadsheet", Resource.iconFor(
+        'upload'))
+    buttonPanel.add(uploadButton, c)
     uploadButton.addActionListener(UploadSpreadsheetAction.new(self))
     
     self.add(buttonPanel)
-    self.add(Component.searchPanel, BorderLayout::NORTH)
+#    self.add(Component.searchPanel, BorderLayout::NORTH)
 
   end # initUI
 end

@@ -1,5 +1,5 @@
 #
-#  CheckBoxListener.rb
+#  ServiceCheckBoxListener.rb
 #  BioCatalogue-Mass-Curator
 #
 #  Created by Mannie Tagarira on 24/05/2010.
@@ -20,7 +20,7 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
 =end
 
-class CheckBoxListener
+class ServiceCheckBoxListener
   java_implements ChangeListener
   
   def initialize(service)
@@ -33,12 +33,18 @@ class CheckBoxListener
 
   def stateChanged(event)
     if !event.getSource.getParent.showDetail && event.getSource.isSelected
-      Cache.deselectServiceForAnnotation(@service)
-      Cache.updateServiceListings
+      Thread.new("Updating listings...") { 
+        event.getSource.getParent.dispose
+        Cache.deselectServiceForAnnotation(@service)  
+      }
     elsif event.getSource.isSelected
-      Cache.selectServiceForAnnotation(@service)
+      Thread.new("Updating listings...") { 
+        Cache.selectServiceForAnnotation(@service)
+      }
     else
-      Cache.deselectServiceForAnnotation(@service)
+      Thread.new("Updating listings...") { 
+        Cache.deselectServiceForAnnotation(@service)
+      }
     end
     
     SELECTED_SERVICES_WINDOW.refreshSelectedServices

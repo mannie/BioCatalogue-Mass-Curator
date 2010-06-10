@@ -53,7 +53,7 @@ private
     backButton.addActionListener(GoBackAction.new(self))
     panel.add(backButton, BorderLayout::WEST)
     
-    @uploadSpreadsheetButton = JButton.new("Upload")
+    @uploadSpreadsheetButton = JButton.new("Upload", Resource.iconFor('upload'))
     @uploadSpreadsheetButton.addActionListener(@uploadSpreadsheetAction)
     panel.add(@uploadSpreadsheetButton, BorderLayout::EAST)
     @uploadSpreadsheetButton.setEnabled(false)
@@ -81,6 +81,17 @@ private
     # update constraints
     c.insets.set(0, 0, 3, 0)
 
+    # selected spreadsheet label 
+    c.gridy += 1
+    c.gridx = 1
+    c.anchor = GridBagConstraints::EAST
+    panel.add(@selectedSpreadsheetLabel, c)
+    
+    # select spreadsheet button   
+    c.anchor = GridBagConstraints::WEST
+    c.gridx = 0
+    panel.add(@selectSpreadsheetButton, c)
+    
     # username label 
     c.gridy += 1
     c.gridx = 0
@@ -113,15 +124,6 @@ private
     rememberMeCheckBox = JCheckBox.new("Remember me")
     rememberMeCheckBox.setBorder(BorderFactory.createEmptyBorder())
     panel.add(rememberMeCheckBox, c)
-
-    # upload button
-    c.gridy += 1
-    c.gridx = 1
-    c.anchor = GridBagConstraints::WEST
-    c.insets.set(10, 0, 0, 0)
-    @uploadSpreadsheetButton = JButton.new("Upload To BioCatalogue")
-    @uploadSpreadsheetButton.addActionListener(@uploadSpreadsheetAction)
-    panel.add(@uploadSpreadsheetButton, c)
 =end
     return panel
   end # credentialsPanel

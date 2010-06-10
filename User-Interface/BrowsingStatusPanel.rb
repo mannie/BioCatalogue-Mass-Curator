@@ -42,7 +42,7 @@ class BrowsingStatusPanel < JPanel
     @backButton = JButton.new("Go Back")
     @backButton.addActionListener(GoBackAction.new(self))
 
-    @exportButton = JButton.new("Export")
+    @exportButton = JButton.new("Export", Resource.iconFor('excel'))
     @exportButton.addActionListener(GenerateSpreadsheetAction.new(self))
             
     refresh

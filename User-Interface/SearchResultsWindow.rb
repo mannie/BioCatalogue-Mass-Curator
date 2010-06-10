@@ -58,7 +58,7 @@ private
     c = GridBagConstraints.new
     c.anchor = GridBagConstraints::NORTHWEST
     c.fill = GridBagConstraints::HORIZONTAL
-    c.insets = Insets.new(2, 3, 2, 3)
+    c.insets = Insets.new(1, 2, 1, 2)
     c.weightx = 2
     c.gridy = 0
 

@@ -71,7 +71,8 @@ class LoadServicesAction
       panel.add(Component.searchPanel, BorderLayout::NORTH)
       panel.add(Component.browsingStatusPanel, BorderLayout::SOUTH)
       
-      Application.syncCollectionWithCache(panel.localServiceCache)
+      Cache.syncWithCollection(panel.localServiceCache)
+      Cache.updateServiceListings(panel.localListingCache)
     else
       @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
       @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)

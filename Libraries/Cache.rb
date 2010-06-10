@@ -42,12 +42,16 @@ module Cache
   def self.selectServiceForAnnotation(service)
     @@selectedServices.merge!(service.id => service) if service && 
         service.class==Service && !@@selectedServices.include?(service.id)
+
+    self.updateServiceListings(@@serviceListings[service.id])
   end # self.selectServiceForAnnotation
   
   def self.deselectServiceForAnnotation(service)
     @@selectedServices.reject! { |key, value| 
       key == service.id 
     } if service && service.class==Service
+    
+    self.updateServiceListings(@@serviceListings[service.id])
   end # self.deselectServiceForAnnotation
   
   def self.addService(service)
@@ -63,16 +67,35 @@ module Cache
     } if service && service.class==Service
   end # self.removeService
 
-  def self.syncCollectionWithCache(collection)
+  def self.syncWithCollection(collection)
      # TODO: do a 2 way sync of the services
     collection.each { |service|
       if (cached = @@services[service.id])
           service = cached
         end
       }
-  end # self.syncCollectionWithCache(collection)
+  end # self.syncWithCollection(collection)
 
-  def self.updateServiceListings()
+  def self.addServiceListing(service, listing)
+    list = @@serviceListings[service.id] || []
+    list << listing
+    list.uniq!
+
+    @@serviceListings.merge!(service.id => list) unless 
+        @@serviceListings[service.id]
+        
+    self.updateServiceListings(@@serviceListings[service.id])
+  end # self.addServiceListing
+  
+  def self.removeServiceListing(service, listing)
+    @@serviceListings[service.id].reject! { |panel| panel==listing }
+        
+    self.updateServiceListings(@@serviceListings[service.id])
+  end # self.removeServiceListing
+  
+  def self.updateServiceListings(collection)
+    puts collection.size if collection
+    collection.each { |panel| panel.refresh } if collection
   end # self.updateServiceListings
   
 end # module Cache
