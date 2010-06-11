@@ -1,3 +1,6 @@
 .DS_Store
 build/*
-reload_app.rb
+manifest.mf
+build.xml
+nbproject/*
+dist/*
