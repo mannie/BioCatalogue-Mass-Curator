@@ -197,48 +197,7 @@
 	<key>Notifications</key>
 	<array/>
 	<key>OpenEditors</key>
-	<array>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>3622759911C2508000B47BBE</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>ServiceSelectPanel.rb</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>3622759A11C2508000B47BBE</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>ServiceSelectPanel.rb</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>362275A111C251DF00B47BBE</string>
-						<key>history</key>
-						<array>
-							<string>3622759611C24ED000B47BBE</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {552, 648}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>395 339 552 689 0 0 1680 1028 </string>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>-1</integer>
@@ -296,18 +255,10 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 									<array>
 										<string>360FD7A711A40F7000AEC536</string>
-										<string>362735E111A6DD3D00269B2C</string>
-										<string>36F907CC11A688FD009E69E2</string>
-										<string>36F9025F11A54B27009E69E2</string>
-										<string>36F9028911A54B90009E69E2</string>
-										<string>36F9028A11A54B90009E69E2</string>
-										<string>360FD7B911A4107600AEC536</string>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>49</integer>
-											<integer>47</integer>
 											<integer>0</integer>
 										</array>
 									</array>
@@ -364,23 +315,19 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 									<array>
 										<string>360FD7A711A40F7000AEC536</string>
-										<string>362735E111A6DD3D00269B2C</string>
-										<string>36F907CC11A688FD009E69E2</string>
-										<string>36F9025F11A54B27009E69E2</string>
-										<string>36F9028911A54B90009E69E2</string>
-										<string>36F9028A11A54B90009E69E2</string>
+										<string>362275A811C26ACA00B47BBE</string>
 										<string>1C37FAAC04509CD000000102</string>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>6</integer>
+											<integer>7</integer>
 											<integer>1</integer>
 											<integer>0</integer>
 										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-									<string>{{0, 40}, {275, 602}}</string>
+									<string>{{0, 0}, {275, 602}}</string>
 								</dict>
 								<key>PBXTopSmartGroupGIDs</key>
 								<array/>
@@ -437,7 +384,6 @@
 									<array>
 										<string>1C37FABC05509CD000000102</string>
 										<string>E2644B35053B69B200211256</string>
-										<string>1CC0EA4004350EF90044410B</string>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
@@ -515,12 +461,11 @@
 	<integer>0</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>36273F1711AC147A00269B2C</string>
 		<string>1C530D57069F1CE1000CFCEE</string>
-		<string>3622758111C24CFD00B47BBE</string>
 		<string>1C530D54069F1CE1000CFCEE</string>
 		<string>1C530D5B069F1CE1000CFCEE</string>
 		<string>/Users/mannie/Documents/BioCatalogue-Mass-Curator/BioCatalogue-Mass-Curator.xcodeproj</string>
-		<string>3622759911C2508000B47BBE</string>
 	</array>
 	<key>WindowString</key>
 	<string>-1 340 292 688 0 0 1680 1028 </string>
@@ -894,14 +839,12 @@
 							<key>Dock</key>
 							<array>
 								<dict>
-									<key>BecomeActive</key>
-									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>UploadSpreadsheetPanel.rb</string>
+										<string>application_constants.rb</string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -922,6 +865,8 @@
 							<string>364pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -1048,8 +993,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -1085,7 +1028,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>36273F1711AC147A00269B2C</string>
-				<string>3622733111C1314F00B47BBE</string>
+				<string>362275A311C252A400B47BBE</string>
 				<string>36273F1611AC147A00269B2C</string>
 			</array>
 			<key>ToolbarConfiguration</key>

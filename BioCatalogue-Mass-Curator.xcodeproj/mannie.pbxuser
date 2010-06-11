@@ -1,50 +1,5 @@
 // !$*UTF8*$!
 {
-	3602647211BFE3D2006CE00E /* Application.rb */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = text.script.ruby;
-		name = Application.rb;
-		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/Libraries/Application.rb";
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {492, 935}}";
-			sepNavSelRange = "{887, 0}";
-			sepNavVisRange = "{369, 2005}";
-			sepNavWindowFrame = "{{315, 312}, {551, 716}}";
-		};
-	};
-	3602647C11BFE3FF006CE00E /* Cache.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{144, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2390}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {971, 738}}";
-			sepNavSelRange = "{1571, 0}";
-			sepNavVisRange = "{754, 961}";
-			sepNavWindowFrame = "{{530, 312}, {551, 716}}";
-		};
-	};
-	360265EB11C0F5EE006CE00E /* AppComponentListener.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{159, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1116}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 627}}";
-			sepNavSelRange = "{460, 0}";
-			sepNavVisRange = "{0, 460}";
-			sepNavWindowFrame = "{{414, 312}, {551, 716}}";
-		};
-	};
-	3602664411C0FA41006CE00E /* remote_resource.png */ = {
-		uiCtxt = {
-			sepNavWindowFrame = "{{130, 202}, {551, 716}}";
-		};
-	};
-	3602668611C10C3C006CE00E /* Resource.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{147, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2511}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 639}}";
-			sepNavSelRange = "{1637, 0}";
-			sepNavVisRange = "{2, 1831}";
-			sepNavWindowFrame = "{{356, 42}, {551, 716}}";
-		};
-	};
 	360FD7A911A40F7000AEC536 /* Project object */ = {
 		activeBuildConfigurationName = Debug;
 		activeExecutable = 360FD88011A417C900AEC536 /* BioCatalogue Mass Curator */;
@@ -89,7 +44,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					200,
 					200,
-					123,
+					122.58349609375,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXBookmarksDataSource_LocationID,
@@ -103,7 +58,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
 					300,
-					201,
+					202.20849609375,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXErrorsWarningsDataSource_TypeID,
@@ -130,7 +85,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					316,
+					312,
 					20,
 					48,
 					43,
@@ -197,44 +152,25 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 297945725;
-			PBXWorkspaceStateSaveDate = 297945725;
+			PBXPerProjectTemplateStateSaveDate = 297970265;
+			PBXWorkspaceStateSaveDate = 297970265;
 		};
 		perUserProjectItems = {
-			3622755411C248B500B47BBE = 3622755411C248B500B47BBE /* PBXTextBookmark */;
-			3622755E11C24A7600B47BBE = 3622755E11C24A7600B47BBE /* PBXTextBookmark */;
-			3622756E11C24AD300B47BBE /* PBXBookmark */ = 3622756E11C24AD300B47BBE /* PBXBookmark */;
-			3622756F11C24AEB00B47BBE /* PBXBookmark */ = 3622756F11C24AEB00B47BBE /* PBXBookmark */;
-			3622757111C24B4B00B47BBE /* PBXBookmark */ = 3622757111C24B4B00B47BBE /* PBXBookmark */;
-			3622757311C24CF600B47BBE /* PBXTextBookmark */ = 3622757311C24CF600B47BBE /* PBXTextBookmark */;
-			3622757411C24CF600B47BBE /* PBXTextBookmark */ = 3622757411C24CF600B47BBE /* PBXTextBookmark */;
-			3622757611C24CF600B47BBE /* PBXTextBookmark */ = 3622757611C24CF600B47BBE /* PBXTextBookmark */;
-			3622757711C24CF600B47BBE /* PBXTextBookmark */ = 3622757711C24CF600B47BBE /* PBXTextBookmark */;
-			3622757811C24CF600B47BBE /* PBXTextBookmark */ = 3622757811C24CF600B47BBE /* PBXTextBookmark */;
-			3622757911C24CF600B47BBE /* PBXTextBookmark */ = 3622757911C24CF600B47BBE /* PBXTextBookmark */;
-			3622757A11C24CF600B47BBE /* PBXTextBookmark */ = 3622757A11C24CF600B47BBE /* PBXTextBookmark */;
-			3622757B11C24CF600B47BBE /* PBXTextBookmark */ = 3622757B11C24CF600B47BBE /* PBXTextBookmark */;
-			3622757C11C24CF600B47BBE /* PBXTextBookmark */ = 3622757C11C24CF600B47BBE /* PBXTextBookmark */;
-			3622757D11C24CF600B47BBE /* PBXTextBookmark */ = 3622757D11C24CF600B47BBE /* PBXTextBookmark */;
-			3622757E11C24CF600B47BBE /* PBXTextBookmark */ = 3622757E11C24CF600B47BBE /* PBXTextBookmark */;
-			3622758311C24CFD00B47BBE /* PBXTextBookmark */ = 3622758311C24CFD00B47BBE /* PBXTextBookmark */;
-			3622758611C24CFD00B47BBE /* PBXTextBookmark */ = 3622758611C24CFD00B47BBE /* PBXTextBookmark */;
-			3622758911C24CFD00B47BBE /* PBXTextBookmark */ = 3622758911C24CFD00B47BBE /* PBXTextBookmark */;
-			3622758B11C24D3D00B47BBE /* PBXBookmark */ = 3622758B11C24D3D00B47BBE /* PBXBookmark */;
-			3622758C11C24D5D00B47BBE /* PBXBookmark */ = 3622758C11C24D5D00B47BBE /* PBXBookmark */;
-			3622758D11C24DB200B47BBE /* PBXTextBookmark */ = 3622758D11C24DB200B47BBE /* PBXTextBookmark */;
-			3622759011C24DB200B47BBE /* PBXTextBookmark */ = 3622759011C24DB200B47BBE /* PBXTextBookmark */;
-			3622759311C24DB200B47BBE /* PBXTextBookmark */ = 3622759311C24DB200B47BBE /* PBXTextBookmark */;
-			3622759411C24DB200B47BBE /* PBXTextBookmark */ = 3622759411C24DB200B47BBE /* PBXTextBookmark */;
-			3622759511C24DB200B47BBE /* PBXTextBookmark */ = 3622759511C24DB200B47BBE /* PBXTextBookmark */;
-			3622759611C24ED000B47BBE /* PBXBookmark */ = 3622759611C24ED000B47BBE /* PBXBookmark */;
-			3622759811C2508000B47BBE /* PBXTextBookmark */ = 3622759811C2508000B47BBE /* PBXTextBookmark */;
-			3622759B11C2508000B47BBE /* PBXTextBookmark */ = 3622759B11C2508000B47BBE /* PBXTextBookmark */;
-			3622759C11C2510300B47BBE /* PBXTextBookmark */ = 3622759C11C2510300B47BBE /* PBXTextBookmark */;
-			3622759D11C2510300B47BBE /* PBXTextBookmark */ = 3622759D11C2510300B47BBE /* PBXTextBookmark */;
-			3622759F11C2519300B47BBE /* PBXTextBookmark */ = 3622759F11C2519300B47BBE /* PBXTextBookmark */;
-			362275A011C2519300B47BBE /* PBXTextBookmark */ = 362275A011C2519300B47BBE /* PBXTextBookmark */;
-			362275A111C251DF00B47BBE /* PBXTextBookmark */ = 362275A111C251DF00B47BBE /* PBXTextBookmark */;
+			368C24FC11C2903A0002C691 /* PBXTextBookmark */ = 368C24FC11C2903A0002C691 /* PBXTextBookmark */;
+			368C24FD11C2903A0002C691 /* PBXTextBookmark */ = 368C24FD11C2903A0002C691 /* PBXTextBookmark */;
+			368C24FE11C2903A0002C691 /* PBXTextBookmark */ = 368C24FE11C2903A0002C691 /* PBXTextBookmark */;
+			368C250211C2903A0002C691 /* PBXTextBookmark */ = 368C250211C2903A0002C691 /* PBXTextBookmark */;
+			368C3A7511C2A9B70002C691 /* PBXTextBookmark */ = 368C3A7511C2A9B70002C691 /* PBXTextBookmark */;
+			368C3A7611C2A9B70002C691 /* PBXTextBookmark */ = 368C3A7611C2A9B70002C691 /* PBXTextBookmark */;
+			368C3A8111C2A9B70002C691 /* PBXTextBookmark */ = 368C3A8111C2A9B70002C691 /* PBXTextBookmark */;
+			368C3AE311C2AAD40002C691 /* PBXTextBookmark */ = 368C3AE311C2AAD40002C691 /* PBXTextBookmark */;
+			368C3AE411C2AAD40002C691 /* PBXTextBookmark */ = 368C3AE411C2AAD40002C691 /* PBXTextBookmark */;
+			368C3AE611C2AAD40002C691 /* PBXTextBookmark */ = 368C3AE611C2AAD40002C691 /* PBXTextBookmark */;
+			368C3AE711C2AAD40002C691 /* PBXTextBookmark */ = 368C3AE711C2AAD40002C691 /* PBXTextBookmark */;
+			368C3AE811C2AAD40002C691 /* PBXTextBookmark */ = 368C3AE811C2AAD40002C691 /* PBXTextBookmark */;
+			368C3AE911C2AAD40002C691 /* PBXTextBookmark */ = 368C3AE911C2AAD40002C691 /* PBXTextBookmark */;
+			368C3AEB11C2AAD40002C691 /* PBXTextBookmark */ = 368C3AEB11C2AAD40002C691 /* PBXTextBookmark */;
+			368C3AEC11C2AAD40002C691 /* PBXTextBookmark */ = 368C3AEC11C2AAD40002C691 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 360FD7AD11A40F7000AEC536 /* Source Control */;
 		userBookmarkGroup = 3634F7CA11B921CF003A01B6 /* PBXBookmarkGroup */;
@@ -251,22 +187,6 @@
 	360FD7AE11A40F7000AEC536 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
-	};
-	360FD7D211A410BA00AEC536 /* ReadMe.rdoc */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {971, 347}}";
-			sepNavSelRange = "{87, 13}";
-			sepNavVisRange = "{0, 641}";
-			sepNavWindowFrame = "{{476, 82}, {550, 723}}";
-		};
-	};
-	360FD7D311A410BF00AEC536 /* Licence */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {492, 7458}}";
-			sepNavSelRange = "{16026, 6}";
-			sepNavVisRange = "{0, 3075}";
-			sepNavWindowFrame = "{{130, 195}, {551, 723}}";
-		};
 	};
 	360FD88011A417C900AEC536 /* BioCatalogue Mass Curator */ = {
 		isa = PBXExecutable;
@@ -332,415 +252,35 @@
 		path = run.sh;
 		sourceTree = SOURCE_ROOT;
 	};
-	3622733211C1324A00B47BBE /* AppKeyListener.rb */ = {
+	362275D411C26ACA00B47BBE /* run_dev.sh */ = {
 		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{153, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1344}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 627}}";
-			sepNavSelRange = "{178, 490}";
-			sepNavVisRange = "{0, 688}";
-			sepNavWindowFrame = "{{301, 312}, {551, 716}}";
+			sepNavIntBoundsRect = "{{0, 0}, {490, 493}}";
+			sepNavSelRange = "{20, 0}";
+			sepNavVisRange = "{0, 1212}";
+			sepNavWindowFrame = "{{255, 221}, {551, 716}}";
 		};
 	};
-	3622752611C23AFC00B47BBE /* CredentialsKeyListener.rb */ = {
+	362275E111C26ACA00B47BBE /* ReadMe.rdoc */ = {
 		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{161, 657}\";\n            s = 0;\n        },\n                {\n            r = \"{898, 89}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1827}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 627}}";
-			sepNavSelRange = "{703, 0}";
-			sepNavVisRange = "{0, 1083}";
-			sepNavWindowFrame = "{{364, 312}, {551, 716}}";
+			sepNavIntBoundsRect = "{{0, 0}, {490, 493}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 641}";
 		};
 	};
-	3622755411C248B500B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 3602647211BFE3D2006CE00E /* Application.rb */;
-		name = "Application.rb: 36";
-		rLen = 0;
-		rLoc = 1254;
-		rType = 0;
-		vrLen = 1944;
-		vrLoc = 542;
-	};
-	3622755E11C24A7600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 3634FC0E11BFABEB003A01B6 /* Application.rb */;
-		name = "Application.rb: 26";
-		rLen = 0;
-		rLoc = 887;
-		rType = 0;
-		vrLen = 1872;
-		vrLoc = 809;
-	};
-	3622756E11C24AD300B47BBE /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 360265EB11C0F5EE006CE00E /* AppComponentListener.rb */;
-	};
-	3622756F11C24AEB00B47BBE /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */;
-	};
-	3622757111C24B4B00B47BBE /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */;
-	};
-	3622757311C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */;
-		name = "UploadSpreadsheetPanel.rb: 23";
-		rLen = 22;
-		rLoc = 827;
-		rType = 0;
-		vrLen = 878;
-		vrLoc = 821;
-	};
-	3622757411C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 3622757511C24CF600B47BBE /* UploadSpreadsheetAction.rb */;
-		rLen = 22;
-		rLoc = 1371;
-		rType = 0;
-	};
-	3622757511C24CF600B47BBE /* UploadSpreadsheetAction.rb */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = text.script.ruby;
-		name = UploadSpreadsheetAction.rb;
-		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/Event-Handlers/UploadSpreadsheetAction.rb";
-		sourceTree = "<absolute>";
+	362275E211C26ACA00B47BBE /* Licence */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {971, 1309}}";
-			sepNavSelRange = "{1066, 21}";
-			sepNavVisRange = "{937, 1065}";
-		};
-	};
-	3622757611C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */;
-		name = "UploadSpreadsheetAction.rb: 107";
-		rLen = 22;
-		rLoc = 4126;
-		rType = 0;
-		vrLen = 1167;
-		vrLoc = 2879;
-	};
-	3622757711C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */;
-		name = "UploadSpreadsheetPanel.rb: 23";
-		rLen = 22;
-		rLoc = 827;
-		rType = 0;
-		vrLen = 850;
-		vrLoc = 820;
-	};
-	3622757811C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */;
-		name = "UploadSpreadsheetAction.rb: 42";
-		rLen = 22;
-		rLoc = 1371;
-		rType = 0;
-		vrLen = 1306;
-		vrLoc = 1035;
-	};
-	3622757911C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */;
-		name = "UploadSpreadsheetPanel.rb: 23";
-		rLen = 22;
-		rLoc = 827;
-		rType = 0;
-		vrLen = 884;
-		vrLoc = 862;
-	};
-	3622757A11C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */;
-		name = "UploadSpreadsheetAction.rb: 107";
-		rLen = 22;
-		rLoc = 4126;
-		rType = 0;
-		vrLen = 881;
-		vrLoc = 821;
-	};
-	3622757B11C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */;
-		name = "UploadSpreadsheetPanel.rb: 49";
-		rLen = 0;
-		rLoc = 1608;
-		rType = 0;
-		vrLen = 854;
-		vrLoc = 821;
-	};
-	3622757C11C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */;
-		name = "UploadSpreadsheetAction.rb: 53";
-		rLen = 22;
-		rLoc = 1615;
-		rType = 0;
-		vrLen = 813;
-		vrLoc = 821;
-	};
-	3622757D11C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */;
-		name = "UploadSpreadsheetPanel.rb: 23";
-		rLen = 22;
-		rLoc = 827;
-		rType = 0;
-		vrLen = 878;
-		vrLoc = 821;
-	};
-	3622757E11C24CF600B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */;
-		name = "UploadSpreadsheetAction.rb: 36";
-		rLen = 21;
-		rLoc = 1066;
-		rType = 0;
-		vrLen = 1065;
-		vrLoc = 937;
-	};
-	3622758311C24CFD00B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */;
-		name = "LoadServicesAction.rb: 103";
-		rLen = 0;
-		rLoc = 4122;
-		rType = 0;
-		vrLen = 1981;
-		vrLoc = 1969;
-	};
-	3622758611C24CFD00B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */;
-		name = "UploadSpreadsheetPanel.rb: 23";
-		rLen = 22;
-		rLoc = 827;
-		rType = 0;
-		vrLen = 1723;
-		vrLoc = 380;
-	};
-	3622758911C24CFD00B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 360265EB11C0F5EE006CE00E /* AppComponentListener.rb */;
-		name = "AppComponentListener.rb: 39";
-		rLen = 0;
-		rLoc = 1116;
-		rType = 0;
-		vrLen = 1116;
-		vrLoc = 0;
-	};
-	3622758B11C24D3D00B47BBE /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 363DE10E11AE983600CF54D7 /* BrowsingStatusPanel.rb */;
-	};
-	3622758C11C24D5D00B47BBE /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 3634FC1011BFAC98003A01B6 /* Component.rb */;
-	};
-	3622758D11C24DB200B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */;
-		name = "LoadServicesAction.rb: 112";
-		rLen = 0;
-		rLoc = 4353;
-		rType = 0;
-		vrLen = 2028;
-		vrLoc = 2052;
-	};
-	3622759011C24DB200B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 3634FC1011BFAC98003A01B6 /* Component.rb */;
-		name = "Component.rb: 63";
-		rLen = 19;
-		rLoc = 1819;
-		rType = 0;
-		vrLen = 2004;
-		vrLoc = 18;
-	};
-	3622759311C24DB200B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 363DE10E11AE983600CF54D7 /* BrowsingStatusPanel.rb */;
-		name = "BrowsingStatusPanel.rb: 25";
-		rLen = 10;
-		rLoc = 884;
-		rType = 0;
-		vrLen = 1648;
-		vrLoc = 0;
-	};
-	3622759411C24DB200B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 360265EB11C0F5EE006CE00E /* AppComponentListener.rb */;
-		name = "AppComponentListener.rb: 39";
-		rLen = 0;
-		rLoc = 1116;
-		rType = 0;
-		vrLen = 1116;
-		vrLoc = 0;
-	};
-	3622759511C24DB200B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */;
-		name = "UploadSpreadsheetPanel.rb: 23";
-		rLen = 22;
-		rLoc = 827;
-		rType = 0;
-		vrLen = 1723;
-		vrLoc = 380;
-	};
-	3622759611C24ED000B47BBE /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */;
-	};
-	3622759811C2508000B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */;
-		name = "LoadServicesAction.rb: 71";
-		rLen = 0;
-		rLoc = 2249;
-		rType = 0;
-		vrLen = 2313;
-		vrLoc = 1504;
-	};
-	3622759B11C2508000B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */;
-		name = "ServiceSelectPanel.rb: 26";
-		rLen = 14;
-		rLoc = 955;
-		rType = 0;
-		vrLen = 3584;
-		vrLoc = 0;
-	};
-	3622759C11C2510300B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */;
-		name = "LoadServicesAction.rb: 126";
-		rLen = 0;
-		rLoc = 4656;
-		rType = 0;
-		vrLen = 2199;
-		vrLoc = 2659;
-	};
-	3622759D11C2510300B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */;
-		name = "ServiceSelectPanel.rb: 26";
-		rLen = 14;
-		rLoc = 955;
-		rType = 0;
-		vrLen = 3584;
-		vrLoc = 0;
-	};
-	3622759F11C2519300B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */;
-		name = "LoadServicesAction.rb: 130";
-		rLen = 0;
-		rLoc = 4703;
-		rType = 0;
-		vrLen = 2134;
-		vrLoc = 2899;
-	};
-	362275A011C2519300B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */;
-		name = "ServiceSelectPanel.rb: 26";
-		rLen = 14;
-		rLoc = 955;
-		rType = 0;
-		vrLen = 3584;
-		vrLoc = 0;
-	};
-	362275A111C251DF00B47BBE /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */;
-		name = "ServiceSelectPanel.rb: 26";
-		rLen = 14;
-		rLoc = 955;
-		rType = 0;
-		vrLen = 3584;
-		vrLoc = 0;
-	};
-	3627349C11A6BAE400269B2C /* GenerateSpreadsheetAction.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{164, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2678}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {971, 837}}";
-			sepNavSelRange = "{1218, 4}";
-			sepNavVisRange = "{837, 1154}";
-			sepNavWindowFrame = "{{876, 115}, {554, 721}}";
+			sepNavIntBoundsRect = "{{0, 0}, {490, 7458}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 2280}";
 		};
 	};
 	3627357211A6CB9000269B2C /* AppWindowListener.rb */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {491, 627}}";
-			sepNavSelRange = "{890, 0}";
-			sepNavVisRange = "{0, 1564}";
-			sepNavWindowFrame = "{{653, 305}, {550, 723}}";
-		};
-	};
-	3627392911AAAF9D00269B2C /* ServiceCheckBoxListener.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{155, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1713}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {971, 463}}";
-			sepNavSelRange = "{674, 0}";
-			sepNavVisRange = "{182, 875}";
-			sepNavWindowFrame = "{{445, 119}, {552, 721}}";
-		};
-	};
-	3627399D11AAC13E00269B2C /* SelectedServicesWindow.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{161, 657}\";\n            s = 0;\n        },\n                {\n            r = \"{911, 75}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2028}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {971, 574}}";
-			sepNavSelRange = "{330, 0}";
-			sepNavVisRange = "{0, 754}";
-			sepNavWindowFrame = "{{476, 307}, {552, 721}}";
-		};
-	};
-	36273C0111ABD7BA00269B2C /* PreviewDialog.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{152, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1382}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {489, 611}}";
-			sepNavSelRange = "{441, 6}";
-			sepNavVisRange = "{0, 726}";
-			sepNavWindowFrame = "{{790, 305}, {548, 723}}";
-		};
-	};
-	36273D0D11ABEE9400269B2C /* ServiceListingPanel.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{158, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2248}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {489, 683}}";
-			sepNavSelRange = "{1183, 0}";
-			sepNavVisRange = "{59, 1533}";
-			sepNavWindowFrame = "{{840, 305}, {548, 723}}";
-		};
-	};
-	36273F5411AC1EF900269B2C /* Notification.rb */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {489, 611}}";
-			sepNavSelRange = "{97, 713}";
-			sepNavVisRange = "{0, 1218}";
-			sepNavWindowFrame = "{{663, 305}, {548, 723}}";
-		};
-	};
-	3634F67E11B800EE003A01B6 /* SpreadsheetParsing.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{157, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 4126}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 1112}}";
-			sepNavSelRange = "{1919, 0}";
-			sepNavVisRange = "{56, 1882}";
-			sepNavWindowFrame = "{{304, 305}, {551, 723}}";
-		};
-	};
-	3634F70811B8FEA7003A01B6 /* SpreadsheetConstants.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{159, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2330}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 628}}";
-			sepNavSelRange = "{1637, 0}";
-			sepNavVisRange = "{0, 1674}";
-			sepNavWindowFrame = "{{791, 305}, {551, 723}}";
-		};
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = text.script.ruby;
+		name = AppWindowListener.rb;
+		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/Event-Handlers/AppWindowListener.rb";
+		sourceTree = "<absolute>";
 	};
 	3634F7CA11B921CF003A01B6 /* PBXBookmarkGroup */ = {
 		isa = PBXBookmarkGroup;
@@ -749,242 +289,207 @@
 		);
 		name = Root;
 	};
-	3634F7E711B92C21003A01B6 /* LoggerHelper.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{151, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1603}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 611}}";
-			sepNavSelRange = "{247, 0}";
-			sepNavVisRange = "{0, 947}";
-			sepNavWindowFrame = "{{355, 247}, {551, 723}}";
-		};
-	};
-	3634F85F11B93296003A01B6 /* application_constants.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{160, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 3876}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {971, 1112}}";
-			sepNavSelRange = "{942, 48}";
-			sepNavVisRange = "{164, 1114}";
-			sepNavWindowFrame = "{{310, 153}, {551, 723}}";
-		};
-	};
-	3634F9F711BCFE9B003A01B6 /* SearchResultsWindow.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{158, 657}\";\n            s = 0;\n        },\n                {\n            r = \"{1500, 1227}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2781}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 627}}";
-			sepNavSelRange = "{898, 0}";
-			sepNavVisRange = "{0, 899}";
-			sepNavWindowFrame = "{{1110, 26}, {551, 716}}";
-		};
-	};
 	3634FA0011BD0323003A01B6 /* PBXBookmark */ = {
 		isa = PBXBookmark;
 		fRef = 3627357211A6CB9000269B2C /* AppWindowListener.rb */;
 	};
-	3634FC0E11BFABEB003A01B6 /* Application.rb */ = {
+	368C24FC11C2903A0002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 362275E211C26ACA00B47BBE /* Licence */;
+		name = "Licence: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 2280;
+		vrLoc = 0;
+	};
+	368C24FD11C2903A0002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 362275D411C26ACA00B47BBE /* run_dev.sh */;
+		name = "run.sh: 27";
+		rLen = 0;
+		rLoc = 1190;
+		rType = 0;
+		vrLen = 962;
+		vrLoc = 0;
+	};
+	368C24FE11C2903A0002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 362275E111C26ACA00B47BBE /* ReadMe.rdoc */;
+		name = "ReadMe.rdoc: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 641;
+		vrLoc = 0;
+	};
+	368C250211C2903A0002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 368C250311C2903A0002C691 /* application_constants.rb */;
+		name = "application_constants.rb: 125";
+		rLen = 0;
+		rLoc = 3867;
+		rType = 0;
+		vrLen = 1248;
+		vrLoc = 2787;
+	};
+	368C250311C2903A0002C691 /* application_constants.rb */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.script.ruby;
+		name = application_constants.rb;
+		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/src/scripts/application_constants.rb";
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {492, 913}}";
-			sepNavSelRange = "{887, 0}";
-			sepNavVisRange = "{809, 1872}";
-			sepNavWindowFrame = "{{348, 312}, {551, 716}}";
+			sepNavIntBoundsRect = "{{0, 0}, {490, 1364}}";
+			sepNavSelRange = "{2813, 0}";
+			sepNavVisRange = "{0, 1526}";
 		};
 	};
-	3634FC0F11BFAC44003A01B6 /* XMLUtils.rb */ = {
+	368C3A7511C2A9B70002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 362275E111C26ACA00B47BBE /* ReadMe.rdoc */;
+		name = "ReadMe.rdoc: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 641;
+		vrLoc = 0;
+	};
+	368C3A7611C2A9B70002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 362275E211C26ACA00B47BBE /* Licence */;
+		name = "Licence: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 2280;
+		vrLoc = 0;
+	};
+	368C3A8111C2A9B70002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 368C3A8211C2A9B70002C691 /* application_requires.rb */;
+		name = "application_requires.rb: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1399;
+		vrLoc = 0;
+	};
+	368C3A8211C2A9B70002C691 /* application_requires.rb */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.script.ruby;
+		name = application_requires.rb;
+		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/src/scripts/application_requires.rb";
+		sourceTree = "<absolute>";
+	};
+	368C3A8511C2A9B70002C691 /* application_requires.rb */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = text.script.ruby;
+		name = application_requires.rb;
+		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/src/scripts/application_requires.rb";
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{147, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1902}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 604}}";
-			sepNavSelRange = "{1246, 0}";
-			sepNavVisRange = "{0, 1246}";
-			sepNavWindowFrame = "{{998, 312}, {551, 716}}";
+			sepNavIntBoundsRect = "{{0, 0}, {490, 583}}";
+			sepNavSelRange = "{1183, 0}";
+			sepNavVisRange = "{60, 1472}";
 		};
 	};
-	3634FC1011BFAC98003A01B6 /* Component.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{148, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2045}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 650}}";
-			sepNavSelRange = "{1076, 12}";
-			sepNavVisRange = "{47, 1342}";
-			sepNavWindowFrame = "{{736, 109}, {551, 716}}";
-		};
+	368C3AE311C2AAD40002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 362275D411C26ACA00B47BBE /* run_dev.sh */;
+		name = "run_dev.sh: 3";
+		rLen = 0;
+		rLoc = 20;
+		rType = 0;
+		vrLen = 1212;
+		vrLoc = 0;
 	};
-	3634FCEE11BFC54B003A01B6 /* COPYING */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {492, 23815}}";
-			sepNavSelRange = "{3290, 182}";
-			sepNavVisRange = "{68, 2463}";
-			sepNavWindowFrame = "{{318, 78}, {551, 716}}";
-		};
+	368C3AE411C2AAD40002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 368C3AE511C2AAD40002C691 /* Main.java */;
+		name = "Main.java: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 392;
+		vrLoc = 0;
 	};
-	3634FD2A11BFC54B003A01B6 /* complex.rb */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {971, 7029}}";
-			sepNavSelRange = "{169, 10}";
-			sepNavVisRange = "{0, 1058}";
-		};
+	368C3AE511C2AAD40002C691 /* Main.java */ = {
+		isa = PBXFileReference;
+		name = Main.java;
+		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/src/masscurator/Main.java";
+		sourceTree = "<absolute>";
 	};
-	363DDC8F11AD266B00CF54D7 /* SpreadsheetGeneration.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{160, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 4331}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 1233}}";
-			sepNavSelRange = "{1644, 0}";
-			sepNavVisRange = "{329, 1968}";
-			sepNavWindowFrame = "{{477, 305}, {551, 723}}";
-		};
+	368C3AE611C2AAD40002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 368C3A8511C2A9B70002C691 /* application_requires.rb */;
+		name = "application_requires.rb: 35";
+		rLen = 0;
+		rLoc = 1183;
+		rType = 0;
+		vrLen = 1472;
+		vrLoc = 60;
 	};
-	363DDD2F11AD53C400CF54D7 /* SearchAction.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{151, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1795}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {489, 634}}";
-			sepNavSelRange = "{1100, 0}";
-			sepNavVisRange = "{0, 1139}";
-			sepNavWindowFrame = "{{776, 305}, {548, 723}}";
-		};
+	368C3AE711C2AAD40002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 368C250311C2903A0002C691 /* application_constants.rb */;
+		name = "application_constants.rb: 125";
+		rLen = 0;
+		rLoc = 3867;
+		rType = 0;
+		vrLen = 1291;
+		vrLoc = 2744;
 	};
-	363DDDF411AD675B00CF54D7 /* SearchPanel.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{150, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1524}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {971, 452}}";
-			sepNavSelRange = "{752, 0}";
-			sepNavVisRange = "{184, 684}";
-			sepNavWindowFrame = "{{351, 305}, {548, 723}}";
-		};
+	368C3AE811C2AAD40002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 362275D411C26ACA00B47BBE /* run_dev.sh */;
+		name = "run_dev.sh: 3";
+		rLen = 0;
+		rLoc = 20;
+		rType = 0;
+		vrLen = 1212;
+		vrLoc = 0;
 	};
-	363DDFED11AE7B3800CF54D7 /* ServiceComponent.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{155, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 2905}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 947}}";
-			sepNavSelRange = "{1820, 0}";
-			sepNavVisRange = "{688, 1561}";
-			sepNavWindowFrame = "{{508, 305}, {551, 723}}";
-		};
+	368C3AE911C2AAD40002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 368C3AEA11C2AAD40002C691 /* Main.java */;
+		name = "Main.java: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 392;
+		vrLoc = 0;
 	};
-	363DE10E11AE983600CF54D7 /* BrowsingStatusPanel.rb */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {492, 704}}";
-			sepNavSelRange = "{884, 10}";
-			sepNavVisRange = "{0, 1724}";
-			sepNavWindowFrame = "{{261, 220}, {551, 723}}";
-		};
+	368C3AEA11C2AAD40002C691 /* Main.java */ = {
+		isa = PBXFileReference;
+		name = Main.java;
+		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/src/masscurator/Main.java";
+		sourceTree = "<absolute>";
 	};
-	363DE23F11AEB0E000CF54D7 /* run.sh */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {492, 634}}";
-			sepNavSelRange = "{828, 0}";
-			sepNavVisRange = "{0, 958}";
-			sepNavWindowFrame = "{{80, 305}, {551, 723}}";
-		};
+	368C3AEB11C2AAD40002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 368C3A8511C2A9B70002C691 /* application_requires.rb */;
+		name = "application_requires.rb: 35";
+		rLen = 0;
+		rLoc = 1183;
+		rType = 0;
+		vrLen = 1472;
+		vrLoc = 60;
 	};
-	363DE3C911AFC7E800CF54D7 /* ServiceComponentPort.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{159, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1026}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 611}}";
-			sepNavSelRange = "{273, 0}";
-			sepNavVisRange = "{0, 370}";
-			sepNavWindowFrame = "{{747, 147}, {551, 723}}";
-		};
+	368C3AEC11C2AAD40002C691 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 368C3AED11C2AAD40002C691 /* application_constants.rb */;
+		name = "application_constants.rb: 85";
+		rLen = 0;
+		rLoc = 2813;
+		rType = 0;
+		vrLen = 1526;
+		vrLoc = 0;
 	};
-	36F9026111A54B27009E69E2 /* MainPanel.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{148, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1925}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {489, 617}}";
-			sepNavSelRange = "{213, 0}";
-			sepNavVisRange = "{0, 1269}";
-			sepNavWindowFrame = "{{483, 305}, {548, 723}}";
-		};
-	};
-	36F9026211A54B27009E69E2 /* MainWindow.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{149, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1411}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {487, 630}}";
-			sepNavSelRange = "{352, 0}";
-			sepNavVisRange = "{0, 755}";
-			sepNavWindowFrame = "{{711, 309}, {546, 719}}";
-		};
-	};
-	36F9026311A54B27009E69E2 /* ServiceSelectPanel.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{157, 657}\";\n            s = 0;\n        },\n                {\n            r = \"{2045, 1510}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 3584}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {493, 632}}";
-			sepNavSelRange = "{299, 14}";
-			sepNavVisRange = "{0, 1419}";
-			sepNavWindowFrame = "{{395, 307}, {552, 721}}";
-		};
-	};
-	36F9026411A54B27009E69E2 /* UploadSpreadsheetPanel.rb */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {971, 1386}}";
-			sepNavSelRange = "{827, 22}";
-			sepNavVisRange = "{821, 854}";
-			sepNavWindowFrame = "{{688, 307}, {552, 721}}";
-		};
-	};
-	36F9028B11A54B90009E69E2 /* application_requires.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{159, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1758}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {487, 607}}";
-			sepNavSelRange = "{284, 0}";
-			sepNavVisRange = "{0, 1102}";
-			sepNavWindowFrame = "{{907, 27}, {546, 719}}";
-		};
-	};
-	36F9028C11A54B90009E69E2 /* main.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{143, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1952}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {487, 617}}";
-			sepNavSelRange = "{187, 24}";
-			sepNavVisRange = "{0, 1296}";
-			sepNavWindowFrame = "{{247, 309}, {546, 719}}";
-		};
-	};
-	36F902BD11A55AC2009E69E2 /* LoadServicesAction.rb */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {487, 1551}}";
-			sepNavSelRange = "{4703, 0}";
-			sepNavVisRange = "{2899, 2138}";
-			sepNavWindowFrame = "{{812, 309}, {546, 719}}";
-		};
-	};
-	36F9033F11A562B1009E69E2 /* UploadSpreadsheetAction.rb */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {971, 1309}}";
-			sepNavSelRange = "{1066, 21}";
-			sepNavVisRange = "{937, 1065}";
-			sepNavWindowFrame = "{{626, 312}, {551, 716}}";
-		};
-	};
-	36F905D111A58885009E69E2 /* GoBackAction.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{151, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1611}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {493, 609}}";
-			sepNavSelRange = "{813, 0}";
-			sepNavVisRange = "{0, 955}";
-			sepNavWindowFrame = "{{838, 307}, {552, 721}}";
-		};
-	};
-	36F907CD11A68918009E69E2 /* BioCatalogueClient.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{157, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1926}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {492, 617}}";
-			sepNavSelRange = "{295, 12}";
-			sepNavVisRange = "{0, 1270}";
-			sepNavWindowFrame = "{{705, 305}, {551, 723}}";
-		};
-	};
-	36F907E011A68FD8009E69E2 /* PreviewAction.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{152, 657}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 1334}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {493, 609}}";
-			sepNavSelRange = "{445, 0}";
-			sepNavVisRange = "{0, 678}";
-			sepNavWindowFrame = "{{188, 307}, {552, 721}}";
-		};
-	};
-	36F907E111A6907F009E69E2 /* Service.rb */ = {
-		uiCtxt = {
-			sepNavFolds = "{\n    c =     (\n                {\n            r = \"{146, 657}\";\n            s = 0;\n        },\n                {\n            r = \"{3482, 42}\";\n            s = 0;\n        }\n    );\n    r = \"{0, 3540}\";\n    s = 0;\n}";
-			sepNavIntBoundsRect = "{{0, 0}, {971, 1146}}";
-			sepNavSelRange = "{2507, 0}";
-			sepNavVisRange = "{1933, 910}";
-			sepNavWindowFrame = "{{343, 305}, {551, 723}}";
-		};
+	368C3AED11C2AAD40002C691 /* application_constants.rb */ = {
+		isa = PBXFileReference;
+		name = application_constants.rb;
+		path = "/Users/mannie/Documents/BioCatalogue-Mass-Curator/src/scripts/application_constants.rb";
+		sourceTree = "<absolute>";
 	};
 }
