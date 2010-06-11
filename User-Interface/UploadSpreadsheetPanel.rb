@@ -24,7 +24,7 @@ class UploadSpreadsheetPanel < JPanel
   
   attr_reader :selectSpreadsheetButton, :uploadSpreadsheetButton
   attr_reader :selectedSpreadsheetLabel
-  attr_reader :usernameField, :passwordField
+  attr_reader :usernameField, :passwordField, :uploadSpreadsheetAction
   
   def initialize
     super()
@@ -42,6 +42,10 @@ class UploadSpreadsheetPanel < JPanel
     initUI
     return self
   end # initialize
+  
+  def spreadsheetSpecified
+    @selectedSpreadsheetLabel.isEnabled
+  end # spreadsheetSpecified
   
 private
   
@@ -71,7 +75,8 @@ private
   def mainPanel
     panel = JPanel.new
     panel.setLayout(GridBagLayout.new)
-
+    keyListener = CredentialsKeyListener.new(self)
+    
     # set constraints
     c = GridBagConstraints.new
     c.insets = Insets.new(0, 0, 75, 0)
@@ -97,13 +102,14 @@ private
     c.gridx = 0
     c.anchor = GridBagConstraints::EAST
     usernameLabel = JLabel.new("BioCatalogue Username:")
-    usernameLabel.setLabelFor(@usernameField = JTextField.new("mannie@mygrid.org.uk", 30))
+    usernameLabel.setLabelFor(@usernameField = JTextField.new(30))
     panel.add(usernameLabel, c)
     
     # username field   
     c.anchor = GridBagConstraints::WEST
     c.gridx = 1
     panel.add(@usernameField, c)
+    @usernameField.addKeyListener(keyListener)
 
     # password label
     c.anchor = GridBagConstraints::EAST
@@ -117,7 +123,8 @@ private
     c.anchor = GridBagConstraints::WEST
     c.gridx = 1
     panel.add(@passwordField, c)
-
+    @passwordField.addKeyListener(keyListener)
+    
     return panel
   end # mainPanel
   

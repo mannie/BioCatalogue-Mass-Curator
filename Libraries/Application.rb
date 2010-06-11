@@ -23,7 +23,7 @@
 module Application
   
   def self.postAnnotationData(jsonContent, user, pass)
-    begin            
+    begin
       request = Net::HTTP::Post.new("/annotations/bulk_create")
       request.basic_auth(user, pass)
       request.body = jsonContent
@@ -34,20 +34,23 @@ module Application
         response = http.request(request)
         
         case response
-        when Net::HTTPSuccess
-          return true
-        when Net::HTTPClientError, Net::HTTPServerError
-          requestJSON, responseJSON = JSON(jsonContent), JSON(response.body)
-          
-          raise "Failure: POST /annotations/bulk_create with content\n" +
-              requestJSON.inspect + "\n\nResponse:\n" + responseJSON.inspect
+          when Net::HTTPSuccess
+            Notification.informationDialog(
+                "Your annotations have been successfully sent.", "Success")
+          when Net::HTTPClientError
+            Notification.errorDialog("Invalid username and/or password")
+            raise "Invalid username and/or password"
+          when Net::HTTPServerError
+            Notification.errorDialog("Error occured")
+            raise response.inspect
         end
       } # Net::HTTP.new(BioCatalogueClient.HOST.host).start
     rescue Exception => ex
       log('e', ex)
       return nil
     end # begin rescue
-
+            
+    return true
   end # self.postAnnotationData
   
   def self.serviceWithURI(uriString)

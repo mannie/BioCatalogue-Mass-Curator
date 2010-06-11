@@ -39,6 +39,7 @@ USER_INTERFACE_DIR = File.join(APP_ROOT, "User-Interface").freeze
 EVENT_HANDLERS = %w{ AppComponentListener.rb
                      AppKeyListener.rb
                      AppWindowListener.rb
+                     CredentialsKeyListener.rb
                      GenerateSpreadsheetAction.rb 
                      GoBackAction.rb
                      LoadServicesAction.rb
@@ -64,7 +65,6 @@ MODELS = %w{ BioCatalogueClient.rb
              ServiceComponentPort.rb }.freeze
 
 USER_INTERFACE = %w{ BrowsingStatusPanel.rb
-                     LoginPanel.rb
                      MainWindow.rb 
                      MainPanel.rb
                      PreviewDialog.rb
@@ -90,7 +90,8 @@ AWT = %w{ BorderLayout
                   Insets
                   Toolkit }.freeze
 
-AWT_EVENTS = %w{ ActionListener
+AWT_EVENTS = %w{ ActionEvent
+                 ActionListener
                  ComponentListener
                  KeyEvent
                  KeyListener

@@ -24,6 +24,7 @@ class UploadSpreadsheetAction
   java_implements ActionListener
 
   @selectedFilePath = nil
+  @@uploadPanel = nil
   
   def initialize(container)
     super()
@@ -32,15 +33,16 @@ class UploadSpreadsheetAction
     return self
   end # initialize
 
+  def self.setUploadPanelVisible(visible)
+    @@uploadPanel.setVisible(visible) if @@uploadPanel
+  end # self.setUploadPanelVisible
+  
 # --------------------
   
   def actionPerformed(event)
     if @buttonContainer.instance_of?(MainPanel)
       @buttonContainer.setVisible(false)
-      
-      # @@loginPanel ||= LoginPanel.new
-      # @@loginPanel.setVisible(true)
-      
+            
       @@uploadPanel ||= UploadSpreadsheetPanel.new
       @@uploadPanel.setVisible(true)
       @buttonContainer.setVisible(false)
@@ -61,8 +63,12 @@ class UploadSpreadsheetAction
           @selectedFilePath = @@fileSelector.getSelectedFile.getAbsolutePath
           @buttonContainer.selectedSpreadsheetLabel.setText(@selectedFilePath)
           @buttonContainer.selectedSpreadsheetLabel.setEnabled(true)
-          
-          @buttonContainer.uploadSpreadsheetButton.setEnabled(true)
+        
+          user = @buttonContainer.usernameField.getText.strip
+          pass = @buttonContainer.passwordField.getText.strip
+
+          @buttonContainer.uploadSpreadsheetButton.setEnabled(true) if 
+              !user.empty? && !pass.empty?
         end # if file selected
       elsif event.getSource==@buttonContainer.uploadSpreadsheetButton        
         return if @selectedFilePath.nil?
@@ -86,18 +92,11 @@ class UploadSpreadsheetAction
               proceed = false
             end
             
-            if proceed
-              user = @buttonContainer.usernameField.getText
-              pass = @buttonContainer.passwordField.getText
-              
-              if Application.postAnnotationData(jsonOutput, user, pass)
-                Notification.informationDialog(
-                    "Your annotations have been successfully sent.", "Success")
-              else
-                Notification.errorDialog(
-                    "An error occured while trying to send your annotations.")
-              end
-            end # if proceed
+            user = @buttonContainer.usernameField.getText.strip
+            pass = @buttonContainer.passwordField.getText.strip
+            
+            Application.postAnnotationData(jsonOutput, user, pass) if proceed &&
+                !user.empty? && !pass.empty?
           else
             Notification.errorDialog(
                 "An error occured while uploading your spreadsheet.")

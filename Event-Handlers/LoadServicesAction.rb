@@ -64,19 +64,30 @@ class LoadServicesAction
     @@currentPage = @pageNumber
     
     Thread.new("Loading page ##{@pageNumber}") {
-      # disable event source
-      event.getSource.setEnabled(false)
-      
+      # disable browsing buttons in panel      
       if @buttonContainer.class==MainPanel
-        @buttonContainer.setEnabled(false)
-        
         originalCaption = event.getSource.getText
         event.getSource.setText("Loading...")
+        event.getSource.setEnabled(false)
+      else
+        previousPageEnabled = @buttonContainer.previousPageButton.isEnabled
+        nextPageEnabled = @buttonContainer.nextPageButton.isEnabled
+        backButtonEnabled = Component.browsingStatusPanel.backButton.isEnabled
+        exportButtonEnabled = Component.exportButton.isEnabled
+        searchEnabled = Component.searchButton.isEnabled
+        
+        @buttonContainer.previousPageButton.setEnabled(false)
+        @buttonContainer.nextPageButton.setEnabled(false)
+        Component.browsingStatusPanel.backButton.setEnabled(false)
+        Component.exportButton.setEnabled(false)
+        Component.searchField.setEnabled(false)
+        Component.searchButton.setEnabled(false)
       end
       
+      # update source icon
       originalIcon = event.getSource.getIcon
       event.getSource.setIcon(Resource.iconFor('busy'))
-      
+
       # load new service select panel
       if (panel = @@resultsPanelForPage[@pageNumber])
         @@serviceSelectPanel = panel
@@ -100,21 +111,29 @@ class LoadServicesAction
       
       # update full view to show new services
       @buttonContainer.setVisible(false)
+      UploadSpreadsheetAction.setUploadPanelVisible(false)
       @@serviceSelectPanel.setVisible(true)
       
       MAIN_WINDOW.getContentPane.add(@@serviceSelectPanel)
       MAIN_WINDOW.getContentPane.repaint
       Component.flash(@@serviceSelectPanel)
       
-      # re-enable event source 
+      # update source icon
       event.getSource.setIcon(originalIcon)
       
+      # re-enable browsing buttons in panel
       if @buttonContainer.class==MainPanel
-        event.getSource.setText(originalCaption)
-        @buttonContainer.setEnabled(true)
+        event.getSource.setText(originalCaption) 
+        event.getSource.setEnabled(true)
+      else        
+        Component.searchButton.setEnabled(searchEnabled)
+        Component.searchField.setEnabled(true)
+
+        Component.exportButton.setEnabled(exportButtonEnabled)
+        Component.browsingStatusPanel.backButton.setEnabled(backButtonEnabled)
+        @buttonContainer.nextPageButton.setEnabled(nextPageEnabled)
+        @buttonContainer.previousPageButton.setEnabled(previousPageEnabled)
       end
-      
-      event.getSource.setEnabled(true)
     }
   end # actionPerformed
 
