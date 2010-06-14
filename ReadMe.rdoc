@@ -28,6 +28,9 @@ The builds are handled by the Rawr[http://github.com/rawr/rawr] gem.
 
 To create an executable JAR, simply run (you do not need to run 'rawr install'):
   rake rawr:jar
-  
+
+To execute the app from a JAR, run:
+  java -jar BioCatalogue-Mass-Curator.jar
+
 For a full list of 'rake rawr:' commands, run:
   rake -T
