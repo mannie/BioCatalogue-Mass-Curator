@@ -24,18 +24,32 @@
 
 # Application Directory Names
 
-APP_ROOT = File.expand_path(
-    File.join(File.dirname(__FILE__), "..", "..")).freeze
+EVENTS_DIR = File.expand_path(File.join(
+    File.dirname(__FILE__), "events")).freeze
 
-EVENTS_DIR = File.join(APP_ROOT, "src", "events").freeze
-MODELS_DIR = File.join(APP_ROOT, "src", "models").freeze
-MODULES_DIR = File.join(APP_ROOT, "src", "modules").freeze
-SCRIPTS_DIR = File.join(APP_ROOT, "src", "scripts").freeze
-UI_DIR = File.join(APP_ROOT, "src", "ui").freeze
+MODELS_DIR = File.expand_path(File.join(
+    File.dirname(__FILE__), "models")).freeze
+    
+MODULES_DIR = File.expand_path(File.join(
+    File.dirname(__FILE__), "modules")).freeze
+    
+UI_DIR = File.expand_path(File.join(File.dirname(__FILE__), "ui")).freeze
 
-LIB_DIR = File.join(APP_ROOT, "lib").freeze
+dirPath = File.join(File.dirname(__FILE__), "..", "resources")
+dirPath = File.expand_path(dirPath.gsub("file:", "")).freeze
 
-RESOURCES_DIR = File.join(APP_ROOT, "resources").freeze
+if File.directory?(dirPath)
+  RESOURCES_DIR = dirPath
+else 
+  dirPath = File.join(File.dirname(__FILE__), "..", "..", "resources")
+  dirPath = File.expand_path(dirPath.gsub("file:", "")).freeze
+  
+  if File.directory?(dirPath)
+    RESOURCES_DIR = File.expand_path(dirPath).freeze
+  else
+    RESOURCES_DIR = ''
+  end
+end
 
 # ========================================
 
@@ -84,14 +98,14 @@ UI_SRC = %w{ BrowsingStatusPanel.rb
 
 # Java Classes To Include
 AWT = %w{ BorderLayout
-                  Color
-                  Dimension
-                  FlowLayout 
-                  GridLayout
-                  GridBagLayout
-                  GridBagConstraints
-                  Insets
-                  Toolkit }.freeze
+          Color
+          Dimension
+          FlowLayout 
+          GridLayout
+          GridBagLayout
+          GridBagConstraints
+          Insets
+          Toolkit }.freeze
 
 AWT_EVENTS = %w{ ActionEvent
                  ActionListener
@@ -101,22 +115,22 @@ AWT_EVENTS = %w{ ActionEvent
                  WindowListener }.freeze
 
 SWING = %w{ filechooser.FileNameExtensionFilter
-                    BorderFactory 
-                    BoxLayout 
-                    ImageIcon
-                    JButton 
-                    JCheckBox
-                    JDialog
-                    JFileChooser
-                    JFrame 
-                    JLabel 
-                    JOptionPane 
-                    JPanel
-                    JPasswordField
-                    JScrollPane
-                    JTextArea
-                    JTextField
-                    SwingConstants }.freeze
+            BorderFactory 
+            BoxLayout 
+            ImageIcon
+            JButton 
+            JCheckBox
+            JDialog
+            JFileChooser
+            JFrame 
+            JLabel 
+            JOptionPane 
+            JPanel
+            JPasswordField
+            JScrollPane
+            JTextArea
+            JTextField
+            SwingConstants }.freeze
 
 SWING_EVENTS = %w{ ChangeListener }.freeze
 

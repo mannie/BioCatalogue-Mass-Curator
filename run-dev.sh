@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# run.sh
+# run-dev.sh
 # BioCatalogue-Mass-Curator
 #
 # Created by Mannie Tagarira on 27/05/2010.
@@ -21,15 +21,17 @@
 
 # ========================================
 
-CURRENT_DIR=$(dirname $0)
+PROJECT_DIR=$(dirname $0)
 
-BOOTSTRAP=$CURRENT_DIR/BioCatalogue-Mass-Curator.jar
+JRUBY=$PROJECT_DIR/lib/jruby-complete-1.5.1.jar
 
-JSON=$CURRENT_DIR/lib/json-jruby.jar
-SPREADSHEET=$CURRENT_DIR/lib/spreadsheet.jar
-LIBXML=$CURRENT_DIR/lib/libxml-jruby.jar
-LAUNCHER=$CURRENT_DIR/lib/BrowserLauncher2-1_3.jar
+JSON=$PROJECT_DIR/lib/json-jruby.jar
+SPREADSHEET=$PROJECT_DIR/lib/spreadsheet.jar
+LIBXML=$PROJECT_DIR/lib/libxml-jruby.jar
+LAUNCHER=$PROJECT_DIR/lib/BrowserLauncher2-1_3.jar
 
-java -jar $BOOTSTRAP -r$LIBXML -r$SPREADSHEET -r$JSON -r$LAUNCHER
+BOOTSTRAP=$PROJECT_DIR/src/main.rb
+
+java -jar $JRUBY -r$SPREADSHEET -r$JSON -r$LAUNCHER -r$LIBXML -S $BOOTSTRAP 
 
 exit 0

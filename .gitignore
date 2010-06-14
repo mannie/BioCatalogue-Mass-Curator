@@ -1,6 +1,9 @@
 .DS_Store
 build/*
+package/*
+dist/*
+pkg/*
 manifest.mf
 build.xml
 nbproject/*
-dist/*
+BioCatalogue-Mass-Curator.xcodeproj/*
