@@ -26,8 +26,8 @@ BioCatalogue Mass Curator is an application which uses the BioCatalogue[http://b
 The builds are handled by the Rawr[http://github.com/rawr/rawr] gem.
   sudo gem install rawr
 
-To create an executable JAR, simply run (_You do not need to run +rawr install+_):
+To create an executable JAR, simply run (you do not need to run 'rawr install'):
   rake rawr:jar
   
-For a full list of +rake rawr:..._ commands, run:
+For a full list of 'rake rawr:' commands, run:
   rake -T
