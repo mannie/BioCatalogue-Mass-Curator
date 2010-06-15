@@ -17,7 +17,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
+   along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
 module XMLUtils
@@ -54,5 +54,27 @@ module XMLUtils
   def self.selectNodesWithNameFrom(name, parent)
     parent.children.select { |n| n.name == name }
   end # self.selectNodesWithName
+  
+  def self.getServiceListingsFromNode(resultsNode, serviceCache, listingCache)
+    return false unless resultsNode.name=='results'    
+
+    return false if listingCache.nil? || serviceCache.nil?
+    return false unless listingCache.empty? || serviceCache.empty?
+    
+    serviceNodes = self.selectNodesWithNameFrom("service", resultsNode)
+    serviceNodes.each { |node|
+      attr = self.getAttributeFromNode("xlink:href", node)
+      service = Application.serviceWithURI(attr.value)
+               
+      next if service.nil? # URI attribute
+      
+      listing = ServiceListingPanel.new(service)
+      
+      serviceCache << service
+      listingCache << listing
+    }
+    
+    return true
+  end # self.getServiceListingsFromNode
   
 end # module XMLUtils

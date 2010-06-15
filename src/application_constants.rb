@@ -131,7 +131,8 @@ SWING = %w{ filechooser.FileNameExtensionFilter
             JScrollPane
             JTextArea
             JTextField
-            SwingConstants }.freeze
+            SwingConstants
+            SwingUtilities }.freeze
 
 SWING_EVENTS = %w{ ChangeListener }.freeze
 

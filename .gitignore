@@ -7,3 +7,4 @@ manifest.mf
 build.xml
 nbproject/*
 BioCatalogue-Mass-Curator.xcodeproj/*
+Info.plist

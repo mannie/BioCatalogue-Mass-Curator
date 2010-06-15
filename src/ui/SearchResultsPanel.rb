@@ -1,8 +1,8 @@
 #
-#  ServiceSelectPanel.rb
+#  SearchResultsPanel.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 20/05/2010.
+#  Created by Mannie Tagarira on 15/06/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -20,19 +20,22 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
-class ServiceSelectPanel < JPanel
-  
+class SearchResultsPanel < JPanel
+
   attr_reader :localServiceCache, :localListingCache, :mainPanel
   attr_reader :previousPageButton, :nextPageButton
-    
-  def initialize(pageNumber)
+  attr_reader :query
+  
+  @@lastPageStatusLabelUsed = nil
+  @@lastPage = nil
+  
+  def initialize(query, pageNumber)
     super()
 
-    @page = pageNumber.to_i
+    @query, @page = query, pageNumber.to_i
+    
     initUI
 
-    Component.browsingStatusPanel.pageCount = @lastPage
-    
     return self
   end # initialize
   
@@ -40,21 +43,26 @@ private
   
   def initUI
     self.setLayout(BorderLayout.new)  
-    
-    self.add(Component.searchPanel, BorderLayout::NORTH)
+
     self.add(@mainPanel ||= mainScrollPane)
-    self.add(Component.browsingStatusPanel, BorderLayout::SOUTH)
+    
+    # current page label
+    self.remove(@@lastPageStatusLabelUsed) if @@lastPageStatusLabelUsed
+    @@lastPageStatusLabelUsed = JLabel.new(
+        "Page #{@page} of #{@@lastPage}", SwingConstants::CENTER)
+    self.add(@@lastPageStatusLabelUsed, BorderLayout::SOUTH)
         
     # button to previous page
     @previousPageButton = JButton.new(Resource.iconFor('back-arrow'))
-    @previousPageButton.addActionListener(LoadServicesAction.new(self, @page-1))
+    @previousPageButton.addActionListener(
+        LoadSearchPageAction.new(self, @page-1))
     @previousPageButton.setEnabled(false) if @page==1
     self.add(@previousPageButton, BorderLayout::WEST)
     
     # button to next page
     @nextPageButton = JButton.new(Resource.iconFor('forward-arrow'))
-    @nextPageButton.addActionListener(LoadServicesAction.new(self, @page+1))
-    @nextPageButton.setEnabled(false) if @page==@lastPage
+    @nextPageButton.addActionListener(LoadSearchPageAction.new(self, @page+1))
+    @nextPageButton.setEnabled(false) if @page==@@lastPage
     self.add(@nextPageButton, BorderLayout::EAST)
   end # initUI
   
@@ -67,18 +75,18 @@ private
     c = GridBagConstraints.new
     c.anchor = GridBagConstraints::NORTHWEST
     c.fill = GridBagConstraints::HORIZONTAL
-    c.insets = Insets.new(5, 5, 5, 5)
+    c.insets = Insets.new(1, 2, 1, 2)
     c.weightx = 2
     c.gridy = 0
-
+p BioCatalogueClient.searchEndpoint(@query, 'xml', CONFIG[:searchResultsPerPage], @page)
     begin
       xmlDocument = XMLUtils.getXMLDocumentFromURI(
-          BioCatalogueClient.servicesEndpoint(
-              'xml', CONFIG[:servicesPerPage], @page, 'SOAP'))
+          BioCatalogueClient.searchEndpoint(
+              @query, 'xml', CONFIG[:searchResultsPerPage], @page))
     rescue Exception => ex
-      log('f', ex)
+      log('e', ex)
     end
-    
+
     @localServiceCache = []
     @localListingCache = []
     
@@ -93,18 +101,22 @@ private
             }
           end
         when 'statistics'
+          break if @@lastPage
+          
           statsNodes = XMLUtils.getValidChildren(node)
           statsNodes.each { |node|
             case node.name
               when 'pages'
-                @lastPage = node.content.to_i
+                @@lastPage = node.content.to_i
             end # case
           }
       end # case
     } # xmlDocument.root.each
         
-    return JScrollPane.new(panel)
+    return (@localServiceCache.empty? ? 
+        JLabel.new("No services matched query\n'#{@query}'", 
+            SwingConstants::CENTER) : 
+        JScrollPane.new(panel))
   end # mainScrollPane
-  
-end
 
+end # SearchResultsPanel

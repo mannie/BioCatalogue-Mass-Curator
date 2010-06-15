@@ -36,6 +36,8 @@ private
   def initUI
     self.setLayout(BorderLayout.new)
 
+#    self.add(Component.searchPanel, BorderLayout::NORTH)
+    
     buttonPanel = JPanel.new
     buttonPanel.setLayout(GridBagLayout.new)
     

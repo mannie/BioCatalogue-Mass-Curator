@@ -17,18 +17,18 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
+   along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
 class SearchResultsWindow < JFrame
   
   @@lastSearchResultsWindow = nil
   
-  def initialize(query, limit=10)
-    super("Top #{limit} results for: " + query)
+  def initialize(query)
+    super("Search results for: " + query)
     
-    @query, @limit = query, limit
-        
+    @query = query
+    
     initUI
     
     @@lastSearchResultsWindow.dispose if @@lastSearchResultsWindow
@@ -64,27 +64,25 @@ private
 
     begin
       xmlDocument = XMLUtils.getXMLDocumentFromURI(
-          BioCatalogueClient.searchEndpoint(@query, 'xml', @limit))
+          BioCatalogueClient.searchEndpoint(
+              @query, 'xml', CONFIG[:searchResultsPerPage]))
     rescue Exception => ex
       log('e', ex)
     end
     
     @localServiceCache = []
+    @localListingCache = []
     
     xmlDocument.root.each { |node|
       case node.name
         when 'results'
-          serviceNodes = XMLUtils.selectNodesWithNameFrom("service", node)
-          serviceNodes.each { |node|
-            attr = XMLUtils.getAttributeFromNode("xlink:href", node)
-            service = Application.serviceWithURI(attr.value)
-            
-            next if service.nil? # URI attribute
-            
-            @localServiceCache << (service)
-            panel.add(ServiceListingPanel.new(service), c)
-            c.gridy += 1
-          }
+          if XMLUtils.getServiceListingsFromNode(
+              node, @localServiceCache, @localListingCache)
+            @localListingCache.each { |listing|
+              panel.add(listing, c)
+              c.gridy += 1
+            }
+          end
       end # case
     } # xmlDocument.root.each
     
