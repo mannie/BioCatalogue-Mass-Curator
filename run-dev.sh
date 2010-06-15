@@ -17,7 +17,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
+# along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 
 # ========================================
 
@@ -32,6 +32,6 @@ LAUNCHER=$PROJECT_DIR/lib/BrowserLauncher2-1_3.jar
 
 BOOTSTRAP=$PROJECT_DIR/src/main.rb
 
-java -jar $JRUBY -r$SPREADSHEET -r$JSON -r$LAUNCHER -r$LIBXML -S $BOOTSTRAP 
+java -jar $JRUBY -r$SPREADSHEET -r$JSON -r$LAUNCHER -r$LIBXML -S $BOOTSTRAP --benchmark=true --host=http://sandbox.biocatalogue.org
 
 exit 0

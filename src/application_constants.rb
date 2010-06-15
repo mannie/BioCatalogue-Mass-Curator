@@ -17,7 +17,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see http://www.gnu.org/licenses/gpl.html.
+   along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
 # ========================================
@@ -61,6 +61,7 @@ EVENTS_SRC = %w{ AppComponentListener.rb
                  CredentialsKeyListener.rb
                  GenerateSpreadsheetAction.rb 
                  GoBackAction.rb
+                 LoadSearchPageAction.rb
                  LoadServicesAction.rb
                  PreviewAction.rb
                  SearchAction.rb
@@ -86,10 +87,10 @@ MODULES_SRC = %w{ Application.rb
 UI_SRC = %w{ BrowsingStatusPanel.rb
              MainWindow.rb 
              MainPanel.rb
-             PreviewDialog.rb
              SearchPanel.rb
              SearchResultsWindow.rb
              ServiceListingPanel.rb
+             SearchResultsPanel.rb
              ServiceSelectPanel.rb
              SelectedServicesWindow.rb 
              UploadSpreadsheetPanel.rb }.freeze
