@@ -72,7 +72,7 @@ class UploadSpreadsheetAction
         end # if file selected
       elsif event.getSource==@buttonContainer.uploadSpreadsheetButton        
         return if @selectedFilePath.nil?
-                
+        
         Thread.new("Posting annotation data") {
           event.getSource.setEnabled(false)
           event.getSource.setText("Uploading...")

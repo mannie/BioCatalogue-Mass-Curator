@@ -59,7 +59,7 @@ module SpreadsheetGeneration
         
         @nextRow += 1
         writeToSpreadsheet(service)
-      end          
+      end
       
       # finalise
       @workbook.write(file.path)

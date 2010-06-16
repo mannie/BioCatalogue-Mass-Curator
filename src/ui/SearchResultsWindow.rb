@@ -65,7 +65,7 @@ private
     begin
       xmlDocument = XMLUtils.getXMLDocumentFromURI(
           BioCatalogueClient.searchEndpoint(
-              @query, 'xml', CONFIG[:searchResultsPerPage]))
+              @query, 'xml', CONFIG['application']['search-results-per-page']))
     rescue Exception => ex
       log('e', ex)
     end

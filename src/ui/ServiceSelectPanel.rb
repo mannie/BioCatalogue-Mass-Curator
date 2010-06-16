@@ -74,7 +74,7 @@ private
     begin
       xmlDocument = XMLUtils.getXMLDocumentFromURI(
           BioCatalogueClient.servicesEndpoint(
-              'xml', CONFIG[:servicesPerPage], @page, 'SOAP'))
+              'xml', CONFIG['application']['services-per-page'], @page, 'SOAP'))
     rescue Exception => ex
       log('f', ex)
     end
@@ -106,5 +106,5 @@ private
     return JScrollPane.new(panel)
   end # mainScrollPane
   
-end
+end # ServiceSelectPanel
 

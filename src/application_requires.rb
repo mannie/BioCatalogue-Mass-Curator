@@ -45,8 +45,44 @@ require 'spreadsheet'
 require 'xml/libxml'
 require 'json/ext'
 
+require 'parseconfig'
+
 # Require Application Sources
 EVENTS_SRC.each { |src| require File.join(EVENTS_DIR, src) }
 MODELS_SRC.each { |src| require File.join(MODELS_DIR, src) }
 MODULES_SRC.each { |src| require File.join(MODULES_DIR, src) }
 UI_SRC.each { |src| require File.join(UI_DIR, src) }
+
+# ========================================
+
+CONFIG = { 'client' => { 'username' => '', 'password' => '' },
+           'application' => { 
+               'biocatalogue-hostname' => 'http://www.biocatalogue.org',
+               'services-per-page' => 15, 
+               'search-results-per-page' => 10 } }
+
+# Load up user config
+begin
+  c = ParseConfig.new(CONFIG_FILE_PATH).params
+  
+  c['client'].each { |key, pref|
+    next if pref.nil?
+    CONFIG['client'][key] = pref
+  }
+  
+  c['application'].each { |key, pref|
+    next if pref.nil?
+    CONFIG['application'][key] = pref
+  }
+rescue Exception => ex
+  msg = "Could not load config file.\nSwitching to default settings."
+  JOptionPane.showMessageDialog(nil, msg, "Config Error", 
+      JOptionPane::INFORMATION_MESSAGE)
+
+  CONFIG['client']['username'], CONFIG['client']['password'] = '', ''
+  CONFIG['application']['biocatalogue-hostname'] = 'http://www.biocatalogue.org'
+  CONFIG['application']['services-per-page'] = 15
+  CONFIG['application']['search-results-per-page'] = 10
+
+  log('e', ex)
+end

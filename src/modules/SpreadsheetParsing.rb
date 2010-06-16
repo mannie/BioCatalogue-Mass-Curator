@@ -83,10 +83,13 @@ module SpreadsheetParsing
                 altered = originalDescrip.chomp.strip != row[cell].chomp.strip
                 annotations.merge!('description' => row[cell]) if altered
               when "Tags"
-                annotations.merge!('tag' => row[cell].split(',')) if row[cell]
+                break unless row[cell]
+                
+                annotations.merge!('tag' => row[cell].to_s.split(','))
               when "Examples"
-                annotations.merge!('example_data' => row[cell].split(',')) if 
-                    row[cell]
+                break unless row[cell]
+                
+                annotations.merge!('example_data' => row[cell].to_s.split(','))
             end # case property
           end # @header.each
           

@@ -36,7 +36,7 @@ class AppWindowListener
         
     if yesNo == JOptionPane::YES_OPTION
       event.getSource.dispose
-      LOGGER.close
+#      LOGGER.close
       java.lang.System::exit(0)
     end
   end # windowClosing

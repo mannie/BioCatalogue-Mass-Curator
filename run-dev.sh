@@ -28,10 +28,16 @@ JRUBY=$PROJECT_DIR/lib/jruby-complete-1.5.1.jar
 JSON=$PROJECT_DIR/lib/json-jruby.jar
 SPREADSHEET=$PROJECT_DIR/lib/spreadsheet.jar
 LIBXML=$PROJECT_DIR/lib/libxml-jruby.jar
-LAUNCHER=$PROJECT_DIR/lib/BrowserLauncher2-1_3.jar
+PARSECONFIG=$PROJECT_DIR/lib/parseconfig.jar
+
+BROWSER_LAUNCHER=$PROJECT_DIR/lib/BrowserLauncher2-1_3.jar
 
 BOOTSTRAP=$PROJECT_DIR/src/main.rb
 
-java -jar $JRUBY -r$SPREADSHEET -r$JSON -r$LAUNCHER -r$LIBXML -S $BOOTSTRAP --benchmark=true --host=http://sandbox.biocatalogue.org
+java -jar $JRUBY \
+-r$SPREADSHEET -r$JSON -r$LIBXML -r$PARSECONFIG \
+-r$BROWSER_LAUNCHER \
+-S $BOOTSTRAP \
+--benchmark=true
 
 exit 0

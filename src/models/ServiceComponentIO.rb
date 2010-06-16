@@ -1,5 +1,5 @@
 #
-#  ServiceComponentPort.rb
+#  ServiceComponentIO.rb
 #  BioCatalogue-Mass-Curator
 #
 #  Created by Mannie Tagarira on 28/05/2010.
@@ -20,7 +20,7 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
-class ServiceComponentPort
+class ServiceComponentIO
   
   attr_reader :id, :name, :description
   
@@ -29,4 +29,4 @@ class ServiceComponentPort
     return self
   end # initialize
   
-end
+end # ServiceComponentIO

@@ -102,7 +102,8 @@ private
     c.gridx = 0
     c.anchor = GridBagConstraints::EAST
     usernameLabel = JLabel.new("BioCatalogue Username:")
-    usernameLabel.setLabelFor(@usernameField = JTextField.new(30))
+    @usernameField = JTextField.new(CONFIG['client']['username'], 35)
+    usernameLabel.setLabelFor(@usernameField)
     panel.add(usernameLabel, c)
     
     # username field   
@@ -116,7 +117,8 @@ private
     c.gridy += 1
     c.gridx = 0
     passwordLabel = JLabel.new("BioCatalogue Password:")
-    passwordLabel.setLabelFor(@passwordField = JPasswordField.new(30))
+    @passwordField = JPasswordField.new(CONFIG['client']['password'], 35)
+    passwordLabel.setLabelFor(@passwordField)
     panel.add(passwordLabel, c)
     
     # password field

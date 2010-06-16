@@ -78,11 +78,11 @@ private
     c.insets = Insets.new(1, 2, 1, 2)
     c.weightx = 2
     c.gridy = 0
-p BioCatalogueClient.searchEndpoint(@query, 'xml', CONFIG[:searchResultsPerPage], @page)
+
     begin
       xmlDocument = XMLUtils.getXMLDocumentFromURI(
-          BioCatalogueClient.searchEndpoint(
-              @query, 'xml', CONFIG[:searchResultsPerPage], @page))
+          BioCatalogueClient.searchEndpoint(@query, 'xml', 
+              CONFIG['application']['search-results-per-page'], @page))
     rescue Exception => ex
       log('e', ex)
     end

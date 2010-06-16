@@ -74,8 +74,8 @@ class Service
     return self
   end # initialize
   
-  def fetchComponents
-    return true if @componentsFetched
+  def fetchComponents(force=false)
+    return true if @componentsFetched && !force
 
     @components = {}
   

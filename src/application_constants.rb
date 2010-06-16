@@ -37,19 +37,26 @@ UI_DIR = File.expand_path(File.join(File.dirname(__FILE__), "ui")).freeze
 
 dirPath = File.join(File.dirname(__FILE__), "..", "resources")
 dirPath = File.expand_path(dirPath.gsub("file:", "")).freeze
+RESOURCES_DIR = dirPath
 
-if File.directory?(dirPath)
-  RESOURCES_DIR = dirPath
-else 
-  dirPath = File.join(File.dirname(__FILE__), "..", "..", "resources")
-  dirPath = File.expand_path(dirPath.gsub("file:", "")).freeze
+# ========================================
+
+# Config file
+
+dirLevels = ""
+filePath = ''
+
+7.times do |x|
+  filePath = File.join(File.dirname(__FILE__), dirLevels, "mass-curator.conf")
+  filePath = File.expand_path(filePath.gsub("file:", "")).freeze
+
+  break if File.file?(filePath)
   
-  if File.directory?(dirPath)
-    RESOURCES_DIR = File.expand_path(dirPath).freeze
-  else
-    RESOURCES_DIR = ''
-  end
+  filePath = ''
+  dirLevels << "../"
 end
+
+CONFIG_FILE_PATH = filePath
 
 # ========================================
 
@@ -71,7 +78,7 @@ EVENTS_SRC = %w{ AppComponentListener.rb
 MODELS_SRC = %w{ BioCatalogueClient.rb
                  Service.rb
                  ServiceComponent.rb
-                 ServiceComponentPort.rb }.freeze
+                 ServiceComponentIO.rb }.freeze
 
 MODULES_SRC = %w{ Application.rb
                   Cache.rb

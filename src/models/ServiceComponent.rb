@@ -44,12 +44,12 @@ class ServiceComponent
           when 'inputs'
             inputs = XMLUtils.selectNodesWithNameFrom("soapInput", propertyNode)
             inputs.each { |inputNode|              
-              addServiceComponentPortFromNodeTo(inputNode, @inputs)
+              addServiceComponentIOFromNodeTo(inputNode, @inputs)
             } # inputs.each
           when 'outputs'
             outputs = XMLUtils.selectNodesWithNameFrom("soapOutput", propertyNode)
             outputs.each { |outputNode|
-              addServiceComponentPortFromNodeTo(outputNode, @outputs)
+              addServiceComponentIOFromNodeTo(outputNode, @outputs)
             } # outputs.each
         end # case
       end # propertyNodes.each
@@ -76,7 +76,7 @@ class ServiceComponent
   
 private
   
-  def addServiceComponentPortFromNodeTo(node, destination)
+  def addServiceComponentIOFromNodeTo(node, destination)
     id = XMLUtils.getAttributeFromNode('xlink:href', node)
     id = id.value.split('/')[-1].to_i
               
@@ -91,7 +91,7 @@ private
       end # case
     } # XMLUtils.getValidChildren(outputNode).each
     
-    destination.merge!(id => ServiceComponentPort.new(id, name, desc))
+    destination.merge!(id => ServiceComponentIO.new(id, name, desc))
   end # getComponentPortFromNode
   
 end

@@ -22,7 +22,7 @@
 
 require 'logger'
 
-LOGGER ||= Logger.new(STDOUT)
+LOGGER ||= Logger.new('mass-curator.log', 'weekly')
 
 def log(level, exception, msg=nil)
   begin
