@@ -46,6 +46,7 @@ require 'xml/libxml'
 require 'json/ext'
 
 require 'parseconfig'
+require 'base64'
 
 # Require Application Sources
 EVENTS_SRC.each { |src| require File.join(EVENTS_DIR, src) }
@@ -63,17 +64,17 @@ CONFIG = { 'client' => { 'username' => '', 'password' => '' },
 
 # Load up user config
 begin
-  c = ParseConfig.new(CONFIG_FILE_PATH).params
+  c = ParseConfig.new(CONFIG_FILE_PATH)
+  c.validate_config
+  config = c.params
   
-  c['client'].each { |key, pref|
-    next if pref.nil?
-    CONFIG['client'][key] = pref
-  }
+  c.groups.each do |group|
+    config[group].each { |key, pref|
+      next if pref.nil?
+      CONFIG[group][key] = pref
+    }
+  end # c.groups.each
   
-  c['application'].each { |key, pref|
-    next if pref.nil?
-    CONFIG['application'][key] = pref
-  }
 rescue Exception => ex
   msg = "Could not load config file.\nSwitching to default settings."
   JOptionPane.showMessageDialog(nil, msg, "Config Error", 

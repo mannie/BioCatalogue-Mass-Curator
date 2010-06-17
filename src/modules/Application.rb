@@ -22,6 +22,12 @@
 
 module Application
   
+  @@storeCredentials = false
+  
+  def self.storeCredentials(store)
+    @@storeCredentials = store==true
+  end # self.storeCredentials
+  
   def self.postAnnotationData(jsonContent, user, pass)
     begin
       request = Net::HTTP::Post.new("/annotations/bulk_create")
@@ -81,5 +87,35 @@ module Application
       else nil
     end # case
   end # resourceNameFor
-    
+  
+  def self.writeConfigFile
+    begin
+      @configFile = open(CONFIG_FILE_PATH, "w+")
+
+      config = ParseConfig.new(CONFIG_FILE_PATH)
+
+      if @@storeCredentials
+        CONFIG['client']['username'] = BioCatalogueClient.currentUser[:username]
+        CONFIG['client']['password'] = Base64.encode64(
+            BioCatalogueClient.currentUser[:password])
+      else
+        CONFIG['client']['username'], CONFIG['client']['password'] = '', ''
+      end
+        
+      config.add('client', CONFIG['client'])
+      config.add('application', CONFIG['application'])
+      
+      # sanitize config
+      CONFIG.each do |group, values|
+        values.each { |key, value| CONFIG[group][key] = value.to_s }
+      end
+      
+      config.write(@configFile)
+    rescue Exception => ex
+      log('e', ex)
+    ensure
+      @configFile.close if @configFile
+    end
+  end # writeConfigFile
+  
 end # module Application

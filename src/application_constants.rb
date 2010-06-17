@@ -62,7 +62,8 @@ CONFIG_FILE_PATH = filePath
 
 # Application Source Files To Include
 
-EVENTS_SRC = %w{ AppComponentListener.rb
+EVENTS_SRC = %w{ AppCheckBoxListener
+                 AppComponentListener.rb
                  AppKeyListener.rb
                  AppWindowListener.rb
                  CredentialsKeyListener.rb

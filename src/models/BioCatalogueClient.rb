@@ -22,6 +22,8 @@
 
 class BioCatalogueClient
   
+  @@currentUser = { :username => '', :password => '' }
+  
   def initialize(base="http://www.biocatalogue.org")
     @@HOST ||= URI.parse(base)
     
@@ -30,6 +32,15 @@ class BioCatalogueClient
   end # initialize
   
 # --------------------
+  
+  def self.currentUser
+    @@currentUser.clone.freeze
+  end # self.currentUser
+  
+  def self.setCurrentUser(user, pass)
+    @@currentUser[:username] = user
+    @@currentUser[:password] = pass
+  end # self.currentUser(user, pass)
   
   def self.SEARCH
     @@SEARCH

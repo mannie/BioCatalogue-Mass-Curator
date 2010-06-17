@@ -117,7 +117,8 @@ private
     c.gridy += 1
     c.gridx = 0
     passwordLabel = JLabel.new("BioCatalogue Password:")
-    @passwordField = JPasswordField.new(CONFIG['client']['password'], 35)
+    @passwordField = JPasswordField.new(
+        Base64.decode64(CONFIG['client']['password']), 35)
     passwordLabel.setLabelFor(@passwordField)
     panel.add(passwordLabel, c)
     
@@ -126,6 +127,14 @@ private
     c.gridx = 1
     panel.add(@passwordField, c)
     @passwordField.addKeyListener(keyListener)
+    
+    # remember me checkbox
+    c.gridy += 1
+    panel.add(rememberMeCheckBox = JCheckBox.new("Remember me"), c)
+    rememberMeCheckBox.addChangeListener(AppCheckBoxListener.new(self))
+    forget = CONFIG['client']['password'].empty? || 
+        CONFIG['client']['username'].empty?
+    rememberMeCheckBox.setSelected(!forget)
     
     return panel
   end # mainPanel
