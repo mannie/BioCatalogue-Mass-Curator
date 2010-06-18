@@ -72,7 +72,7 @@ private
     c.gridy = 0
 
     begin
-      xmlDocument = XMLUtils.getXMLDocumentFromURI(
+      xmlDocument = XMLUtil.getXMLDocumentFromURI(
           BioCatalogueClient.servicesEndpoint(
               'xml', CONFIG['application']['services-per-page'], @page, 'SOAP'))
     rescue Exception => ex
@@ -85,7 +85,7 @@ private
     xmlDocument.root.each { |node|
       case node.name
         when 'results'
-          if XMLUtils.getServiceListingsFromNode(
+          if XMLUtil.getServiceListingsFromNode(
               node, @localServiceCache, @localListingCache)
             @localListingCache.each { |listing|
               panel.add(listing, c)
@@ -93,7 +93,7 @@ private
             }
           end
         when 'statistics'
-          statsNodes = XMLUtils.getValidChildren(node)
+          statsNodes = XMLUtil.getValidChildren(node)
           statsNodes.each { |node|
             case node.name
               when 'pages'

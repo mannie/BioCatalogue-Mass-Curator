@@ -38,6 +38,6 @@ java -jar $JRUBY \
 -r$SPREADSHEET -r$JSON -r$LIBXML -r$PARSECONFIG \
 -r$BROWSER_LAUNCHER \
 -S $BOOTSTRAP \
---benchmark=true
+--benchmark=true --log-to-stdout
 
 exit 0

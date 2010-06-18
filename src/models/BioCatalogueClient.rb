@@ -42,9 +42,13 @@ class BioCatalogueClient
     @@currentUser[:password] = pass
   end # self.currentUser(user, pass)
   
+  def self.USER_AGENT
+    "Mass Curator (Alpha) - JRuby/#{JRUBY_VERSION}"
+  end # self.USER_AGENT
+  
   def self.SEARCH
     @@SEARCH
-  end
+  end # self.SEARCH
     
   def self.HOST
     @@HOST

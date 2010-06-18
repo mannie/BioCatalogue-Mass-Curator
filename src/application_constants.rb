@@ -84,13 +84,14 @@ MODELS_SRC = %w{ BioCatalogueClient.rb
 MODULES_SRC = %w{ Application.rb
                   Cache.rb
                   Component.rb
+                  JSONUtil.rb
                   LoggerHelper.rb
                   Notification.rb
                   Resource.rb
                   SpreadsheetConstants.rb
                   SpreadsheetGeneration.rb
                   SpreadsheetParsing.rb
-                  XMLUtils.rb }.freeze
+                  XMLUtil.rb }.freeze
 
 UI_SRC = %w{ BrowsingStatusPanel.rb
              MainWindow.rb 

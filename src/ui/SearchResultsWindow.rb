@@ -63,7 +63,7 @@ private
     c.gridy = 0
 
     begin
-      xmlDocument = XMLUtils.getXMLDocumentFromURI(
+      xmlDocument = XMLUtil.getXMLDocumentFromURI(
           BioCatalogueClient.searchEndpoint(
               @query, 'xml', CONFIG['application']['search-results-per-page']))
     rescue Exception => ex
@@ -76,7 +76,7 @@ private
     xmlDocument.root.each { |node|
       case node.name
         when 'results'
-          if XMLUtils.getServiceListingsFromNode(
+          if XMLUtil.getServiceListingsFromNode(
               node, @localServiceCache, @localListingCache)
             @localListingCache.each { |listing|
               panel.add(listing, c)

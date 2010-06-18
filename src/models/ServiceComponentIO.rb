@@ -22,10 +22,10 @@
 
 class ServiceComponentIO
   
-  attr_reader :id, :name, :description
+  attr_reader :id, :name, :descriptions
   
-  def initialize(id, name, description)
-    @id, @name, @description = id, name, description
+  def initialize(id, name, descriptions)
+    @id, @name, @descriptions = id, name, descriptions.clone
     return self
   end # initialize
   

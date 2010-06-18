@@ -22,7 +22,7 @@
 
 class ServiceComponent
 
-  attr_reader :id, :name, :description
+  attr_reader :id, :name, :descriptions
   attr_reader :inputs, :outputs
   
   def initialize(uriString)
@@ -30,24 +30,27 @@ class ServiceComponent
     @outputs = {}
     
     begin
-      @id = uriString.split('/')[-1].to_i
-      
-      xmlDocument = XMLUtils.getXMLDocumentFromURI(uriString)
-      propertyNodes = XMLUtils.getValidChildren(xmlDocument.root)
+      @id = uriString.split('/')[-1].to_i      
+      xmlDocument = XMLUtil.getXMLDocumentFromURI(uriString)
+      propertyNodes = XMLUtil.getValidChildren(xmlDocument.root)
       
       propertyNodes.each do |propertyNode|
         case propertyNode.name
           when 'name'
             @name = propertyNode.content
           when 'dc:description'
-            @description = propertyNode.content
+            @descriptions = JSONUtil.getAnnotationOfTypeForResource(
+                'description', uriString)
+
+            @descriptions << propertyNode.content
+            @descriptions.reject! { |d| d.strip.empty? }
           when 'inputs'
-            inputs = XMLUtils.selectNodesWithNameFrom("soapInput", propertyNode)
+            inputs = XMLUtil.selectNodesWithNameFrom("soapInput", propertyNode)
             inputs.each { |inputNode|              
               addServiceComponentIOFromNodeTo(inputNode, @inputs)
             } # inputs.each
           when 'outputs'
-            outputs = XMLUtils.selectNodesWithNameFrom("soapOutput", propertyNode)
+            outputs = XMLUtil.selectNodesWithNameFrom("soapOutput", propertyNode)
             outputs.each { |outputNode|
               addServiceComponentIOFromNodeTo(outputNode, @outputs)
             } # outputs.each
@@ -77,21 +80,25 @@ class ServiceComponent
 private
   
   def addServiceComponentIOFromNodeTo(node, destination)
-    id = XMLUtils.getAttributeFromNode('xlink:href', node)
-    id = id.value.split('/')[-1].to_i
-              
+    uriString = XMLUtil.getAttributeFromNode('xlink:href', node).value
+    id = uriString.split('/')[-1].to_i
+
     name, desc = nil, nil
     
-    XMLUtils.getValidChildren(node).each { |propertyNode|
+    XMLUtil.getValidChildren(node).each { |propertyNode|
       case propertyNode.name
         when 'name'
           name = propertyNode.content
         when 'dc:description'
-          desc = propertyNode.content
+          descriptions = JSONUtil.getAnnotationOfTypeForResource('description', 
+              uriString)
+
+          descriptions << propertyNode.content
       end # case
-    } # XMLUtils.getValidChildren(outputNode).each
+    } # XMLUtil.getValidChildren(outputNode).each
     
-    destination.merge!(id => ServiceComponentIO.new(id, name, desc))
+    descriptions.reject! { |d| d.strip.empty? }
+    destination.merge!(id => ServiceComponentIO.new(id, name, descriptions))
   end # getComponentPortFromNode
   
 end

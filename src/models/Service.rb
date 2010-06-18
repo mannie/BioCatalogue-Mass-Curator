@@ -22,33 +22,34 @@
 
 class Service
   
-  attr_reader :components, :selectedStatusChangeListener
-  attr_reader :id, :name, :description, :technology
-  attr_reader :variantURI
+  attr_reader :components, :descriptions 
+  attr_reader :id, :name, :technology
+  attr_reader :variantURI, :selectedStatusChangeListener
   
   @componentsFetched = false
   
   def initialize(serviceURIString)
     begin
       @id = serviceURIString.split('/')[-1].to_i
- 
+      @descriptions = []
+       
       serviceURIString << "/variants.xml"        
-      xmlDocument = XMLUtils.getXMLDocumentFromURI(serviceURIString)
+      xmlDocument = XMLUtil.getXMLDocumentFromURI(serviceURIString)
     
-      propertyNodes = XMLUtils.getValidChildren(xmlDocument.root)
+      propertyNodes = XMLUtil.getValidChildren(xmlDocument.root)
       propertyNodes.each do |propertyNode|
         case propertyNode.name
           when 'name'
             @name = propertyNode.content
           when 'dc:description'
-            @description = propertyNode.content
+            @descriptions << propertyNode.content
           when 'serviceTechnologyTypes'
-            @technology = XMLUtils.getContentOfFirstChild(propertyNode)
+            @technology = XMLUtil.getContentOfFirstChild(propertyNode)
           when 'variants'
-            variants = XMLUtils.selectNodesWithNameFrom(
+            variants = XMLUtil.selectNodesWithNameFrom(
                 "#{@technology.downcase}Service", propertyNode)
             variants.each { |node|
-              @variantURI = XMLUtils.getAttributeFromNode(
+              @variantURI = XMLUtil.getAttributeFromNode(
                   "xlink:href", node).value
               break if @variantURI
             }
@@ -80,16 +81,22 @@ class Service
     @components = {}
   
     begin
-      xmlDocument = XMLUtils.getXMLDocumentFromURI(@variantURI.to_s + '.xml')
+      # get descriptions
+      @descriptions << JSONUtil.getAnnotationOfTypeForResource('description', 
+          @variantURI)
+      @descriptions.flatten!
+      @descriptions.reject! { |d| d.strip.empty? }
+      
+      xmlDocument = XMLUtil.getXMLDocumentFromURI(@variantURI.to_s + '.xml')
       
       nodeName = (@technology=="SOAP" ? "operations" : nil)
       raise "Only support for SOAP is currently available" if nodeName.nil?
       
-      operationsNode = XMLUtils.selectNodesWithNameFrom(
+      operationsNode = XMLUtil.selectNodesWithNameFrom(
           nodeName, xmlDocument.root)[0]
       
-      XMLUtils.getValidChildren(operationsNode).each { |op|
-        uriString = XMLUtils.getAttributeFromNode("xlink:href", op).value
+      XMLUtil.getValidChildren(operationsNode).each { |op|
+        uriString = XMLUtil.getAttributeFromNode("xlink:href", op).value
         
         component = ServiceComponent.new(uriString)
         next if component.id == -1
@@ -100,6 +107,7 @@ class Service
       Cache.addService(self)
       @componentsFetched = true
       
+      p self.inspect
       return true
     rescue Exception => ex
       log('e', ex)
@@ -115,4 +123,4 @@ class Service
     "#{@technology}::#{@id}::#{@name}"
   end # to_s
 
-end
+end # Service

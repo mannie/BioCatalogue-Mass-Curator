@@ -79,7 +79,7 @@ private
     @worksheet[@nextRow, 0] = service.id
     @worksheet[@nextRow, 1] = "#{service.technology} Service"
     @worksheet[@nextRow, 2] = service.name
-    @worksheet[@nextRow, 3] = service.description
+    @worksheet[@nextRow, 3] = service.descriptions.join("\n----------\n")
     3.times { |x| @worksheet.row(@nextRow).set_format(x, @@formats[:service]) }
     @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
     
@@ -92,18 +92,18 @@ private
     service.components.each do |id, component|
       # write operation   
       writeComponentRow(@@formats[:operation], "SOAP Operation", id,
-          component.name, component.description)
+          component.name, component.descriptions.join("\n----------\n"))
               
       # write inputs
       component.inputs.each do |id, input|
         writeComponentRow(@@formats[:input], "SOAP Input", id,
-            input.name, input.description)
+            input.name, input.descriptions.join("\n----------\n"))
       end # component.inputs.each
       
       # write outputs
       component.outputs.each do |id, output|
         writeComponentRow(@@formats[:output], "SOAP Output", id,
-            output.name, output.description)
+            output.name, output.descriptions.join("\n----------\n"))
       end # component.outputs.each
     end # service.components.each
   end # self.writeServiceComponents

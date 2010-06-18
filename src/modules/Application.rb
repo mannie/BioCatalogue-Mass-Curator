@@ -35,6 +35,7 @@ module Application
       request.body = jsonContent
       request.content_type = 'application/json'
       request.add_field("Accept", 'application/json')
+      request.add_field("User-Agent", BioCatalogueClient.USER_AGENT)
       
       Net::HTTP.new(BioCatalogueClient.HOST.host).start { |http|
         response = http.request(request)

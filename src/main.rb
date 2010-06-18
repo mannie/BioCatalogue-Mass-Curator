@@ -31,6 +31,12 @@ ARGV.options do |opts|
     doBenchmark = a=="true" 
   }
   
+  opts.on("--log-to-stdout", "Log to standard output") {
+    p "Logging to STDOUT..."
+    require 'logger'
+    LOGGER = Logger.new(STDOUT)
+  }
+  
   opts.parse!
 end
 

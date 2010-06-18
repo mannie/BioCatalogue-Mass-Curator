@@ -1,5 +1,5 @@
 #
-#  XMLUtils.rb
+#  XMLUtil.rb
 #  BioCatalogue-Mass-Curator
 #
 #  Created by Mannie Tagarira on 09/06/2010.
@@ -20,7 +20,7 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
-module XMLUtils
+module XMLUtil
 
   def self.getXMLDocumentFromURI(uri)
     begin
@@ -28,9 +28,8 @@ module XMLUtils
       
       raise "Invalid argument" unless uri.class.name.include?("URI")
       
-      userAgent = "BioCatalogue Mass Curator Alpha; JRuby/#{JRUBY_VERSION}"
       xmlContent = open(uri, "Accept" => "application/xml", 
-          "User-Agent" => userAgent).read
+          "User-Agent" => BioCatalogueClient.USER_AGENT).read
       
       return LibXMLJRuby::XML::Parser.string(xmlContent).parse
     rescue Exception => ex
@@ -77,4 +76,4 @@ module XMLUtils
     return true
   end # self.getServiceListingsFromNode
   
-end # module XMLUtils
+end # XMLUtil
