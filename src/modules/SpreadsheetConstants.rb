@@ -21,25 +21,55 @@
 =end
 
 module SpreadsheetConstants
-
+  
+  @@columnNumberFor = { :id => 0, 
+                        :type => 1, 
+                        :name => 2, 
+                        :descriptions => 3,
+                        :newDescriptions => 4,
+                        :tags => 5,
+                        :examples => 6 }
+  
+  def self.column(key)
+    @@columnNumberFor[key.to_sym]
+  end # self.column
+  
   def self.HEIGHT_MULTIPLIER
     1.4 
   end # self.HEIGHT_MULTIPLIER
   
   def self.HEADER
-    %w{ ID Type Name Description Tags Examples }
+    header = []
+    
+    @@columnNumberFor.each do |property, cell|
+      val = case property
+              when :id : "ID"
+              when :newDescriptions : "New Descriptions"
+              else property.to_s.capitalize
+            end
+      
+      header[cell] = val
+    end # each property
+    
+    return header
   end # self.HEADER
 
-  def self.widthForCell(cell)
+  def self.widthFor(cell)
     case cell
-      when 0: 7 # ID
-      when 1: 20 # Type
-      when 2: 40 # Name
-      when 3: 70 # Description
-      when 4: 20 # Tags
-      when 5: 30 # Examples
+      when @@columnNumberFor[:id]
+        7
+      when @@columnNumberFor[:type]
+        20
+      when @@columnNumberFor[:name]
+        40
+      when @@columnNumberFor[:descriptions], @@columnNumberFor[:newDescriptions]
+        70
+      when @@columnNumberFor[:tags]
+        20 
+      when @@columnNumberFor[:examples] 
+        30 
     end
-  end # self.widthForCell
+  end # self.widthFor
   
   def self.defineSpreadsheetFormatting
     size = 11

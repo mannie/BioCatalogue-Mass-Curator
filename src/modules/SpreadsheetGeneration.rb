@@ -27,31 +27,32 @@ module SpreadsheetGeneration
       raise "Invalid arguments" if services.nil? || services.empty? ||
           saveDirPath.nil? || saveDirPath.empty?
 
-      # FORMATTING
+      # FORMATTING
       Spreadsheet.client_encoding = 'UTF-8'
       @@formats ||= SpreadsheetConstants.defineSpreadsheetFormatting
-      @@offset ||= 1
+      @@offset ||= 1 # the number of cells to skip before applying formatting
       
       # initialise
       filename = "Curation Spreadsheet (#{Time.now.strftime('%Y-%m-%d')} at " 
       filename += "#{Time.now.strftime('%H%M')}).xls"
       
-      file = File.new(File.join(saveDirPath, filename), "w+")
-      @workbook = Spreadsheet::Workbook.new(file.path)  
-      
-      @worksheet = @workbook.create_worksheet :name => "Annotate Services"
-      
-      # create header and set format
-      @nextRow = 0
-      @worksheet.row(@nextRow).concat(SpreadsheetConstants.HEADER)
-      SpreadsheetConstants.HEADER.size.times { |cell|
-        @worksheet.row(@nextRow).set_format(cell, @@formats[:header]) 
-        @worksheet.column(cell).width = SpreadsheetConstants.widthForCell(cell)
-      }
-      @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
-          
+      @file = File.new(File.join(saveDirPath, filename), "w+")
+      @workbook = Spreadsheet::Workbook.new(@file.path)  
+
       # loop through services and write to @workbook
-      services.each do |id, service|
+      services.each do |id, service|      
+        @worksheet = @workbook.create_worksheet :name => service.name
+        
+        # create header and set format
+        @nextRow = 0
+        @worksheet.row(@nextRow).concat(SpreadsheetConstants.HEADER)
+        SpreadsheetConstants.HEADER.size.times { |cell|
+          @worksheet.row(@nextRow).set_format(cell, @@formats[:header]) 
+          @worksheet.column(cell).width = SpreadsheetConstants.widthFor(cell)
+        }
+        @worksheet.row(@nextRow).height *= 
+            SpreadsheetConstants.HEIGHT_MULTIPLIER
+          
         next unless service.technology == "SOAP"
         
         success = service.fetchComponents
@@ -62,12 +63,13 @@ module SpreadsheetGeneration
       end
       
       # finalise
-      @workbook.write(file.path)
-      file.close
+      @workbook.write(@file.path)
+      @file.close
     
-      return file
+      return @file
     rescue Exception => ex
       log('e', ex)
+      File.delete(@file.path) if @file
       return nil
     end # begin rescue
   end # self.generateSpreadsheet
@@ -92,34 +94,45 @@ private
     service.components.each do |id, component|
       # write operation   
       writeComponentRow(@@formats[:operation], "SOAP Operation", id,
-          component.name, component.descriptions.join("\n----------\n"))
+          component.name, component.descriptions)
               
       # write inputs
       component.inputs.each do |id, input|
         writeComponentRow(@@formats[:input], "SOAP Input", id,
-            input.name, input.descriptions.join("\n----------\n"))
+            input.name, input.descriptions)
       end # component.inputs.each
       
       # write outputs
       component.outputs.each do |id, output|
         writeComponentRow(@@formats[:output], "SOAP Output", id,
-            output.name, output.descriptions.join("\n----------\n"))
+            output.name, output.descriptions)
       end # component.outputs.each
     end # service.components.each
   end # self.writeServiceComponents
   
-  def self.writeComponentRow(format, type, id, name, description)
-    @worksheet[@nextRow, 0] = id
+  def self.writeComponentRow(format, type, id, name, descriptions)
+    # write ID
+    @worksheet[@nextRow, SpreadsheetConstants.column(:id)] = id
     @worksheet.row(@nextRow).set_format(0, @@formats[:gray])
 
-    @worksheet[@nextRow, 1] = type
-    @worksheet[@nextRow, 2] = name
-    @worksheet[@nextRow, 3] = description
-        
+    # write TYPE and NAME
+    @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = type
+    @worksheet[@nextRow, SpreadsheetConstants.column(:name)] = name
+    
+    finalizeRowWithFormat(format) if descriptions.empty?
+    
+    descriptions.each do |description|
+      @worksheet[@nextRow, SpreadsheetConstants.column(:descriptions)] = 
+          description
+      finalizeRowWithFormat(format)
+    end # descriptions.each
+  end # self.writeComponentRow
+
+  def self.finalizeRowWithFormat(format)
     2.times { |x| @worksheet.row(@nextRow).set_format(x + @@offset, format) }
     @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
     
     @nextRow += 1
-  end
-
+  end # self.finalizeRowWithFormat
+  
 end # module SpreadsheetGeneration

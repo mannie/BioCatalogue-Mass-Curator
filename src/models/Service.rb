@@ -107,7 +107,6 @@ class Service
       Cache.addService(self)
       @componentsFetched = true
       
-      p self.inspect
       return true
     rescue Exception => ex
       log('e', ex)
