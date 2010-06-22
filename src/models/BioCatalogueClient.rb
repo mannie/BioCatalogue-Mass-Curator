@@ -26,8 +26,6 @@ class BioCatalogueClient
   
   def initialize(base="http://www.biocatalogue.org")
     @@HOST ||= URI.parse(base)
-    
-    @@SEARCH ||= SearchAction.new
     @@user = nil
   end # initialize
   
@@ -45,18 +43,14 @@ class BioCatalogueClient
   def self.USER_AGENT
     "Mass Curator (Alpha) - JRuby/#{JRUBY_VERSION}"
   end # self.USER_AGENT
-  
-  def self.SEARCH
-    @@SEARCH
-  end # self.SEARCH
-    
+      
   def self.HOST
     @@HOST
   end # self.HOST
     
   def self.searchEndpoint(query, format=nil, perPage=25, page=1,
       scope='services')
-    query = URI.escape(query)
+    query = URI.escape(query.strip)
     
     if !format.nil? && !format.empty? && format.class==String
       URI.join(@@HOST.to_s,

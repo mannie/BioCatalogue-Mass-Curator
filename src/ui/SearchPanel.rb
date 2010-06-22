@@ -29,6 +29,12 @@ class SearchPanel < JPanel
     initUI
     return self
   end # initialize
+
+  def query
+    @searchField.getText
+  end
+  
+private
   
   def initUI
     self.setLayout(GridBagLayout.new)    
@@ -48,10 +54,9 @@ class SearchPanel < JPanel
     c.gridx = 1
     c.weightx = 1
     @searchButton = JButton.new("Search", Resource.iconFor('search'))
-    @searchButton.addActionListener(BioCatalogueClient.SEARCH)
+    @searchButton.addActionListener(SearchAction.new(self, 1))
     @searchButton.setEnabled(false)
     self.add(@searchButton, c)
-    
   end # initUI
 
 end # SearchPanel

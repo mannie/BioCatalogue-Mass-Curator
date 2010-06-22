@@ -23,72 +23,20 @@
 class SearchResultsWindow < JFrame
   
   @@lastSearchResultsWindow = nil
-  
+
   def initialize(query)
     super("Search results for: " + query)
-    
-    @query = query
-    
+        
     initUI
-    
-    @@lastSearchResultsWindow.dispose if @@lastSearchResultsWindow
-    @@lastSearchResultsWindow = self
-
+        
     return self
   end # initialize
-  
+    
 private
 
-  def initUI
-    self.getContentPane.add(searchResultsPanel)
-    
+  def initUI    
     self.setMinimumSize(Dimension.new(300, 100))
-    self.pack
-    
     self.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
-
-    Component.centerToParent(self, MAIN_WINDOW)
-    self.setVisible(true)
   end # initUI
-
-  def searchResultsPanel
-    panel = JPanel.new
-    panel.setLayout(GridBagLayout.new)
-    
-    c = GridBagConstraints.new
-    c.anchor = GridBagConstraints::NORTHWEST
-    c.fill = GridBagConstraints::HORIZONTAL
-    c.insets = Insets.new(1, 2, 1, 2)
-    c.weightx = 2
-    c.gridy = 0
-
-    begin
-      xmlDocument = XMLUtil.getXMLDocumentFromURI(
-          BioCatalogueClient.searchEndpoint(
-              @query, 'xml', CONFIG['application']['search-results-per-page']))
-    rescue Exception => ex
-      log('e', ex)
-    end
-    
-    @localServiceCache = []
-    @localListingCache = []
-    
-    xmlDocument.root.each { |node|
-      case node.name
-        when 'results'
-          if XMLUtil.getServiceListingsFromNode(
-              node, @localServiceCache, @localListingCache)
-            @localListingCache.each { |listing|
-              panel.add(listing, c)
-              c.gridy += 1
-            }
-          end
-      end # case
-    } # xmlDocument.root.each
-    
-    return (@localServiceCache.empty? ? 
-        JLabel.new("No services matched '#{@query}'", SwingConstants::CENTER) : 
-        JScrollPane.new(panel))
-  end # searchResultsPanel
   
 end # SearchResultsWindow

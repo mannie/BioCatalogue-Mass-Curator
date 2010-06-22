@@ -2,7 +2,7 @@
 #  SearchAction.rb
 #  BioCatalogue-Mass-Curator
 #
-#  Created by Mannie Tagarira on 26/05/2010.
+#  Created by Mannie Tagarira on 15/06/2010.
 #  Copyright (c) 2010 University of Manchester, UK.
 
 =begin
@@ -22,35 +22,97 @@
 
 class SearchAction
   java_implements ActionListener
+
+  @@resultsPanelForPage = {}
+  @@searchResultsPanel = nil
+
+  @@searchResultsWindow = nil
   
-  def initialize
+  @@query = ''
+  
+  def initialize(container, pageNumber)
     super()
+    @buttonContainer = container
+    @pageNumber = pageNumber
+        
     return self
   end # initialize
 
 # --------------------
-
+  
   def actionPerformed(event)
-    query = Component.searchField.getText
-    query.strip!
-    
-    unless query.empty?      
-      Thread.new("Searching for: '#{}'") {
-        Component.searchPanel.searchField.setEnabled(false)
-        Component.searchPanel.searchButton.setEnabled(false)
-        Component.searchPanel.searchButton.setIcon(Resource.iconFor('busy'))
-        Component.searchPanel.searchButton.setText("Searching...")
-
-        SearchResultsWindow.new(query)
-        
-        Component.searchPanel.searchButton.setText("Search")
-        Component.searchPanel.searchButton.setIcon(Resource.iconFor('search'))
-        Component.searchPanel.searchButton.setEnabled(true)
-        Component.searchPanel.searchField.setEnabled(true)
-      }
-    else
-      Component.searchButton.setEnabled(false)
+    if @buttonContainer.class==SearchPanel
+      @@resultsPanelForPage = {}
+      @@searchResultsPanel = nil
+      @@query = @buttonContainer.query
+      
+      @@searchResultsWindow.dispose if @@searchResultsWindow
+      @@searchResultsWindow = SearchResultsWindow.new(@@query)
+      @@positionSet = false
     end
+    
+    Thread.new("Loading search: #{@@query} results page ##{@pageNumber}") {
+      # disable browsing buttons
+      if @buttonContainer.class==SearchPanel
+        event.getSource.setText("Searching...")
+        event.getSource.setEnabled(false)
+      else
+        previousPageEnabled = @buttonContainer.previousPageButton.isEnabled
+        nextPageEnabled = @buttonContainer.nextPageButton.isEnabled
+        searchEnabled = Component.searchButton.isEnabled
+        
+        @buttonContainer.previousPageButton.setEnabled(false)
+        @buttonContainer.nextPageButton.setEnabled(false)
+      end
+      
+      Component.searchField.setEnabled(false)
+      Component.searchButton.setEnabled(false)
+
+      # update source icon
+      originalIcon = event.getSource.getIcon
+      event.getSource.setIcon(Resource.iconFor('busy'))
+
+      # load new search results panel
+      if (panel = @@resultsPanelForPage[@pageNumber])
+        @@searchResultsPanel = panel
+
+        Cache.syncWithCollection(panel.localServiceCache)
+        Cache.updateServiceListings(panel.localListingCache)
+      else
+        @@searchResultsPanel = SearchResultsPanel.new(@@query, @pageNumber)
+        @@resultsPanelForPage.merge!(@pageNumber => @@searchResultsPanel)
+      end
+      
+      # update full view to show search results
+      @buttonContainer.setVisible(false) if @buttonContainer.class!=SearchPanel
+      @@searchResultsPanel.setVisible(true)
+      
+      @@searchResultsWindow.getContentPane.add(@@searchResultsPanel)
+      @@searchResultsWindow.getContentPane.repaint
+      @@searchResultsWindow.pack
+      
+      unless @@positionSet
+        Component.centerToParent(@@searchResultsWindow, MAIN_WINDOW)
+        @@positionSet = true
+      end
+      
+      @@searchResultsWindow.setVisible(true)
+
+      # update source icon
+      event.getSource.setIcon(originalIcon)
+      
+      # re-enable browsing buttons 
+      Component.searchButton.setEnabled(searchEnabled)
+      Component.searchField.setEnabled(true)
+
+      if @buttonContainer.class==SearchPanel
+        event.getSource.setText("Search") 
+        event.getSource.setEnabled(true)
+      else
+        @buttonContainer.nextPageButton.setEnabled(nextPageEnabled)
+        @buttonContainer.previousPageButton.setEnabled(previousPageEnabled)
+      end
+    }
   end # actionPerformed
 
-end
+end # SearchAction

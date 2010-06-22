@@ -62,7 +62,7 @@ class LoadServicesAction
   def actionPerformed(event)
     # set page number to be used by the GoBackAction
     @@currentPage = @pageNumber
-    
+
     Thread.new("Loading page ##{@pageNumber}") {
       # disable browsing buttons in panel      
       if @buttonContainer.class==MainPanel

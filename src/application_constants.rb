@@ -69,7 +69,6 @@ EVENTS_SRC = %w{ AppCheckBoxListener
                  CredentialsKeyListener.rb
                  GenerateSpreadsheetAction.rb 
                  GoBackAction.rb
-                 LoadSearchPageAction.rb
                  LoadServicesAction.rb
                  PreviewAction.rb
                  SearchAction.rb

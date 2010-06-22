@@ -29,11 +29,8 @@ class AppKeyListener
   def keyReleased(event) 
   end # keyReleased
  
-  def keyTyped(event)
-    query = Component.searchField.getText
-    query.strip!
-    
-    if query.empty?
+  def keyTyped(event)    
+    if Component.searchField.getText.strip.empty?
       Component.searchButton.setEnabled(false)
       return
     else
@@ -41,7 +38,9 @@ class AppKeyListener
     end
     
     case event.getKeyChar
-      when KeyEvent::VK_ENTER: BioCatalogueClient.SEARCH.actionPerformed(nil)
+      when KeyEvent::VK_ENTER
+        @@searchAction ||= SearchAction.new(Component.searchPanel, 1)
+        @@searchAction.actionPerformed(Component.searchButton)
     end
   end # keyTyped
 

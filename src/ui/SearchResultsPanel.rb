@@ -27,8 +27,7 @@ class SearchResultsPanel < JPanel
   attr_reader :query
   
   @@lastPageStatusLabelUsed = nil
-  @@lastPage = nil
-  
+    
   def initialize(query, pageNumber)
     super()
 
@@ -48,21 +47,23 @@ private
     
     # current page label
     self.remove(@@lastPageStatusLabelUsed) if @@lastPageStatusLabelUsed
+    
+    return if @lastPage==0
+    
     @@lastPageStatusLabelUsed = JLabel.new(
-        "Page #{@page} of #{@@lastPage}", SwingConstants::CENTER)
+        "Page #{@page} of #{@lastPage}", SwingConstants::CENTER)
     self.add(@@lastPageStatusLabelUsed, BorderLayout::SOUTH)
         
     # button to previous page
     @previousPageButton = JButton.new(Resource.iconFor('back-arrow'))
-    @previousPageButton.addActionListener(
-        LoadSearchPageAction.new(self, @page-1))
+    @previousPageButton.addActionListener(SearchAction.new(self, @page-1))
     @previousPageButton.setEnabled(false) if @page==1
     self.add(@previousPageButton, BorderLayout::WEST)
     
     # button to next page
     @nextPageButton = JButton.new(Resource.iconFor('forward-arrow'))
-    @nextPageButton.addActionListener(LoadSearchPageAction.new(self, @page+1))
-    @nextPageButton.setEnabled(false) if @page==@@lastPage
+    @nextPageButton.addActionListener(SearchAction.new(self, @page+1))
+    @nextPageButton.setEnabled(false) if @page==@lastPage
     self.add(@nextPageButton, BorderLayout::EAST)
   end # initUI
   
@@ -100,14 +101,12 @@ private
               c.gridy += 1
             }
           end
-        when 'statistics'
-          break if @@lastPage
-          
+        when 'statistics'          
           statsNodes = XMLUtil.getValidChildren(node)
           statsNodes.each { |node|
             case node.name
               when 'pages'
-                @@lastPage = node.content.to_i
+                @lastPage = node.content.to_i
             end # case
           }
       end # case
