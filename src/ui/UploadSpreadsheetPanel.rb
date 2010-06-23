@@ -50,7 +50,7 @@ class UploadSpreadsheetPanel < JPanel
 private
   
   def initUI
-    self.setLayout(BorderLayout.new)
+    self.setLayout(BorderLayout.new(50, 50))
     
     self.add(mainPanel)
     self.add(buttonPanel, BorderLayout::SOUTH)
@@ -83,20 +83,23 @@ private
     c.gridx, c.gridy = 1, 0
     c.ipadx = 10
 
-    # selected spreadsheet label 
+    # selected spreadsheet label
     c.gridy += 1
     c.gridx = 1
-    c.anchor = GridBagConstraints::EAST
-    panel.add(@selectedSpreadsheetLabel, c)
-    
-    # select spreadsheet button   
     c.anchor = GridBagConstraints::WEST
+    panel.add(@selectedSpreadsheetLabel, c)
+
+    # select spreadsheet button   
     c.gridx = 0
+    c.fill = GridBagConstraints::HORIZONTAL
+    c.anchor = GridBagConstraints::EAST
+    c.insets.right = 10
     panel.add(@selectSpreadsheetButton, c)
 
     # update constraints
+    c.fill = GridBagConstraints::NONE
     c.insets.set(0, 0, 3, 0)
-    
+        
     # username label 
     c.gridy += 1
     c.gridx = 0

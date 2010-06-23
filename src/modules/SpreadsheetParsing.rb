@@ -34,22 +34,22 @@ module SpreadsheetParsing
       
       @workbook.worksheets.each do |worksheet| # iterate each worksheet
         worksheet.each do |row| # iterate each row of the worksheet
-          if row==worksheet.first
+          if row.to_a==SpreadsheetConstants.SERVICE_HEADER || 
+              row.to_a==SpreadsheetConstants.COMPONENT_HEADER
             @header = row.to_a
-            raise "Incompatible spreadsheet format" unless @header==SpreadsheetConstants.HEADER
           else # all other rows
             # set up temp storage vars
             entry = {}
-            annotations = {}
+            @annotations = {}
             
             description, tags, examples = nil, nil, nil
             
             # fill in vars with the spreadsheet values
             @header.size.times do |cell|
               case cell
-                when SpreadsheetConstants.column(:id)
+                when SpreadsheetConstants.column(:id) # ID
                   @id = row[cell] if row[cell]
-                when SpreadsheetConstants.column(:type)
+                when SpreadsheetConstants.column(:type) # Type
                   unless @id
                     @resource, @service, @component = nil, nil. nil
                     break
@@ -72,7 +72,7 @@ module SpreadsheetParsing
                     
                     entry.merge!('resource' => uri.to_s)
                   end # if else resource=='soap_services'
-                when SpreadsheetConstants.column(:newDescriptions)
+                when SpreadsheetConstants.column(:newDescriptions) # Descriptions
                   break unless @id
                   
                   originals = case @resource
@@ -87,24 +87,40 @@ module SpreadsheetParsing
                               end # case resource
                   
                   isNew = row[cell] && !originals.include?(row[cell])
-                  annotations.merge!('description' => row[cell]) if isNew
-                when SpreadsheetConstants.column(:tags)
+                  @annotations.merge!('description' => row[cell]) if isNew
+                when SpreadsheetConstants.column(:tags) # Tags
                   break unless @id
                   
-                  annotations.merge!('tag' => row[cell].to_s.split(',')) if 
+                  @annotations.merge!('tag' => row[cell].to_s.split(',')) if 
                       row[cell]
-                when SpreadsheetConstants.column(:examples)
+                when SpreadsheetConstants.column(:examples) # Examples + Doc URL
                   break unless @id
                   
-                  allow = row[cell] && !@resource=~/(service|operation)/i
-                  annotations.merge!(
-                      'example_data' => row[cell].to_s.split(',')) if allow
+                  if @resource.include?("service")
+                    break unless addServiceAnnotation(row[cell], 
+                        'documentation_url')
+                  elsif !@resource.include?("operation") && row[cell]
+                    @annotations.merge!(
+                        'example_data' => row[cell].to_s.split(','))
+                  end
+                when SpreadsheetConstants.column(:licenses) # Licenses
+                  break unless addServiceAnnotation(row[cell], 'license')
+                when SpreadsheetConstants.column(:contactInfo) # Contact Info
+                  break unless addServiceAnnotation(row[cell], 'contact')
+                when SpreadsheetConstants.column(:cost) # Cost
+                  break unless addServiceAnnotation(row[cell], 'cost')
+                when SpreadsheetConstants.column(:publications) # Publications
+                  break unless addServiceAnnotation(row[cell], 'publication')
+                when SpreadsheetConstants.column(:citations) # Citations
+                  break unless addServiceAnnotation(row[cell], 'citation')
+                when SpreadsheetConstants.column(:usageConditions) # Usage Cond.
+                  break unless addServiceAnnotation(row[cell], 'usage_condition')
               end # case property
             end # @header.each
             
             # consolidate the entry
-            unless annotations.empty?
-              entry.merge!('annotations' => annotations)
+            unless @annotations.empty?
+              entry.merge!('annotations' => @annotations)
               bulkAnnotations << entry
             end
             
@@ -113,6 +129,7 @@ module SpreadsheetParsing
       end # workbook.worksheets.each
       
       content = {'bulk_annotations' => bulkAnnotations}
+p content.to_json
       return (bulkAnnotations.empty? ? '' : content.to_json)
 
     rescue Exception => ex
@@ -120,5 +137,16 @@ module SpreadsheetParsing
       return nil
     end # begin rescue
   end # self.generateJSONFromSpreadsheet
+  
+private
+
+  def self.addServiceAnnotation(value, type)
+    return false unless @id
+    return false unless @resource.include?("service")
+    
+    @annotations.merge!(type => value) if value
+    
+    return true
+  end # self.addServiceAnnotation
   
 end # module SpreadsheetParsing

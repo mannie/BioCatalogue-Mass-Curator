@@ -33,8 +33,8 @@ module SpreadsheetConstants
                       :contactInfo => 8,
                       :cost => 9,
                       :publications => 10,
-                      :citations => 10,
-                      :usageConditions => 11}.freeze
+                      :citations => 11,
+                      :usageConditions => 12}.freeze
   
   SERVICE_HEADER_PROPERTIES = [ :id, :type, :name, :descriptions, 
                                 :newDescriptions, :tags, :documentationURLs, 

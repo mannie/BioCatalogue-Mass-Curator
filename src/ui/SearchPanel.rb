@@ -38,7 +38,8 @@ private
   
   def initUI
     self.setLayout(GridBagLayout.new)    
-      
+    self.setBorder(BorderFactory.createEtchedBorder)
+    
     # default constraints
     c = GridBagConstraints.new
     c.fill = GridBagConstraints::HORIZONTAL
@@ -48,6 +49,7 @@ private
     c.gridx = 0
     c.weightx = 50
     self.add(@searchField = JTextField.new, c)
+    @searchField.setHorizontalAlignment(JTextField::CENTER)
     @searchField.addKeyListener(AppKeyListener.new)
           
     # search button

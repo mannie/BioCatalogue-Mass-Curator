@@ -38,6 +38,7 @@ class BrowsingStatusPanel < JPanel
   
   def initUI
     self.setLayout(BorderLayout.new)
+    self.setBorder(BorderFactory.createEtchedBorder)
     
     @backButton = JButton.new("Go Back", Resource.iconFor('home'))
     @backButton.addActionListener(GoBackAction.new(self))

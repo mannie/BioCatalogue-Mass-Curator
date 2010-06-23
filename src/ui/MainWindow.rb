@@ -43,7 +43,7 @@ private
     
     self.setDefaultCloseOperation(JFrame::DO_NOTHING_ON_CLOSE)
 
-    self.setMinimumSize(Dimension.new(800, 600))
+    self.setMinimumSize(Dimension.new(950, 600))
     self.pack
     
     Component.centerToDisplay(self)
