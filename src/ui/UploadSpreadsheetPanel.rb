@@ -53,7 +53,6 @@ private
     self.setLayout(BorderLayout.new(50, 50))
     
     self.add(mainPanel)
-    self.add(buttonPanel, BorderLayout::SOUTH)
   end # initUI
   
   def buttonPanel
@@ -68,7 +67,7 @@ private
     @uploadSpreadsheetButton.addActionListener(@uploadSpreadsheetAction)
     panel.add(@uploadSpreadsheetButton, BorderLayout::EAST)
     @uploadSpreadsheetButton.setEnabled(false)
-    
+        
     return panel
   end # buttonPanel
     
@@ -91,8 +90,6 @@ private
 
     # select spreadsheet button   
     c.gridx = 0
-    c.fill = GridBagConstraints::HORIZONTAL
-    c.anchor = GridBagConstraints::EAST
     c.insets.right = 10
     panel.add(@selectSpreadsheetButton, c)
 
@@ -139,6 +136,14 @@ private
         CONFIG['client']['username'].empty?
     rememberMeCheckBox.setSelected(!forget)
     
+    # go back and upload buttons
+    c.insets.set(90, 0, 0, 0)
+    c.gridx = 0
+    c.gridy += 1
+    c.gridwidth = 2
+    c.fill = GridBagConstraints::HORIZONTAL
+    panel.add(buttonPanel, c)
+
     return panel
   end # mainPanel
   
