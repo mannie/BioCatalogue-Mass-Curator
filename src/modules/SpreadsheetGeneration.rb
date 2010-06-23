@@ -43,15 +43,9 @@ module SpreadsheetGeneration
       services.each do |id, service|      
         @worksheet = @workbook.create_worksheet :name => service.name
         
-        # create header and set format
+        # create service header and set format
         @nextRow = 0
-        @worksheet.row(@nextRow).concat(SpreadsheetConstants.HEADER)
-        SpreadsheetConstants.HEADER.size.times { |cell|
-          @worksheet.row(@nextRow).set_format(cell, @@formats[:header]) 
-          @worksheet.column(cell).width = SpreadsheetConstants.widthFor(cell)
-        }
-        @worksheet.row(@nextRow).height *= 
-            SpreadsheetConstants.HEIGHT_MULTIPLIER
+        setHeader(SpreadsheetConstants.SERVICE_HEADER)
           
         next unless service.technology == "SOAP"
         
@@ -78,13 +72,20 @@ private
 
   def self.writeToSpreadsheet(service)
     # write service row and format
-    @worksheet[@nextRow, 0] = service.id
-    @worksheet[@nextRow, 1] = "#{service.technology} Service"
-    @worksheet[@nextRow, 2] = service.name
-    @worksheet[@nextRow, 3] = service.descriptions.join("\n----------\n")
+    @worksheet[@nextRow, SpreadsheetConstants.column(:id)] = service.id
+    @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = 
+        "#{service.technology} Service"
+    @worksheet[@nextRow, SpreadsheetConstants.column(:name)] = service.name
+
     3.times { |x| @worksheet.row(@nextRow).set_format(x, @@formats[:service]) }
     @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
+
+    writeDescriptions(service.descriptions, @@formats[:service])
     
+    # set header for top level components
+    @nextRow += 3
+    setHeader(SpreadsheetConstants.COMPONENT_HEADER)
+
     # iterate over top level components
     @nextRow += 1
     writeServiceComponents(service)
@@ -119,13 +120,9 @@ private
     @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = type
     @worksheet[@nextRow, SpreadsheetConstants.column(:name)] = name
     
-    finalizeRowWithFormat(format) if descriptions.empty?
+    writeDescriptions(descriptions, format)
     
-    descriptions.each do |description|
-      @worksheet[@nextRow, SpreadsheetConstants.column(:descriptions)] = 
-          description
-      finalizeRowWithFormat(format)
-    end # descriptions.each
+    @nextRow += 1
   end # self.writeComponentRow
 
   def self.finalizeRowWithFormat(format)
@@ -135,4 +132,23 @@ private
     @nextRow += 1
   end # self.finalizeRowWithFormat
   
+  def self.setHeader(header)
+    @worksheet.row(@nextRow).concat(header)
+    header.size.times { |cell|
+      @worksheet.row(@nextRow).set_format(cell, @@formats[:header]) 
+      @worksheet.column(cell).width = SpreadsheetConstants.widthFor(cell)
+    }
+    @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
+  end # self.setHeader
+  
+  def self.writeDescriptions(descriptions, format)
+    if descriptions.empty?
+      finalizeRowWithFormat(format)
+    else
+      descriptions.each do |desc|
+        @worksheet[@nextRow, SpreadsheetConstants.column(:descriptions)] = desc
+        finalizeRowWithFormat(format)
+      end # descriptions.each
+    end # if else descriptions.empty?
+  end # self.writeDescriptions
 end # module SpreadsheetGeneration

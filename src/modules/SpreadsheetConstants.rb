@@ -22,52 +22,80 @@
 
 module SpreadsheetConstants
   
-  @@columnNumberFor = { :id => 0, 
-                        :type => 1, 
-                        :name => 2, 
-                        :descriptions => 3,
-                        :newDescriptions => 4,
-                        :tags => 5,
-                        :examples => 6 }
+  PROPERTY_COLUMN = { :id => 0, 
+                      :type => 1, 
+                      :name => 2, 
+                      :descriptions => 3,
+                      :newDescriptions => 4,
+                      :tags => 5,
+                      :examples => 6, :documentationURLs => 6,
+                      :licenses => 7,
+                      :contactInfo => 8,
+                      :cost => 9,
+                      :publications => 10,
+                      :citations => 10,
+                      :usageConditions => 11}.freeze
+  
+  SERVICE_HEADER_PROPERTIES = [ :id, :type, :name, :descriptions, 
+                                :newDescriptions, :tags, :documentationURLs, 
+                                :licenses, :contactInfo, :cost, :publications, 
+                                :citations, :usageConditions ].freeze
+
+  COMPONENT_HEADER_PROPERTIES = [ :id, :type, :name, :descriptions, 
+                                  :newDescriptions, :tags, :examples ].freeze
   
   def self.column(key)
-    @@columnNumberFor[key.to_sym]
+    PROPERTY_COLUMN[key.to_sym]
   end # self.column
   
   def self.HEIGHT_MULTIPLIER
     1.4 
   end # self.HEIGHT_MULTIPLIER
   
-  def self.HEADER
+  def self.SERVICE_HEADER
     header = []
     
-    @@columnNumberFor.each do |property, cell|
-      val = case property
+    SERVICE_HEADER_PROPERTIES.size.times do |cell|
+      val = case SERVICE_HEADER_PROPERTIES[cell]
               when :id : "ID"
+              when :descriptions : "Existing Descriptions"
               when :newDescriptions : "New Descriptions"
-              else property.to_s.capitalize
+              when :documentationURLs : "Documentation URLs"
+              when :contactInfo : "Contact Info"
+              when :usageConditions : "Usage Conditions"
+              else SERVICE_HEADER_PROPERTIES[cell].to_s.capitalize
             end
       
       header[cell] = val
     end # each property
     
     return header
-  end # self.HEADER
+  end # self.COMPONENT_HEADER
+  
+  def self.COMPONENT_HEADER
+    header = []
+    
+    COMPONENT_HEADER_PROPERTIES.size.times do |cell|
+      val = case COMPONENT_HEADER_PROPERTIES[cell]
+              when :id : "ID"
+              when :descriptions : "Existing Descriptions"
+              when :newDescriptions : "New Descriptions"
+              else COMPONENT_HEADER_PROPERTIES[cell].to_s.capitalize
+            end
+      
+      header[cell] = val
+    end # each property
+    
+    return header
+  end # self.COMPONENT_HEADER
 
   def self.widthFor(cell)
     case cell
-      when @@columnNumberFor[:id]
-        7
-      when @@columnNumberFor[:type]
-        20
-      when @@columnNumberFor[:name]
-        40
-      when @@columnNumberFor[:descriptions], @@columnNumberFor[:newDescriptions]
-        70
-      when @@columnNumberFor[:tags]
-        20 
-      when @@columnNumberFor[:examples] 
-        30 
+      when PROPERTY_COLUMN[:id] : 7
+      when PROPERTY_COLUMN[:name] : 40
+      when PROPERTY_COLUMN[:descriptions], PROPERTY_COLUMN[:newDescriptions] : 50
+      when PROPERTY_COLUMN[:examples] : 30
+      else 20
     end
   end # self.widthFor
   
@@ -76,17 +104,18 @@ module SpreadsheetConstants
     patt = 1
     
     h = Spreadsheet::Format.new(:size => size + 1, :pattern_fg_color => :grey,
-        :pattern => patt, :weight => :bold, :align => :center)
+                                :pattern => patt, :weight => :bold, :align => 
+                                :center)
     s = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :magenta,
-        :pattern => patt, :weight => :bold)                                 
+                                :pattern => patt, :weight => :bold)                                 
     op = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :yellow, 
-        :pattern => patt)                                     
+                                 :pattern => patt)                                     
     i = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :cyan, 
-        :pattern => patt)
+                                :pattern => patt)
     o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :lime, 
-        :pattern => patt)
+                                :pattern => patt)
     g = Spreadsheet::Format.new(:size => size - 1, :color => :gray, 
-        :locked => true, :hidden => true)
+                                :locked => true, :hidden => true)
         
     return { :header => h, 
              :service => s, 

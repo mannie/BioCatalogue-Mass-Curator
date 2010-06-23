@@ -48,7 +48,7 @@ module JSONUtil
       annotationsForPage.each do |page, annotations|
         annotations.each do |annotation|
           resource = annotation['annotation']['annotatable']['resource']
-          next unless resource==resourceURI
+          next unless resource==resourceURI.to_s 
           
           type = annotation['annotation']['attribute']['name']
           next unless type==annotationType
