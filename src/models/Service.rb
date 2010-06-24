@@ -24,7 +24,7 @@ class Service
   
   attr_reader :components, :descriptions 
   attr_reader :id, :name, :technology
-  attr_reader :variantURI, :selectedStatusChangeListener
+  attr_reader :variantURI, :deploymentURI, :selectedStatusChangeListener
   
   @componentsFetched = false
   
@@ -33,7 +33,7 @@ class Service
       @id = serviceURIString.split('/')[-1].to_i
       @descriptions = []
        
-      serviceURIString << "/variants.xml"        
+      serviceURIString << ".xml"
       xmlDocument = XMLUtil.getXMLDocumentFromURI(serviceURIString)
     
       propertyNodes = XMLUtil.getValidChildren(xmlDocument.root)
@@ -49,12 +49,20 @@ class Service
             variants = XMLUtil.selectNodesWithNameFrom(
                 "#{@technology.downcase}Service", propertyNode)
             variants.each { |node|
-              @variantURI = XMLUtil.getAttributeFromNode(
-                  "xlink:href", node).value
+              @variantURI = XMLUtil.getAttributeFromNode("xlink:href", node)
               break if @variantURI
             }
             
-            @variantURI = URI.parse(@variantURI)
+            @variantURI = URI.parse(@variantURI.value)
+          when 'deployments'
+            deployments = XMLUtil.selectNodesWithNameFrom(
+                "serviceDeployment", propertyNode)
+            deployments.each { |node|
+              @deploymentURI = XMLUtil.getAttributeFromNode("xlink:href", node)
+              break if @deploymentURI
+            }
+            
+            @deploymentURI = URI.parse(@deploymentURI.value)
         end # case
       end # propertyNodes.each
       

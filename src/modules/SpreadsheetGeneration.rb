@@ -120,16 +120,26 @@ private
     @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = type
     @worksheet[@nextRow, SpreadsheetConstants.column(:name)] = name
     
-    writeDescriptions(descriptions, format)
+    writeDescriptions(descriptions, format, type.downcase.include?("operation"))
     
     @nextRow += 1
   end # self.writeComponentRow
 
-  def self.finalizeRowWithFormat(format)
-    2.times { |x| @worksheet.row(@nextRow).set_format(x + @@offset, format) }
+  def self.finalizeRowWithFormat(format, isNotAllowed=false)
+    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:type), format)
+    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:name), format)    
+    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:descriptions), format)    
+    
+    if isNotAllowed
+      @worksheet.row(@nextRow).set_format(
+          SpreadsheetConstants.column(:examples), @@formats[:notAllowed])
+      @worksheet.row(@nextRow).set_format(
+          SpreadsheetConstants.column(:dataFormat), @@formats[:notAllowed])
+    end
+    
     @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
     
-    @nextRow += 1
+    @nextRow += 2
   end # self.finalizeRowWithFormat
   
   def self.setHeader(header)
@@ -141,13 +151,13 @@ private
     @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
   end # self.setHeader
   
-  def self.writeDescriptions(descriptions, format)
+  def self.writeDescriptions(descriptions, format, isNotAllowed=false)
     if descriptions.empty?
-      finalizeRowWithFormat(format)
+      finalizeRowWithFormat(format, isNotAllowed)
     else
       descriptions.each do |desc|
         @worksheet[@nextRow, SpreadsheetConstants.column(:descriptions)] = desc
-        finalizeRowWithFormat(format)
+        finalizeRowWithFormat(format, isNotAllowed)
       end # descriptions.each
     end # if else descriptions.empty?
   end # self.writeDescriptions

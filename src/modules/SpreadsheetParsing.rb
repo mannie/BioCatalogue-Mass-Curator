@@ -41,6 +41,7 @@ module SpreadsheetParsing
             # set up temp storage vars
             entry = {}
             @annotations = {}
+            @deploymentAnnotations = {}
             
             description, tags, examples = nil, nil, nil
             
@@ -54,7 +55,7 @@ module SpreadsheetParsing
                     @resource, @service, @component = nil, nil. nil
                     break
                   end
-                  
+
                   @resource = Application.resourceNameFor(row[cell]) if
                       row[cell]
 
@@ -86,7 +87,7 @@ module SpreadsheetParsing
                                   @component.outputs[@id].descriptions
                               end # case resource
                   
-                  isNew = row[cell] && !originals.include?(row[cell])
+                  isNew = row[cell] && originals && !originals.include?(row[cell])
                   @annotations.merge!('description' => row[cell]) if isNew
                 when SpreadsheetConstants.column(:tags) # Tags
                   break unless @id
@@ -103,8 +104,12 @@ module SpreadsheetParsing
                     @annotations.merge!(
                         'example_data' => row[cell].to_s.split(','))
                   end
-                when SpreadsheetConstants.column(:licenses) # Licenses
-                  break unless addServiceAnnotation(row[cell], 'license')
+                when SpreadsheetConstants.column(:licenses) # Licenses + Format
+                  if @resource.include?("service")
+                    break unless addServiceAnnotation(row[cell], 'license')
+                  elsif !@resource.include?("operation") && row[cell]
+                    @annotations.merge!('format' => row[cell])
+                  end
                 when SpreadsheetConstants.column(:contactInfo) # Contact Info
                   break unless addServiceAnnotation(row[cell], 'contact')
                 when SpreadsheetConstants.column(:cost) # Cost
@@ -124,12 +129,17 @@ module SpreadsheetParsing
               bulkAnnotations << entry
             end
             
+            unless @deploymentAnnotations.empty?
+              entry = { 'resource' => @service.deploymentURI.to_s,
+                        'annotations' => @deploymentAnnotations }
+              bulkAnnotations << entry
+            end
+            
           end # if else row == first        
         end # worksheet.each
       end # workbook.worksheets.each
       
       content = {'bulk_annotations' => bulkAnnotations}
-p content.to_json
       return (bulkAnnotations.empty? ? '' : content.to_json)
 
     rescue Exception => ex
@@ -144,7 +154,11 @@ private
     return false unless @id
     return false unless @resource.include?("service")
     
-    @annotations.merge!(type => value) if value
+    if type=='cost' || type=='usage_condition' || type=='contact'
+      @deploymentAnnotations.merge!(type => value) if value
+    else
+      @annotations.merge!(type => value) if value
+    end
     
     return true
   end # self.addServiceAnnotation

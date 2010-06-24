@@ -29,7 +29,7 @@ module SpreadsheetConstants
                       :newDescriptions => 4,
                       :tags => 5,
                       :examples => 6, :documentationURLs => 6,
-                      :licenses => 7,
+                      :dataFormat => 7, :licenses => 7,
                       :contactInfo => 8,
                       :cost => 9,
                       :publications => 10,
@@ -42,7 +42,8 @@ module SpreadsheetConstants
                                 :citations, :usageConditions ].freeze
 
   COMPONENT_HEADER_PROPERTIES = [ :id, :type, :name, :descriptions, 
-                                  :newDescriptions, :tags, :examples ].freeze
+                                  :newDescriptions, :tags, :examples, 
+                                  :dataFormat ].freeze
   
   def self.column(key)
     PROPERTY_COLUMN[key.to_sym]
@@ -80,6 +81,7 @@ module SpreadsheetConstants
               when :id : "ID"
               when :descriptions : "Existing Descriptions"
               when :newDescriptions : "New Descriptions"
+              when :dataFormat : "Data Formats"
               else COMPONENT_HEADER_PROPERTIES[cell].to_s.capitalize
             end
       
@@ -104,25 +106,26 @@ module SpreadsheetConstants
     patt = 1
     
     h = Spreadsheet::Format.new(:size => size + 1, :pattern_fg_color => :grey,
-                                :pattern => patt, :weight => :bold, :align => 
-                                :center)
+                                :pattern => patt, :weight => :bold, 
+                                :align => :center)
     s = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :magenta,
-                                :pattern => patt, :weight => :bold)                                 
+                                :pattern => patt)                                 
     op = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :yellow, 
                                  :pattern => patt)                                     
     i = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :cyan, 
                                 :pattern => patt)
     o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :lime, 
                                 :pattern => patt)
-    g = Spreadsheet::Format.new(:size => size - 1, :color => :gray, 
-                                :locked => true, :hidden => true)
+    g = Spreadsheet::Format.new(:size => size - 1, :color => :gray)
+    n = Spreadsheet::Format.new(:pattern_fg_color => :grey, :pattern => patt)
         
     return { :header => h, 
              :service => s, 
              :operation => op, 
              :input => i, 
              :output => o,
-             :gray => g }        
+             :gray => g,
+             :notAllowed => n }
   end # self.defineSpreadsheetFormatting
   
 end # module SpreadsheetConstants
