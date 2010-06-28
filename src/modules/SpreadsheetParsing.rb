@@ -101,8 +101,7 @@ module SpreadsheetParsing
                     break unless addServiceAnnotation(row[cell], 
                         'documentation_url')
                   elsif !@resource.include?("operation") && row[cell]
-                    @annotations.merge!(
-                        'example_data' => row[cell].to_s.split(','))
+                    @annotations.merge!('example_data' => row[cell])
                   end
                 when SpreadsheetConstants.column(:licenses) # Licenses + Format
                   if @resource.include?("service")
