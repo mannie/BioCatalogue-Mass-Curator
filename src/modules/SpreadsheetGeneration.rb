@@ -128,7 +128,8 @@ private
   def self.finalizeRowWithFormat(format, isNotAllowed=false)
     @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:type), format)
     @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:name), format)    
-    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:descriptions), format)    
+    @worksheet.row(@nextRow).set_format(
+        SpreadsheetConstants.column(:descriptions), @@formats[:notAllowed])
     
     if isNotAllowed
       @worksheet.row(@nextRow).set_format(

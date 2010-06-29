@@ -75,8 +75,10 @@ private
       xmlDocument = XMLUtil.getXMLDocumentFromURI(
           BioCatalogueClient.servicesEndpoint(
               'xml', CONFIG['application']['services-per-page'], @page, 'SOAP'))
+      raise "Could not load services." if xmlDocument.nil?
     rescue Exception => ex
       log('f', ex)
+      java.lang.System::exit(0)
     end
     
     @localServiceCache = []

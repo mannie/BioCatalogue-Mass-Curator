@@ -39,7 +39,7 @@ def log(level, exception, msg=nil)
       when 'I': LOGGER.info msg
       when 'W': LOGGER.warn msg
       when 'E': LOGGER.error msg
-      when 'F': LOGGER.fatal msg; LOGGER.close; exit
+      when 'F': LOGGER.fatal msg; LOGGER.close
       else LOGGER.unknown msg
     end # case
 

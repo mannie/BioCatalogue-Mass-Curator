@@ -117,7 +117,8 @@ module SpreadsheetConstants
     o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :lime, 
                                 :pattern => patt)
     g = Spreadsheet::Format.new(:size => size - 1, :color => :gray)
-    n = Spreadsheet::Format.new(:pattern_fg_color => :grey, :pattern => patt)
+    n = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :silver, 
+                                :pattern => patt)
         
     return { :header => h, 
              :service => s, 

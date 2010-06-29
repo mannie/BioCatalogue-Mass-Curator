@@ -33,6 +33,8 @@ module XMLUtil
       
       return LibXMLJRuby::XML::Parser.string(xmlContent).parse
     rescue Exception => ex
+      Notification.errorDialog("No internet connection found.") if ex.class==
+          SocketError
       log('e', ex)
       return nil
     end # begin rescue
