@@ -74,6 +74,10 @@ class UploadSpreadsheetAction
         return if @selectedFilePath.nil?
         
         Thread.new("Posting annotation data") {
+          @buttonContainer.selectSpreadsheetButton.setEnabled(false)
+          @buttonContainer.usernameField.setEnabled(false)
+          @buttonContainer.passwordField.setEnabled(false)
+          
           event.getSource.setEnabled(false)
           event.getSource.setText("Uploading...")
           event.getSource.setIcon(Resource.iconFor('busy'))
@@ -89,6 +93,8 @@ class UploadSpreadsheetAction
                   "No new annotations could be found in the spreadsheet.\n" +
                   "Nothing has been sent to BioCatalogue.", 
                   "No New Annotations Found")
+              SpreadsheetParsing.performAfterPostActions
+
               proceed = false
             end
             
@@ -105,6 +111,10 @@ class UploadSpreadsheetAction
           event.getSource.setIcon(Resource.iconFor('upload'))
           event.getSource.setText("Upload")
           event.getSource.setEnabled(true)
+          
+          @buttonContainer.passwordField.setEnabled(true)
+          @buttonContainer.usernameField.setEnabled(true)
+          @buttonContainer.selectSpreadsheetButton.setEnabled(true)
         } # Thread.new
       end # elsif event.getSource==@buttonContainer.uploadSpreadsheetButton
 

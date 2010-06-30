@@ -44,6 +44,7 @@ module Application
           when Net::HTTPSuccess
             Notification.informationDialog(
                 "Your annotations have been successfully sent.", "Success")
+            SpreadsheetParsing.performAfterPostActions
           when Net::HTTPClientError
             Notification.errorDialog("Invalid username and/or password")
             raise "Invalid username and/or password"
