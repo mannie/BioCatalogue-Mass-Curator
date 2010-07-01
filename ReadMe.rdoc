@@ -10,7 +10,13 @@ Copyright:: (c) 2010 University of Manchester, UK
 
 
 == Synopsis
-BioCatalogue Mass Curator is an application which uses the BioCatalogue[http://biocatalogue.org] read/write API to handle batch annotation of services via the use of spreadsheets.  This JRuby application allows users (curators) to select a collection of services and export these services into an annotation template (in the form of an Excel spreadsheet).  Curators can then add descriptions, tags, and example data annotaions into the spreadsheet, and use the application to post these new annotations to the BioCatalogue.
+The BioCatalogue Mass Curator application is a small tool which utilizes BioCatalogue's read/write API to handle batch annotation of web services via the use of spreadsheets
+
+BioCatalogue curators can use the tool to browse and/or search the catalogue for web services and select services they are interested in annotating.  The selected collection of services can then be exported into an annotation template (in the form of an Excel spreadsheet).  Curators can then add different types of annotation to the services within the spreadsheet such as, but not limited to, descriptions, tags, and example data.
+
+Mass Curator currently supports the annotation of SOAP services only; a user can only add annotations to the SOAP service, the SOAP operations, and the SOAP inputs and outputs.  REST service support is yet to come.
+
+After adding annotations to the spreadsheet, curators can then use the tool to extract the annotations from the spreadsheet and upload them to the BioCatalogue.
 
 
 
@@ -18,10 +24,12 @@ BioCatalogue Mass Curator is an application which uses the BioCatalogue[http://b
 === Gems
 - json-jruby
 - libxml-jruby
-- spreadsheet
+- parseconfig
 - ruby-ole
+- spreadsheet
   
 === Java Libraries
+- JRuby
 - BrowserLauncher
 
 

@@ -83,22 +83,22 @@ private
     uriString = XMLUtil.getAttributeFromNode('xlink:href', node).value
     id = uriString.split('/')[-1].to_i
 
-    name, desc = nil, nil
+    name, anns = nil, nil
     
     XMLUtil.getValidChildren(node).each { |propertyNode|
       case propertyNode.name
         when 'name'
           name = propertyNode.content
         when 'dc:description'
-          descriptions = JSONUtil.getAnnotationOfTypeForResource('description', 
+          anns = JSONUtil.getAnnotationOfTypeForResource('description', 
               uriString)
 
-          descriptions << propertyNode.content
+          anns << propertyNode.content
       end # case
     } # XMLUtil.getValidChildren(outputNode).each
     
-    descriptions.reject! { |d| d.strip.empty? }
-    destination.merge!(id => ServiceComponentIO.new(id, name, descriptions))
+    anns.reject! { |d| d.strip.empty? }
+    destination.merge!(id => ServiceComponentIO.new(id, name, anns))
   end # getComponentPortFromNode
   
 end

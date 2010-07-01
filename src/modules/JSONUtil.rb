@@ -48,16 +48,16 @@ module JSONUtil
       annotationsForPage.each do |page, annotations|
         annotations.each do |annotation|
           resource = annotation['annotation']['annotatable']['resource']
-          next unless resource==resourceURI.to_s 
+          next unless resource.to_s==resourceURI.to_s 
           
           type = annotation['annotation']['attribute']['name']
           next unless type==annotationType
-          
+
           requestedAnnotations << annotation['annotation']['value']['content']
         end # annotations.each
       end # annotationsForPage.each
 
-      return requestedAnnotations.clone
+      return requestedAnnotations.uniq.clone
     rescue Exception => ex
       log('e', ex)
       return nil

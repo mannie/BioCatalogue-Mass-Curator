@@ -90,9 +90,8 @@ class Service
   
     begin
       # get descriptions
-      @descriptions << JSONUtil.getAnnotationOfTypeForResource('description', 
-          @variantURI)
-      @descriptions.flatten!
+      @descriptions.concat(
+          JSONUtil.getAnnotationOfTypeForResource('description', @variantURI))
       @descriptions.reject! { |d| d.strip.empty? }
       
       xmlDocument = XMLUtil.getXMLDocumentFromURI(@variantURI.to_s + '.xml')
