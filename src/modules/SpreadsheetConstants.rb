@@ -107,19 +107,19 @@ module SpreadsheetConstants
     
     h = Spreadsheet::Format.new(:size => size + 1, :pattern_fg_color => :grey,
                                 :pattern => patt, :weight => :bold, 
-                                :align => :center)
+                                :align => :center, :color => :white)
     s = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :magenta,
-                                :pattern => patt)                                 
+                                :pattern => patt, :align => :justify)                                 
     op = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :yellow, 
-                                 :pattern => patt)                                     
+                                 :pattern => patt, :align => :justify)                                     
     i = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :cyan, 
-                                :pattern => patt)
+                                :pattern => patt, :align => :justify)
     o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :lime, 
-                                :pattern => patt)
-    g = Spreadsheet::Format.new(:size => size - 1, :color => :gray)
+                                :pattern => patt, :align => :justify)
+    g = Spreadsheet::Format.new(:size => size - 1, :color => :gray, :align => :justify)
     n = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :silver, 
-                                :pattern => patt)
-        
+                                :pattern => patt, :align => :justify)
+    
     return { :header => h, 
              :service => s, 
              :operation => op, 

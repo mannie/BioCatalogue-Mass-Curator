@@ -41,7 +41,8 @@ module SpreadsheetGeneration
 
       # loop through services and write to @workbook
       services.each do |id, service|      
-        @worksheet = @workbook.create_worksheet :name => service.name
+        @worksheet = @workbook.create_worksheet :name => 
+            "Service | #{service.name.gsub(/\W/, '-')}"
         
         # create service header and set format
         @nextRow = 0
