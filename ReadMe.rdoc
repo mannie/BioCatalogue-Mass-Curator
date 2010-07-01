@@ -22,27 +22,29 @@ After adding annotations to the spreadsheet, curators can then use the tool to e
 
 == Dependencies
 === Gems
-- json-jruby
-- libxml-jruby
-- parseconfig
-- ruby-ole
-- spreadsheet
+- json-jruby[http://json-jruby.rubyforge.org]
+- libxml-jruby[http://github.com/dylanvaughn/libxml-jruby]
+- parseconfig[http://rubyforge.org/projects/parseconfig]
+- ruby-ole[http://code.google.com/p/ruby-ole]
+- spreadsheet[http://spreadsheet.rubyforge.org]
   
 === Java Libraries
-- JRuby
-- BrowserLauncher
+- JRuby[http://jruby.org]
+- BrowserLauncher[http://browserlaunch2.sourceforge.net]
 
 
 
 == Building
+(The commands below are issued from the top level directory of the working copy)
+
 The builds are handled by the Rawr[http://github.com/rawr/rawr] gem.
-  sudo gem install rawr
+  sudo jruby -S gem install rawr
 
 To create an executable JAR, simply run (you do not need to run 'rawr install'):
   rake rawr:jar
 
 To execute the app from a JAR, run:
-  java -jar BioCatalogue-Mass-Curator.jar
+  java -jar package/jar/BioCatalogue-Mass-Curator.jar
 
 For a full list of 'rake rawr:' commands, run:
   rake -T
