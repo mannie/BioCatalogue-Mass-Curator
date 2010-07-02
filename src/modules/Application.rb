@@ -24,6 +24,8 @@ module Application
   
   @@storeCredentials = false
   
+  # --------------------
+  
   def self.storeCredentials(store)
     @@storeCredentials = store==true
   end # self.storeCredentials
@@ -37,13 +39,13 @@ module Application
       request.add_field("Accept", 'application/json')
       request.add_field("User-Agent", BioCatalogueClient.USER_AGENT)
       
-      Net::HTTP.new(BioCatalogueClient.HOST.host).start { |http|
+      Net::HTTP.new(BioCatalogueClient.HOSTNAME.host).start { |http|
         response = http.request(request)
         
         case response
           when Net::HTTPSuccess
             Notification.informationDialog(
-                "Your annotations have been successfully sent.", "Success")
+                "Your annotations have been successfully submitting.", "Success")
             SpreadsheetParsing.performAfterPostActions
           when Net::HTTPClientError
             Notification.errorDialog("Invalid username and/or password")
@@ -52,7 +54,7 @@ module Application
             Notification.errorDialog("Error occured")
             raise response.inspect
         end
-      } # Net::HTTP.new(BioCatalogueClient.HOST.host).start
+      } # Net::HTTP.new(BioCatalogueClient.HOSTNAME.host).start
     rescue Exception => ex
       log('e', ex)
       return nil
@@ -77,7 +79,7 @@ module Application
     path = "/#{resource}/#{id}"
     path += ".#{format}" if format
     
-    return URI.join(BioCatalogueClient.HOST.to_s, path)
+    return URI.join(BioCatalogueClient.HOSTNAME.to_s, path)
   end # self.weblinkWithID
   
   def self.resourceNameFor(thing)

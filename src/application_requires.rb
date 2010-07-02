@@ -48,21 +48,16 @@ require 'json/ext'
 require 'parseconfig'
 require 'base64'
 
-# Require Application Sources
-EVENTS_SRC.each { |src| require File.join(EVENTS_DIR, src) }
-MODELS_SRC.each { |src| require File.join(MODELS_DIR, src) }
-MODULES_SRC.each { |src| require File.join(MODULES_DIR, src) }
-UI_SRC.each { |src| require File.join(UI_DIR, src) }
-
 # ========================================
 
+# Set up user config
 CONFIG = { 'client' => { 'username' => '', 'password' => '' },
            'application' => { 
                'biocatalogue-hostname' => 'http://www.biocatalogue.org',
                'services-per-page' => 15, 
                'search-results-per-page' => 10 } }
 
-# Load up user config
+# Load up user config from file
 begin
   c = ParseConfig.new(CONFIG_FILE_PATH)
   c.validate_config
@@ -84,6 +79,12 @@ rescue Exception => ex
   CONFIG['application']['biocatalogue-hostname'] = 'http://www.biocatalogue.org'
   CONFIG['application']['services-per-page'] = 15
   CONFIG['application']['search-results-per-page'] = 10
-
-  log('e', ex)
 end
+
+# ========================================
+
+# Require Application Sources
+EVENTS_SRC.each { |src| require File.join(EVENTS_DIR, src) }
+MODELS_SRC.each { |src| require File.join(MODELS_DIR, src) }
+MODULES_SRC.each { |src| require File.join(MODULES_DIR, src) }
+UI_SRC.each { |src| require File.join(UI_DIR, src) }

@@ -26,6 +26,8 @@ module Cache
   @@services ||= {}
   @@serviceListings ||= {}
 
+# --------------------
+
   def self.services
     @@services
   end # self.services

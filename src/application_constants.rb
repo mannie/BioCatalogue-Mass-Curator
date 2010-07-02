@@ -46,7 +46,7 @@ RESOURCES_DIR = dirPath
 dirLevels = ""
 filePath = ''
 
-7.times do |x|
+6.times do |x|
   filePath = File.join(File.dirname(__FILE__), dirLevels, "mass-curator.conf")
   filePath = File.expand_path(filePath.gsub("file:", "")).freeze
 
@@ -75,12 +75,12 @@ EVENTS_SRC = %w{ AppCheckBoxListener
                  ServiceCheckBoxListener.rb
                  UploadSpreadsheetAction.rb }.freeze
 
-MODELS_SRC = %w{ BioCatalogueClient.rb
-                 Service.rb
+MODELS_SRC = %w{ Service.rb
                  ServiceComponent.rb
                  ServiceComponentIO.rb }.freeze
 
 MODULES_SRC = %w{ Application.rb
+                  BioCatalogueClient.rb
                   Cache.rb
                   Component.rb
                   JSONUtil.rb

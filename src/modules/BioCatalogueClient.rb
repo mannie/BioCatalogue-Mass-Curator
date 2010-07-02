@@ -20,15 +20,11 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
-class BioCatalogueClient
+module BioCatalogueClient
   
-  @@currentUser = { :username => '', :password => '' }
-  
-  def initialize(base="http://www.biocatalogue.org")
-    @@HOST ||= URI.parse(base)
-    @@user = nil
-  end # initialize
-  
+  @@currentUser ||= { :username => '', :password => '' }
+  @@HOSTNAME ||= URI.parse(CONFIG['application']['biocatalogue-hostname'])
+
 # --------------------
   
   def self.currentUser
@@ -44,30 +40,30 @@ class BioCatalogueClient
     "Mass Curator (Alpha) - JRuby/#{JRUBY_VERSION}"
   end # self.USER_AGENT
       
-  def self.HOST
-    @@HOST
-  end # self.HOST
+  def self.HOSTNAME
+    @@HOSTNAME
+  end # self.HOSTNAME
     
   def self.searchEndpoint(query, format=nil, perPage=25, page=1,
       scope='services')
     query = URI.escape(query.strip)
     
     if !format.nil? && !format.empty? && format.class==String
-      URI.join(@@HOST.to_s,
+      URI.join(@@HOSTNAME.to_s,
           "/search.#{format}" + 
           "?q=#{query}&scope=#{scope}&page=#{page}&per_page=#{perPage}")
     else
-      URI.join(@@HOST.to_s, "/search?q=#{query}")
+      URI.join(@@HOSTNAME.to_s, "/search?q=#{query}")
     end
   end # self.searchEndpoint
 
   def self.servicesEndpoint(format=nil, perPage=25, page=1, filter='')
     if !format.nil? && !format.empty? && format.class==String
-      URI.join(@@HOST.to_s, 
+      URI.join(@@HOSTNAME.to_s, 
           "/services.#{format}?per_page=#{perPage}&page=#{page}&t=[#{filter}]")
     else
-      URI.join(@@HOST.to_s, "/services")
+      URI.join(@@HOSTNAME.to_s, "/services")
     end
   end # self.servicesEndpoint
     
-end
+end # BioCatalogueClient

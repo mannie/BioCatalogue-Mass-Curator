@@ -24,6 +24,8 @@ require 'logger'
 
 LOGGER ||= Logger.new('mass-curator.log', 'weekly')
 
+# --------------------
+
 def log(level, exception, msg=nil)
   begin
     raise "Invalid parameters passed to logger" if level.nil? || level.empty? ||

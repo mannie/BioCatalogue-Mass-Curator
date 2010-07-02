@@ -53,11 +53,6 @@ if doBenchmark
     b.report("Libr") {
       require File.join(File.dirname(__FILE__), 'application_requires.rb')
     }
-
-    b.report("Clie") { 
-      biocatalogueClient = BioCatalogueClient.new(
-          CONFIG['application']['biocatalogue-hostname'])
-    }
     
     b.report("Sele") { SELECTED_SERVICES_WINDOW = SelectedServicesWindow.new }
 
@@ -71,8 +66,6 @@ else # !CONFIG[:doBenchmark]
   require File.join(File.dirname(__FILE__), 'application_constants.rb')
   require File.join(File.dirname(__FILE__), 'application_requires.rb')
 
-  biocatalogueClient = BioCatalogueClient.new(
-      CONFIG['application']['biocatalogue-hostname'])
   SELECTED_SERVICES_WINDOW = SelectedServicesWindow.new
   MAIN_WINDOW = MainWindow.new
   
