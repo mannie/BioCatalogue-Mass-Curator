@@ -108,6 +108,7 @@ module Application
         
       config.add('client', CONFIG['client'])
       config.add('application', CONFIG['application'])
+      config.add('spreadsheet', CONFIG['spreadsheet'])
       
       # sanitize config
       CONFIG.each do |group, values|

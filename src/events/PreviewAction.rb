@@ -20,13 +20,18 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This launches the user's default web browser to show the associated service.
+
+# ========================================
+
 class PreviewAction
   java_implements ActionListener
 
-  def initialize(container, service=nil)
+  # ACCEPTS: the Service to load when the attached button is clicked
+  # RETURNS: self
+  def initialize(service)
     super()
     
-    @buttonContainer = container
     @service = service if service.class == Service
     
     return self
@@ -36,7 +41,7 @@ class PreviewAction
 
   def actionPerformed(event)
     @@browserLauncher ||= BrowserLauncher.new
-    @@browserLauncher.setNewWindowPolicy(false)
+    @@browserLauncher.setNewWindowPolicy(false) # use tabs if possible
     
     @@browserLauncher.openURLinBrowser(
         Application.weblinkWithIDForResource(@service.id).to_s)

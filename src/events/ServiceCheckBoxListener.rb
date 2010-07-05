@@ -20,9 +20,16 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is a specific checkbox listener for the ServiceListingPanels.
+# Also see AppCheckBoxListener.
+
+# ========================================
+
 class ServiceCheckBoxListener
   java_implements ChangeListener
   
+  # ACCEPTS: the Service which is to be selected/deselected for annotation
+  # RETURNS: self
   def initialize(service)
     super()
     @service = service
@@ -34,7 +41,7 @@ class ServiceCheckBoxListener
   def stateChanged(event)
     if !event.getSource.getParent.showDetail && event.getSource.isSelected
       Thread.new("Deselecting service for annotation + disposal...") { 
-        event.getSource.getParent.dispose
+        event.getSource.getParent.dispose # remove listing fom selected Services
         Cache.deselectServiceForAnnotation(@service)  
       }
     elsif event.getSource.isSelected

@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is a generic key listener for the application
+
+# ========================================
+
 class AppKeyListener
   java_implements KeyListener
  

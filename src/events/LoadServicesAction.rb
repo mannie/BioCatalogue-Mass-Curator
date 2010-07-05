@@ -20,12 +20,18 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This handles the page loading when browsing between service pages.
+
+# ========================================
+
 class LoadServicesAction
   java_implements ActionListener
 
-  @@resultsPanelForPage = {}
-  @@serviceSelectPanel = nil
+  @@resultsPanelForPage = {} # The local (previously browsed) page cache
+  @@serviceSelectPanel = nil # The currently visible ServiceSelectPanel
   
+  # ACCEPTS: the container of the button, and the page number to load
+  # RETURNS: self
   def initialize(container, pageNumber)
     super()
     @buttonContainer = container
@@ -33,20 +39,25 @@ class LoadServicesAction
     return self
   end # initialize
 
+  # ACCEPTS: an integer for the page number
   def setLoadPageNumber(page)
     @pageNumber = page
   end # setLoadPageNumber
 
 # --------------------
   
+  # RETURNS: the current page number
   def self.currentPage
     @@currentPage
   end # self.currentPage
   
+  # ACCEPTS: a boolean to set the ServiceSelectPanel visibility
   def self.setServicesPanelVisible(visible)
     @@serviceSelectPanel.setVisible(visible) if @@serviceSelectPanel
   end # self.setServicesPanelVisible
-   
+  
+  # Hide or show components based on the application's export status
+  # ACCEPTS: a boolean - whether the application is current exporting or not
   def self.setBusyExporting(exporting)
     Component.searchPanel.setVisible(!exporting)
     Component.browsingStatusPanel.setVisible(!exporting)
@@ -89,7 +100,7 @@ class LoadServicesAction
       event.getSource.setIcon(Resource.iconFor('busy'))
 
       # load new service select panel
-      if (panel = @@resultsPanelForPage[@pageNumber])
+      if (panel = @@resultsPanelForPage[@pageNumber]) # used cached panel
         @@serviceSelectPanel = panel
               
         panel.add(Component.searchPanel, BorderLayout::NORTH)
@@ -97,7 +108,7 @@ class LoadServicesAction
         
         Cache.syncWithCollection(panel.localServiceCache)
         Cache.updateServiceListings(panel.localListingCache)
-      else
+      else # create new panel and add to local cache
         @@serviceSelectPanel = ServiceSelectPanel.new(@pageNumber)
         @@resultsPanelForPage.merge!(@pageNumber => @@serviceSelectPanel)
       end

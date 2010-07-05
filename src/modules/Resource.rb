@@ -21,7 +21,23 @@
 =end
 
 module Resource
-
+  
+  @@helpTextArray = []
+  
+  def self.helpTextArray
+    return @@helpTextArray.clone unless @@helpTextArray.empty?
+    
+    file = File.new(self.pathTo("spreadsheet_help_text.txt"))
+    fileContent = file.read
+    file.close
+    
+    fileContent.chomp!
+    @@helpTextArray = fileContent.split("\n")
+    @@helpTextArray.reject! { |x| x.nil? || x.strip.empty? }
+    
+    return @@helpTextArray.clone
+  end # self.helpTextArray
+  
   def self.pathTo(resourceName)
     File.expand_path(File.join(RESOURCES_DIR, resourceName))
   end # self.pathToLocalResource

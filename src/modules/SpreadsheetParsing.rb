@@ -47,6 +47,8 @@ module SpreadsheetParsing
       @bulkAnnotations = []      
       
       @workbook.worksheets.each do |worksheet| # iterate each worksheet
+        next if worksheet.name.strip.downcase == "help"
+        
         begin
           parseWorksheet(worksheet)
           @@successfullyParsedServiceIDS << @service

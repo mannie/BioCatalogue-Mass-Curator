@@ -20,6 +20,8 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This file loads the into memory, the classes defined in application_constants.rb
+
 # ========================================
 
 # Require Java Core Libraries
@@ -51,13 +53,24 @@ require 'base64'
 # ========================================
 
 # Set up user config
-CONFIG = { 'client' => { 'username' => '', 'password' => '' },
-           'application' => { 
-               'biocatalogue-hostname' => 'http://www.biocatalogue.org',
-               'services-per-page' => 15, 
-               'search-results-per-page' => 10 } }
+CONFIG = { 'client' => {}, 'application' => {}, 'spreadsheet' => {} }
+
+# Define the default config
+def resetUserConfigToDefaults
+  CONFIG['client']['username'] = ''
+  CONFIG['client']['password'] = ''
+  
+  CONFIG['application']['biocatalogue-hostname'] = 'http://www.biocatalogue.org'
+  CONFIG['application']['services-per-page'] = 15
+  CONFIG['application']['search-results-per-page'] = 10
+  
+  CONFIG['spreadsheet']['include-help'] = true
+end
+
+resetUserConfigToDefaults
 
 # Load up user config from file
+# If the process fails, the config options revert to the defaults
 begin
   c = ParseConfig.new(CONFIG_FILE_PATH)
   c.validate_config
@@ -70,15 +83,17 @@ begin
     }
   end # c.groups.each
   
+  # run a check to see whether the config contains valid data types
+  # there is no need to actually store the integer into the CONFIG hash
+  # if any of the validations here fail, reset the config hash to the defaults
+  CONFIG['application']['services-per-page'].to_i
+  CONFIG['application']['search-results-per-page'].to_i
+  
 rescue Exception => ex
   msg = "Could not load config file.\nSwitching to default settings."
   JOptionPane.showMessageDialog(nil, msg, "Config Error", 
       JOptionPane::INFORMATION_MESSAGE)
-
-  CONFIG['client']['username'], CONFIG['client']['password'] = '', ''
-  CONFIG['application']['biocatalogue-hostname'] = 'http://www.biocatalogue.org'
-  CONFIG['application']['services-per-page'] = 15
-  CONFIG['application']['search-results-per-page'] = 10
+  resetUserConfigToDefaults
 end
 
 # ========================================

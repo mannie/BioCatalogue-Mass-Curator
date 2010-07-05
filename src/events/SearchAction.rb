@@ -20,16 +20,22 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is charge of displaying the search results.  See also SearchResultsPanel
+
+# ========================================
+
 class SearchAction
   java_implements ActionListener
 
-  @@resultsPanelForPage = {}
-  @@searchResultsPanel = nil
+  @@resultsPanelForPage = {} # local cache for SearchResultsPanel
+  @@searchResultsPanel = nil # currently visible SearchResultsPanel
 
-  @@searchResultsWindow = nil
+  @@searchResultsWindow = nil # currently visible SearchResultsWindo
   
-  @@query = ''
+  @@query = '' # current query
   
+  # ACCEPTS: container of search or next/previous page button, and page to load
+  # RETURNS: self
   def initialize(container, pageNumber)
     super()
     @buttonContainer = container
@@ -73,12 +79,12 @@ class SearchAction
       event.getSource.setIcon(Resource.iconFor('busy'))
 
       # load new search results panel
-      if (panel = @@resultsPanelForPage[@pageNumber])
+      if (panel = @@resultsPanelForPage[@pageNumber]) # used cached panel
         @@searchResultsPanel = panel
 
         Cache.syncWithCollection(panel.localServiceCache)
         Cache.updateServiceListings(panel.localListingCache)
-      else
+      else # create new panel and add to cache
         @@searchResultsPanel = SearchResultsPanel.new(@@query, @pageNumber)
         @@resultsPanelForPage.merge!(@pageNumber => @@searchResultsPanel)
       end

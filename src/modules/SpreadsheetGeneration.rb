@@ -39,6 +39,43 @@ module SpreadsheetGeneration
       @file = File.new(File.join(saveDirPath, filename), "w+")
       @workbook = Spreadsheet::Workbook.new(@file.path)  
 
+      # write worksheet containing help text
+      if CONFIG['spreadsheet']['include-help']=="true"
+        @worksheet = @workbook.create_worksheet :name => "HELP"
+
+=begin
+        # example service is service with ID: 564 (BlastDemo)
+        uri = Application.weblinkWithIDForResource(564)
+        service = Application.serviceWithURI(uri.to_s)
+        service.fetchComponents
+=end
+        
+        # write help text
+        @nextRow = 0
+
+        @worksheet[@nextRow, 0] = "HELP"
+        @worksheet.column(0).width = 240
+        @worksheet.row(@nextRow).set_format(0, @@formats[:header])
+        
+        Resource.helpTextArray.each { |content|
+          @nextRow += 2
+          @worksheet[@nextRow, 0] = content
+
+          @worksheet.row(@nextRow).set_format(0, @@formats[:merged])
+        
+          @worksheet.row(@nextRow).height *= 
+              SpreadsheetConstants.HEIGHT_MULTIPLIER          
+        }
+
+=begin     
+        setHeader(SpreadsheetConstants.COMPONENT_HEADER)
+
+        # write services components
+        @nextRow += 1
+        writeServiceComponents(service)
+=end
+      end
+      
       # loop through services and write to @workbook
       services.each do |id, service|      
         @worksheet = @workbook.create_worksheet :name => 

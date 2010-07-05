@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is a generic component listener for the application's components.
+
+# ========================================
+
 class AppComponentListener
   java_implements ComponentListener
   

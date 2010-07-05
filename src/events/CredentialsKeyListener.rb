@@ -20,9 +20,15 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is a specific key listener for handling logins via key presses.
+
+# ========================================
+
 class CredentialsKeyListener
   java_implements KeyListener
  
+  # ACCEPTS: the container of the button
+  # RETURNS: self
   def initialize(container)
     super()
     

@@ -20,9 +20,16 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is a generic checkbox listener for the application.
+# Also see ServiceCheckBoxListener.
+
+# ========================================
+
 class AppCheckBoxListener
   java_implements ChangeListener
 
+  # ACCEPTS: the container of the button
+  # RETURNS: self
   def initialize(container)
     super()
     

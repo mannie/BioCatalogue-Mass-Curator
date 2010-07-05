@@ -108,17 +108,26 @@ module SpreadsheetConstants
     h = Spreadsheet::Format.new(:size => size + 1, :pattern_fg_color => :grey,
                                 :pattern => patt, :weight => :bold, 
                                 :align => :center, :color => :white)
+                                
     s = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :magenta,
-                                :pattern => patt, :align => :justify)                                 
+                                :pattern => patt, :align => :justify)
+                                
     op = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :yellow, 
-                                 :pattern => patt, :align => :justify)                                     
+                                 :pattern => patt, :align => :justify)
+                                                              
     i = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :cyan, 
                                 :pattern => patt, :align => :justify)
+                                
     o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :lime, 
                                 :pattern => patt, :align => :justify)
-    g = Spreadsheet::Format.new(:size => size - 1, :color => :gray, :align => :justify)
+                                
+    g = Spreadsheet::Format.new(:size => size - 1, :color => :gray, 
+                                :align => :justify)
+    
     n = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :silver, 
                                 :pattern => patt, :align => :justify)
+
+    m = Spreadsheet::Format.new(:size => size, :align => :justify)
     
     return { :header => h, 
              :service => s, 
@@ -126,7 +135,8 @@ module SpreadsheetConstants
              :input => i, 
              :output => o,
              :gray => g,
-             :notAllowed => n }
+             :notAllowed => n,
+             :merged => m }
   end # self.defineSpreadsheetFormatting
   
 end # module SpreadsheetConstants

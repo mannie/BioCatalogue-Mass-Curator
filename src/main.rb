@@ -20,10 +20,15 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is the entry into the application.
+
+# ========================================
+
 doBenchmark = false
 
 require 'optparse'
 
+# Parse the command line arguments before attempting to load default config
 ARGV.options do |opts|
   opts.on("-h", "--help", "Show this help message.") { puts opts; exit }
   
@@ -61,7 +66,7 @@ if doBenchmark
     
   end
   
-else # !CONFIG[:doBenchmark]
+else # do not do benchmark
   
   require File.join(File.dirname(__FILE__), 'application_constants.rb')
   require File.join(File.dirname(__FILE__), 'application_requires.rb')

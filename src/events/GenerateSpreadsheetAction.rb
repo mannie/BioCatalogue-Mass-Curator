@@ -20,11 +20,18 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This action listener handles the button clicks and takes appropriate action
+# before and after generating a spreadsheet.
+
+# ========================================
+
 class GenerateSpreadsheetAction
   java_implements ActionListener
 
   @@isBusyExporting = false
   
+  # ACCEPTS: the container of the button
+  # RETURNS: self
   def initialize(container)
     super()
     @buttonContainer = container
@@ -32,11 +39,13 @@ class GenerateSpreadsheetAction
   end # initialize
 
 # --------------------
-  
+
+  # ACCEPTS: a boolean stating the application's export status
   def self.setBusyExporting(busy)
     @@isBusyExporting = busy
   end # self.setBusyExporting
 
+  # RETURNS: a boolean stating whether the application is performing an export
   def self.isBusyExporting
     @@isBusyExporting
   end # isBusyExporting
@@ -55,6 +64,7 @@ class GenerateSpreadsheetAction
       return if dir.nil? || !dir.isDirectory
       
       Thread.new("Generating spreadsheet") { |t|
+        # disable most interaction with the application
         GenerateSpreadsheetAction.setBusyExporting(true)
 
         event.getSource.setEnabled(false)
@@ -64,15 +74,16 @@ class GenerateSpreadsheetAction
         file = SpreadsheetGeneration.generateSpreadsheet(
             Cache.selectedServices, dir.path)
 
-        if file
+        if file # successfully exported
           Notification.informationDialog(
               "The selected services have been successfully exported to:\n" + 
               file.path, "Export Complete")
-        else
+        else # failed to export
           Notification.errorDialog(
               "An error occured while trying to export the selected services.")
         end
         
+        # re-enable user-application interaction
         event.getSource.setIcon(Resource.iconFor('excel'))
         event.getSource.setText("Export")
         event.getSource.setEnabled(true)

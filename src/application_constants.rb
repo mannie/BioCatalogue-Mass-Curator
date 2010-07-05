@@ -20,6 +20,8 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This file defines which files/classes are required by the application.
+
 # ========================================
 
 # Application Directory Names

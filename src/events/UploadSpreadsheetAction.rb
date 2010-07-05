@@ -20,12 +20,19 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This makes the calls to the modules that do the actual uploading.  This works
+# as a UI updater.
+
+# ========================================
+
 class UploadSpreadsheetAction
   java_implements ActionListener
 
-  @selectedFilePath = nil
+  @@selectedFilePath = nil
   @@uploadPanel = nil
   
+  # ACCEPTS: the container of the button
+  # RETURNS: self
   def initialize(container)
     super()
     @buttonContainer = container
@@ -33,6 +40,7 @@ class UploadSpreadsheetAction
     return self
   end # initialize
 
+  # ACCEPTS: a boolean
   def self.setUploadPanelVisible(visible)
     @@uploadPanel.setVisible(visible) if @@uploadPanel
   end # self.setUploadPanelVisible
@@ -40,7 +48,7 @@ class UploadSpreadsheetAction
 # --------------------
   
   def actionPerformed(event)
-    if @buttonContainer.instance_of?(MainPanel)
+    if @buttonContainer.instance_of?(MainPanel) # show the UploadSpreadsheetPanel
       @buttonContainer.setVisible(false)
             
       @@uploadPanel ||= UploadSpreadsheetPanel.new
@@ -53,6 +61,7 @@ class UploadSpreadsheetAction
     elsif @buttonContainer.instance_of?(UploadSpreadsheetPanel)
       
       if event.getSource==@buttonContainer.selectSpreadsheetButton
+        # open the file select dialog
         @@fileSelector ||= JFileChooser.new
         @@filter ||= FileNameExtensionFilter.new("Excel Spreadsheets", "xls")
         @@fileSelector.setAcceptAllFileFilterUsed(false)
@@ -60,8 +69,8 @@ class UploadSpreadsheetAction
     
         if @@fileSelector.showOpenDialog(MAIN_WINDOW) == 
             JFileChooser::APPROVE_OPTION
-          @selectedFilePath = @@fileSelector.getSelectedFile.getAbsolutePath
-          @buttonContainer.selectedSpreadsheetLabel.setText(@selectedFilePath)
+          @@selectedFilePath = @@fileSelector.getSelectedFile.getAbsolutePath
+          @buttonContainer.selectedSpreadsheetLabel.setText(@@selectedFilePath)
           @buttonContainer.selectedSpreadsheetLabel.setEnabled(true)
         
           user = @buttonContainer.usernameField.getText.strip
@@ -70,10 +79,12 @@ class UploadSpreadsheetAction
           @buttonContainer.uploadSpreadsheetButton.setEnabled(true) if 
               !user.empty? && !pass.empty?
         end # if file selected
-      elsif event.getSource==@buttonContainer.uploadSpreadsheetButton        
-        return if @selectedFilePath.nil?
+      elsif event.getSource==@buttonContainer.uploadSpreadsheetButton
+        # upload the annotations
+        return if @@selectedFilePath.nil?
         
         Thread.new("Posting annotation data") {
+          # disable user interaction
           @buttonContainer.selectSpreadsheetButton.setEnabled(false)
           @buttonContainer.usernameField.setEnabled(false)
           @buttonContainer.passwordField.setEnabled(false)
@@ -83,9 +94,9 @@ class UploadSpreadsheetAction
           event.getSource.setIcon(Resource.iconFor('busy'))
           
           jsonOutput = SpreadsheetParsing.generateJSONFromSpreadsheet(
-              @selectedFilePath)
+              @@selectedFilePath)
           
-          if jsonOutput
+          if jsonOutput # some annotation were returned
             proceed = true
             
             if jsonOutput.empty?
@@ -103,11 +114,12 @@ class UploadSpreadsheetAction
             
             Application.postAnnotationData(jsonOutput, user, pass) if proceed &&
                 !user.empty? && !pass.empty?
-          else
+          else # failed to extract annotations
             Notification.errorDialog(
                 "An error occured while uploading your spreadsheet.")
           end # if jsonOutput 
           
+          # re-enable user interaction
           event.getSource.setIcon(Resource.iconFor('upload'))
           event.getSource.setText("Upload")
           event.getSource.setEnabled(true)

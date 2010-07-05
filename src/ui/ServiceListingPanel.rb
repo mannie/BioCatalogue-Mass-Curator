@@ -66,7 +66,7 @@ private
     c.weightx = GridBagConstraints::REMAINDER
     c.gridx = 1
     previewButton = JButton.new("Preview", Resource.iconFor('url'))
-    previewButton.addActionListener(PreviewAction.new(self, @service))
+    previewButton.addActionListener(PreviewAction.new(@service))
     self.add(previewButton, c)
 
     if @showDetail
