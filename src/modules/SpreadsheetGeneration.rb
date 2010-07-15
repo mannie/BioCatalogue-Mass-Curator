@@ -40,7 +40,7 @@ module SpreadsheetGeneration
       @workbook = Spreadsheet::Workbook.new(@file.path)  
 
       # write worksheet containing help text
-      if CONFIG['spreadsheet']['include-help']=="true"
+      if CONFIG['spreadsheet']['include-help'].downcase=="true"
         @worksheet = @workbook.create_worksheet :name => "HELP"
 
 =begin
@@ -54,11 +54,11 @@ module SpreadsheetGeneration
         @nextRow = 0
 
         @worksheet[@nextRow, 0] = "HELP"
-        @worksheet.column(0).width = 240
+        @worksheet.column(0).width = 150
         @worksheet.row(@nextRow).set_format(0, @@formats[:header])
         
         Resource.helpTextArray.each { |content|
-          @nextRow += 2
+          @nextRow += 1
           @worksheet[@nextRow, 0] = content
 
           @worksheet.row(@nextRow).set_format(0, @@formats[:merged])

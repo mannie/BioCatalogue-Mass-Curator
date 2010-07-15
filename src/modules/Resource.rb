@@ -33,7 +33,6 @@ module Resource
     
     fileContent.chomp!
     @@helpTextArray = fileContent.split("\n")
-    @@helpTextArray.reject! { |x| x.nil? || x.strip.empty? }
     
     return @@helpTextArray.clone
   end # self.helpTextArray

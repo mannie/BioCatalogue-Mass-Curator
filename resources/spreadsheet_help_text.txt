@@ -1,9 +1,19 @@
-This spreadsheet provides a means of annotating web services registered in the BioCatalogue, as well as the components of that particular service.  At the moment, only SOAP services are supported.  Each service in this spreadsheet is placed in it's own worksheet.
+This spreadsheet provides a means of annotating web services registered in the BioCatalogue, as well as the components of that particular service.  
+At the moment, only the annotating of SOAP services is supported.
 
-Each worksheet contains a header; this header contains the different annotation fields which are applicable to the item below it e.g. "examples", and "tags".  It also contains information needed by the application and so should not be changed.  
+Each worksheet in this spreadsheet is dedicated to the annotation of one service.
 
-Grayed out fields or cells represent annotation fields that should not be changed.  Any changes made or any annotations added to these fields or cells are ignored; such annotation fields include "Existing Descriptions" on all components, and "Examples" and "Data Formats" on SOAP operations.
+Each worksheet contains 2 grayed out headers; one for the Service level annotations and the other for annotating the Service components.  
+The headers contain the different annotation fields which are applicable to the item below it e.g. "examples", and "tags".  
+They also contain information needed by the application and so should not be changed.  
 
-The spreadsheet allows a user to add multiple annotations to each annotatable part of the web service; simply add a new row below the item you are annotating, and add the annotation to the relevant field.  This can be done for all annotation fields.  
+Grayed out fields or cells represent annotation fields that should not be changed; any changes made or any annotations added to these fields or cells are ignored.
+Such annotation fields include "Existing Descriptions" on everything, and "Examples" and "Data Formats" on SOAP operations.
 
-You can also add multiple tags without adding a new row for each tag; simply add the tags into the same cell comma seperated e.g. "these, are, different, tags"
+The spreadsheet allows a user to add multiple annotations to each annotatable part of the web service.
+To do this, simply add a new row below the item you are annotating, and add the annotation to the relevant field.  This can be done for all annotation fields.  
+
+You can also add multiple tags without adding a new row for each tag; simply add the tags into the same cell seperated seperated by a comma e.g. "these, are, different, tags"
+
+For more information, contact the BioCatalogue team: contact@biocatalogue.org
+

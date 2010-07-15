@@ -94,6 +94,6 @@ configuration do |c|
 	# Undocumented option 'windows_icon_path'
 	# default value: "GenericJavaApp.ico"
 	#
-	#c.windows_icon_path = "GenericJavaApp.ico"
+	c.windows_icon_path = "resources/biocatalogue.ico"
 
 end
