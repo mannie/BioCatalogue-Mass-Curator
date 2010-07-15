@@ -40,7 +40,7 @@ module SpreadsheetGeneration
       @workbook = Spreadsheet::Workbook.new(@file.path)  
 
       # write worksheet containing help text
-      if CONFIG['spreadsheet']['include-help'].downcase=="true"
+      if CONFIG['spreadsheet']['include-help'].to_s.downcase=="true"
         @worksheet = @workbook.create_worksheet :name => "HELP"
 
 =begin
@@ -173,7 +173,7 @@ private
       @worksheet.row(@nextRow).set_format(
           SpreadsheetConstants.column(:examples), @@formats[:notAllowed])
       @worksheet.row(@nextRow).set_format(
-          SpreadsheetConstants.column(:dataFormat), @@formats[:notAllowed])
+          SpreadsheetConstants.column(:dataFormats), @@formats[:notAllowed])
     end
     
     @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER

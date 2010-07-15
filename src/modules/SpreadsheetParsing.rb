@@ -150,7 +150,7 @@ private
               elsif !@resource.include?("operation") && row[cell]
                 @annotations.merge!('example_data' => row[cell])
               end
-            when SpreadsheetConstants.column(:licenses) # Licenses + Format
+            when SpreadsheetConstants.column(:licenses) # Licenses + Data Formats
               if @resource.include?("service")
                 break unless addServiceAnnotation(row[cell], 'license')
               elsif !@resource.include?("operation") && row[cell]
@@ -164,8 +164,17 @@ private
               break unless addServiceAnnotation(row[cell], 'publication')
             when SpreadsheetConstants.column(:citations) # Citations
               break unless addServiceAnnotation(row[cell], 'citation')
-            when SpreadsheetConstants.column(:usageConditions) # Usage Cond.
+            when SpreadsheetConstants.column(:usageConditions) # Usage Conditions
               break unless addServiceAnnotation(row[cell], 'usage_condition')
+            when SpreadsheetConstants.column(:categories) # Categories
+              next # TODO: remove this line after API changes are made
+              
+              if row[cell]
+                category = row[cell].chomp.strip.squeeze(" ")
+                categoryID = SpreadsheetConstants.categoryID(category)
+
+                break unless addServiceAnnotation(categoryID, 'category')
+              end
           end # case property
         end # @header.each
         

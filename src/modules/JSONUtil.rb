@@ -22,27 +22,37 @@
 
 module JSONUtil
 
-  def self.getAnnotationOfTypeForResource(annotationType, resourceURI)
+  def self.paginatedCollection(collection, fromURI)
     begin
       page = 1
-      perPage = 30
-      
-      annotationsForPage = {}
+      perPage = 50
+
+      paginatedCollection = {}
       
       while
-        uri = URI.parse(resourceURI.to_s.gsub(/\/$/, '') +
-            "/annotations.json?page=#{page}&per_page=#{perPage}")
+        uri = URI.parse(fromURI.to_s.gsub(/\/$/, '') +
+            "/#{collection}.json?page=#{page}&per_page=#{perPage}")
 
-        jsonContent = open(uri, "Accept" => "application/json", 
-            "User-Agent" => BioCatalogueClient.USER_AGENT).read
+        jsonContent = open(uri, "Accept" => "application/json").read
 
-        annotations = JSON(jsonContent)
-        break if annotations.empty?
+        elements = JSON(jsonContent)
+        break if elements.empty?
         
-        annotationsForPage.merge!(page => annotations)
+        paginatedCollection.merge!(page => elements)
         page += 1
       end
-            
+      
+      return paginatedCollection
+    rescue Exception => ex
+      log('e', ex)
+      return {}
+    end # begin rescue
+  end # self.paginatedCollection
+  
+  def self.getAnnotationOfTypeForResource(annotationType, resourceURI)
+    begin      
+      annotationsForPage = self.paginatedCollection("annotations", resourceURI)
+      
       requestedAnnotations = []
 
       annotationsForPage.each do |page, annotations|

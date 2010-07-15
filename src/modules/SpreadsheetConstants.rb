@@ -22,6 +22,8 @@
 
 module SpreadsheetConstants
   
+  CATEGORIES = {}
+  
   PROPERTY_COLUMN = { :id => 0, 
                       :type => 1, 
                       :name => 2, 
@@ -29,21 +31,24 @@ module SpreadsheetConstants
                       :newDescriptions => 4,
                       :tags => 5,
                       :examples => 6, :documentationURLs => 6,
-                      :dataFormat => 7, :licenses => 7,
+                      :dataFormats => 7, :licenses => 7,
                       :contactInfo => 8,
                       :cost => 9,
                       :publications => 10,
                       :citations => 11,
-                      :usageConditions => 12}.freeze
+                      :usageConditions => 12,
+                      :categories => 13}.freeze
   
-  SERVICE_HEADER_PROPERTIES = [ :id, :type, :name, :descriptions, 
+  SERVICE_HEADER_PROPERTIES = [ :id, :type, :name, :descriptions,
                                 :newDescriptions, :tags, :documentationURLs, 
                                 :licenses, :contactInfo, :cost, :publications, 
-                                :citations, :usageConditions ].freeze
+                                :citations, :usageConditions, :categories ].freeze
 
   COMPONENT_HEADER_PROPERTIES = [ :id, :type, :name, :descriptions, 
                                   :newDescriptions, :tags, :examples, 
-                                  :dataFormat ].freeze
+                                  :dataFormats ].freeze
+  
+  
   
   def self.column(key)
     PROPERTY_COLUMN[key.to_sym]
@@ -55,19 +60,19 @@ module SpreadsheetConstants
   
   def self.SERVICE_HEADER
     header = []
-    
-    SERVICE_HEADER_PROPERTIES.size.times do |cell|
-      val = case SERVICE_HEADER_PROPERTIES[cell]
+        
+    SERVICE_HEADER_PROPERTIES.each do |property|
+      val = case property              
               when :id : "ID"
               when :descriptions : "Existing Descriptions"
               when :newDescriptions : "New Descriptions"
               when :documentationURLs : "Documentation URLs"
               when :contactInfo : "Contact Info"
               when :usageConditions : "Usage Conditions"
-              else SERVICE_HEADER_PROPERTIES[cell].to_s.capitalize
+              else property.to_s.capitalize
             end
       
-      header[cell] = val
+      header[PROPERTY_COLUMN[property]] = val
     end # each property
     
     return header
@@ -76,16 +81,16 @@ module SpreadsheetConstants
   def self.COMPONENT_HEADER
     header = []
     
-    COMPONENT_HEADER_PROPERTIES.size.times do |cell|
-      val = case COMPONENT_HEADER_PROPERTIES[cell]
+    COMPONENT_HEADER_PROPERTIES.each do |property|
+      val = case property              
               when :id : "ID"
               when :descriptions : "Existing Descriptions"
               when :newDescriptions : "New Descriptions"
-              when :dataFormat : "Data Formats"
-              else COMPONENT_HEADER_PROPERTIES[cell].to_s.capitalize
+              when :dataFormats : "Data Formats"
+              else property.to_s.capitalize
             end
       
-      header[cell] = val
+      header[PROPERTY_COLUMN[property]] = val
     end # each property
     
     return header
@@ -100,6 +105,11 @@ module SpreadsheetConstants
       else 20
     end
   end # self.widthFor
+  
+  def self.categoryID(category)
+    self.getCategoriesFromHost if CATEGORIES.empty?
+    return CATEGORIES[category]
+  end
   
   def self.defineSpreadsheetFormatting
     size = 11
@@ -139,4 +149,24 @@ module SpreadsheetConstants
              :merged => m }
   end # self.defineSpreadsheetFormatting
   
+private
+
+  def self.getCategoriesFromHost
+    begin      
+      categoriesForPage = JSONUtil.paginatedCollection("categories", 
+          BioCatalogueClient.HOSTNAME)
+
+      categoriesForPage.each do |page, categories|
+        categories.each { |category|
+          category_id = category['category']['self'].split('/')[-1]
+          CATEGORIES.merge!(cat['category']['name'] => category_id)
+        } # categories.each
+      end # categoriesForPage.each
+
+      return requestedCategories.uniq.clone
+    rescue Exception => ex
+      log('e', ex)
+    end # begin rescue
+  end # self.getCategoriesFromHost
+
 end # module SpreadsheetConstants
