@@ -63,7 +63,6 @@ if doBenchmark
 
     b.report("Main") { MAIN_WINDOW = MainWindow.new }
     
-    
   end
   
 else # do not do benchmark

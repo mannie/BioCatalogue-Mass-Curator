@@ -1,7 +1,7 @@
 = BioCatalogue Mass Curator
 
 Authors::   Mannie Tagarira
-Version::   0.0.6
+Version::   0.1
 Contact::   mannie@mygrid.org.uk
 URL::       http://www.biocatalogue.org
 Licence::   GPL 3 (See Licence or http://www.gnu.org/licenses/gpl.html)
@@ -31,7 +31,7 @@ After adding annotations to the spreadsheet, curators can then use the tool to e
 === Java Libraries
 - JRuby[http://jruby.org]
 - BrowserLauncher[http://browserlaunch2.sourceforge.net]
-
+- POI[http://poi.apache.org]
 
 
 == Building

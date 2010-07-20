@@ -146,4 +146,7 @@ SWING = %w{ filechooser.FileNameExtensionFilter
 
 SWING_EVENTS = %w{ ChangeListener }.freeze
 
-OTHER_CLASSES = %w{ edu.stanford.ejalbert.BrowserLauncher }.freeze
+OTHER_CLASSES = %w{ edu.stanford.ejalbert.BrowserLauncher 
+                    java.io.FileInputStream                    
+                    org.apache.poi.hssf.usermodel.HSSFWorkbook
+                    org.apache.poi.hssf.usermodel.HSSFCell }.freeze

@@ -29,13 +29,14 @@ JSON=$PROJECT_DIR/lib/json-jruby.jar
 SPREADSHEET=$PROJECT_DIR/lib/spreadsheet.jar
 LIBXML=$PROJECT_DIR/lib/libxml-jruby.jar
 PARSECONFIG=$PROJECT_DIR/lib/parseconfig.jar
+POI=$PROJECT_DIR/lib/poi-3.6.jar
 
 BROWSER_LAUNCHER=$PROJECT_DIR/lib/BrowserLauncher2-1_3.jar
 
 BOOTSTRAP=$PROJECT_DIR/src/main.rb
 
 java -jar $JRUBY \
--r$SPREADSHEET -r$JSON -r$LIBXML -r$PARSECONFIG \
+-r$SPREADSHEET -r$JSON -r$LIBXML -r$PARSECONFIG -r$POI \
 -r$BROWSER_LAUNCHER \
 -S $BOOTSTRAP \
 --benchmark=true --log-to-stdout
