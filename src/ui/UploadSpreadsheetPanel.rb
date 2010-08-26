@@ -31,12 +31,10 @@ class UploadSpreadsheetPanel < JPanel
     
     @uploadSpreadsheetAction = UploadSpreadsheetAction.new(self)
     
-    @selectedSpreadsheetLabel = JLabel.new("no file selected", 
-        SwingConstants::CENTER)
+    @selectedSpreadsheetLabel = JLabel.new("no file selected", SwingConstants::CENTER)
     @selectedSpreadsheetLabel.setEnabled(false)
   
-    @selectSpreadsheetButton = JButton.new("Select File", 
-        Resource.iconFor('folder'))
+    @selectSpreadsheetButton = JButton.new("Select File", Resource.iconFor('folder'))
     @selectSpreadsheetButton.addActionListener(@uploadSpreadsheetAction)
 
     initUI
@@ -117,8 +115,7 @@ private
     c.gridy += 1
     c.gridx = 0
     passwordLabel = JLabel.new("BioCatalogue Password:")
-    @passwordField = JPasswordField.new(
-        Base64.decode64(CONFIG['client']['password']), 35)
+    @passwordField = JPasswordField.new(Base64.decode64(CONFIG['client']['password']), 35)
     passwordLabel.setLabelFor(@passwordField)
     panel.add(passwordLabel, c)
     
@@ -132,8 +129,7 @@ private
     c.gridy += 1
     panel.add(rememberMeCheckBox = JCheckBox.new("Remember me"), c)
     rememberMeCheckBox.addChangeListener(AppCheckBoxListener.new(self))
-    forget = CONFIG['client']['password'].empty? || 
-        CONFIG['client']['username'].empty?
+    forget = CONFIG['client']['password'].empty? || CONFIG['client']['username'].empty?
     rememberMeCheckBox.setSelected(!forget)
     
     # go back and upload buttons

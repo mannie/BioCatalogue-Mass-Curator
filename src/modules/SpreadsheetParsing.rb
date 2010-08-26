@@ -112,8 +112,8 @@ private
               break
             end
 
-            @resource = Application.resourceNameFor(cell.getStringCellValue)
-            if @resource=='soap_services'
+            @resource = Application.resourceTypeFor(cell.getStringCellValue)
+            if @resource==Application.resourceTypeFor('soap service')
               uri = Application.weblinkWithIDForResource(@id)
               @service = Application.serviceWithURI(uri.to_s)
               @service.fetchComponents
@@ -131,23 +131,24 @@ private
             break unless @id && @resource
 
             originals = case @resource
-                          when 'soap_services'
+                          when Application.resourceTypeFor('soap service')
                             @service.descriptions
-                          when 'soap_operations'
+                          when Application.resourceTypeFor('soap operation')
                             @component.descriptions
-                          when 'soap_inputs'
+                          when Application.resourceTypeFor('soap input')
                             @component.inputs[@id].descriptions if @component.inputs[@id]
-                          when 'soap_outputs'
+                          when Application.resourceTypeFor('soap output')
                             @component.outputs[@id].descriptions if @component.outputs[@id]
                         end # case resource
             
-            isNew = originals && !originals.include?(cell.getStringCellValue)
+            isNew = originals && !cell.getStringCellValue.empty? && !originals.include?(cell.getStringCellValue)
             @annotations.merge!('description' => cell.getStringCellValue) if isNew
           # --------------------
           when SpreadsheetConstants.column(:tags) # Tags
             break unless @id && @resource
             
-            @annotations.merge!('tag' => cell.getStringCellValue.split(','))
+            tags = cell.getStringCellValue.split(',')
+            @annotations.merge!('tag' => tags) unless tags.empty?
           # --------------------
           when SpreadsheetConstants.column(:examples) # Examples + DocumentationURL
             break unless @id && @resource

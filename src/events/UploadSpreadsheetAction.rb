@@ -67,8 +67,7 @@ class UploadSpreadsheetAction
         @@fileSelector.setAcceptAllFileFilterUsed(false)
         @@fileSelector.setFileFilter(@@filter)
     
-        if @@fileSelector.showOpenDialog(MAIN_WINDOW) == 
-            JFileChooser::APPROVE_OPTION
+        if @@fileSelector.showOpenDialog(MAIN_WINDOW) == JFileChooser::APPROVE_OPTION
           @@selectedFilePath = @@fileSelector.getSelectedFile.getAbsolutePath
           @buttonContainer.selectedSpreadsheetLabel.setText(@@selectedFilePath)
           @buttonContainer.selectedSpreadsheetLabel.setEnabled(true)
@@ -76,8 +75,7 @@ class UploadSpreadsheetAction
           user = @buttonContainer.usernameField.getText.strip
           pass = @buttonContainer.passwordField.getText.strip
 
-          @buttonContainer.uploadSpreadsheetButton.setEnabled(true) if 
-              !user.empty? && !pass.empty?
+          @buttonContainer.uploadSpreadsheetButton.setEnabled(true) if !user.empty? && !pass.empty?
         end # if file selected
       elsif event.getSource==@buttonContainer.uploadSpreadsheetButton
         # upload the annotations
@@ -93,17 +91,14 @@ class UploadSpreadsheetAction
           event.getSource.setText("Uploading...")
           event.getSource.setIcon(Resource.iconFor('busy'))
           
-          jsonOutput = SpreadsheetParsing.generateJSONFromSpreadsheet(
-              @@selectedFilePath)
+          jsonOutput = SpreadsheetParsing.generateJSONFromSpreadsheet(@@selectedFilePath)
           
           if jsonOutput # some annotation were returned
             proceed = true
             
             if jsonOutput.empty?
-              Notification.informationDialog(
-                  "No new annotations could be found in the spreadsheet.\n" +
-                  "Nothing has been sent to BioCatalogue.", 
-                  "No New Annotations Found")
+              msg = "No new annotations could be found in the spreadsheet.\nNothing has been sent to BioCatalogue."
+              Notification.informationDialog(msg, "No New Annotations Found")
               SpreadsheetParsing.performAfterPostActions
 
               proceed = false
@@ -115,8 +110,7 @@ class UploadSpreadsheetAction
             Application.postAnnotationData(jsonOutput, user, pass) if proceed &&
                 !user.empty? && !pass.empty?
           else # failed to extract annotations
-            Notification.errorDialog(
-                "An error occured while uploading your spreadsheet.")
+            Notification.errorDialog("An error occured while submitting your annotations.")
           end # if jsonOutput 
           
           # re-enable user interaction

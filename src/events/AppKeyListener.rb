@@ -44,8 +44,7 @@ class AppKeyListener
     case event.getKeyChar
       when KeyEvent::VK_ENTER
         @@searchAction ||= SearchAction.new(Component.searchPanel, 1)
-        @@searchAction.actionPerformed(
-            ActionEvent.new(Component.searchButton, 0, ''))
+        @@searchAction.actionPerformed(ActionEvent.new(Component.searchButton, 0, ''))
     end
   end # keyTyped
 

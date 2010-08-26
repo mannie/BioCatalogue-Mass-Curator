@@ -29,34 +29,20 @@ class ServiceComponent
     @inputs = {}
     @outputs = {}
     
+    # TODO: support for REST services
     begin
       @id = uriString.split('/')[-1].to_i      
-      xmlDocument = XMLUtil.getXMLDocumentFromURI(uriString)
-      propertyNodes = XMLUtil.getValidChildren(xmlDocument.root)
-      
-      propertyNodes.each do |propertyNode|
-        case propertyNode.name
-          when 'name'
-            @name = propertyNode.content
-          when 'dc:description'
-            @descriptions = JSONUtil.getAnnotationOfTypeForResource(
-                'description', uriString)
 
-            @descriptions << propertyNode.content
-            @descriptions.reject! { |d| d.strip.empty? }
-          when 'inputs'
-            inputs = XMLUtil.selectNodesWithNameFrom("soapInput", propertyNode)
-            inputs.each { |inputNode|              
-              addServiceComponentIOFromNodeTo(inputNode, @inputs)
-            } # inputs.each
-          when 'outputs'
-            outputs = XMLUtil.selectNodesWithNameFrom("soapOutput", propertyNode)
-            outputs.each { |outputNode|
-              addServiceComponentIOFromNodeTo(outputNode, @outputs)
-            } # outputs.each
-        end # case
-      end # propertyNodes.each
+      document = JSONUtil.getDocumentFromURI(uriString)
       
+      @name = document['soap_operation']['name']
+
+      @descriptions = JSONUtil.getAnnotationOfTypeForResource('description', uriString)
+      @descriptions << document['soap_operation']['description']
+      @descriptions.reject! { |d| d.nil? || d.strip.empty? }
+
+      document['soap_operation']['inputs'].each { |input| addServiceComponentIOFromNodeTo(input, @inputs, "soap input") }
+      document['soap_operation']['outputs'].each { |output| addServiceComponentIOFromNodeTo(output, @outputs, "soap output") }      
     rescue Exception => ex
       log('e', ex)
     end # begin rescue
@@ -79,26 +65,15 @@ class ServiceComponent
   
 private
   
-  def addServiceComponentIOFromNodeTo(node, destination)
-    uriString = XMLUtil.getAttributeFromNode('xlink:href', node).value
+  def addServiceComponentIOFromNodeTo(node, destination, resourceName)
+    uriString = node['resource']
     id = uriString.split('/')[-1].to_i
 
-    name, anns = nil, nil
-    
-    XMLUtil.getValidChildren(node).each { |propertyNode|
-      case propertyNode.name
-        when 'name'
-          name = propertyNode.content
-        when 'dc:description'
-          anns = JSONUtil.getAnnotationOfTypeForResource('description', 
-              uriString)
-
-          anns << propertyNode.content
-      end # case
-    } # XMLUtil.getValidChildren(outputNode).each
-    
+    name = node['name']
+    anns = JSONUtil.getAnnotationOfTypeForResource('description', uriString)
     anns.reject! { |d| d.strip.empty? }
-    destination.merge!(id => ServiceComponentIO.new(id, name, anns))
+    
+    destination.merge!(id => ServiceComponentIO.new(id, resourceName, name, anns))
   end # getComponentPortFromNode
   
 end

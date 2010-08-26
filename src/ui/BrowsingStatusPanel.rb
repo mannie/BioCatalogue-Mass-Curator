@@ -52,8 +52,7 @@ class BrowsingStatusPanel < JPanel
   def refresh
     # current page label
     self.remove(@@lastLabelUsed) if @@lastLabelUsed
-    @@lastLabelUsed = JLabel.new("Page #{@currentPage} of #{@pageCount}", 
-        SwingConstants::CENTER)
+    @@lastLabelUsed = JLabel.new("Page #{@currentPage} of #{@pageCount}", SwingConstants::CENTER)
   
     # add components to panel
     self.add(@backButton, BorderLayout::WEST)

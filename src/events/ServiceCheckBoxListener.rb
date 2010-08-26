@@ -60,8 +60,7 @@ class ServiceCheckBoxListener
     
     return if GenerateSpreadsheetAction.isBusyExporting
 
-    Component.browsingStatusPanel.exportButton.setEnabled(
-        !Cache.selectedServices.empty?)
+    Component.browsingStatusPanel.exportButton.setEnabled(!Cache.selectedServices.empty?)
     Component.browsingStatusPanel.refresh
   end # stateChanged
   

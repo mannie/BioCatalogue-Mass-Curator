@@ -48,7 +48,7 @@ RESOURCES_DIR = dirPath
 dirLevels = ""
 filePath = ''
 
-6.times do |x|
+3.times do |x|
   filePath = File.join(File.dirname(__FILE__), dirLevels, "mass-curator.conf")
   filePath = File.expand_path(filePath.gsub("file:", "")).freeze
 

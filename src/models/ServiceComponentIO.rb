@@ -22,10 +22,13 @@
 
 class ServiceComponentIO
   
-  attr_reader :id, :name, :descriptions
+  attr_reader :id, :name, :resourceType, :descriptions
   
-  def initialize(id, name, descriptions)
-    @id, @name, @descriptions = id, name, descriptions.clone
+  def initialize(id, resourceName, name, descriptions)
+    @id, @name = id, name
+    @resourceType = Application.resourceTypeFor(resourceName)
+    @descriptions = descriptions.clone
+    
     return self
   end # initialize
   

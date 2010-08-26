@@ -42,8 +42,8 @@ module Cache
   end # self.selectedServices
 
   def self.selectServiceForAnnotation(service)
-    @@selectedServices.merge!(service.id => service) if service && 
-        service.class==Service && !@@selectedServices.include?(service.id)
+    isValid = service && service.class==Service && !@@selectedServices.include?(service.id)
+    @@selectedServices.merge!(service.id => service) if isValid
 
     self.updateServiceListings(@@serviceListings[service.id])
   end # self.selectServiceForAnnotation
@@ -57,8 +57,7 @@ module Cache
   end # self.deselectServiceForAnnotation
   
   def self.addService(service)
-    @@services.merge!(service.id => service) if service && 
-        service.class==Service
+    @@services.merge!(service.id => service) if service && service.class==Service
   end # self.addService
 
   def self.removeService(service)
@@ -70,7 +69,7 @@ module Cache
   end # self.removeService
 
   def self.syncWithCollection(collection)
-     # TODO: do a 2 way sync of the services
+    # TODO: do a 2 way sync of the services
     collection.each { |service|
       if (cached = @@services[service.id])
           service = cached
@@ -83,8 +82,7 @@ module Cache
     list << listing
     list.uniq!
 
-    @@serviceListings.merge!(service.id => list) unless 
-        @@serviceListings[service.id]
+    @@serviceListings.merge!(service.id => list) unless @@serviceListings[service.id]
         
     self.updateServiceListings(@@serviceListings[service.id])
   end # self.addServiceListing

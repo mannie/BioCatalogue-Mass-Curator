@@ -50,8 +50,7 @@ private
     
     return if @lastPage==0
     
-    @@lastPageStatusLabelUsed = JLabel.new(
-        "Page #{@page} of #{@lastPage}", SwingConstants::CENTER)
+    @@lastPageStatusLabelUsed = JLabel.new("Page #{@page} of #{@lastPage}", SwingConstants::CENTER)
     self.add(@@lastPageStatusLabelUsed, BorderLayout::SOUTH)
         
     # button to previous page
@@ -81,9 +80,8 @@ private
     c.gridy = 0
 
     begin
-      xmlDocument = XMLUtil.getXMLDocumentFromURI(
-          BioCatalogueClient.searchEndpoint(@query, 'xml', 
-              CONFIG['application']['search-results-per-page'], @page))
+      uri = BioCatalogueClient.searchEndpoint(@query, 'json', CONFIG['application']['search-results-per-page'], @page)
+      document = JSONUtil.getDocumentFromURI(uri)
     rescue Exception => ex
       log('e', ex)
     end
@@ -91,31 +89,18 @@ private
     @localServiceCache = []
     @localListingCache = []
     
-    xmlDocument.root.each { |node|
-      case node.name
-        when 'results'
-          if XMLUtil.getServiceListingsFromNode(
-              node, @localServiceCache, @localListingCache)
-            @localListingCache.each { |listing|
-              panel.add(listing, c)
-              c.gridy += 1
-            }
-          end
-        when 'statistics'          
-          statsNodes = XMLUtil.getValidChildren(node)
-          statsNodes.each { |node|
-            case node.name
-              when 'pages'
-                @lastPage = node.content.to_i
-            end # case
-          }
-      end # case
-    } # xmlDocument.root.each
+    @lastPage = document['search']['pages']
+    
+    if JSONUtil.getServiceListingsFromNode(document['search']['results'], @localServiceCache, @localListingCache)
+      @localListingCache.each { |listing|
+        panel.add(listing, c)
+        c.gridy += 1
+      }
+    end
         
     return (@localServiceCache.empty? ? 
-        JLabel.new("No services matched query\n'#{@query}'", 
-            SwingConstants::CENTER) : 
-        JScrollPane.new(panel))
+            JLabel.new("No services matched query\n'#{@query}'", SwingConstants::CENTER) : 
+            JScrollPane.new(panel))
   end # mainScrollPane
 
 end # SearchResultsPanel

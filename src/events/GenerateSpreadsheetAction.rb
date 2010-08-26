@@ -58,8 +58,7 @@ class GenerateSpreadsheetAction
 
     LoadServicesAction.setBusyExporting(true)
 
-    if @@fileSelector.showOpenDialog(MAIN_WINDOW) == 
-        JFileChooser::APPROVE_OPTION
+    if @@fileSelector.showOpenDialog(MAIN_WINDOW) == JFileChooser::APPROVE_OPTION
       dir = @@fileSelector.getSelectedFile()
       return if dir.nil? || !dir.isDirectory
       
@@ -71,16 +70,13 @@ class GenerateSpreadsheetAction
         event.getSource.setText("Exporting...")
         event.getSource.setIcon(Resource.iconFor('busy'))
         
-        file = SpreadsheetGeneration.generateSpreadsheet(
-            Cache.selectedServices, dir.path)
+        file = SpreadsheetGeneration.generateSpreadsheet(Cache.selectedServices, dir.path)
 
         if file # successfully exported
-          Notification.informationDialog(
-              "The selected services have been successfully exported to:\n" + 
-              file.path, "Export Complete")
+          msg = "The selected services have been successfully exported to:\n" + file.path
+          Notification.informationDialog(msg, "Export Complete")
         else # failed to export
-          Notification.errorDialog(
-              "An error occured while trying to export the selected services.")
+          Notification.errorDialog("An error occured while trying to export the selected services.")
         end
         
         # re-enable user-application interaction

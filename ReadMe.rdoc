@@ -1,7 +1,7 @@
 = BioCatalogue Mass Curator
 
 Authors::   Mannie Tagarira
-Version::   0.1
+Version::   0.2.0a
 Contact::   mannie@mygrid.org.uk
 URL::       http://www.biocatalogue.org
 Licence::   GPL 3 (See Licence or http://www.gnu.org/licenses/gpl.html)

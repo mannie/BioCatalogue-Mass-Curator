@@ -37,15 +37,14 @@ module Application
       request.body = jsonContent
       request.content_type = 'application/json'
       request.add_field("Accept", 'application/json')
-      request.add_field("User-Agent", BioCatalogueClient.USER_AGENT)
+      request.add_field("User-Agent", BioCatalogueClient::USER_AGENT)
       
-      Net::HTTP.new(BioCatalogueClient.HOSTNAME.host).start { |http|
+      Net::HTTP.new(BioCatalogueClient::HOSTNAME.host).start { |http|
         response = http.request(request)
         
         case response
           when Net::HTTPSuccess
-            Notification.informationDialog(
-                "Your annotations have been successfully submitting.", "Success")
+            Notification.informationDialog("Your annotations have been successfully submitted.", "Success")
             SpreadsheetParsing.performAfterPostActions
           when Net::HTTPClientError
             Notification.errorDialog("Invalid username and/or password")
@@ -54,7 +53,7 @@ module Application
             Notification.errorDialog("Error occured")
             raise response.inspect
         end
-      } # Net::HTTP.new(BioCatalogueClient.HOSTNAME.host).start
+      } # Net::HTTP.new(BioCatalogueClient::HOSTNAME.host).start
     rescue Exception => ex
       log('e', ex)
       return nil
@@ -79,18 +78,18 @@ module Application
     path = "/#{resource}/#{id}"
     path += ".#{format}" if format
     
-    return URI.join(BioCatalogueClient.HOSTNAME.to_s, path)
+    return URI.join(BioCatalogueClient::HOSTNAME.to_s, path)
   end # self.weblinkWithID
   
-  def self.resourceNameFor(thing)
-    case thing.downcase
+  def self.resourceTypeFor(name)
+    case name.downcase
       when "soap service": "soap_services"
       when "soap input": "soap_inputs"
       when "soap output": "soap_outputs"
       when "soap operation": "soap_operations"
       else nil
     end # case
-  end # resourceNameFor
+  end # resourceTypeFor
   
   def self.writeConfigFile
     begin
@@ -100,8 +99,7 @@ module Application
 
       if @@storeCredentials
         CONFIG['client']['username'] = BioCatalogueClient.currentUser[:username]
-        CONFIG['client']['password'] = Base64.encode64(
-            BioCatalogueClient.currentUser[:password])
+        CONFIG['client']['password'] = Base64.encode64(BioCatalogueClient.currentUser[:password])
       else
         CONFIG['client']['username'], CONFIG['client']['password'] = '', ''
       end

@@ -43,8 +43,7 @@ class PreviewAction
     @@browserLauncher ||= BrowserLauncher.new
     @@browserLauncher.setNewWindowPolicy(false) # use tabs if possible
     
-    @@browserLauncher.openURLinBrowser(
-        Application.weblinkWithIDForResource(@service.id).to_s)
+    @@browserLauncher.openURLinBrowser(Application.weblinkWithIDForResource(@service.id).to_s)
   end # actionPerformed
 
 end

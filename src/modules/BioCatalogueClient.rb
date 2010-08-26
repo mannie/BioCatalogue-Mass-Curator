@@ -22,48 +22,42 @@
 
 module BioCatalogueClient
   
-  @@currentUser ||= { :username => '', :password => '' }
-  @@HOSTNAME ||= URI.parse(CONFIG['application']['biocatalogue-hostname'])
-
+  @@userCredentials ||= { :username => '', :password => '' }
+  
+  HOSTNAME = URI.parse(CONFIG['application']['biocatalogue-hostname'])
+  USER_AGENT = "Mass Curator (Alpha) - JRuby/#{JRUBY_VERSION}"
+  
 # --------------------
   
   def self.currentUser
-    @@currentUser.clone.freeze
+    @@userCredentials.clone.freeze
   end # self.currentUser
   
   def self.setCurrentUser(user, pass)
-    @@currentUser[:username] = user
-    @@currentUser[:password] = pass
+    @@userCredentials[:username] = user
+    @@userCredentials[:password] = pass
   end # self.currentUser(user, pass)
-  
-  def self.USER_AGENT
-    "Mass Curator (Alpha) - JRuby/#{JRUBY_VERSION}"
-  end # self.USER_AGENT
       
-  def self.HOSTNAME
-    @@HOSTNAME
-  end # self.HOSTNAME
-    
-  def self.searchEndpoint(query, format=nil, perPage=25, page=1,
-      scope='services')
+  def self.searchEndpoint(query, format=nil, perPage=25, page=1, scope='services')
     query = URI.escape(query.strip)
     
     if !format.nil? && !format.empty? && format.class==String
-      URI.join(@@HOSTNAME.to_s,
-          "/search.#{format}" + 
-          "?q=#{query}&scope=#{scope}&page=#{page}&per_page=#{perPage}")
+      URI.join(HOSTNAME.to_s, "/search.#{format}?q=#{query}&scope=#{scope}&page=#{page}&per_page=#{perPage}")
     else
-      URI.join(@@HOSTNAME.to_s, "/search?q=#{query}")
+      URI.join(HOSTNAME.to_s, "/search?q=#{query}")
     end
   end # self.searchEndpoint
 
   def self.servicesEndpoint(format=nil, perPage=25, page=1, filter='')
     if !format.nil? && !format.empty? && format.class==String
-      URI.join(@@HOSTNAME.to_s, 
-          "/services.#{format}?per_page=#{perPage}&page=#{page}&t=[#{filter}]")
+      URI.join(HOSTNAME.to_s, "/services.#{format}?per_page=#{perPage}&page=#{page}&t=[#{filter}]")
     else
-      URI.join(@@HOSTNAME.to_s, "/services")
+      URI.join(HOSTNAME.to_s, "/services")
     end
   end # self.servicesEndpoint
-    
+  
+private
+  
+  
+
 end # BioCatalogueClient

@@ -73,8 +73,7 @@ private
       # add link to biocatalogue
       c.gridx, c.gridy = 0, 1
       c.insets.set(2, 50, 3, 5)
-      uriLabel = JLabel.new(@service.technology + ": " + 
-          Application.weblinkWithIDForResource(@service.id).to_s)
+      uriLabel = JLabel.new(@service.technology + ": " + Application.weblinkWithIDForResource(@service.id).to_s)
       uriLabel.setIcon(Resource.iconFor('service'))
       self.add(uriLabel, c)
     end # if @showDetail 

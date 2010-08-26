@@ -41,9 +41,8 @@ class GoBackAction
     @buttonContainer.setVisible(false)
     LoadServicesAction.setServicesPanelVisible(false)
     
-    MAIN_WINDOW.mainPanel.browseButtonAction.setLoadPageNumber(
-        LoadServicesAction.currentPage) if @buttonContainer.instance_of?(
-        BrowsingStatusPanel)
+    isBrowsingStatusPanel = @buttonContainer.instance_of?(BrowsingStatusPanel)
+    MAIN_WINDOW.mainPanel.browseButtonAction.setLoadPageNumber(LoadServicesAction.currentPage) if isBrowsingStatusPanel
  
 #    MAIN_WINDOW.mainPanel.add(Component.searchPanel, BorderLayout::NORTH)
     

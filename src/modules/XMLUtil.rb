@@ -22,23 +22,21 @@
 
 module XMLUtil
 
-  def self.getXMLDocumentFromURI(uri)
+  def self.getDocumentFromURI(uri)
     begin
       uri = URI.parse(uri) if uri.class==String
       
       raise "Invalid argument" unless uri.class.name.include?("URI")
       
-      xmlContent = open(uri, "Accept" => "application/xml", 
-          "User-Agent" => BioCatalogueClient.USER_AGENT).read
+      xmlContent = open(uri, "Accept" => "application/xml", "User-Agent" => BioCatalogueClient::USER_AGENT).read
       
       return LibXMLJRuby::XML::Parser.string(xmlContent).parse
     rescue Exception => ex
-      Notification.errorDialog("No internet connection found.") if ex.class==
-          SocketError
+      Notification.errorDialog("No internet connection found.") if ex.class==SocketError
       log('e', ex)
       return nil
     end # begin rescue
-  end # self.getXMLDocumentFromURI
+  end # self.getDocumentFromURI
   
   def self.getAttributeFromNode(attribute, node)
     node.attributes.select { |a| "xlink:href"==a.name }[0]

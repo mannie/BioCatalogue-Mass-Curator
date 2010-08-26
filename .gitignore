@@ -6,7 +6,7 @@ pkg/*
 manifest.mf
 build.xml
 nbproject/*
-BioCatalogue-Mass-Curator.xcodeproj/*
+*.xcodeproj/*
 *.plist
 *.log
 *.conf

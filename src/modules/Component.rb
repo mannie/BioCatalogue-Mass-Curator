@@ -23,13 +23,8 @@
 module Component
 
   def self.centerToParent(dependant, parent)
-    x = parent.getLocationOnScreen.getX + 
-        (parent.getWidth / 2) - 
-        (dependant.getWidth / 2)
-  
-    y = parent.getLocationOnScreen.getY	+ 
-        (parent.getHeight / 2) - 
-        (dependant.getHeight / 2)
+    x = parent.getLocationOnScreen.getX + (parent.getWidth / 2) - (dependant.getWidth / 2)
+    y = parent.getLocationOnScreen.getY	+ (parent.getHeight / 2) - (dependant.getHeight / 2)
 
     dependant.setLocation(x, y)
   end # self.centerToParent

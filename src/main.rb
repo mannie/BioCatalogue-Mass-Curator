@@ -51,13 +51,9 @@ if doBenchmark
   
   Benchmark.bm do |b| 
 
-    b.report("Cons") {
-      require File.join(File.dirname(__FILE__), 'application_constants.rb')
-    }
+    b.report("Cons") { require File.join(File.dirname(__FILE__), 'application_constants.rb') }
     
-    b.report("Libr") {
-      require File.join(File.dirname(__FILE__), 'application_requires.rb')
-    }
+    b.report("Libr") { require File.join(File.dirname(__FILE__), 'application_requires.rb') }
     
     b.report("Sele") { SELECTED_SERVICES_WINDOW = SelectedServicesWindow.new }
 

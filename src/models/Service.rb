@@ -33,43 +33,20 @@ class Service
       @id = serviceURIString.split('/')[-1].to_i
       @descriptions = []
        
-      serviceURIString << ".xml"
-      xmlDocument = XMLUtil.getXMLDocumentFromURI(serviceURIString)
-    
-      propertyNodes = XMLUtil.getValidChildren(xmlDocument.root)
-      propertyNodes.each do |propertyNode|
-        case propertyNode.name
-          when 'name'
-            @name = propertyNode.content
-          when 'dc:description'
-            @descriptions << propertyNode.content
-          when 'serviceTechnologyTypes'
-            @technology = XMLUtil.getContentOfFirstChild(propertyNode)
-          when 'variants'
-            variants = XMLUtil.selectNodesWithNameFrom(
-                "#{@technology.downcase}Service", propertyNode)
-            variants.each { |node|
-              @variantURI = XMLUtil.getAttributeFromNode("xlink:href", node)
-              break if @variantURI
-            }
-            
-            @variantURI = URI.parse(@variantURI.value)
-          when 'deployments'
-            deployments = XMLUtil.selectNodesWithNameFrom(
-                "serviceDeployment", propertyNode)
-            deployments.each { |node|
-              @deploymentURI = XMLUtil.getAttributeFromNode("xlink:href", node)
-              break if @deploymentURI
-            }
-            
-            @deploymentURI = URI.parse(@deploymentURI.value)
-        end # case
-      end # propertyNodes.each
+      serviceURIString << ".json"
+      document = JSONUtil.getDocumentFromURI(serviceURIString)
+      
+      @name = document['service']['name']
+      @technology = document['service']['service_technology_types'].first
+
+      @descriptions << document['service']['description']
+
+      @deploymentURI = document['service']['deployments'].first['resource']      
+      @variantURI = document['service']['variants'].first['resource']
       
       @selectedStatusChangeListener = ServiceCheckBoxListener.new(self)
       
       Cache.addService(self)
-      
     rescue Exception => ex
       log('e', ex)
       Cache.removeService(self)
@@ -90,29 +67,25 @@ class Service
   
     begin
       # get descriptions
-      @descriptions.concat(
-          JSONUtil.getAnnotationOfTypeForResource('description', @variantURI))
+      @descriptions.concat(JSONUtil.getAnnotationOfTypeForResource('description', @variantURI))
       @descriptions.reject! { |d| d.strip.empty? }
       
-      xmlDocument = XMLUtil.getXMLDocumentFromURI(@variantURI.to_s + '.xml')
+      document = JSONUtil.getDocumentFromURI(@variantURI.to_s + '.json')
       
-      nodeName = (@technology=="SOAP" ? "operations" : nil)
-      raise "Only support for SOAP is currently available" if nodeName.nil?
-      
-      operationsNode = XMLUtil.selectNodesWithNameFrom(
-          nodeName, xmlDocument.root)[0]
-      
-      XMLUtil.getValidChildren(operationsNode).each { |op|
-        uriString = XMLUtil.getAttributeFromNode("xlink:href", op).value
+      # TODO: support for REST services
+      if @technology.include?("REST")
+        raise "Only support for SOAP is currently available"
+      else
+        document['soap_service']['operations'].each { |operation|
+          component = ServiceComponent.new(operation['resource'])
+          next if component.id == -1
+          
+          @components.merge!(component.id => component)
+        }
         
-        component = ServiceComponent.new(uriString)
-        next if component.id == -1
-        
-        @components.merge!(component.id => component)
-      }
-      
-      Cache.addService(self)
-      @componentsFetched = true
+        Cache.addService(self)
+        @componentsFetched = true
+      end # if @technology.include?("REST")
       
       return true
     rescue Exception => ex

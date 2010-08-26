@@ -24,8 +24,7 @@ module SpreadsheetGeneration
 
   def self.generateSpreadsheet(services, saveDirPath)
     begin
-      raise "Invalid arguments" if services.nil? || services.empty? ||
-          saveDirPath.nil? || saveDirPath.empty?
+      raise "Invalid arguments" if services.nil? || services.empty? || saveDirPath.nil? || saveDirPath.empty?
 
       # FORMATTING
       Spreadsheet.client_encoding = 'UTF-8'
@@ -33,8 +32,7 @@ module SpreadsheetGeneration
       @@offset ||= 1 # the number of cells to skip before applying formatting
       
       # initialise
-      filename = "Curation Spreadsheet (#{Time.now.strftime('%Y-%m-%d')} at " 
-      filename += "#{Time.now.strftime('%H%M')}).xls"
+      filename = "Curation Spreadsheet (#{Time.now.strftime('%Y-%m-%d')} at #{Time.now.strftime('%H%M')}).xls" 
       
       @file = File.new(File.join(saveDirPath, filename), "w+")
       @workbook = Spreadsheet::Workbook.new(@file.path)  
@@ -63,8 +61,7 @@ module SpreadsheetGeneration
 
           @worksheet.row(@nextRow).set_format(0, @@formats[:merged])
         
-          @worksheet.row(@nextRow).height *= 
-              SpreadsheetConstants.HEIGHT_MULTIPLIER          
+          @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER          
         }
 
 =begin     
@@ -78,8 +75,7 @@ module SpreadsheetGeneration
       
       # loop through services and write to @workbook
       services.each do |id, service|      
-        @worksheet = @workbook.create_worksheet :name => 
-            "Service | #{service.name.gsub(/\W/, '-')}"
+        @worksheet = @workbook.create_worksheet :name => "Service | #{service.name.gsub(/\W/, '-')}"
         
         # create service header and set format
         @nextRow = 0
@@ -111,12 +107,11 @@ private
   def self.writeToSpreadsheet(service)
     # write service row and format
     @worksheet[@nextRow, SpreadsheetConstants.column(:id)] = service.id
-    @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = 
-        "#{service.technology} Service"
+    @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = "#{service.technology} Service"
     @worksheet[@nextRow, SpreadsheetConstants.column(:name)] = service.name
 
     3.times { |x| @worksheet.row(@nextRow).set_format(x, @@formats[:service]) }
-    @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
+    @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER
 
     writeDescriptions(service.descriptions, @@formats[:service])
     
@@ -132,19 +127,16 @@ private
   def self.writeServiceComponents(service)
     service.components.each do |id, component|
       # write operation   
-      writeComponentRow(@@formats[:operation], "SOAP Operation", id,
-          component.name, component.descriptions)
+      writeComponentRow(@@formats[:operation], "SOAP Operation", id, component.name, component.descriptions)
               
       # write inputs
       component.inputs.each do |id, input|
-        writeComponentRow(@@formats[:input], "SOAP Input", id,
-            input.name, input.descriptions)
+        writeComponentRow(@@formats[:input], "SOAP Input", id, input.name, input.descriptions)
       end # component.inputs.each
       
       # write outputs
       component.outputs.each do |id, output|
-        writeComponentRow(@@formats[:output], "SOAP Output", id,
-            output.name, output.descriptions)
+        writeComponentRow(@@formats[:output], "SOAP Output", id, output.name, output.descriptions)
       end # component.outputs.each
     end # service.components.each
   end # self.writeServiceComponents
@@ -166,17 +158,14 @@ private
   def self.finalizeRowWithFormat(format, isNotAllowed=false)
     @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:type), format)
     @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:name), format)    
-    @worksheet.row(@nextRow).set_format(
-        SpreadsheetConstants.column(:descriptions), @@formats[:notAllowed])
+    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:descriptions), @@formats[:notAllowed])
     
     if isNotAllowed
-      @worksheet.row(@nextRow).set_format(
-          SpreadsheetConstants.column(:examples), @@formats[:notAllowed])
-      @worksheet.row(@nextRow).set_format(
-          SpreadsheetConstants.column(:dataFormats), @@formats[:notAllowed])
+      @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:examples), @@formats[:notAllowed])
+      @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:dataFormats), @@formats[:notAllowed])
     end
     
-    @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
+    @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER
     
     @nextRow += 2
   end # self.finalizeRowWithFormat
@@ -187,7 +176,7 @@ private
       @worksheet.row(@nextRow).set_format(cell, @@formats[:header]) 
       @worksheet.column(cell).width = SpreadsheetConstants.widthFor(cell)
     }
-    @worksheet.row(@nextRow).height *= SpreadsheetConstants.HEIGHT_MULTIPLIER
+    @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER
   end # self.setHeader
   
   def self.writeDescriptions(descriptions, format, isNotAllowed=false)

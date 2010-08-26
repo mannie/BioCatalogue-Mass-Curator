@@ -60,8 +60,8 @@ class CredentialsKeyListener
     
     case event.getKeyChar
       when KeyEvent::VK_ENTER
-        @buttonContainer.uploadSpreadsheetAction.actionPerformed(
-            ActionEvent.new(@buttonContainer.uploadSpreadsheetButton, 0, ''))
+        actionEvent = ActionEvent.new(@buttonContainer.uploadSpreadsheetButton, 0, '')
+        @buttonContainer.uploadSpreadsheetAction.actionPerformed(actionEvent)
     end
   end # keyTyped
 

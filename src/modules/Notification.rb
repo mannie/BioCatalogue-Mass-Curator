@@ -23,13 +23,11 @@
 module Notification
   
   def self.errorDialog(msg, title="Error")
-    JOptionPane.showMessageDialog(MAIN_WINDOW, msg, title, 
-        JOptionPane::ERROR_MESSAGE)
+    JOptionPane.showMessageDialog(MAIN_WINDOW, msg, title, JOptionPane::ERROR_MESSAGE)
   end # self.errorDialog
   
   def self.informationDialog(msg, title="Information")
-    JOptionPane.showMessageDialog(MAIN_WINDOW, msg, title, 
-        JOptionPane::INFORMATION_MESSAGE)
+    JOptionPane.showMessageDialog(MAIN_WINDOW, msg, title, JOptionPane::INFORMATION_MESSAGE)
   end # self.informationDialog
   
 end # module Notification

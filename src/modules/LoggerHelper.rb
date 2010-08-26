@@ -28,11 +28,9 @@ LOGGER ||= Logger.new('mass-curator.log', 'weekly')
 
 def log(level, exception, msg=nil)
   begin
-    raise "Invalid parameters passed to logger" if level.nil? || level.empty? ||
-        (exception.nil? && msg.nil?)
+    raise "Invalid parameters passed to logger" if level.nil? || level.empty? || (exception.nil? && msg.nil?)
     
-    msg = "#{exception.class.name} - #{exception.message}\n" << 
-        exception.backtrace.join("\n") if msg.nil?
+    msg = "#{exception.class.name} - #{exception.message}\n" << exception.backtrace.join("\n") if msg.nil?
     
     level = 'U' unless %w{ DEBUG INFO WARN ERROR FATAL }.include?(level.upcase)
     

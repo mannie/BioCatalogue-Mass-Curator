@@ -58,8 +58,7 @@ private
     
     # upload button
     c.gridy += 1
-    uploadButton = JButton.new("Upload A Spreadsheet", Resource.iconFor(
-        'upload'))
+    uploadButton = JButton.new("Upload A Spreadsheet", Resource.iconFor('upload'))
     buttonPanel.add(uploadButton, c)
     uploadButton.addActionListener(UploadSpreadsheetAction.new(self))
     

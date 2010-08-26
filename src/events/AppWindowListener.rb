@@ -34,9 +34,8 @@ class AppWindowListener
   end # windowClosed
   
   def windowClosing(event)
-    yesNo = JOptionPane.showConfirmDialog(event.getSource,
-        "Are you sure you want to close this application?",
-        "Quit?", JOptionPane::YES_NO_OPTION)
+    msg = "Are you sure you want to close this application?"
+    yesNo = JOptionPane.showConfirmDialog(event.getSource, msg, "Quit?", JOptionPane::YES_NO_OPTION)
         
     if yesNo == JOptionPane::YES_OPTION
       event.getSource.dispose

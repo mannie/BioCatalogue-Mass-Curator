@@ -21,7 +21,9 @@
 =end
 
 module SpreadsheetConstants
-  
+
+  HEIGHT_MULTIPLIER = 1.4 
+    
   CATEGORIES = {}
   
   PROPERTY_COLUMN = { :id => 0, 
@@ -48,15 +50,9 @@ module SpreadsheetConstants
                                   :newDescriptions, :tags, :examples, 
                                   :dataFormats ].freeze
   
-  
-  
   def self.column(key)
     PROPERTY_COLUMN[key.to_sym]
   end # self.column
-  
-  def self.HEIGHT_MULTIPLIER
-    1.4 
-  end # self.HEIGHT_MULTIPLIER
   
   def self.SERVICE_HEADER
     header = []
@@ -115,27 +111,20 @@ module SpreadsheetConstants
     size = 11
     patt = 1
     
-    h = Spreadsheet::Format.new(:size => size + 1, :pattern_fg_color => :grey,
-                                :pattern => patt, :weight => :bold, 
-                                :align => :center, :color => :white)
+    h = Spreadsheet::Format.new(:size => size + 1, :pattern_fg_color => :grey, :pattern => patt, 
+                                :weight => :bold, :align => :center, :color => :white)
                                 
-    s = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :magenta,
-                                :pattern => patt, :align => :justify)
+    s = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :magenta, :pattern => patt, :align => :justify)
                                 
-    op = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :yellow, 
-                                 :pattern => patt, :align => :justify)
+    op = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :yellow, :pattern => patt, :align => :justify)
                                                               
-    i = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :cyan, 
-                                :pattern => patt, :align => :justify)
+    i = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :cyan, :pattern => patt, :align => :justify)
                                 
-    o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :lime, 
-                                :pattern => patt, :align => :justify)
+    o = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :lime, :pattern => patt, :align => :justify)
                                 
-    g = Spreadsheet::Format.new(:size => size - 1, :color => :gray, 
-                                :align => :justify)
+    g = Spreadsheet::Format.new(:size => size - 1, :color => :gray, :align => :justify)
     
-    n = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :silver, 
-                                :pattern => patt, :align => :justify)
+    n = Spreadsheet::Format.new(:size => size, :pattern_fg_color => :silver, :pattern => patt, :align => :justify)
 
     m = Spreadsheet::Format.new(:size => size, :align => :justify)
     
@@ -153,8 +142,7 @@ private
 
   def self.getCategoriesFromHost
     begin      
-      categoriesForPage = JSONUtil.paginatedCollection("categories", 
-          BioCatalogueClient.HOSTNAME)
+      categoriesForPage = JSONUtil.paginatedCollection("categories", BioCatalogueClient::HOSTNAME)
 
       categoriesForPage.each do |page, categories|
         categories.each { |category|

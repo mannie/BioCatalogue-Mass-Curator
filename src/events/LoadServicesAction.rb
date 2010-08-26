@@ -115,9 +115,8 @@ class LoadServicesAction
       
       # update status.actions panel
       Component.browsingStatusPanel.currentPage = @pageNumber
-      Component.browsingStatusPanel.exportButton.setEnabled(
-          !Cache.selectedServices.empty?) unless
-          GenerateSpreadsheetAction.isBusyExporting
+      selectionMade = !Cache.selectedServices.empty?
+      Component.browsingStatusPanel.exportButton.setEnabled(selectionMade) unless GenerateSpreadsheetAction.isBusyExporting
       Component.browsingStatusPanel.refresh
       
       # update full view to show new services

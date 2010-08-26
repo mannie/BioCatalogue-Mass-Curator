@@ -42,6 +42,8 @@ require 'rubygems'
 require 'open-uri'
 require 'net/http'
 
+require 'oauth/consumer'
+
 require 'spreadsheet'
 
 require 'xml/libxml'
@@ -91,8 +93,7 @@ begin
   
 rescue Exception => ex
   msg = "Could not load config file.\nSwitching to default settings."
-  JOptionPane.showMessageDialog(nil, msg, "Config Error", 
-      JOptionPane::INFORMATION_MESSAGE)
+  JOptionPane.showMessageDialog(nil, msg, "Config Error", JOptionPane::INFORMATION_MESSAGE)
   resetUserConfigToDefaults
 end
 

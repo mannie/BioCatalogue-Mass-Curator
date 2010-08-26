@@ -72,10 +72,9 @@ private
     c.gridy = 0
 
     begin
-      xmlDocument = XMLUtil.getXMLDocumentFromURI(
-          BioCatalogueClient.servicesEndpoint(
-              'xml', CONFIG['application']['services-per-page'], @page, 'SOAP'))
-      raise "Could not load services." if xmlDocument.nil?
+      uri = BioCatalogueClient.servicesEndpoint('json', CONFIG['application']['services-per-page'], @page, 'SOAP')
+      document = JSONUtil.getDocumentFromURI(uri)
+      raise "Could not load services." if document.nil? || document['services'].nil?
     rescue Exception => ex
       log('f', ex)
       java.lang.System::exit(0)
@@ -84,26 +83,14 @@ private
     @localServiceCache = []
     @localListingCache = []
     
-    xmlDocument.root.each { |node|
-      case node.name
-        when 'results'
-          if XMLUtil.getServiceListingsFromNode(
-              node, @localServiceCache, @localListingCache)
-            @localListingCache.each { |listing|
-              panel.add(listing, c)
-              c.gridy += 1
-            }
-          end
-        when 'statistics'
-          statsNodes = XMLUtil.getValidChildren(node)
-          statsNodes.each { |node|
-            case node.name
-              when 'pages'
-                @lastPage = node.content.to_i
-            end # case
-          }
-      end # case
-    } # xmlDocument.root.each
+    @lastPage = document['services']['pages']
+    
+    if JSONUtil.getServiceListingsFromNode(document['services']['results'], @localServiceCache, @localListingCache)
+      @localListingCache.each { |listing|
+        panel.add(listing, c)
+        c.gridy += 1
+      }
+    end
         
     return JScrollPane.new(panel)
   end # mainScrollPane
