@@ -41,13 +41,6 @@ module SpreadsheetGeneration
       if CONFIG['spreadsheet']['include-help'].to_s.downcase=="true"
         @worksheet = @workbook.create_worksheet :name => "HELP"
 
-=begin
-        # example service is service with ID: 564 (BlastDemo)
-        uri = Application.weblinkWithIDForResource(564)
-        service = Application.serviceWithURI(uri.to_s)
-        service.fetchComponents
-=end
-        
         # write help text
         @nextRow = 0
 
@@ -64,13 +57,6 @@ module SpreadsheetGeneration
           @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER          
         }
 
-=begin     
-        setHeader(SpreadsheetConstants.COMPONENT_HEADER)
-
-        # write services components
-        @nextRow += 1
-        writeServiceComponents(service)
-=end
       end
       
       # loop through services and write to @workbook
@@ -81,12 +67,11 @@ module SpreadsheetGeneration
         @nextRow = 0
         setHeader(SpreadsheetConstants.SERVICE_HEADER)
           
-        next unless service.technology == "SOAP"
-        
         success = service.fetchComponents
         next unless success
         
         @nextRow += 1
+        @isRestService = service.technology.include?("REST")
         writeToSpreadsheet(service)
       end
       
@@ -105,70 +90,27 @@ module SpreadsheetGeneration
 private
 
   def self.writeToSpreadsheet(service)
+    serviceType = "#{service.technology.upcase} Service"
     # write service row and format
     @worksheet[@nextRow, SpreadsheetConstants.column(:id)] = service.id
-    @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = "#{service.technology} Service"
+    @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = serviceType
     @worksheet[@nextRow, SpreadsheetConstants.column(:name)] = service.name
 
     3.times { |x| @worksheet.row(@nextRow).set_format(x, @@formats[:service]) }
     @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER
 
-    writeDescriptions(service.descriptions, @@formats[:service])
-    
-    # set header for top level components
-    @nextRow += 3
-    setHeader(SpreadsheetConstants.COMPONENT_HEADER)
+    writeDescriptions(service.descriptions, @@formats[:service], serviceType)
 
-    # iterate over top level components
-    @nextRow += 1
-    writeServiceComponents(service)
-  end # self.writeToSpreadsheet
-  
-  def self.writeServiceComponents(service)
-    service.components.each do |id, component|
-      # write operation   
-      writeComponentRow(@@formats[:operation], "SOAP Operation", id, component.name, component.descriptions)
-              
-      # write inputs
-      component.inputs.each do |id, input|
-        writeComponentRow(@@formats[:input], "SOAP Input", id, input.name, input.descriptions)
-      end # component.inputs.each
-      
-      # write outputs
-      component.outputs.each do |id, output|
-        writeComponentRow(@@formats[:output], "SOAP Output", id, output.name, output.descriptions)
-      end # component.outputs.each
-    end # service.components.each
-  end # self.writeServiceComponents
-  
-  def self.writeComponentRow(format, type, id, name, descriptions)
-    # write ID
-    @worksheet[@nextRow, SpreadsheetConstants.column(:id)] = id
-    @worksheet.row(@nextRow).set_format(0, @@formats[:gray])
+    unless service.components.empty?
+      # set header for top level components
+      @nextRow += 3
+      setHeader(SpreadsheetConstants.COMPONENT_HEADER)
 
-    # write TYPE and NAME
-    @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = type
-    @worksheet[@nextRow, SpreadsheetConstants.column(:name)] = name
-    
-    writeDescriptions(descriptions, format, type.downcase.include?("operation"))
-    
-    @nextRow += 1
-  end # self.writeComponentRow
-
-  def self.finalizeRowWithFormat(format, isNotAllowed=false)
-    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:type), format)
-    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:name), format)    
-    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:descriptions), @@formats[:notAllowed])
-    
-    if isNotAllowed
-      @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:examples), @@formats[:notAllowed])
-      @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:dataFormats), @@formats[:notAllowed])
+      # iterate over top level components
+      @nextRow += 1
+      writeServiceComponents(service) 
     end
-    
-    @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER
-    
-    @nextRow += 2
-  end # self.finalizeRowWithFormat
+  end # self.writeToSpreadsheet
   
   def self.setHeader(header)
     @worksheet.row(@nextRow).concat(header)
@@ -178,15 +120,70 @@ private
     }
     @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER
   end # self.setHeader
+
+  def self.writeServiceComponents(service)
+    service.components.each do |id, component|
+      # write operation
+      type = @isRestService ? "REST Endpoint" : "SOAP Operation"
+      writeComponentRow(@@formats[:component], type, id, component.name, component.descriptions)
+              
+      # write inputs
+      component.inputs.each do |id, input|
+        writeComponentRow(@@formats[:input], Application.displayNameForResourceType(input.resourceType), id, input.name, input.descriptions)
+      end # component.inputs.each
+      
+      # write outputs
+      component.outputs.each do |id, output|
+        writeComponentRow(@@formats[:output], Application.displayNameForResourceType(output.resourceType), id, output.name, output.descriptions)
+      end # component.outputs.each
+    end # service.components.each
+  end # self.writeServiceComponents
   
-  def self.writeDescriptions(descriptions, format, isNotAllowed=false)
+  def self.writeComponentRow(format, displayName, id, name, descriptions)
+    # write ID
+    @worksheet[@nextRow, SpreadsheetConstants.column(:id)] = id
+    @worksheet.row(@nextRow).set_format(0, @@formats[:gray])
+
+    # write displayName and NAME
+    @worksheet[@nextRow, SpreadsheetConstants.column(:type)] = displayName
+    @worksheet[@nextRow, SpreadsheetConstants.column(:name)] = name
+    
+    writeDescriptions(descriptions, format, displayName)
+    
+    @nextRow += 1
+  end # self.writeComponentRow
+
+  def self.writeDescriptions(descriptions, format, displayName)
     if descriptions.empty?
-      finalizeRowWithFormat(format, isNotAllowed)
+      finalizeRowWithFormat(format, displayName)
     else
       descriptions.each do |desc|
         @worksheet[@nextRow, SpreadsheetConstants.column(:descriptions)] = desc
-        finalizeRowWithFormat(format, isNotAllowed)
+        finalizeRowWithFormat(format, displayName)
       end # descriptions.each
     end # if else descriptions.empty?
   end # self.writeDescriptions
+  
+  def self.finalizeRowWithFormat(format, displayName)
+    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:type), format)
+    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:name), format)    
+    @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:descriptions), @@formats[:notAllowed]) # field is grayed out
+    
+    case displayName.downcase
+      when "soap operation"
+        @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:examples), @@formats[:notAllowed])
+        @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:dataFormats), @@formats[:notAllowed])      
+      when "soap input", "soap output"
+      when "rest endpoint", "rest method"
+        @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:dataFormats), @@formats[:notAllowed])      
+      when "rest parameter"
+        @worksheet.row(@nextRow).set_format(SpreadsheetConstants.column(:dataFormats), @@formats[:notAllowed])      
+      when "rest representation"                
+    end
+    
+    @worksheet.row(@nextRow).height *= SpreadsheetConstants::HEIGHT_MULTIPLIER
+    
+    @nextRow += 2
+  end # self.finalizeRowWithFormat
+
 end # module SpreadsheetGeneration

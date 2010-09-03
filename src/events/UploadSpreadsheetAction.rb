@@ -107,8 +107,7 @@ class UploadSpreadsheetAction
             user = @buttonContainer.usernameField.getText.strip
             pass = @buttonContainer.passwordField.getText.strip
             
-            Application.postAnnotationData(jsonOutput, user, pass) if proceed &&
-                !user.empty? && !pass.empty?
+            Application.postAnnotationData(jsonOutput, user, pass) if proceed && !user.empty? && !pass.empty?
           else # failed to extract annotations
             Notification.errorDialog("An error occured while submitting your annotations.")
           end # if jsonOutput 

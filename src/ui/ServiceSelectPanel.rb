@@ -72,7 +72,7 @@ private
     c.gridy = 0
 
     begin
-      uri = BioCatalogueClient.servicesEndpoint('json', CONFIG['application']['services-per-page'], @page, 'SOAP')
+      uri = BioCatalogueClient.servicesEndpoint('json', CONFIG['application']['services-per-page'], @page)
       document = JSONUtil.getDocumentFromURI(uri)
       raise "Could not load services." if document.nil? || document['services'].nil?
     rescue Exception => ex

@@ -108,37 +108,40 @@ private
           # --------------------
           when SpreadsheetConstants.column(:type) # Type
             unless @id
-              @resource, @service, @component = nil, nil. nil
+              @resource, @service, @component = nil, nil, nil
               break
             end
 
             @resource = Application.resourceTypeFor(cell.getStringCellValue)
-            if @resource==Application.resourceTypeFor('soap service')
+            if @resource==Application.resourceTypeFor('soap service') || @resource==Application.resourceTypeFor('rest service')
               uri = Application.weblinkWithIDForResource(@id)
               @service = Application.serviceWithURI(uri.to_s)
               @service.fetchComponents
-
-              entry.merge!('resource' => @service.variantURI.to_s)
             else
-              @component = @service.components[@id] if @resource=='soap_operations'
-
-              uri = Application.weblinkWithIDForResource(@id, @resource)
-              
-              entry.merge!('resource' => uri.to_s)
-            end # if else resource=='soap_services'
+              isTopLevelComponent = @resource==Application.resourceTypeFor('soap operation') || @resource==Application.resourceTypeFor('rest method')
+              @component = @service.components[@id] if isTopLevelComponent
+            end # if else resource is a service
           # --------------------
           when SpreadsheetConstants.column(:newDescriptions) # Descriptions
             break unless @id && @resource
 
             originals = case @resource
-                          when Application.resourceTypeFor('soap service')
+                          when Application.resourceTypeFor('soap service'), Application.resourceTypeFor('rest service')
                             @service.descriptions
-                          when Application.resourceTypeFor('soap operation')
+                          when Application.resourceTypeFor('soap operation'), Application.resourceTypeFor('rest method')
                             @component.descriptions
-                          when Application.resourceTypeFor('soap input')
+                          when Application.resourceTypeFor('soap input'), Application.resourceTypeFor('rest parameter')
                             @component.inputs[@id].descriptions if @component.inputs[@id]
                           when Application.resourceTypeFor('soap output')
                             @component.outputs[@id].descriptions if @component.outputs[@id]
+                          when Application.resourceTypeFor('rest representation')
+                            inputs = @component.inputs[@id].descriptions if @component.inputs[@id]
+                            outputs = @component.outputs[@id].descriptions if @component.outputs[@id]
+                            
+                            inputs ||= []
+                            outputs ||= []
+                            
+                            inputs.concat(outputs).flatten
                         end # case resource
             
             isNew = originals && !cell.getStringCellValue.empty? && !originals.include?(cell.getStringCellValue)
@@ -153,18 +156,21 @@ private
           when SpreadsheetConstants.column(:examples) # Examples + DocumentationURL
             break unless @id && @resource
             
-            if @resource.include?("service")
+            if @resource==Application.resourceTypeFor('rest service') || @resource==Application.resourceTypeFor('soap service')
               break unless addServiceAnnotation(cell.getStringCellValue, 'documentation_url')
-            elsif !@resource.include?("operation")
+            elsif @resource!=Application.resourceTypeFor('soap operation') && @resource!=Application.resourceTypeFor('rest method')
               @annotations.merge!('example_data' => cell.getStringCellValue)
+            elsif @resource==Application.resourceTypeFor('rest method')
+              @annotations.merge!('example_endpoint' => cell.getStringCellValue)
             end
           # --------------------
           when SpreadsheetConstants.column(:licenses) # Licenses + Data Formats
             break unless @id && @resource
 
-            if @resource.include?("service")
+            if @resource==Application.resourceTypeFor('rest service') || @resource==Application.resourceTypeFor('soap service')
               break unless addServiceAnnotation(cell.getStringCellValue, 'license')
-            elsif !@resource.include?("operation")
+            elsif @resource==Application.resourceTypeFor('soap input') || @resource==Application.resourceTypeFor('soap output') ||
+                  @resource==Application.resourceTypeFor('rest representation')
               @annotations.merge!('format' => cell.getStringCellValue)
             end
           # --------------------
@@ -184,17 +190,23 @@ private
             break unless addServiceAnnotation(cell.getStringCellValue, 'usage_condition')
           # --------------------
           when SpreadsheetConstants.column(:categories) # Categories
-            if false # TODO: enable after API changes are made
-              category = cell.getStringCellValue.chomp.strip.squeeze(" ")
-              categoryID = SpreadsheetConstants.categoryID(category)
+            break # TODO: enable section after API changes are made
 
-              break unless addServiceAnnotation(categoryID, 'category')
-            end
+            category = cell.getStringCellValue.chomp.strip.squeeze(" ")
+            categoryID = SpreadsheetConstants.categoryID(category)
+
+            break unless addServiceAnnotation(categoryID, 'category')
         end # case cell.getColumnIndex
       end # row.each
       
       # consolidate the entry
       unless @annotations.empty?
+        if @resource==Application.resourceTypeFor('soap service') || @resource==Application.resourceTypeFor('rest service')
+          entry.merge!('resource' => @service.variantURI.to_s)
+        else
+          entry.merge!('resource' => Application.weblinkWithIDForResource(@id, @resource).to_s)
+        end
+        
         entry.merge!('annotations' => @annotations)
         @bulkAnnotations << entry
       end
@@ -204,6 +216,7 @@ private
                   'annotations' => @deploymentAnnotations }
         @bulkAnnotations << entry
       end
+      
     end # worksheet.each
   end # self.parseWorksheet
   

@@ -64,8 +64,6 @@ module XMLUtil
     serviceNodes.each { |node|
       attr = self.getAttributeFromNode("xlink:href", node)
       service = Application.serviceWithURI(attr.value)
-               
-      next if service.nil? || service.technology!="SOAP" 
       
       listing = ServiceListingPanel.new(service)
       

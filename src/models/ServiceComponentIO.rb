@@ -27,7 +27,7 @@ class ServiceComponentIO
   def initialize(id, resourceName, name, descriptions)
     @id, @name = id, name
     @resourceType = Application.resourceTypeFor(resourceName)
-    @descriptions = descriptions.clone
+    @descriptions = descriptions.uniq
     
     return self
   end # initialize

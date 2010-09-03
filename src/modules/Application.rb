@@ -41,7 +41,7 @@ module Application
       
       Net::HTTP.new(BioCatalogueClient::HOSTNAME.host).start { |http|
         response = http.request(request)
-        
+
         case response
           when Net::HTTPSuccess
             Notification.informationDialog("Your annotations have been successfully submitted.", "Success")
@@ -81,12 +81,26 @@ module Application
     return URI.join(BioCatalogueClient::HOSTNAME.to_s, path)
   end # self.weblinkWithID
   
+  def self.displayNameForResourceType(type)
+    case type.downcase
+      when "soap_inputs": "SOAP Input"
+      when "soap_outputs": "SOAP Output"
+      when "rest_parameters": "REST Parameter"
+      when "rest_representations": "REST Representation"
+      else type
+    end # case
+  end # displayNameForResourceType
+  
   def self.resourceTypeFor(name)
     case name.downcase
       when "soap service": "soap_services"
       when "soap input": "soap_inputs"
       when "soap output": "soap_outputs"
       when "soap operation": "soap_operations"
+      when "rest service": "rest_services"
+      when "rest method", "rest endpoint": "rest_methods"
+      when "rest parameter": "rest_parameters"
+      when "rest representation": "rest_representations"
       else nil
     end # case
   end # resourceTypeFor

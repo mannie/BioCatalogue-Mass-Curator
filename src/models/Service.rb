@@ -68,24 +68,28 @@ class Service
     begin
       # get descriptions
       @descriptions.concat(JSONUtil.getAnnotationOfTypeForResource('description', @variantURI))
-      @descriptions.reject! { |d| d.strip.empty? }
+      @descriptions.reject! { |d| d.nil? || d.strip.empty? }
+      @descriptions.uniq!
       
-      document = JSONUtil.getDocumentFromURI(@variantURI.to_s + '.json')
-      
-      # TODO: support for REST services
       if @technology.include?("REST")
-        raise "Only support for SOAP is currently available"
+        document = JSONUtil.getDocumentFromURI(@variantURI.to_s + '/methods.json')
+        componentList = document['rest_service']['methods']
+      elsif @technology.include?("SOAP")
+        document = JSONUtil.getDocumentFromURI(@variantURI.to_s + '.json')
+        componentList = document['soap_service']['operations']
       else
-        document['soap_service']['operations'].each { |operation|
-          component = ServiceComponent.new(operation['resource'])
-          next if component.id == -1
-          
-          @components.merge!(component.id => component)
-        }
-        
-        Cache.addService(self)
-        @componentsFetched = true
+        raise "The technology type for the service is not supported."
       end # if @technology.include?("REST")
+
+      componentList.each { |componentListing|
+        component = ServiceComponent.new(componentListing['resource'])
+        next if component.id == -1
+        
+        @components.merge!(component.id => component)
+      }
+      
+      Cache.addService(self)
+      @componentsFetched = true
       
       return true
     rescue Exception => ex

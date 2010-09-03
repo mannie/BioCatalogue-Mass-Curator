@@ -117,8 +117,6 @@ module JSONUtil
     
     resultsNode.each { |node|
       service = Application.serviceWithURI(node['resource'])
-               
-      next if service.nil? || service.technology!="SOAP" 
       
       listing = ServiceListingPanel.new(service)
       

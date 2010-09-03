@@ -34,15 +34,40 @@ class ServiceComponent
       @id = uriString.split('/')[-1].to_i      
 
       document = JSONUtil.getDocumentFromURI(uriString)
-      
-      @name = document['soap_operation']['name']
 
       @descriptions = JSONUtil.getAnnotationOfTypeForResource('description', uriString)
-      @descriptions << document['soap_operation']['description']
-      @descriptions.reject! { |d| d.nil? || d.strip.empty? }
 
-      document['soap_operation']['inputs'].each { |input| addServiceComponentIOFromNodeTo(input, @inputs, "soap input") }
-      document['soap_operation']['outputs'].each { |output| addServiceComponentIOFromNodeTo(output, @outputs, "soap output") }      
+      if document['soap_operation'] # SOAP
+        @name = document['soap_operation']['name']
+
+        @descriptions << document['soap_operation']['description']
+
+        document['soap_operation']['inputs'].each { |input| addServiceComponentIOFromNodeTo(input, @inputs, "soap input") }
+        document['soap_operation']['outputs'].each { |output| addServiceComponentIOFromNodeTo(output, @outputs, "soap output") }
+      elsif document['rest_method'] # REST
+        if document['rest_method']['name']
+          @name = document['rest_method']['name'] + " | " + document['rest_method']['endpoint_label']
+        else
+          @name = document['rest_method']['endpoint_label']
+        end
+
+        @descriptions << document['rest_method']['description']
+
+        document['rest_method']['inputs'].each do |type, list|
+          resourceName = resourceNameForRestInputOutputElement(type) or next
+          list.each { |input| addServiceComponentIOFromNodeTo(input, @inputs, resourceName) }
+        end
+
+        document['rest_method']['outputs'].each do |type, list|
+          resourceName = resourceNameForRestInputOutputElement(type) or next
+          list.each { |output| addServiceComponentIOFromNodeTo(output, @outputs, resourceName) }
+        end
+      else # UNSUPPORTED
+        raise "Unsupported service component type found: " + uriString.to_s
+      end
+      
+      @descriptions.reject! { |d| d.nil? || d.strip.empty? }
+      @descriptions.uniq!
     rescue Exception => ex
       log('e', ex)
     end # begin rescue
@@ -54,22 +79,23 @@ class ServiceComponent
     
     return self
   end # initialize
-  
-  def addInput(id, name)
-    @inputs.merge!(id => name)
-  end # addInput
-  
-  def addOutput(id, name)
-    @outputs.merge!(id => name)
-  end # addOutput
-  
+    
 private
+  
+  def resourceNameForRestInputOutputElement(element)
+    return case element 
+             when "representations" : "rest representation"
+             when "parameters" : "rest parameter"
+             else nil
+            end
+  end
   
   def addServiceComponentIOFromNodeTo(node, destination, resourceName)
     uriString = node['resource']
     id = uriString.split('/')[-1].to_i
 
-    name = node['name']
+    name = resourceName.include?("representation") ? node['content_type'] : node['name']
+
     anns = JSONUtil.getAnnotationOfTypeForResource('description', uriString)
     anns.reject! { |d| d.strip.empty? }
     
