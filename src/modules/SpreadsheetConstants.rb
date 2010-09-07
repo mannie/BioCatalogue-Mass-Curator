@@ -102,10 +102,10 @@ module SpreadsheetConstants
     end
   end # self.widthFor
   
-  def self.categoryID(category)
+  def self.categoryIDForString(category)
     self.getCategoriesFromHost if CATEGORIES.empty?
-    return CATEGORIES[category]
-  end
+    return CATEGORIES[category.chomp.strip.squeeze(" ")]
+  end # self.categoryIDForString
   
   def self.defineSpreadsheetFormatting
     size = 11
@@ -146,12 +146,10 @@ private
 
       categoriesForPage.each do |page, categories|
         categories.each { |category|
-          category_id = category['category']['self'].split('/')[-1]
-          CATEGORIES.merge!(cat['category']['name'] => category_id)
+          category_id = category['resource'].split('/')[-1]
+          CATEGORIES.merge!(category['name'].chomp.strip.squeeze(" ") => category_id)
         } # categories.each
       end # categoriesForPage.each
-
-      return requestedCategories.uniq.clone
     rescue Exception => ex
       log('e', ex)
     end # begin rescue
