@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is a helper module to handle items in the app's "resources" folder 
+
+# ========================================
+
 module Resource
   
   @@helpTextArray = []

@@ -20,16 +20,24 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is analogous to a BioCatalogue RestMethod or SoapOperation
+
+# ========================================
+
 class ServiceComponent
 
   attr_reader :id, :name, :descriptions
   attr_reader :inputs, :outputs
   
+  # ACCEPTS: a URI to the "service component" in BioCatalogue which is to be created locally
+  # This assumes that the following formats:
+  #   http(s)://{biocatalogue-instance}/soap_operations/{id}
+  #   http(s)://{biocatalogue-instance}/rest_methods/{id}
+  # RETURNS: self
   def initialize(uriString)
     @inputs = {}
     @outputs = {}
     
-    # TODO: support for REST services
     begin
       @id = uriString.split('/')[-1].to_i      
 
@@ -82,6 +90,7 @@ class ServiceComponent
     
 private
   
+  # Helper
   def resourceNameForRestInputOutputElement(element)
     return case element 
              when "representations" : "rest representation"
@@ -90,6 +99,11 @@ private
             end
   end
   
+  # This adds either an Input of an Output based on the given JSON node
+  # ACCEPTS: 
+  #   node: json data
+  #   destination: the hash in which to place the created ComponentIO
+  #   resourceName: "soap_inputs", "rest_parameters", etc
   def addServiceComponentIOFromNodeTo(node, destination, resourceName)
     uriString = node['resource']
     id = uriString.split('/')[-1].to_i

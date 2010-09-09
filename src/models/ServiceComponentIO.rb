@@ -20,10 +20,21 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is analogous to the following BioCatalogue models:
+# SoapInput, SoapOutput, RestParameter (request and response), RestRepresentation (request and response)
+
+# ========================================
+
 class ServiceComponentIO
   
   attr_reader :id, :name, :resourceType, :descriptions
   
+  # ACCEPTS: 
+  #   id: the ID of the component
+  #   resourceName: a human readable name for the object e.g "soap input", "rest parameter"
+  #   name: name
+  #   descriptions: the descriptions available for this object
+  # RETURNS: self
   def initialize(id, resourceName, name, descriptions)
     @id, @name = id, name
     @resourceType = Application.resourceTypeFor(resourceName)

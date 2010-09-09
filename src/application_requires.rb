@@ -54,10 +54,10 @@ require 'base64'
 
 # ========================================
 
-# Set up user config
+# Set up user config hash
 CONFIG = { 'client' => {}, 'application' => {}, 'spreadsheet' => {} }
 
-# Define the default config
+# Define the default config settings
 def resetUserConfigToDefaults
   CONFIG['client']['username'] = ''
   CONFIG['client']['password'] = ''

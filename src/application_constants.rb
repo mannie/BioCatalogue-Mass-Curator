@@ -20,21 +20,16 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
-# This file defines which files/classes are required by the application.
+# This file defines which files/classes are required to load up the application.
+# The XXX_DIR vars are used in some modules in the application.
 
 # ========================================
 
 # Application Directory Names
 
-EVENTS_DIR = File.expand_path(File.join(
-    File.dirname(__FILE__), "events")).freeze
-
-MODELS_DIR = File.expand_path(File.join(
-    File.dirname(__FILE__), "models")).freeze
-    
-MODULES_DIR = File.expand_path(File.join(
-    File.dirname(__FILE__), "modules")).freeze
-    
+EVENTS_DIR = File.expand_path(File.join(File.dirname(__FILE__), "events")).freeze
+MODELS_DIR = File.expand_path(File.join(File.dirname(__FILE__), "models")).freeze
+MODULES_DIR = File.expand_path(File.join(File.dirname(__FILE__), "modules")).freeze
 UI_DIR = File.expand_path(File.join(File.dirname(__FILE__), "ui")).freeze
 
 dirPath = File.join(File.dirname(__FILE__), "..", "resources")

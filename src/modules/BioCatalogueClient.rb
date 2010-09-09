@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This module contains information needed by the application in order to make HTTP requests
+
+# ========================================
+
 module BioCatalogueClient
   
   @@userCredentials ||= { :username => '', :password => '' }
@@ -32,12 +36,20 @@ module BioCatalogueClient
   def self.currentUser
     @@userCredentials.clone.freeze
   end # self.currentUser
-  
+
+  # ACCEPTS: username, password
   def self.setCurrentUser(user, pass)
     @@userCredentials[:username] = user
     @@userCredentials[:password] = pass
   end # self.currentUser(user, pass)
-      
+  
+  # ACCEPTS: 
+  #   query: the search term you want to search the biocatalogue for
+  #   format: the representation you would like the data in e.g. "json"; default=nil
+  #   perPage: the number of items to fetch per page; default=25
+  #   page: the page you would like to fetch; default=1
+  #   scope: the scope you would like to base you search on; default='services'
+  # RETURNS: a URI for the search endpoint which contains all the given filters
   def self.searchEndpoint(query, format=nil, perPage=25, page=1, scope='services')
     query = URI.escape(query.strip)
     
@@ -48,16 +60,18 @@ module BioCatalogueClient
     end
   end # self.searchEndpoint
 
-  def self.servicesEndpoint(format=nil, perPage=25, page=1, filter='')
+  # ACCEPTS: 
+  #   format: the representation you would like the data in e.g. "json"; default=nil
+  #   perPage: the number of items to fetch per page; default=25
+  #   page: the page you would like to fetch; default=1
+  #   serviceType: the type of services you want to show in the index e.g. "SOAP", "REST"; default=''
+  # RETURNS: a URI for the search endpoint which contains all the given filters
+  def self.servicesEndpoint(format=nil, perPage=25, page=1, serviceType='')
     if !format.nil? && !format.empty? && format.class==String
-      URI.join(HOSTNAME.to_s, "/services.#{format}?per_page=#{perPage}&page=#{page}&t=[#{filter}]")
+      URI.join(HOSTNAME.to_s, "/services.#{format}?per_page=#{perPage}&page=#{page}&t=[#{serviceType}]")
     else
       URI.join(HOSTNAME.to_s, "/services")
     end
   end # self.servicesEndpoint
-  
-private
-  
-  
 
 end # BioCatalogueClient

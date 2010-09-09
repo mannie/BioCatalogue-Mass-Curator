@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This module contains helpers for UI items
+
+# ========================================
+
 module Component
 
   def self.centerToParent(dependant, parent)

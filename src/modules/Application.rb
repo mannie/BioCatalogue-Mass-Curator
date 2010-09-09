@@ -20,16 +20,26 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This module contains generic helper methods for the application
+
+# ========================================
+
 module Application
   
   @@storeCredentials = false
   
   # --------------------
   
+  # ACCEPTS: a boolean stating whether or not the user's credentials should be written to file
   def self.storeCredentials(store)
     @@storeCredentials = store==true
   end # self.storeCredentials
   
+  # ACCEPTS:
+  #   jsonContent: JSON data to post
+  #   user: username
+  #   pass: passwork
+  # RETURNS: a boolean containing the success status of the HTTP POST
   def self.postAnnotationData(jsonContent, user, pass)
     begin
       request = Net::HTTP::Post.new("/annotations/bulk_create")
@@ -56,14 +66,16 @@ module Application
       } # Net::HTTP.new(BioCatalogueClient::HOSTNAME.host).start
     rescue Exception => ex
       log('e', ex)
-      return nil
+      return false
     end # begin rescue
             
     return true
   end # self.postAnnotationData
   
+  # ACCEPTS: a URI linking to a BioCatalogue service resource
+  # RETURNS: an already existing or newly created service
   def self.serviceWithURI(uriString)
-    id = uriString.split('/')[-1].to_i
+    id = uriString.to_s.split('/')[-1].to_i
     
     service = Cache.services[id]
     service ||= Service.new(uriString.to_s)
@@ -71,6 +83,13 @@ module Application
     return service
   end # self.serviceWithURI
   
+  # ACCEPTS: 
+  #   id: the BioCatalogue ID of the resource
+  #   resource: the biocatalogue resource type; default="services"
+  #   format: the representation e.g. "json"; default=nil
+  # RETURNS: nil OR a URI with format:
+  #     http(s)://{biocatalogue-instance}/{resource}/{id}
+  #     http(s)://{biocatalogue-instance}/{resource}/{id}/{format}
   def self.weblinkWithIDForResource(id, resource="services", format=nil)
     return nil if !format.nil? && format.class!=String
     return nil if resource.nil? || resource.class!=String
@@ -81,16 +100,20 @@ module Application
     return URI.join(BioCatalogueClient::HOSTNAME.to_s, path)
   end # self.weblinkWithID
   
+  # ACCEPTS: a biocatalogue resource type e.g "soap_inputs", "rest_parameter"
+  # RETURNS: a display name if one is available for the given resource type
   def self.displayNameForResourceType(type)
     case type.downcase
       when "soap_inputs": "SOAP Input"
       when "soap_outputs": "SOAP Output"
       when "rest_parameters": "REST Parameter"
       when "rest_representations": "REST Representation"
-      else type
+      else type.gsub("_", " ")
     end # case
   end # displayNameForResourceType
   
+  # ACCEPTS: a display name e.g. "SOAP Service", "REST Parameter"
+  # RETURNS: a biocatalogue resource type e.g "soap_inputs", "rest_parameter" if one is available for the given resource type
   def self.resourceTypeFor(name)
     case name.downcase
       when "soap service": "soap_services"
@@ -105,6 +128,7 @@ module Application
     end # case
   end # resourceTypeFor
   
+  # This serializes the current CONFIG hash to a file in the folder containing the application named "mass-curator.conf"
   def self.writeConfigFile
     begin
       @configFile = open(CONFIG_FILE_PATH, "w+")

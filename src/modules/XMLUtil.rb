@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is a helper for all things XML in the app
+
+# ========================================
+
 module XMLUtil
 
   def self.getDocumentFromURI(uri)

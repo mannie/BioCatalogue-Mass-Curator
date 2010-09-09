@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This module contains helpers specific to maintaining the application's caches
+
+# ========================================
+
 module Cache
   
   @@selectedServices ||= {}
@@ -28,19 +32,23 @@ module Cache
 
 # --------------------
 
+  # RETURNS: a list of all the services loaded from the biocatalogue
   def self.services
     @@services
   end # self.services
   
+  # RETURNS: A hash containing all the ServiceListingPanels: { :service_id => [], ... }
   def self.serviceListings
     @@serviceListings
   end # self.serviceListings
   
+  # RETURNS: A hash containing all the selected services: { :service_id => service, ... }
   def self.selectedServices
     @@selectedServices.reject! { |id, service| id == -1 }
     @@selectedServices
   end # self.selectedServices
 
+  # ACCEPTS: a Service to add to the "selectedServices" cache
   def self.selectServiceForAnnotation(service)
     isValid = service && service.class==Service && !@@selectedServices.include?(service.id)
     @@selectedServices.merge!(service.id => service) if isValid
@@ -48,6 +56,7 @@ module Cache
     self.updateServiceListings(@@serviceListings[service.id])
   end # self.selectServiceForAnnotation
   
+  # ACCEPTS: a Service to remove from the "selectedServices" cache
   def self.deselectServiceForAnnotation(service)
     @@selectedServices.reject! { |key, value| 
       key == service.id 
@@ -56,10 +65,12 @@ module Cache
     self.updateServiceListings(@@serviceListings[service.id])
   end # self.deselectServiceForAnnotation
   
+  # ACCEPTS: the service to add to the services cache
   def self.addService(service)
     @@services.merge!(service.id => service) if service && service.class==Service
   end # self.addService
 
+  # ACCEPTS: the service to remove from the services cache
   def self.removeService(service)
     self.deselectServiceForAnnotation(service)
     
@@ -68,6 +79,8 @@ module Cache
     } if service && service.class==Service
   end # self.removeService
 
+  # ACCEPTS: the collection that is meant to be updated to the latest version of the services
+  # At the moment, the main cache remains untouched
   def self.syncWithCollection(collection)
     # TODO: do a 2 way sync of the services
     collection.each { |service|
@@ -77,6 +90,9 @@ module Cache
       }
   end # self.syncWithCollection(collection)
 
+  # ACCEPTS:
+  #   service: the service to ADD a ServiceListingPanel for
+  #   listing: the ServiceListingPanel
   def self.addServiceListing(service, listing)
     list = @@serviceListings[service.id] || []
     list << listing
@@ -87,12 +103,16 @@ module Cache
     self.updateServiceListings(@@serviceListings[service.id])
   end # self.addServiceListing
   
+  # ACCEPTS:
+  #   service: the service to REMOVE a ServiceListingPanel for
+  #   listing: the ServiceListingPanel
   def self.removeServiceListing(service, listing)
     @@serviceListings[service.id].reject! { |panel| panel==listing }
         
     self.updateServiceListings(@@serviceListings[service.id])
   end # self.removeServiceListing
   
+  # ACCEPTS: a collection of ServiceListingPanels
   def self.updateServiceListings(collection)
     collection.each { |panel| panel.refresh } if collection
   end # self.updateServiceListings

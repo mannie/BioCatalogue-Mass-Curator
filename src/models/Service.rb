@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This is analogous to a Service in BioCatalogue 
+
+# ========================================
+
 class Service
   
   attr_reader :components, :descriptions 
@@ -27,7 +31,10 @@ class Service
   attr_reader :variantURI, :deploymentURI, :selectedStatusChangeListener
   
   @componentsFetched = false
-  
+
+  # ACCEPTS: a URI to the Service in BioCatalogue which is to be created locally
+  # This assumes that the string is in the format http(s)://{biocatalogue-instance}/services/{id}
+  # RETURNS: self
   def initialize(serviceURIString)
     begin
       @id = serviceURIString.split('/')[-1].to_i
@@ -59,7 +66,9 @@ class Service
     
     return self
   end # initialize
-  
+
+  # ACCEPTS: a boolean - whether or not to fetch the components AGAIN if they are already available
+  # RETURNS: a boolean to say whether the fetch has been successful of not
   def fetchComponents(force=false)
     return true if @componentsFetched && !force
 
@@ -98,10 +107,12 @@ class Service
     end # begin rescue
   end # fetchComponents
 
+  # RETURNS: a boolean stating whether THIS service has been selected for annotation by the user or not
   def isSelectedForAnnotation
     !Cache.selectedServices[@id].nil?
   end # isSelectedForAnnotation
-
+  
+  # FOR DEBUG
   def to_s
     "#{@technology}::#{@id}::#{@name}"
   end # to_s

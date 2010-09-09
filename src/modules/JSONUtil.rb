@@ -20,6 +20,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses/gpl.html
 =end
 
+# This module is a helper for all things JSON in the app
+
+# ========================================
+
 module JSONUtil
 
   def self.getDocumentFromURI(uri)
