@@ -1,5 +1,10 @@
 package models.interfaces;
 
+import models.interfaces.abstracts.AnnotatableEntity;
+import models.interfaces.abstracts.DescribedEntity;
+import models.interfaces.abstracts.SubmittedEntity;
+import models.interfaces.abstracts.TimeStampedEntity;
+
 public interface RestParameter extends DescribedEntity, AnnotatableEntity, ArchivableEntity, TimeStampedEntity, SubmittedEntity {
 
   public boolean getIsOptional();

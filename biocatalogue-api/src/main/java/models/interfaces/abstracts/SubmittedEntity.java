@@ -1,4 +1,5 @@
-package models.interfaces;
+package models.interfaces.abstracts;
+
 
 public interface SubmittedEntity {
 
