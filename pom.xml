@@ -5,10 +5,10 @@
   <groupId>org.biocatalogue</groupId>
   <artifactId>mass-curator</artifactId>
   <version>0.3-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>Mass Curator</name>
-  <description>This is the Java implementation for the BioCatalogue REST API.</description>
+  <description>A simple tool to allow for the annotation of BioCatalogue web services in bulk via the use of spreadsheets.</description>
   <url>http://www.biocatalogue.org</url>
 
   <properties>
@@ -28,4 +28,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <modules>
+  	<module>biocatalogue-api</module>
+  </modules>
 </project>
