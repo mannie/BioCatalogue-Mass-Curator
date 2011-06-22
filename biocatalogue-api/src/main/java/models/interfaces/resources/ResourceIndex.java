@@ -6,13 +6,13 @@ public interface ResourceIndex {
 
   public String getSearchQuery();
 
-  // ---
+  // --
 
   public int getNumberOfItemsPerPage();
 
   public int getTotalNumberOfItems();
 
-  // ---
+  // --
 
   public int getCurrentPage();
 

@@ -1,6 +1,6 @@
 package models.interfaces;
 
-public interface BioCatalogue {
+public interface BioCatalogueDetails {
 
   public String getAPIVersion();
 
