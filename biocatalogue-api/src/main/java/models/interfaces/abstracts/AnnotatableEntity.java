@@ -1,6 +1,6 @@
 package models.interfaces.abstracts;
 
-import models.interfaces.Annotation;
+import models.interfaces.resources.Annotation;
 
 public interface AnnotatableEntity extends IdentifiableEntity, NamedEntity {
 

@@ -1,6 +1,6 @@
 package models.interfaces.abstracts;
 
-import models.interfaces.Location;
+import models.interfaces.resources.Location;
 
 public interface LocatableEntity {
 
