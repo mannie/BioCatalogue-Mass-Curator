@@ -1,8 +1,9 @@
-package models.jsonimpl;
+package models.generic;
 
 import java.text.ParseException;
 
 import junit.framework.Assert;
+import models.jsonimpl.VersionImpl;
 
 import org.junit.After;
 import org.junit.Before;
