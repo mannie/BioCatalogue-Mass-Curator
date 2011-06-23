@@ -6,7 +6,6 @@ import models.interfaces.constants.BioCatalogue;
 import util.Network;
 import exceptions.HostnameUnreachableException;
 
-
 public class BioCatalogueClientImpl implements BioCatalogueClient {
 
   private BioCatalogueDetails _bioCatalogueDetails;
@@ -29,7 +28,7 @@ public class BioCatalogueClientImpl implements BioCatalogueClient {
       _hostname = hostname;
 
     if (!Network.isReachable(_hostname))
-      throw new HostnameUnreachableException();
+      throw new HostnameUnreachableException("Hostname '" + _hostname + "' could not be reached.");
 
     _bioCatalogueDetails = new BioCatalogueDetailsImpl(this);
   }

@@ -61,13 +61,13 @@ public class BioCatalogueClientTest extends TestCase {
   @Test
   public void testGetHostname() {
     Assert.assertNotNull(_client.getHostname());
-    Assert.assertEquals(true, _client.getHostname().getClass() == String.class);
+    Assert.assertEquals(String.class, _client.getHostname().getClass());
 
     Assert.assertNotNull(_clientWithNullArg.getHostname());
-    Assert.assertEquals(true, _clientWithNullArg.getHostname().equalsIgnoreCase(_client.getHostname()));
+    Assert.assertTrue(_clientWithNullArg.getHostname().equalsIgnoreCase(_client.getHostname()));
 
     Assert.assertNotNull(_clientWithValidHostname.getHostname());
-    Assert.assertEquals(true, _clientWithValidHostname.getHostname().equalsIgnoreCase(VALID_HOSTNAME));
+    Assert.assertTrue(_clientWithValidHostname.getHostname().equalsIgnoreCase(VALID_HOSTNAME));
   }
 
 }

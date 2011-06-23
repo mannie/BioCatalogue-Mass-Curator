@@ -1,9 +1,11 @@
 package models.interfaces;
 
+import models.interfaces.generic.Version;
+
 public interface BioCatalogueDetails {
 
-  public String getAPIVersion();
+  public Version getAPIVersion();
 
-  public String getSystemVersion();
+  public Version getSystemVersion();
 
 }
