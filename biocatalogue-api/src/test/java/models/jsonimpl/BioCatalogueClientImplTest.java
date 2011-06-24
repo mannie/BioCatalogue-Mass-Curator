@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BioCatalogueClientTest extends TestCase {
+public class BioCatalogueClientImplTest extends TestCase {
 
   private final static String VALID_HOSTNAME = "sandbox.biocatalogue.org";
   private final static String INVALID_HOSTNAME = "standbomb.biochatalogue.org";
