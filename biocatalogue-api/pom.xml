@@ -10,4 +10,13 @@
   <version>0.3-SNAPSHOT</version>
   <name>BioCatalogue API</name>
   <description>This is the Java implementation for the BioCatalogue REST API.</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.apache.wink</groupId>
+  		<artifactId>wink-client</artifactId>
+  		<version>1.1.3-incubating</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  </dependencies>
 </project>

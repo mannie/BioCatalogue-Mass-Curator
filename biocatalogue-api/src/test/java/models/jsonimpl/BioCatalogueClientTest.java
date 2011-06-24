@@ -9,13 +9,13 @@ import org.junit.Test;
 
 public class BioCatalogueClientTest extends TestCase {
 
+  private final static String VALID_HOSTNAME = "sandbox.biocatalogue.org";
+  private final static String INVALID_HOSTNAME = "standbomb.biochatalogue.org";
+  
   private BioCatalogueClientImpl _client;
   private BioCatalogueClientImpl _clientWithNullArg;
   private BioCatalogueClientImpl _clientWithValidHostname;
   private BioCatalogueClientImpl _clientWithInvalidHostname;
-
-  private final static String VALID_HOSTNAME = "sandbox.biocatalogue.org";
-  private final static String INVALID_HOSTNAME = "standbomb.biochatalogue.org";
 
   // --
 

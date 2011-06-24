@@ -1,5 +1,7 @@
 package models.jsonimpl;
 
+import java.net.URI;
+
 import models.interfaces.BioCatalogueClient;
 import models.interfaces.BioCatalogueDetails;
 import models.interfaces.constants.BioCatalogue;
@@ -27,8 +29,12 @@ public class BioCatalogueClientImpl implements BioCatalogueClient {
     else
       _hostname = hostname;
 
-    if (!Network.isReachable(_hostname))
+    try {
+      URI uri = new URI(Network.HTTP_PROTOCOL, _hostname, null, null);
+      if (!Network.isReachable(uri)) throw new Exception();
+    } catch (Exception e) {
       throw new HostnameUnreachableException("Hostname '" + _hostname + "' could not be reached.");
+    }
 
     _bioCatalogueDetails = new BioCatalogueDetailsImpl(this);
   }
