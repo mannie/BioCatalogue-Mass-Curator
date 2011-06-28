@@ -5,7 +5,7 @@ import java.text.ParseException;
 
 import models.interfaces.BioCatalogueClient;
 import models.interfaces.BioCatalogueDetails;
-import models.interfaces.constants.JSON;
+import models.interfaces.constants.JSONConstants;
 import models.interfaces.generic.Version;
 import net.sf.json.JSONObject;
 import util.Network;
@@ -29,7 +29,7 @@ public class BioCatalogueDetailsImpl implements BioCatalogueDetails {
       JSONObject json = Network.getDocument(uri);
       
       try {
-        String version = (String) ((JSONObject)json.get(JSON.BIOCATALOGUE)).get(JSON.API_VERSION);
+        String version = (String) ((JSONObject)json.get(JSONConstants.BIOCATALOGUE)).get(JSONConstants.API_VERSION);
         _apiVersion = new VersionImpl(version);
       } catch (ParseException e) {
         _apiVersion = null;
@@ -37,7 +37,7 @@ public class BioCatalogueDetailsImpl implements BioCatalogueDetails {
       }
 
       try {
-        String version = (String) ((JSONObject)json.get(JSON.BIOCATALOGUE)).get(JSON.VERSION);
+        String version = (String) ((JSONObject)json.get(JSONConstants.BIOCATALOGUE)).get(JSONConstants.VERSION);
         _systemVersion = new VersionImpl(version);
       } catch (ParseException e) {
         _systemVersion = null;

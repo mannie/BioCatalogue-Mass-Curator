@@ -1,4 +1,4 @@
-package models.interfaces.resources;
+package models.interfaces.resources.helpers;
 
 import models.interfaces.abstracts.IdentifiableEntity;
 

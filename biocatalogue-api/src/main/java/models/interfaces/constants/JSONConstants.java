@@ -1,6 +1,6 @@
 package models.interfaces.constants;
 
-public interface JSON {
+public interface JSONConstants {
 
   public static final String BIOCATALOGUE = "biocatalogue";
   

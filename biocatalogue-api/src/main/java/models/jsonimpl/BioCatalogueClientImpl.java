@@ -7,7 +7,7 @@ import java.util.HashMap;
 import models.interfaces.BioCatalogueClient;
 import models.interfaces.BioCatalogueDetails;
 import models.interfaces.constants.BioCatalogueConstants;
-import models.interfaces.constants.JSON;
+import models.interfaces.constants.JSONConstants;
 import models.interfaces.resources.Service;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -84,10 +84,10 @@ public class BioCatalogueClientImpl implements BioCatalogueClient {
         int id;
         String name, resource;
         String[] resourceComponents;
-        for (Object item : (JSONArray)json.get(JSON.SERVICES)) {
-          name = (String) ((JSONObject)item).get(JSON.NAME);
+        for (Object item : (JSONArray)json.get(JSONConstants.SERVICES)) {
+          name = (String) ((JSONObject)item).get(JSONConstants.NAME);
           
-          resource = (String) ((JSONObject)item).get(JSON.RESOURCE);
+          resource = (String) ((JSONObject)item).get(JSONConstants.RESOURCE);
           resourceComponents = resource.split("/");
           
           id = Integer.parseInt(resourceComponents[resourceComponents.length - 1]);

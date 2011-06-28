@@ -1,4 +1,4 @@
-package models.interfaces.resources;
+package models.interfaces.abstracts;
 
 import java.util.Date;
 
