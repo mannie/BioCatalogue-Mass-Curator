@@ -1,12 +1,13 @@
 package models.interfaces.resources;
 
 import models.interfaces.abstracts.AnnotatableEntity;
+import models.interfaces.abstracts.ArchivableEntity;
 import models.interfaces.abstracts.DescribedEntity;
 import models.interfaces.abstracts.DocURLAnnotatedEntity;
 import models.interfaces.abstracts.SubmittedEntity;
 import models.interfaces.abstracts.TimeStampedEntity;
 
-public interface RestMethod extends AnnotatableEntity, DescribedEntity, ArchivableEntity, TimeStampedEntity, SubmittedEntity, DocURLAnnotatedEntity {
+public interface RestMethod extends AnnotatableEntity, DescribedEntity, DocURLAnnotatedEntity, SubmittedEntity, ArchivableEntity, TimeStampedEntity {
 
   public String getURLTemplate();
 

@@ -2,9 +2,9 @@ package models.interfaces.abstracts;
 
 public interface IdentifiableEntity {
 
-  public int getIdentifierAsInt();
+  public int getIntIdentifier();
 
-  public String getIdentifierAsString();
+  public String getStringIdentifier();
 
   public String getURLComponent();
 

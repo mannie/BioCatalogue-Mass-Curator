@@ -4,8 +4,9 @@ import models.interfaces.abstracts.AnnotatableEntity;
 import models.interfaces.abstracts.LocatableEntity;
 import models.interfaces.abstracts.SubmittedEntity;
 import models.interfaces.abstracts.TimeStampedEntity;
+import models.interfaces.resources.helpers.ServiceVariant;
 
-public interface ServiceDeployment extends LocatableEntity, AnnotatableEntity, TimeStampedEntity, SubmittedEntity {
+public interface ServiceDeployment extends AnnotatableEntity, LocatableEntity, SubmittedEntity, TimeStampedEntity {
 
   public ServiceProvider getProvider();
 

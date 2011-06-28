@@ -12,6 +12,12 @@ public class BioCatalogueClientImplTest extends TestCase {
   private final static String VALID_HOSTNAME = "sandbox.biocatalogue.org";
   private final static String INVALID_HOSTNAME = "standbomb.biochatalogue.org";
   
+  private static final int INVALID_SERVICE_ID = 1;
+  private static final int VALID_SERVICE_ID = 2046;
+  private static final String VALID_SERVICE_NAME = "BioQuali";
+  
+  // --
+  
   private BioCatalogueClientImpl _client;
   private BioCatalogueClientImpl _clientWithNullArg;
   private BioCatalogueClientImpl _clientWithValidHostname;
@@ -70,4 +76,37 @@ public class BioCatalogueClientImplTest extends TestCase {
     Assert.assertTrue(_clientWithValidHostname.getHostname().equalsIgnoreCase(VALID_HOSTNAME));
   }
 
+  @Test
+  public void testGetServices() {
+    Assert.assertNotNull(_client.getServices());
+    Assert.assertTrue(_client.getServices().length > 0);
+    Assert.assertTrue(_client.getServices().length > 1000);
+    Assert.assertEquals(ServiceImpl.class, _client.getServices()[0].getClass());
+    
+    Assert.assertNotNull(_clientWithNullArg.getServices());
+    Assert.assertTrue(_clientWithNullArg.getServices().length > 0);
+    Assert.assertTrue(_clientWithNullArg.getServices().length > 1000);
+    Assert.assertEquals(ServiceImpl.class, _clientWithNullArg.getServices()[0].getClass());
+    
+    Assert.assertNotNull(_clientWithValidHostname.getServices());
+    Assert.assertTrue(_clientWithValidHostname.getServices().length > 0);
+    Assert.assertTrue(_clientWithValidHostname.getServices().length > 1000);
+    Assert.assertEquals(ServiceImpl.class, _clientWithValidHostname.getServices()[0].getClass());
+  }
+  
+  @Test
+  public void testGetService() {
+    Assert.assertNull(_client.getService(INVALID_SERVICE_ID));
+    Assert.assertNotNull(_client.getService(VALID_SERVICE_ID));
+    Assert.assertTrue(_client.getService(VALID_SERVICE_ID).getName().equals(VALID_SERVICE_NAME));
+
+    Assert.assertNull(_clientWithNullArg.getService(INVALID_SERVICE_ID));
+    Assert.assertNotNull(_clientWithNullArg.getService(VALID_SERVICE_ID));
+    Assert.assertTrue(_clientWithNullArg.getService(VALID_SERVICE_ID).getName().equals(VALID_SERVICE_NAME));
+    
+    Assert.assertNull(_clientWithValidHostname.getService(INVALID_SERVICE_ID));
+    Assert.assertNotNull(_clientWithValidHostname.getService(VALID_SERVICE_ID));
+    Assert.assertTrue(_clientWithValidHostname.getService(VALID_SERVICE_ID).getName().equals(VALID_SERVICE_NAME));
+  }
+  
 }

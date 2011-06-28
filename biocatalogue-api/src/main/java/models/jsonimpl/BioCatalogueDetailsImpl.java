@@ -1,10 +1,14 @@
 package models.jsonimpl;
 
+import java.net.URI;
 import java.text.ParseException;
 
 import models.interfaces.BioCatalogueClient;
 import models.interfaces.BioCatalogueDetails;
+import models.interfaces.constants.JSON;
 import models.interfaces.generic.Version;
+import net.sf.json.JSONObject;
+import util.Network;
 
 public class BioCatalogueDetailsImpl implements BioCatalogueDetails {
 
@@ -15,30 +19,34 @@ public class BioCatalogueDetailsImpl implements BioCatalogueDetails {
 
   // --
 
-  public BioCatalogueDetailsImpl(BioCatalogueClient client) {
+  public BioCatalogueDetailsImpl(BioCatalogueClient client) throws Exception {
     if (client == null)
       throw new IllegalArgumentException("BioCatalogueClient cannot be null");
 
     _client = client;
+    try {
+      URI uri = new URI(Network.HTTP_PROTOCOL, _client.getHostname(), "/api", null);
+      JSONObject json = Network.getDocument(uri);
+      
+      try {
+        String version = (String) ((JSONObject)json.get(JSON.BIOCATALOGUE)).get(JSON.API_VERSION);
+        _apiVersion = new VersionImpl(version);
+      } catch (ParseException e) {
+        _apiVersion = null;
+        // TODO figure out what to do when given an incorrect version
+      }
 
-    // TODO set _apiVersion and _systemVersion
-    try {
-      _apiVersion = new VersionImpl(null);
-    } catch (ParseException e) {
-      _apiVersion = null;
+      try {
+        String version = (String) ((JSONObject)json.get(JSON.BIOCATALOGUE)).get(JSON.VERSION);
+        _systemVersion = new VersionImpl(version);
+      } catch (ParseException e) {
+        _systemVersion = null;
+      }
       
-      // TODO figure out what to do when given an incorrect version
-      e.printStackTrace();
+    } catch (Exception e) {
+      throw e;
     }
-    
-    try {
-      _systemVersion = new VersionImpl(null);
-    } catch (ParseException e) {
-      _systemVersion = null;
-      
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+
   }
 
   // --

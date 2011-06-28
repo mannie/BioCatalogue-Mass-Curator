@@ -1,7 +1,6 @@
 package models.jsonimpl;
 
 import junit.framework.Assert;
-import models.interfaces.generic.Version;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,13 +41,13 @@ public class BioCatalogueDetailsImplTest {
   @Test
   public void testGetAPIVersion() {
     Assert.assertNotNull(_details.getAPIVersion());
-    Assert.assertEquals(Version.class, _details.getAPIVersion().getClass());
+    Assert.assertEquals(VersionImpl.class, _details.getAPIVersion().getClass());
   }
 
   @Test
   public void testGetSystemVersion() {
     Assert.assertNotNull(_details.getSystemVersion());
-    Assert.assertEquals(Version.class, _details.getSystemVersion().getClass());
+    Assert.assertEquals(VersionImpl.class, _details.getSystemVersion().getClass());
   }
 
 }
