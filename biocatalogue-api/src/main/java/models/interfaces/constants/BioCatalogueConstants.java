@@ -11,4 +11,6 @@ public interface BioCatalogueConstants {
   public static final String BL_JSON = "bljson";
   public static final String BL_JSON_EXTENSION = "." + BL_JSON;
 
+  public static final int SERVICES_PER_PAGE = 10;
+
 }

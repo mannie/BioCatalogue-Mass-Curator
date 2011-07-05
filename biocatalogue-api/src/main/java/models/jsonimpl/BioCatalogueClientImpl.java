@@ -17,6 +17,8 @@ import exceptions.HostnameUnreachableException;
 public class BioCatalogueClientImpl implements BioCatalogueClient {
 
   private static final int INITIAL_CAPACITY_FOR_DATA_STRUCTURES = 255;
+
+  private static final int SERVICES_PER_PAGE = BioCatalogueConstants.SERVICES_PER_PAGE;
   
   // --
   
@@ -112,6 +114,40 @@ public class BioCatalogueClientImpl implements BioCatalogueClient {
     getServices();
     return _servicesMap.get(new Integer(id));
   }
+  
+  public Service[] getServices(int pageNumber) {    
+    if (pageNumber < 1) return new Service[0];
+    
+    getServices();
+    // lastPage has been rounded up!
+    int lastPage = (int) Math.round(_servicesArray.length / SERVICES_PER_PAGE + 0.5);
+    if (pageNumber > lastPage) return new Service[0];
+    
+    // set starting point
+    Service[] services = new Service[SERVICES_PER_PAGE];
+    int lowerBound = pageNumber * SERVICES_PER_PAGE - SERVICES_PER_PAGE + 1; 
+    
+    // set stopping point
+    int upperBound = SERVICES_PER_PAGE; 
+    if (pageNumber == lastPage) {
+      upperBound = pageNumber * SERVICES_PER_PAGE;
+      
+      int itemsOnPage = _servicesArray.length % SERVICES_PER_PAGE;
+      if (itemsOnPage < SERVICES_PER_PAGE) upperBound = upperBound - SERVICES_PER_PAGE + itemsOnPage; 
+    } else if (pageNumber > 1) {
+      upperBound *= pageNumber; 
+    }
+    
+    // get services
+    int itemCount = upperBound - lowerBound + 1;
+    for (int i = 0; i < itemCount; i++) {
+      services[i] = _servicesArray[lowerBound + i - 1];
+    }
+    
+    return services;
+  }
+  
+  // --
   
   public Service[] reloadServices() {
     initDataStructures();

@@ -11,6 +11,16 @@
   <description>A simple tool to allow for the annotation of BioCatalogue web services in bulk via the use of spreadsheets.</description>
   <url>http://www.biocatalogue.org</url>
 
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>org.biocatalogue</groupId>
+  			<artifactId>biocatalogue-api</artifactId>
+  			<version>0.3-SNAPSHOT</version>
+  			<scope>compile</scope>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

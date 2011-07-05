@@ -12,6 +12,8 @@ public interface BioCatalogueClient {
   
   public Service[] getServices();
   
+  public Service[] getServices(int pageNumber);
+
   public Service getService(int id);
                  
 }
