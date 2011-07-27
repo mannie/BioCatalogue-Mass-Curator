@@ -34,7 +34,12 @@ After adding annotations to the spreadsheet, curators can then use the tool to e
 - POI[http://poi.apache.org]
 
 
-== Building
+== Running
+
+To run the app, run:
+  ./run.sh
+
+== Building For Deployment
 (The commands below are issued from the top level directory of the working copy)
 
 The builds are handled by the Rawr[http://github.com/rawr/rawr] gem.
