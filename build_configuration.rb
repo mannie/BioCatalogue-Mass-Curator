@@ -37,7 +37,7 @@ configuration do |c|
 	# Undocumented option 'jruby_jar'
 	# default value: "lib/java/jruby-complete.jar"
 	#
-	c.jruby_jar = "lib/jruby-complete-1.5.1.jar"
+	#c.jruby_jar = "lib/jruby-complete-1.6.3.jar"
 
 	# Undocumented option 'compile_ruby_files'
 	# default value: true

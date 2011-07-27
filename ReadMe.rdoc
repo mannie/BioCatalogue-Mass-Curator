@@ -40,7 +40,8 @@ After adding annotations to the spreadsheet, curators can then use the tool to e
 The builds are handled by the Rawr[http://github.com/rawr/rawr] gem.
   sudo jruby -S gem install rawr
 
-To create an executable JAR, simply run (you do not need to run 'rawr install'):
+To create an executable JAR, simply run:
+  rawr install
   rake rawr:jar
 
 To execute the app from a JAR, run:

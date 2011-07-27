@@ -22,7 +22,7 @@
 # ========================================
 
 PROJECT_DIR=$(dirname $0)
-JRUBY=$PROJECT_DIR/lib/jruby-complete-1.5.1.jar
+JRUBY=$PROJECT_DIR/lib/jruby-complete.jar
 
 # Gems
 JSON=$PROJECT_DIR/lib/json-jruby.jar
